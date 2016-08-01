@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/lmizrahi12/BorrowMyBooks.png?label=ready&title=Ready)](https://waffle.io/lmizrahi12/BorrowMyBooks)
 # BorrowMyBooks
 ## COMS3009: Software Design Project.
 
