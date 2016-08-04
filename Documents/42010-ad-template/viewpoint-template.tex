@@ -1,0 +1,352 @@
+%%% Version 2.1b %%%
+
+%%%%%%%%%%
+\section{\Fillin{Viewpoint Name}}\label{vp:template}
+%%%%%%%%%%
+
+\must{Provide the name for the viewpoint.}
+
+If there are any synonyms or other common names by which this viewpoint is
+known or used, record them here.
+
+
+%%%%%%%%%%
+\section{Overview} 
+%%%%%%%%%%
+
+Provide an abstract or brief overview of the viewpoint. 
+
+Describe the viewpoint's key features.
+
+
+%%%%%%%%%%
+\section{Concerns and stakeholders} 
+%%%%%%%%%%
+
+Architects looking for an architecture viewpoint suitable for their
+purposes often use the identified concerns and typical stakeholders to
+guide them in their search.  Therefore it is important (and required
+by the Standard) to document the concerns and stakeholders for which a
+viewpoint is intended.
+
+%%%%%%%%%%
+\subsection{Concerns}\label{vp:concerns}
+%%%%%%%%%%
+
+\must{Provide a listing of architecture-relevant concerns to be framed by
+this architecture viewpoint per \std{7a}.}
+
+Describe each concern.
+
+Concerns name ``areas of interest'' in a system.
+
+\note{Following ISO/IEC/IEEE 42010, \textbf{system} is a shorthand for
+  any number of things including man-made systems, software products
+  and services, and software-intensive systems such as ``individual
+  applications, systems in the traditional sense, subsystems, systems
+  of systems, product lines, product families, whole enterprises, and
+  other aggregations of interest''.}
+
+Concerns may be very general (e.g., \textit{Reliability}) or quite
+specific (\textit{e.g., How does the system handle network latency?}).
+  
+Concerns identified in this section are critical information for an
+architect because they help her decide when this viewpoint will be
+useful.
+
+When used in an architecture description, the viewpoint becomes a
+``contract'' between the architect and stakeholders that these
+concerns will be addressed in the view resulting from this viewpoint.
+
+It can be helpful to express concerns \emph{in the form of questions}
+that views resulting from that viewpoint will be able to answer. E.g.,
+\begin{itemize}
+\item \textit{How does the system manage faults?}
+\item \textit{What services does the system provide?}
+\end{itemize}
+
+\note{``In the form of a question'' is inspired by the television quiz
+  show, \textit{Jeopardy!}}
+ 
+\std{5.3} contains a candidate list of concerns that must be considered
+when producing an architecture description. These can be considered
+here for their relevance to the viewpoint being specified:
+\begin{itemize}
+\item What are the purpose(s) of the system-of-interest?
+\item What is the suitability of the architecture for achieving the
+  system-of-interest's purpose(s)?
+\item How feasible is it to construct and deploy the
+  system-of-interest?
+\item What are the potential risks and impacts of the
+  system-of-interest to its stakeholders throughout its life cycle?
+\item How is the system-of-interest to be maintained and evolved?
+\end{itemize}
+
+See also: \std{4.2.3}.
+
+%%%%%%%%%%
+\subsection{Typical stakeholders} 
+%%%%%%%%%%
+
+\must{Provide a listing of the typical stakeholders of a system who
+  are in the potential audience for views of this kind, per \std{7b}.}
+
+Typical stakeholders would include those likely to read such views
+and/or those who need to use the results of this view for another
+task.
+
+Stakeholders to consider include:
+\begin{itemize}
+\item users of a system; 
+\item operators of a system; 
+\item acquirers of a system;
+\item owners of a system; 
+\item suppliers of a system; 
+\item developers of a system; 
+\item builders of a system; 
+\item maintainers of a system.
+\end{itemize}
+
+%%%%%%%%%%
+\subsection{``Anti-concerns'' \Optional} 
+%%%%%%%%%%
+
+It may be helpful to architects and stakeholders to
+document the kinds of issues for which this viewpoint is \emph{not
+  appropriate or not particularly useful}.
+
+Identifying the ``anti-concerns'' of a given notation or approach may
+be a good antidote for certain overly used models and notations.
+
+% \tbd{Examples!}
+
+
+
+%%%%%%%%%%
+\section{Model kinds+}\label{mk:list}
+%%%%%%%%%%
+
+\must{Identify each model kind used in the viewpoint per \std{7c}.}
+
+In the Standard, each architecture view consists of multiple
+architecture models. Each model is governed by a \textit{model kind}
+which establishes the notations, conventions and rules for models of
+that type.  See: \std{4.2.5, 5.5 and 5.6}.
+
+Repeat the next section for each model kind listed here the viewpoint
+being specified.
+
+
+%%%%%%%%%%
+\section{\Fillin{Model Kind Name}}\label{vp:mk}
+%%%%%%%%%%
+
+\must{Identify the model kind.}
+
+
+%%%%%%%%%%
+\subsection{\Fillin{Model Kind Name} conventions} 
+%%%%%%%%%%
+
+\must{Describe the conventions for models of this kind.}
+
+Conventions include languages, notations, modeling techniques,
+analytical methods and other operations. These are key modeling
+resources that the model kind makes available to architects and
+determine the vocabularies for constructing models of the kind and
+therefore, how those models are interpreted and used.
+
+It can be useful to separate these conventions into a \emph{language
+  part}: in terms of a metamodel or specification of notation to be
+used and a \emph{process part}: to describe modeling techniques used
+to create the models and methods which can be used on the models that
+result.  These include operations on models of the model kind.
+
+The remainder of this section focuses on the language part. The next
+section focuses on the process part.
+
+The Standard does not prescribe \emph{how} modeling conventions are to
+be documented.  The conventions could be defined:
+\begin{description}
+\item[I)] by reference to an existing notation or language (such as
+  SADT, UML or an architecture description language such as ArchiMate
+  or SysML) or to an existing technique (such as $M/M/4$ queues);
+\item[II)] by presenting a metamodel defining its core constructs;
+\item[III)] via a template for users to fill in;
+\item[IV)] by some combination of these methods or in some other
+  manner.
+\end{description}
+
+Further guidance on methods I) through III) is provided below.
+ 
+Sometimes conventions are applicable across more than one model kind
+-- it is not necessary to provide a separate set of conventions, a
+metamodel, notations, or operations for each, when a single
+specification is adequate.
+
+
+%%%%%%%%%%
+\subsubsection{I) Model kind languages or notations \Optional}
+%%%%%%%%%%
+
+Identify or define the notation used in models of the kind.
+
+Identify an existing notation or model language or define one that can
+be used for models of this model kind. Describe its syntax, semantics,
+tool support, as needed.
+
+
+%%%%%%%%%%
+\subsubsection{II) Model kind metamodel \Optional} 
+%%%%%%%%%%
+
+A metamodel presents the AD elements that constitute the
+vocabulary of a model kind, and their rules of combination. There are
+different ways of representing metamodels (such as UML class diagrams, OWL,
+eCore). The metamodel should present:
+\begin{description}
+\item[entities] What are the major sorts of conceptual elements that
+  are present in models of this kind?
+\item[attributes] What properties do entities possess in models of
+  this kind?
+\item[relationships] What relations are defined among entities in
+  models of this kind?
+\item[constraints] What constraints are there on entities, attributes
+  and/or relationships and their combinations in models of this kind?
+\end{description}
+
+\note{Metamodel constraints should not be confused with architecture
+  constraints that apply to the subject being modeled, not the
+  notations used.}
+
+In the terms of the Standard, entities, attributes, relationships are
+\textit{AD elements} per \std{3.4, 4.2.5 and 5.7}.
+
+In the \textit{Views-and-Beyond} approach~\cite{DSA:2010}, each
+viewtype (which is similar to a viewpoint) is specified by a set of
+elements, properties, and relations (which correspond to entities,
+attributes and relationships here, respectively).
+
+When a viewpoint specifies multiple model kinds it can be useful to
+specify a single viewpoint metamodel unifying the definition of the
+model kinds and the expression of correspondence rules.  When defining
+an architecture framework, it may be helpful to use a single metamodel
+to express multiple, related viewpoints and model kinds.
+
+% \tbd{EXAMPLE -- In \cite{Hilliard:1999} and earlier work, we said that
+%   all views are built from primitives called components, connections
+%   and constraints which basically gives views a graph structure with
+%   components as nodes and two types of edges (connections and
+%   constraints). There are two issues with this: (\textit{1})
+%   components and \textit{connectors} have taken on a specialized
+%   meaning from the work by CMU and others \cite{Shaw-Garlan:1996};
+%   (\textit{2}) this ur-ontology may be over-commiting for some views.}
+
+
+%%%%%%%%%%
+\subsubsection{III) Model kind templates \Optional}
+%%%%%%%%%%
+
+Provide a template or form specifying the format and/or content of
+models of this model kind.
+
+%% \tbd{EXAMPLE} 
+
+
+%%%%%%%%%%
+\subsection{\Fillin{Model Kind Name} operations \Optional} 
+%%%%%%%%%%
+
+Specify operations defined on models of this kind.
+
+See~\S\ref{Opns} for further guidance.
+
+
+%%%%%%%%%%
+\subsection{\Fillin{Model Kind Name} correspondence rules}
+%%%%%%%%%%
+
+\must{Document any correspondence rules associated with the model
+  kind.}
+
+See~\S\ref{CRs} for further guidance.
+
+
+%%%%%%%%%%
+\section{Operations on views}\label{Opns}
+%%%%%%%%%%
+
+Operations define the methods to be applied to views and their models.
+Types of operations include:
+
+\begin{description}
+
+\item[construction methods] are the means by which views are
+  constructed under this viewpoint. These operations could be in the
+  form of process guidance (how to start, what to do next); or work
+  product guidance (templates for views of this type). Construction
+  techniques may also be heuristic: identifying styles, patterns, or
+  other idioms to apply in the synthesis of the view.
+
+\item[interpretation methods] which guide readers to understanding
+  and interpreting architecture views and their models.
+
+\item[analysis methods] are used to check, reason about, transform,
+  predict, and evaluate architectural results from this view,
+  including operations which refer to model correspondence rules.
+
+\item[implementation methods] are the means by which to design and
+  build systems using this view.
+
+\end{description}
+
+Another approach to categorizing operations is from Finkelstein et
+al. \cite{Finkelstein+1992}. The \emph{work plan} for a viewpoint
+defines 4 kinds of actions (on the view representations):
+\textit{assembly actions} which contains the actions available to the
+developer to build a specification; \textit{check actions} which
+contains the actions available to the developer to check the
+consistency of the specification; \textit{viewpoint actions} which
+create new viewpoints as development proceeds; \textit{guide actions}
+which provide the developer with guidance on what to do and when.
+
+
+%%%%%%%%%%
+\section{Correspondence rules}\label{CRs}
+%%%%%%%%%%
+
+\must{Document any correspondence rules defined by this viewpoint or
+  its model kinds.}
+
+Usually, these rules will be across models or across views since,
+constraints within a model kind will have been specified as part of
+the conventions of that model kind.
+
+See: \std{4.2.6 and 5.7}
+
+%%\tbd{examples or specs}
+
+%%%%%%%%%%
+\section{Examples \Optional} 
+%%%%%%%%%%
+
+Provide helpful examples of use of the viewpoint for the reader
+(architects and other stakeholders).
+
+
+%%%%%%%%%%
+\section{Notes \Optional} 
+%%%%%%%%%%
+
+Provide any additional information that users of the viewpoint may
+need or find helpful.
+
+
+%%%%%%%%%%
+\section{Sources} 
+%%%%%%%%%%
+
+\must{Identify sources for this architecture viewpoint, if any,
+  including author, history, bibliographic references, prior art, per
+  \std{7e}.}
+

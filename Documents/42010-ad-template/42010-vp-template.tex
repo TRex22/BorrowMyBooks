@@ -1,0 +1,159 @@
+
+\documentclass[10pt]{article}
+
+% The Preamble has many definitions and settings
+\input{preamble}
+
+
+\begin{document}
+
+\title{Architecture Viewpoint Template for ISO/IEC/IEEE 42010}
+
+\author{Rich Hilliard \\
+  \href{mailto:r.hilliard@computer.org}{r.hilliard@computer.org}}
+
+\date{\textsc{version} $2.2$}
+
+\maketitle
+
+\pdfinfo{
+  /Title (Architecture Viewpoint Template (ISO/IEC/IEEE 42010:2011)
+  /Author (Rich Hilliard, r.hilliard@computer.org)
+  /Keywords (architecture description, viewpoints)
+}
+
+
+%%%%%%%%%%%%%%%
+\begin{abstract}
+  \noindent This is a template for specifying architecture viewpoints in
+  accordance with ISO/IEC/IEEE~42010:2011, \textit{Systems and
+    software engineering---Architecture description}.
+\end{abstract}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Using the template}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addcontentsline{toc}{section}{Using the template}
+
+This is a template that architects and organizations can use for
+documenting an architecture viewpoint in accordance with
+ISO/IEC/IEEE 42010:2011~\cite{ISO42010:2011}. In particular, the
+requirements on viewpoints are found in Clause~7 of that Standard.
+
+The template provides an outline for an architecture viewpoint and
+defines a set of ``slots'' or information items to be elaborated by
+the architect using the template to define and specify a viewpoint.
+Each slot is identified by a heading name followed by a brief
+description of its intended content and guidance for developing that
+content. 
+
+The template uses a few conventions, as follows.
+
+\must{``Musts'' are items which must be present to satisfy the
+  Standard. Musts are marked like this.}
+
+\should{``Shoulds'' are items recommended to be present, but not
+  required by the Standard. Shoulds are marked like this.}
+
+Optional items are marked with this: \Optional.
+
+\Fillin{Items} like \Fillin{this} signal names to be filled-in by a
+user of the template and used throughout the viewpoint definition.
+
+The source files for this version of the template is packaged as a \LaTeX\
+\texttt{section}. It is designed to be included in a \LaTeX\ document
+such as those using the report, book or article document class. (Other
+versions for Microsoft Word and XML will also be made available.)
+
+
+\subsection*{License}
+\addcontentsline{toc}{subsection}{License}
+
+The \textit{Architecture Viewpoint Template} is copyright \copyright\
+2012--2014 by \href{http://www.iso-architecture.org/42010/templates/}%
+{Rich Hilliard}.
+
+The latest version is always available at
+\url{http://www.iso-architecture.org/42010/templates/}
+
+The template is licensed under a
+Creative Commons Attribution 3.0 Unported License. The terms of use
+are here: \\
+\url{http://creativecommons.org/licenses/by/3.0/}
+
+\vskip .242in
+\pdfimage {88x31.png}
+
+This license gives you the user the right to share and remix this
+work to define new architecture viewpoints. 
+It does not require you to share the results of your usage (i.e., new
+viewpoint definitions), but if your use is non-proprietary, we
+encourage you to share your viewpoint definition with others for their
+use via the WG42 Viewpoint Repository \\
+\url{http://www.iso-architecture.org/viewpoints/}.
+
+
+\subsection*{Version History}
+\addcontentsline{toc}{subsection}{Version History}
+
+This template is based on one originally designed for use with
+IEEE~std~1471:2000~\cite{IEEE1471:2000} which was published as
+\cite{Hilliard:2001b}.  That template formed the basis for the
+viewpoint template in \cite{Hilliard:2011}, which appeared during the
+development ISO/IEC/IEEE~42010:2011 and subsequently appeared in
+Annex~B of the published ISO/IEC/IEEE~42010:2011.
+
+The present document is an enhanced version of these earlier
+templates, with additional guidance, clarifications and examples for
+readers.
+\begin{description}
+
+\item[rev 2.2] 7 October 2014, Moved bibliography from
+  \texttt{bibtex} to \texttt{biblatex}. Released revision with minor
+  formatting fixes.
+
+\item[rev 2.1b] June 2012, initial release on 42010 website.
+
+\end{description}
+
+\subsection*{Comments or Questions}
+\addcontentsline{toc}{subsection}{Comments}
+ 
+Contact the author \href{mailto:r.hilliard@computer.org}%
+{Rich Hilliard [r.hilliard@computer.org]} for questions or comments.
+For more information on ISO/IEC/IEEE~42010, visit the ISO/IEC/IEEE
+42010 website: \\
+\url{http://www.iso-architecture.org/42010/}.
+
+%%%%%%%%%%
+\vskip .422in
+\textcolor{Orange}{\Large The template begins here . . .}
+
+\input{viewpoint-template}
+
+\textcolor{Orange}{\Large The template ends here!}
+%%%%%%%%%%
+
+
+%%%%%%%%%% Bibliography
+\printbibliography
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \include{index}
+% \addcontentsline{toc}{chapter}{Index}
+%%%%%%%%%%
+
+
+\newpage
+%%%%%%%%%%
+\tableofcontents 
+%%%%%%%%%%
+
+\end{document}
+
+
+
+

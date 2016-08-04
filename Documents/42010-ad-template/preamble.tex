@@ -1,0 +1,80 @@
+
+%%% Preamble
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage{graphicx}
+
+
+%%%
+%%% Bibliography
+%%%
+\usepackage[backend=bibtex8, citestyle=numeric, bibstyle=authortitle]{biblatex}
+\bibliography{/Users/rh/refs/preamble.bib,
+  /Users/rh/refs/ieee-1471.bib, /Users/rh/refs/cs.bib, /Users/rh/refs/arch.bib}
+
+%%% 
+%%% Definitions
+%%%
+\newcommand{\Fillin}[1]{\textcolor{Red}{$<$#1$>$}}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newcommand{\Optional}{\textcolor{Gray}{\textsf(optional)}}
+\newcommand{\angles}[1]{$\langle$#1$\rangle$}
+\newcommand{\must}[1]{\textcolor{NavyBlue}{$\star$ #1}}
+\newcommand{\note}[1]{\small\textsc{note: }\textit{#1}}
+\newcommand{\should}[1]{\textcolor{Plum}{$\Box$ #1}}
+\newcommand{\std}[1]{\textcolor{Maroon}{ISO/IEC/IEEE~42010,~#1}}
+\newcommand{\tbd}[1]{\noindent\textcolor{Red}{\textbf{TBD: }{\textsf{#1}}}}
+\newcommand{\working}[1]{\noindent\textcolor{CadetBlue}{\textsf{#1}}}
+
+% \renewcommand{\thesection}{\Alph{section}}
+% \renewcommand{\thesubsection}{\alph{subsection}}
+% \renewcommand{\thesubsubsection}{\roman{subsection}.}
+
+\parindent 0cm
+\parskip 0.3cm
+
+% \topmargin 0.2cm
+% \oddsidemargin 1cm
+% \evensidemargin 0.5cm
+% \textwidth 14cm
+% \textheight 20cm
+% \pagestyle{fancy}
+
+%%%  Prettier Tables
+% \usepackage{booktabs}
+%%%  Diagrams
+% \usepackage[all]{xy}
+
+
+%%%
+%%%  Colors
+%%%
+\usepackage{color}
+\usepackage[usenames,dvipsnames]{xcolor} % see: http://en.wikibooks.org/wiki/LaTeX/Colors
+
+
+%%% Fonts
+%\usepackage[charter]{mathdesign}
+%\usepackage{arev}
+%\usepackage{ccfonts,eulervm} \usepackage[T1]{fontenc}
+%\usepackage{cmbright}
+%\usepackage{concrete}
+%\usepackage{kmath,kerkis}
+%\usepackage{mathpazo}
+%\usepackage{mathptmx}
+\usepackage{newcent}
+%\usepackage{palatino}
+%\usepackage{pxfonts}
+%%% end Fonts
+
+
+%%% Index
+%%% \makeindex
+
+
+%%% Make this last package (always load after biblatex):
+\usepackage[pdfstartview=FitH,colorlinks=true,citecolor=ForestGreen,linkcolor=NavyBlue]{hyperref}
+
+%%% end Preamble
+

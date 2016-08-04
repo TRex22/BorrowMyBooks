@@ -1,0 +1,647 @@
+
+\documentclass[10pt,oneside]{report}
+
+% The preamble contains definitions and settings
+\input{preamble}
+
+\begin{document}
+
+%%%%%%%%%%
+\begin{titlepage}
+
+\begin{center}
+\HRule
+
+\Large\textmd{Architecture description template \\
+  for use with ISO/IEC/IEEE 42010:2011}
+\vfill
+
+%%%
+%%% Title
+%%%
+{ \huge{Architecture Description of \\ 
+    \Fillin{Architecture Name} for \\
+    \Fillin{System of Interest}}} \\[0.4cm]
+
+\large\textmd{``Bare bones'' edition}\\
+\large\textmd{version: 2.2}
+\vfill
+
+%%%
+%%% Author
+%%%
+Template prepared by: \\
+\large\textsf{Rich Hilliard \\
+  \href{mailto:r.hilliard@computer.org}{r.hilliard@computer.org}}
+
+\vfill
+%%%
+%%% License
+%%%
+Distributed under \\
+Creative Commons Attribution 3.0 Unported License. \\
+For terms of use see:  \\ 
+\url{http://creativecommons.org/licenses/by/3.0/}
+
+\HRule
+\end{center}
+\end{titlepage}
+%%%%%%%%%% end titlepage
+
+\pdfinfo{
+  /Title (Architecture description template for use with ISO/IEC/IEEE 42010:2011)
+  /Author (Rich Hilliard, r.hilliard@computer.org)
+  /Keywords (architecture description, ISO/IEC/IEEE 42010)
+}
+
+\pagenumbering{roman}
+\setcounter{tocdepth}{3}
+
+
+%%%%%%%%%%
+\chapter*{Using the template}
+\addcontentsline{toc}{chapter}{Using the template}
+%%%%%%%%%%
+
+ISO/IEC/IEEE 42010, \textit{Systems and software engineering ---
+  Architecture description}, defines the contents of an architecture
+description (AD)~\cite{ISO42010:2011}. 
+
+Figure~\ref{fig:content} depicts that contents in terms of a UML class
+diagram.
+
+The AD template in this document defines places for all required
+information and offers the user additional guidance on preparing an
+AD.
+
+An AD may take many forms, not prescribed by the Standard: it could be
+presented as a document, a set of documents, a collection of models, a
+model repository, or in some other form -- as long as the required
+content is accessible in some manner. In particular, organization and
+ordering of required information is not defined by the Standard.
+Thus, headings and subheadings in this template are merely suggestive
+-- not required.
+
+\begin{figure}[!h]
+\pdfimage width 5in {Core-Realm.png}
+\caption{Content model of an architecture description}\label{fig:content}
+\end{figure}
+ 
+The template uses a few conventions, as follows.
+
+\must{``Musts'' are items which must be present to satisfy the
+  Standard. Musts are marked like this.}
+
+\should{``Shoulds'' are items recommended to be present, but not
+  required by the Standard. Shoulds are marked like this.}
+
+Optional items are marked with this: \Optional.
+
+\Fillin{Items} like \Fillin{this} signal names to be filled-in by a
+user of the template and used throughout the resulting AD.
+
+
+
+
+%%%%%%%%%%
+\section*{License}
+\addcontentsline{toc}{section}{License}
+%%%%%%%%%%
+
+The \textit{Architecture Description Template} is copyright
+\copyright\ 2012--2014 by
+\href{http://www.iso-architecture.org/42010/templates/}%
+{Rich Hilliard}.
+
+The latest version is always available at: \\
+\url{http://www.iso-architecture.org/42010/templates/}.
+
+The template is licensed under a Creative Commons Attribution 3.0
+Unported License. For terms of use, see:\\
+\url{http://creativecommons.org/licenses/by/3.0/}
+
+\vfill \pdfimage {88x31.png}
+
+This license gives you the user the right to share and remix this work
+to create architecture descriptions.  It does not require you to share
+the results of your usage, but if your use is non-proprietary, we
+encourage you to share your work with others via the WG42 website \\
+\url{http://www.iso-architecture.org/42010/}.
+
+
+
+%%%%%%%%%%
+\section*{Version history}
+\addcontentsline{toc}{section}{Version History}
+%%%%%%%%%%
+
+This template is based on one originally designed for use with
+IEEE~std~1471:2000~\cite{IEEE1471:2000} and now updated for
+ISO/IEC/IEEE 42010:2011.  The present document is an enhanced version
+of the earlier template, with additional guidance, clarifications and
+examples for readers.
+
+\begin{description}
+\item[rev 2.2] 7 October 2014, Moved bibliography from \texttt{bibtex}
+  to \texttt{biblatex}. Released revision with minor formatting fixes.
+\item[rev 2.1a] June 2012, initial release on 42010 website.
+\end{description}
+
+
+%%%%%%%%%%
+\subsection*{Editions} 
+\addcontentsline{toc}{subsection}{Template editions}
+%%%%%%%%%%
+This is the ``bare bones'' edition -- it contains exactly only
+information items required by the Standard. Other editions meet the
+requirements of the Standard and contain additional information used
+in various documentation approaches (such as
+\cite{Rozanski-Woods:2011,DSA:2010}).
+
+
+%%%%%%%%%%
+\section*{Comments or questions}
+\addcontentsline{toc}{section}{Comments}
+%%%%%%%%%%
+ 
+Contact the author \href{mailto:r.hilliard@computer.org}%
+{Rich Hilliard $\langle$r.hilliard@computer.org$\rangle$} with
+comments, suggestions, improvements or questions.
+
+For more information on ISO/IEC/IEEE 42010, visit the website: \\
+\url{http://www.iso-architecture.org/42010/}.
+
+\textcolor{Orange}{\Large The template begins here . . .}
+
+%%%
+%%% Change page number for main body of text
+%%%
+\pagenumbering{arabic}
+
+
+%%%%%%%%%%
+\chapter{Introduction}\label{ad:info}
+%%%%%%%%%%
+
+This chapter describes introductory information items of the AD,
+including identifying and supplementary information.
+
+
+%%%%%%%%%%
+\section{Identifying information}\label{ad:idinfo}
+%%%%%%%%%%
+
+\must{Identify the architecture being expressed, such as via an
+  \Fillin{Architecture Name}, or as appropriate.}
+
+\must{Identify the \Fillin{System of Interest} for which this is an
+  architecture description.}
+
+Following ISO/IEC/IEEE 42010, \textit{system} (or
+\textit{system-of-interest}) is a shorthand for any number of things
+including man-made systems, software products and services, and
+software-intensive systems including ``individual applications,
+systems in the traditional sense, subsystems, systems of systems,
+product lines, product families, whole enterprises, and other
+aggregations of interest''. \std{4.2}
+
+There is also a place for these two information items on the title
+page.
+
+
+%%%%%%%%%%
+\section{Supplementary information}\label{ad:supinfo}
+%%%%%%%%%%
+
+\must{Provide supplementary information as determined by the project and/or
+organization.}
+
+The details of identifying and supplementary information items are not
+defined by the Standard. Most organizations or projects will have
+their own requirements.
+
+Examples of identifying and supplementary information include: date of
+issue and status; authors, reviewers, approving authority, issuing
+organization; change history; summary; scope; context; glossary;
+version control information; configuration management information and
+references. \std{5.2}
+
+
+%%%%%%%%%%
+\section{Other information}
+%%%%%%%%%%
+
+Although views and models are the primary form of organization in an
+architecture description, an AD may also contain information not part
+of any architecture view or model. 
+
+Examples of types of architecture information that might not be part
+of any architecture view are:
+\begin{itemize}
+\item system or architecture overview
+\item reader's guide to this AD
+\item results of architecture evaluations
+\item rationale for key decisions
+\item view and model correspondences 
+\end{itemize}
+
+This section discusses these forms of information: overviews,
+architecture evaluations and rationale.
+
+
+
+\subsection{Overview \Optional}
+Provide an overview of the architecture being described,
+its essential points, and a summary of the
+\Fillin{System of Interest}.
+
+An Overview could include sections for Purpose, Scope and Context of the architecture.
+
+Provide an overview of the remainder of this AD as a guide for its
+readers.
+
+Recognizing the key role of stakeholders and concerns
+(see~\S\ref{sec:snc}) for the contents of the AD, consider Overview(s)
+organized by stakeholders and/or concerns.
+
+
+%%%%%%%%%%
+\subsection{Architecture evaluations}
+%%%%%%%%%%
+
+\must{Include results from any evaluations of the
+  \Fillin{Architecture Name} being documented.}
+
+
+%%%%%%%%%%
+\subsection{Rationale for key decisions}
+%%%%%%%%%%
+
+\must{An architecture description shall include rationale for each
+  decision considered to be a key architecture decision (per
+  \std{5.8.2}).}
+
+See~\S\ref{ch:decisions} for further guidance about decisions and rationale.
+
+
+%%%%%%%%%%
+\chapter{Stakeholders and concerns}\label{sec:snc}
+%%%%%%%%%%
+
+This chapter contains information items for stakeholders of the 
+architecture, the stakeholders' concerns for that architecture, and
+the traceability of concerns to stakeholders. See also:~\std{5.3}
+
+%%%%%%%%%%
+\section{Stakeholders}\label{ad:stakeholders}
+%%%%%%%%%%
+
+\must{Identify and describe the stakeholders for the architecture.}
+
+  Stakeholders may be individuals (e.g., ``Joe the CEO''), groups
+  (e.g., ``power users of our product''), organizations (e.g., ``the
+  Quality Assurance Department'' or ``the NSA'') as well as classes of
+  same.
+
+  The stakeholders have areas of interest, called \textit{concerns},
+  that are considered fundamental to the architecture of the
+  system-of-interest. See~\S\ref{ad:concerns}.
+
+\must{The following stakeholders must be considered when preparing an
+  AD.  When applicable to the \Fillin{System of Interest}, they must
+  be identified in the architecture description: users, operators,
+  acquirers, owners, suppliers, developers, builders and maintainers.}
+
+  These names are not required to be used; stakeholder names should be
+  chosen as appropriate to the \Fillin{System of Interest}, the
+  project and/or organization.
+
+
+%%%%%%%%%%
+\section{Concerns}\label{ad:concerns}
+%%%%%%%%%%
+
+\must{Identify the concerns considered fundamental to the architecture
+  of \Fillin{System of Interest}.}
+
+\must{Consider the following concerns, and include them in the AD when
+  applicable:}
+
+\begin{itemize}
+\item What are the purpose(s) of the system-of-interest?
+\item What is the suitability of the architecture for achieving the
+  system-of-interest's purpose(s)?
+\item How feasible is it to construct and deploy the
+  system-of-interest?
+\item What are the potential risks and impacts of the
+  system-of-interest to its stakeholders throughout its life cycle?
+\item How is the system-of-interest to be maintained and evolved?
+\end{itemize}
+
+These concern statements are not required to be used; concern
+statements should be chosen as appropriate to the
+\Fillin{System of Interest}, the project and/or organization.
+
+For further guidance on concerns, see~\S\ref{vp:concerns}.
+
+
+%%%%%%%%%%
+\section{Concern--Stakeholder Traceability}
+%%%%%%%%%%
+
+\must{Associate each identified concern from~\S\ref{ad:concerns} with
+  the identified stakeholders from~\S\ref{ad:stakeholders} having that
+  concern.}
+
+This association can be recorded via a simple table or other
+depiction.
+
+\begin{table}[h]
+\caption{Example showing association of stakeholders to
+  concerns in an AD}\label{table:SxC}
+\begin{tabular}{ l | c | c | c | c }
+   & \textsf{Stakeholder~1} & \textsf{Stakeholder~2} & \textsf{Stakeholder~3} &. . . \\
+\hline
+  \textsf{Concern~1} & -- & \textsf{x} & \textsf{x} & . . . \\
+  \textsf{Concern~2} & \textsf{x} & -- & \textsf{x} & . . . \\
+  \textsf{Concern~3} & -- & \textsf{x} & \textsf{x} & . . . \\
+  . . . & & &  \\
+\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%
+\chapter{Viewpoints+}\label{ad:vps}
+%%%%%%%%%%
+
+An AD contains multiple architecture views; each view adheres to the
+conventions of an \textit{architecture viewpoint}. This chapter
+describes the requirements on documenting viewpoints for an AD.
+
+\must{Include a specification for each architecture viewpoint used in
+  this AD.}
+
+\must{Viewpoints must be chosen for the AD such that each identified
+  concern from~\S\ref{ad:concerns} is framed by at least one
+  viewpoint.}
+
+\must{Provide a rationale for each viewpoint used.} 
+
+Rationale could include discussion in terms of its stakeholders, the
+concerns framed by the viewpoint, relevance of its model kinds and
+modeling conventions.
+
+\must{Each architecture viewpoint used in the AD must be specified in
+  accordance with the provisions of \std{7}.}
+
+A detailed template for specifying viewpoints in accordance with the
+Standard is included in ~\S\ref{vp:template} below.
+
+\note{The latest version of the viewpoint template can be found at  \\
+  \url{http://www.iso-architecture.org/42010/templates/}.}
+
+Repeat and fill-in viewpoint template as needed for each viewpoint
+used in the AD.
+
+
+An AD contains one or more architecture views and an architecture
+viewpoint definition for each view. There is no required ordering of
+the views or viewpoints within an AD.  Readers of the AD will need to
+refer to the viewpoint specifications to understand the subject of a
+view, its notations, models and the modeling conventions used.  Given
+a set of views ($v_i$) and their viewpoints ($\mathsf{VP}_i$), the
+architect might consider the following possible arrangements:
+
+\begin{itemize}
+\item Viewpoints, first: $\mathsf{VP}_i$, followed by the views: $v_i$
+\item Interleaved views with their viewpoints: $v_i$, $\mathsf{VP}_i$,
+  $v_j$, $\mathsf{VP}_j$, \ldots
+\item Views up front: $v_i$ with the viewpoints deferred to
+  appendices, $\mathsf{VP}_i$
+\end{itemize}
+
+
+%%% include Viewpoint Template here:
+\input{viewpoint-template}
+
+
+%%%%%%%%%%
+\chapter{Views+}
+%%%%%%%%%%
+
+Much of the material in an AD is presented through its architecture views.
+Each view follows the conventions of its governing viewpoint.
+A view is made up of architecture models.
+
+\must{Include an architecture view for each viewpoint selected
+  in~\S\ref{ad:vps}.}
+
+Repeat and complete the following section for each architecture view
+in the AD.
+
+
+%%%%%%%%%%
+\section{View: \Fillin{View Name}}
+%%%%%%%%%%
+
+\must{Give the architecture view a \Fillin{View Name}.}
+
+\must{Provide any identifying and supplementary information about
+  \Fillin{View Name}.}
+
+The details of this information will be as specified by the
+organization and/or project. See~\S\ref{ad:info} for examples of
+identifying and supplementary information.
+
+Views have their own identifying and supplementary information
+distinct from ADs because they may be developed and evolve separately
+over the lifetime of a project.
+
+\must{Identify the viewpoint governing this view from among those
+  identified in~\S\ref{ad:vps}.}
+
+See also: \std{5.5}
+
+
+%%%%%%%%%%
+\subsection{Models+}
+%%%%%%%%%%
+
+An architecture view is composed of one or more architecture models.
+
+\must{Provide one or more architecture models adhering to the
+  governing viewpoint.}
+
+\must{The models must address all of the concerns framed by the view's
+  governing viewpoint and cover the whole system from that viewpoint.}
+
+Repeat the section below for each model.
+
+\subsection{\Fillin{Model Name}}
+
+\must{Each architecture model shall include version identification as
+  specified by the organization and/or project.}
+
+\must{Each architecture model shall identify its governing model kind
+  and adhere to the conventions of that model kind
+  from~\S\ref{vp:mk}.}
+
+See \std{5.4}.
+
+An architecture model may be a part of more than one architecture
+view. This enables sharing of details and addressing distinct but
+related concerns without redundancy. Other uses of multiple models:
+aspect-oriented style of architecture description: architecture models
+shared across architecture views can be used to express architectural
+perspectives~\cite{Rozanski-Woods:2011} and architecture
+textures~\cite{Ran:2000}. Architecture models can be used as
+containers for applying architecture patterns or architecture styles
+to express fundamental schemes (such as layers, three-tier,
+peer-to-peer, model-view-controller) within architecture views.
+
+
+%%%%%%%%%%
+\subsection{Known Issues with View}\label{known}
+%%%%%%%%%%
+
+\must{Document any discrepancies between the view and its viewpoint
+  conventions. Each architecture view must adhere to the conventions
+  of its governing architecture viewpoint.}
+
+Known issues could include: inconsistencies, items to be completed,
+open or unresolved issues, exceptions and deviations from the
+conventions established by the viewpoint.  Open issues can lead to
+decisions to be made. Exceptions and deviations can be documented as
+decision outcomes and rationale.
+
+
+
+%%%%%%%%%%
+\chapter{Consistency and correspondences}
+%%%%%%%%%%
+
+This chapter describes consistency requirements, recording of known
+inconsistencies in an AD, and the use and documentation of
+correspondences and correspondence rules.
+
+
+\section{Known inconsistencies}
+%%%%%%%%%%
+
+\must{Record any known inconsistencies in the AD.}
+
+Although consistent ADs obviously are to be preferred,
+it is sometimes infeasible or impractical to resolve all
+inconsistencies for reasons of time, effort, or insufficient
+information.
+
+\should{An architecture description should include an analysis of
+  consistency of its architecture models and its views.}
+
+
+\section{Correspondences in the AD}
+%%%%%%%%%%
+
+\must{Identify each correspondence in the AD and its participating AD
+  elements. Identify any correspondence rules governing }
+
+Correspondences are used to express, record, enforce and analyze
+consistency between models, views and other AD elements within an
+architecture description, between ADs, or between an AD and other
+forms of documentation.
+
+AD elements include instances of stakeholders, concerns, viewpoints and
+views, model kinds and models, decisions and rationales. Constructs
+introduced by viewpoints and model kinds are also AD elements.
+
+Correspondences are n-ary mathematical relations. Correspondences can
+be depicted via tables, via links, or via other forms of association
+(such as in UML).
+
+
+
+\section{Correspondence rules}
+%%%%%%%%%%
+
+\must{Identify each correspondence rule applying to the AD.}
+
+Correspondence rules can be introduced by the AD, by one of its
+viewpoints, or from an architecture framework or architecture
+description language being used.
+
+
+\must{For each identified correspondence rule, record whether the rule
+  holds (is satisfied) or otherwise record all known violations.}
+
+
+%%%%%%%%%%
+\appendix
+\chapter{Architecture decisions and rationale}\label{ch:decisions}
+%%%%%%%%%%
+
+It is not required by the Standard to capture architecture
+decisions. This section describes recommendations (``shoulds'') for
+their recording.
+
+%%%%%%%%%%
+\section{Decisions}
+%%%%%%%%%%
+
+\should{Provide evidence of consideration of alternatives and the
+  rationale for the choices made.}
+
+\should{Record architecture decisions considered to be key to the
+  architecture of \Fillin{System of Interest}.}
+
+Areas to consider to selecting key decisions include those:
+\begin{itemize}
+\item affecting key stakeholders or many stakeholders
+\item essential to project planning and management
+\item expensive to enforce or implement
+\item highly sensitive to changes or costly to change
+\item involving intricate or non-obvious reasoning
+\item pertaining to architecturally significant requirements
+\item requiring major expenditures of time or effort to make
+\item resulting in capital expenditures or indirect costs
+\end{itemize}
+
+\should{When recording decisions, the following information items should be considered:}
+\begin{itemize}
+\item unique identifier for the decision 
+\item statement of the decision
+\item correspondences or linkages concerns to which it pertains
+\item owner of the decision
+\item correspondences or linkages to affected AD elements
+\item rationale linked to the decision
+\item forces and constraints on the decision
+\item assumptions influencing the decision
+\item considered alternatives and their potential consequences
+\end{itemize}
+
+See \cite{DFAD:2011} and references there for various
+approaches to documenting decisions compatible with the Standard.
+
+
+%%%%%%%%%%
+\center\textcolor{Orange}{\Large The template ends here!}
+%%%%%%%%%%
+
+
+%%%%%%%%%% Bibliography
+\printbibliography
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \include{index}
+% \addcontentsline{toc}{chapter}{Index}
+%%%%%%%%%%
+
+
+\newpage
+%%%%%%%%%%
+\tableofcontents
+% \listoffigures
+% \listoftables
+%%%%%%%%%%
+
+\end{document}
