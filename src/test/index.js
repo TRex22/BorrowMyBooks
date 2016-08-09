@@ -1,6 +1,15 @@
 var fs = require('fs');
 var util = require('util');
-var fn = require('hactarjs');
-var CronJob = require('cron').CronJob;
+var config = ("../config.json");
+
+var should = require('chai').should();
 
 /*js to test*/
+
+
+describe('#Tests', function() {
+  it('createTest', function(){
+   
+  });
+
+});
