@@ -20,5 +20,6 @@
     "mongoUser": "trex22",
     "mongoPassword": "123456",
     "apiMode": false,
-    "secret": "keybao097d cat"
+    "secret": "keybao097d cat",
+    "buildVersion": 0.1
 }
