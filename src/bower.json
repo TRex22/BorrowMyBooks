@@ -1,0 +1,23 @@
+{
+  "name": "Borrow My Books",
+  "description": "Book lending and selling.",
+  "main": "",
+  "license": "MIT",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-material-design": "^0.5.8",
+    "bootstrap": "^3.3.6"
+  }
+}

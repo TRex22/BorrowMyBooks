@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+	<title><%= title %> Login Form</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/javascripts/script.js"></script>   
+</head>
+<body>
+<form action="/login" method="post" class="box login">
+	<fieldset class="boxBody">
+	  <label>Email</label>
+	  <input type="text" tabindex="1" placeholder="Enter Your Email Address" name="email" required>
+ 	<label>Password</label>
+	  <input type="password" tabindex="2"  placeholder="Enter Your Password"  name="password" required>
+	</fieldset>
+	<footer>
+	<input TYPE="button"class="btnLogin" value="SignUp"  onClick="parent.location='/signup'">
+	  <input type="submit" class="btnLogin" value="Login" tabindex="4">
+	</footer>
+
+</form>
+</body>
+</html>

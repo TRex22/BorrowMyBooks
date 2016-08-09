@@ -1,0 +1,23 @@
+{
+	"filePaths": {
+		"js": "./src/*.js",
+		"css": "./public/*.css",
+		"less": "./public/stylesheets/main.less",
+		"html": "./views/*.html",
+		"bowerRoot": "./bower_components",
+        "logPath": "./logs"
+	},
+    "port": 80,    
+    "liveReloadPort": 35729,
+    "appPath": "./app.js",
+    "startPath": "./bin/www",
+    "start": "gulp watch",
+    "logFileName": "bb.log",
+    "logFileDatePattern": ".yyyy-MM-ddTHH",
+    "logFileMaxSize": 5242880,
+    "logFileMaxFiles": 5,
+    "mongodb": "mongodb://localhost/admin",
+    "mongoUser": "trex22",
+    "mongoPassword": "123456",
+    "apiMode": false
+}

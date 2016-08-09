@@ -1,8 +1,25 @@
+@import "../../bower_components/bootstrap/dist/css/bootstrap.min.css";
+
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: white;
 }
 
 a {
   color: #00B7FF;
+}
+.jumbotron{
+	text-align: center;
+	color: @blue;
+	background-color: #639ED0;
+	padding: 25px;
+
+}
+.stack-trace, .api-routes{
+	text-align: left;
+}
+.build-version{
+	text-align: right;
+	padding-right: 25px;
 }
