@@ -1,6 +1,6 @@
 {
   "name": "BorrowMyBooks",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
@@ -25,6 +25,7 @@
     "gulp-sync": "0.1.4",
     "jshint": "2.9.1",
     "moment": "2.11.2",
+    "mongodb": "^2.2.5",
     "mongoose": "4.4.1",
     "morgan": "1.6.1",
     "passport": "0.3.2",

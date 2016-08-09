@@ -1,3 +1,5 @@
+var logger = require("../logger/logger");
+
 // error handlers - 404 and 500 others check the logs
 // catch 400
 // route to display versions

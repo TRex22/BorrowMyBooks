@@ -31,6 +31,7 @@ var config = require('./config.json');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var teapot = require('./routes/teapot');
+var admin = require('./routes/admin');
 
 var app = express();
 
@@ -46,6 +47,8 @@ app.use(function (req, res, next) {
   logger.info('Connected IP:', ip);
   next();
 });
+
+require('./db/seedDb').go();
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -64,6 +67,7 @@ app.use('/bower_components',  express.static(path.join(__dirname, '/bower_compon
 app.use('/', routes);
 app.use('/users', users);
 app.use('/teapot', teapot);
+app.use('/admin', admin);
 
 //TODO: JMC Fix
 require('./controllers/accounts.js')(app, passport);

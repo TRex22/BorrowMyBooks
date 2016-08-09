@@ -12,7 +12,4 @@ var options = {
 var mongoose = require('mongoose');
 mongoose.connect(config.mongodb, options);
 
-function seedDb() {
-    //check dev environment
-}
-module.exports = seedDb;
+
