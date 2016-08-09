@@ -1,5 +1,5 @@
 /*SOURCE: code from https://github.com/knoldus/Node.js_UserLogin_Template*/
-
+var logger = require("../logger/logger");
 // local authentication
 // For more details go to https://github.com/jaredhanson/passport-local
 var LocalStrategy    = require('passport-local').Strategy;

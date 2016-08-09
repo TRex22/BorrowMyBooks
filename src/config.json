@@ -19,5 +19,6 @@
     "mongodb": "mongodb://localhost/admin",
     "mongoUser": "trex22",
     "mongoPassword": "123456",
-    "apiMode": false
+    "apiMode": false,
+    "secret": "keybao097d cat"
 }
