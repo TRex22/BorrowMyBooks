@@ -1,9 +1,8 @@
-@import "../../bower_components/bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap.flatly.min.css";
 
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  color: white;
 }
 
 a {
@@ -11,10 +10,6 @@ a {
 }
 .jumbotron{
 	text-align: center;
-	color: @blue;
-	background-color: #639ED0;
-	padding: 25px;
-
 }
 .stack-trace, .api-routes{
 	text-align: left;
