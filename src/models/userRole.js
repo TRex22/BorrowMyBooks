@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require('../config/db.js').mongoose;
 
 var userRoleSchema = mongoose.Schema({
     userRole: {
@@ -8,4 +8,10 @@ var userRoleSchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('UserRole', userRoleSchema);
+mongoose.model('UserRole', userRoleSchema);
+var userRole = mongoose.model('UserRole');
+
+module.exports = 
+{
+    userRole: userRole
+}  

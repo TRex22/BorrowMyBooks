@@ -5,11 +5,19 @@ var options = {
     /*db: { native_parser: true },
     server: { poolSize: 5 },
     replset: { rs_name: 'myReplicaSetName' },*/
-    user: config.mongoUser,
-    pass: config.mongoPassword
+   /* user: config.mongoUser,
+    pass: config.mongoPassword*/
+    //TODO JMC Fix add db user
 }
 
 var mongoose = require('mongoose');
 mongoose.connect(config.mongodb, options);
+/*Schema = mongoose.Schema;*/
+
+module.exports = 
+{
+	mongoose : mongoose
+/*	schema: Schema*/
+};
 
 

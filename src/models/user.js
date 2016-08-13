@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require('../config/db.js').mongoose;
 var bcrypt = require('bcrypt-nodejs');
 
 var userSchema = mongoose.Schema({
@@ -13,7 +13,9 @@ var userSchema = mongoose.Schema({
         phone: String,
         interestId: [String],
         PicUrl: String,
-        UserRole: [String]
+        UserRole: [String],
+        LastLoginDate: Date,
+        RegistrationDate: Date
     }
 });
 
@@ -33,4 +35,10 @@ userSchema.methods.updateUser = function(request, response) {
     response.redirect('/user');
 };
 
-module.exports = mongoose.model('User', userSchema);
+mongoose.model('User', userSchema);
+var user = mongoose.model('User');
+
+module.exports = 
+{
+    user: user
+}  

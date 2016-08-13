@@ -1,13 +1,19 @@
-var mongoose = require('mongoose');
+var mongoose = require('../config/db.js').mongoose;
 
 var userRatingSchema = mongoose.Schema({
     userRating: {
         userId: String,
-        Date: String,
+        Date: Date,
         TransactionId: String,
         Rating: Number,
         RaterId: String
     }
 });
 
-module.exports = mongoose.model('UserRating', userRatingSchema);
+mongoose.model('UserRating', userRatingSchema);
+var userRating = mongoose.model('UserRating');
+
+module.exports = 
+{
+    userRating: userRating
+}  

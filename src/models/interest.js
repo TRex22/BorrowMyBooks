@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require('../config/db.js').mongoose;
 
 var interestSchema = mongoose.Schema({
     interest: {
@@ -8,4 +8,10 @@ var interestSchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Interest', interestSchema);
+mongoose.model('Interest', interestSchema);
+var interest = mongoose.model('Interest');
+
+module.exports = 
+{
+    interest: interest
+}  

@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require('../config/db.js').mongoose;
 
 var systemDefaultsSchema = mongoose.Schema({
     systemDefaults: {
@@ -7,4 +7,10 @@ var systemDefaultsSchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('SystemDefaults', systemDefaultsSchema);
+mongoose.model('SystemDefaults', systemDefaultsSchema);
+var systemDefaults = mongoose.model('SystemDefaults');
+
+module.exports = 
+{
+    systemDefaults: systemDefaults
+}  

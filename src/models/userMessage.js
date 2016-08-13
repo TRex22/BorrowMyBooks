@@ -1,10 +1,10 @@
-var mongoose = require('mongoose');
+var mongoose = require('../config/db.js').mongoose;
 
 var userMessageSchema = mongoose.Schema({
     userMessage: {
     	Message: String,
     	Priority: Number,
-    	Date: String,
+    	Date: Date,
     	AdminId: String,
     	FromUserId: String,
     	ToUserId: String,
@@ -13,4 +13,10 @@ var userMessageSchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('UserMessage', userMessageSchema);
+mongoose.model('UserMessage', userMessageSchema);
+var userMessage = mongoose.model('UserMessage');
+
+module.exports = 
+{
+    userMessage: userMessage
+}  

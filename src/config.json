@@ -16,7 +16,7 @@
     "logFileDatePattern": ".yyyy-MM-ddTHH",
     "logFileMaxSize": 5242880,
     "logFileMaxFiles": 5,
-    "mongodb": "mongodb://localhost/admin",
+    "mongodb": "mongodb://localhost/BorrowMyBooks",
     "mongoUser": "trex22",
     "mongoPassword": "123456",
     "apiMode": false,

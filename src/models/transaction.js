@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require('../config/db.js').mongoose;
 
 var transactionSchema = mongoose.Schema({
     transaction: {
@@ -8,9 +8,15 @@ var transactionSchema = mongoose.Schema({
         Amount: Number,
         isPurchase: Boolean,
         hasBeenRevoked: Boolean,
-        Date: String,
+        Date: Date,
         AdminId: String
     }
 });
 
-module.exports = mongoose.model('Transaction', transactionSchema);
+mongoose.model('Transaction', transactionSchema);
+var transaction = mongoose.model('Transaction');
+
+module.exports = 
+{
+    transaction: transaction
+}  
