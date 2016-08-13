@@ -28,7 +28,7 @@ module.exports = function(app) {
     app.use(function(error, req, res, next) {
         res.status(500);
         url = req.url;
-        logger.error("Error Message: code(500) %s", JSON.stringify(error));
+        logger.error("Error Message: code(500) %s", error);
         res.render('error.ejs', { title: '500: Internal Server Error', url: url, statusCode: 500 });
     });
 };
