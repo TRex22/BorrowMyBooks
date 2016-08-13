@@ -7,7 +7,11 @@ var seedDb = require('../db/seedDb');
 //TODO JMC Secure
 router.get('/initdb', function(req, res, next) {
   	seedDb.go();
-  	res.render('index', { title: 'Borrow My Books init', buildVersion: pkg.version });
+  	response.writeHead(302, {
+	  'Location': '/'
+	  //add other headers here...
+	});
+	response.end();
 });
 
 module.exports = router;
