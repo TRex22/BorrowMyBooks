@@ -6,6 +6,7 @@
     <script src="/javascripts/script.js"></script>   
 </head>
 <body>
+<%- include('partials/navbar') %>
 <form action="/login" method="post" class="box login">
 	<fieldset class="boxBody">
 	  <label>Email</label>
@@ -19,5 +20,6 @@
 	</footer>
 
 </form>
+<%- include('partials/footer') %>
 </body>
 </html>

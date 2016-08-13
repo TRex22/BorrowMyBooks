@@ -70,8 +70,9 @@ app.use('/teapot', teapot);
 app.use('/admin', admin);
 
 //TODO: JMC Fix
-require('./controllers/accounts.js')(app, passport);
-require('./controllers/errors.js')(app);
+require('./routes/explore.js');
+require('./routes/accounts.js')(app, passport);
+require('./routes/errors.js')(app);
 
 function auth(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
