@@ -1,0 +1,18 @@
+sudo: false
+language: node_js
+before_script: scripts/prebuild.sh
+node_js:
+- '5.0'
+- '4.1'
+- '4.0'
+- '0.11'
+- '0.10'
+before_deploy: scripts/before_deploy.sh
+deploy:
+  api_key:
+    secure: 
+  on:
+    repo: lmizrahi12/BorrowMyBooks
+    branch: master
+  email: contact@jasonchalom.com
+  provider: npm
