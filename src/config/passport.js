@@ -47,7 +47,8 @@ module.exports = function(passport) {
             process.nextTick(function() {
                 User.findOne({ 'user.email': email }, function(err, user) {
                     if (err) {
-                        return done(err); }
+                        return done(err);
+                    }
                     if (!user)
                         return done(null, false, req.flash('error', 'User does not exist.'));
 
@@ -60,6 +61,43 @@ module.exports = function(passport) {
 
         }));
 
+    passport.use('local', new LocalStrategy(
+        function(username, password, done) {
+            User.findOne({ username: username }, function(err, user) {
+                if (err) {
+                    return done(err);
+                }
+                if (!user) {
+                    return done(null, false, { message: 'Incorrect username.' });
+                }
+                if (!user.validPassword(password)) {
+                    return done(null, false, { message: 'Incorrect password.' });
+                }
+                return done(null, user);
+            });
+        }
+    ));
+
+    passport.use('admin', new LocalStrategy(
+        function(username, password, done) {
+            User.findOne({ username: username }, function(err, user) {
+                if (err) {
+                    return done(err); }
+                if (!user) {
+                    return done(null, false, { message: 'Incorrect username.' });
+                }
+                if (!user.validPassword(password)) {
+                    return done(null, false, { message: 'Incorrect password.' });
+                }
+                if (!user.checkAdminRole())
+                {
+                    return done(null, false, { message: 'Not Authorised.' });
+                }
+                return done(null, user);
+            });
+        }
+    ));
+
     passport.use('signup', new LocalStrategy({
             usernameField: 'email',
             passReqToCallback: true
@@ -71,7 +109,8 @@ module.exports = function(passport) {
                 if (!req.user) {
                     User.findOne({ 'user.email': email }, function(err, user) {
                         if (err) {
-                            return done(err); }
+                            return done(err);
+                        }
                         if (user) {
                             return done(null, false, req.flash('signuperror', 'User already exists'));
                         } else {
@@ -126,7 +165,8 @@ module.exports = function(passport) {
                 if (!req.user) {
                     User.findOne({ 'user.email': profile.emails[0].value }, function(err, user) {
                         if (err) {
-                            return done(err); }
+                            return done(err);
+                        }
                         if (user) {
                             return done(null, user);
                         } else {
@@ -177,7 +217,8 @@ module.exports = function(passport) {
                 if (!req.user) {
                     User.findOne({ 'user.username': profile.displayName }, function(err, user) {
                         if (err) {
-                            return done(err); }
+                            return done(err);
+                        }
                         if (user) {
                             return done(null, user);
                         } else {
@@ -226,7 +267,8 @@ module.exports = function(passport) {
                 if (!req.user) {
                     User.findOne({ 'user.email': profile.emails[0].value }, function(err, user) {
                         if (err) {
-                            return done(err); }
+                            return done(err);
+                        }
                         if (user) {
                             return done(null, user);
                         } else {

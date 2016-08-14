@@ -1,4 +1,5 @@
 var mongoose = require('../config/db.js').mongoose;
+var uuid = require('uuid');
 
 var userRatingSchema = mongoose.Schema({
     userRating: {
@@ -9,6 +10,10 @@ var userRatingSchema = mongoose.Schema({
         RaterId: String
     }
 }, { strict: false, collection: 'UserRating' });
+
+userRatingSchema.methods.generateUUID = function(){
+    return uuid.v4();
+};
 
 mongoose.model('UserRating', userRatingSchema);
 var userRating = mongoose.model('UserRating');

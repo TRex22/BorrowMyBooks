@@ -1,4 +1,5 @@
 var mongoose = require('../config/db.js').mongoose;
+var uuid = require('uuid');
 
 var userRoleSchema = mongoose.Schema({
     userRole: {
@@ -7,6 +8,10 @@ var userRoleSchema = mongoose.Schema({
     	RoleDescription: String
     }
 }, { strict: false, collection: 'UserRole' });
+
+userRoleSchema.methods.generateUUID = function(){
+    return uuid.v4();
+};
 
 mongoose.model('UserRole', userRoleSchema);
 var userRole = mongoose.model('UserRole');

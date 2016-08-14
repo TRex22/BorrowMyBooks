@@ -1,5 +1,6 @@
 var mongoose = require('../config/db.js').mongoose;
 var bcrypt = require('bcrypt-nodejs');
+var uuid = require('uuid');
 
 var userSchema = mongoose.Schema({
     user: {
@@ -12,10 +13,10 @@ var userSchema = mongoose.Schema({
         address: String,
         phone: String,
         interests: [String],
-        PicUrl: String,
-        UserRole: [String],
-        LastLoginDate: Date,
-        RegistrationDate: Date
+        picUrl: String,
+        userRole: [String],
+        lastLoginDate: Date,
+        registrationDate: Date
     }
 }, { strict: false, collection: 'User' });
 
@@ -33,6 +34,18 @@ userSchema.methods.updateUser = function(request, response) {
     this.user.address = request.body.address;
     this.user.save();
     response.redirect('/user');
+};
+
+userSchema.methods.generateUUID = function(){
+    return uuid.v4();
+};
+
+userSchema.methods.checkAdminRole = function(){
+    if (this.user.userRole.indexOf("admin") > -1)
+    {
+        return true;
+    }
+    return false;
 };
 
 mongoose.model('User', userSchema);

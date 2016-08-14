@@ -5,7 +5,7 @@ module.exports = function(app, passport) {
         res.render('login.ejs', { 'title': pkg.name, 'buildVersion': pkg.version });
     });
     app.post('/login', passport.authenticate('login', {
-        successRedirect: '/about',
+        successRedirect: '/',
         failureRedirect: '/login',
         failureFlash: true
     }));
@@ -15,7 +15,7 @@ module.exports = function(app, passport) {
     });
 
     app.post('/signup', passport.authenticate('signup', {
-        successRedirect: '/about',
+        successRedirect: '/',
         failureRedirect: '/signup',
         failureFlash: true
     }));
