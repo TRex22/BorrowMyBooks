@@ -23,10 +23,10 @@ function go() {
         address: "Room 13",
         phone: "1234567890",
         interests: [],
-        PicUrl: null,
-        UserRole: ["admin"],
-        LastLoginDate: null,
-        RegistrationDate: new Date()
+        picUrl: null,
+        userRole: ["admin"],
+        lastLoginDate: null,
+        registrationDate: new Date()
     });
     iUser.userId = iUser.generateUUID()
     iUser.save(); //TODO Password

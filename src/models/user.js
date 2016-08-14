@@ -13,10 +13,10 @@ var userSchema = mongoose.Schema({
         address: String,
         phone: String,
         interests: [String],
-        PicUrl: String,
-        UserRole: [String],
-        LastLoginDate: Date,
-        RegistrationDate: Date
+        picUrl: String,
+        userRole: [String],
+        lastLoginDate: Date,
+        registrationDate: Date
     }
 }, { strict: false, collection: 'User' });
 
@@ -38,6 +38,14 @@ userSchema.methods.updateUser = function(request, response) {
 
 userSchema.methods.generateUUID = function(){
     return uuid.v4();
+};
+
+userSchema.methods.checkAdminRole = function(){
+    if (this.user.userRole.indexOf("admin") > -1)
+    {
+        return true;
+    }
+    return false;
 };
 
 mongoose.model('User', userSchema);

@@ -28,12 +28,6 @@ var flash = require('req-flash');
 var pkg = require('./package.json');
 var config = require('./config.json');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var teapot = require('./routes/teapot');
-var admin = require('./routes/admin');
-var explore = require('./routes/explore');
-
 var app = express();
 
 logger.info("Overriding 'Express' logger");
@@ -49,11 +43,10 @@ app.use(function (req, res, next) {
   next();
 });
 
-//require('./db/seedDb').go();
-
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-/*app.use(logger('dev'));*/
+
+logger.info("Initialize Authentication");
 
 app.use(express.static('public'));
 app.use(cookieParser());
@@ -63,12 +56,19 @@ app.use(flash()); //JMC: TODO add mesages
 app.use(passport.initialize());
 app.use(passport.session());
 
+logger.info("Initialize Routes");
+var routes = require('./routes/index');
+var users = require('./routes/users');
+var teapot = require('./routes/teapot');
+var admin = require('./routes/admin');
+var explore = require('./routes/explore');
+
 app.use('/bower_components',  express.static(path.join(__dirname, '/bower_components')));
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/teapot', teapot);
-app.use('/admin', admin);
+app.use('/admin', admin(passport));
 app.use('/explore', explore);
 //TODO: JMC Fix
 
