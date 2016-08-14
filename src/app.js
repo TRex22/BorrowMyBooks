@@ -32,6 +32,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var teapot = require('./routes/teapot');
 var admin = require('./routes/admin');
+var explore = require('./routes/explore');
 
 var app = express();
 
@@ -68,9 +69,9 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/teapot', teapot);
 app.use('/admin', admin);
-
+app.use('/explore', explore);
 //TODO: JMC Fix
-require('./routes/explore.js');
+
 require('./routes/accounts.js')(app, passport);
 require('./routes/errors.js')(app);
 
