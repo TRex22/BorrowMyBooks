@@ -54,12 +54,12 @@ function go() {
     });
     iBook.save();
 
-    var iInterest = new interest({
+/*    var iInterest = new interest({
         InterestId: String,
         InterestName: String,
         InterestDescription: String
     });
-    var iInterest.save();
+    var iInterest.save();*/
 
     /*var iTransaction = new transaction({
 

@@ -5,6 +5,9 @@ var router = express.Router();
 var seedDb = require('../db/seedDb');
 
 //TODO JMC Secure
+router.get('/', function(req, res, next) {
+	res.render('admin', { title: 'Borrow My Books', buildVersion: pkg.version });
+});
 router.get('/initdb', function(req, res, next) {
   	seedDb.go();
   	res.redirect('/');
