@@ -1,5 +1,6 @@
 var mongoose = require('../config/db.js').mongoose;
 var bcrypt = require('bcrypt-nodejs');
+var uuid = require('uuid');
 
 var userSchema = mongoose.Schema({
     user: {
@@ -33,6 +34,10 @@ userSchema.methods.updateUser = function(request, response) {
     this.user.address = request.body.address;
     this.user.save();
     response.redirect('/user');
+};
+
+userSchema.methods.generateUUID = function(){
+    return uuid.v4();
 };
 
 mongoose.model('User', userSchema);

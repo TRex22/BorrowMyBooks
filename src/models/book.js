@@ -1,4 +1,5 @@
 var mongoose = require('../config/db.js').mongoose;
+var uuid = require('uuid');
 
 var bookSchema = mongoose.Schema({
     book: {
@@ -23,6 +24,10 @@ var bookSchema = mongoose.Schema({
         isOnLoan: Boolean
     }
 }, { strict: false, collection: 'Book' });
+
+bookSchema.methods.generateUUID = function(){
+    return uuid.v4();
+};
 
 var book = mongoose.model('Book', bookSchema);
 
