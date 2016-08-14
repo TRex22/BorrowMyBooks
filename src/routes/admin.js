@@ -7,11 +7,12 @@ var seedDb = require('../db/seedDb');
 //TODO JMC Secure
 router.get('/initdb', function(req, res, next) {
   	seedDb.go();
-  	response.writeHead(302, {
-	  'Location': '/'
-	  //add other headers here...
-	});
-	response.end();
+  	res.redirect('/');
 });
 
 module.exports = router;
+  	/*response.writeHead(302, {
+	  'Location': '/'
+	  //add other headers here...
+	});
+	response.end();*/

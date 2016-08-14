@@ -18,8 +18,7 @@ function go() {
         logger.info('%s has been initialized from the db', doc._id);
     });
 */
-    /*    var iBook = new book.book();*/
-    book.book.create({
+    var iBook = new book.book({
         bookId: "1234",
         title: "A Book about Tests",
         author: "me",
@@ -39,13 +38,34 @@ function go() {
         isForSale: false,
         isSold: false,
         isOnLoan: false
-    }, function(err, small) {
-        if (err) {
-            logger.error(err);
-        } else {
-            logger.info("Book Created.");
-        }
     });
+    /* book.book.create({
+         bookId: "1234",
+         title: "A Book about Tests",
+         author: "me",
+         userId: "0",
+         noAvailable: 1,
+         isAvailable: false,
+         interestId: null,
+         picURL: null,
+         ISBN: null,
+         date: new Date(),
+         creationDate: new Date(),
+         language: "English",
+         edition: "1",
+         loanPrice: 500,
+         sellPrice: 600,
+         isForLoan: false,
+         isForSale: false,
+         isSold: false,
+         isOnLoan: false
+     }, function(err, small) {
+         if (err) {
+             logger.error(err);
+         } else {
+             logger.info("Book Created.");
+         }
+     });*/
 
     /*    iBook.save(function() {
             logger.info("Book Created.");
