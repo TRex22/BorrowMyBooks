@@ -54,37 +54,42 @@ function go() {
     });
     iBook.save();
 
-    /*var iInterest = new interest({
-
+    var iInterest = new interest({
+        InterestId: String,
+        InterestName: String,
+        InterestDescription: String
     });
     var iInterest.save();
 
-    var iTransaction = new transaction({
+    /*var iTransaction = new transaction({
 
     });
-    iTransaction.save();
+    iTransaction.save();*/
 
-    var iSystemMessage = new systemMessage({
-
-    });
-    iSystemMessage.save();
-
-    var iUserMessage = new userMessage({
+    /*var iSystemMessage = new systemMessage({
 
     });
-    iUserMessage.save();
+    iSystemMessage.save();*/
 
-    var iSystemDefaults = new systemDefaults({
-
-    });
-    iSystemDefaults.save();
-
-    var iUserRole = new userRole({
+    /*var iUserMessage = new userMessage({
 
     });
-    iUserRole.save();
+    iUserMessage.save();*/
 
-    var iUserRating = new userRating({
+   /* var iSystemDefaults = new systemDefaults({
+        DefaultProfilePictureURL: String,
+        DefaultBookPictureURL: String
+    });
+    iSystemDefaults.save();*/
+
+/*    var iUserRole = new userRole({
+        RoleId: String,
+        RoleName: String,
+        RoleDescription: String
+    });
+    iUserRole.save();*/
+
+/*    var iUserRating = new userRating({
 
     });
     iUserRating.save();*/
