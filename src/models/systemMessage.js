@@ -1,4 +1,5 @@
 var mongoose = require('../config/db.js').mongoose;
+var uuid = require('uuid');
 
 var systemMessageSchema = mongoose.Schema({
     systemMessage: {
@@ -8,6 +9,10 @@ var systemMessageSchema = mongoose.Schema({
         AdminId: String
     }
 }, { strict: false, collection: 'SystemMessage' });
+
+systemMessageSchema..methods.generateUUID = function(){
+    return uuid.v4();
+};
 
 mongoose.model('SystemMessage', systemMessageSchema);
 var systemMessage = mongoose.model('SystemMessage');
