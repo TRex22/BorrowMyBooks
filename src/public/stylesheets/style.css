@@ -25,3 +25,13 @@ a {
 	padding-top: 10px;
 	padding-bottom: 80px;
 }
+.login{
+	padding-top: 100px;
+	padding-bottom: 250px;
+	padding-left: 500px;
+	padding-right: 500px;
+	border: 1px;
+}
+.center-align{
+	text-align: center;
+}
