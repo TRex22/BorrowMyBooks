@@ -7,12 +7,9 @@ var systemMessageSchema = mongoose.Schema({
         Date: Date,
         AdminId: String
     }
-});
+}, { strict: false, collection: 'SystemMessage' });
 
 mongoose.model('SystemMessage', systemMessageSchema);
 var systemMessage = mongoose.model('SystemMessage');
 
-module.exports = 
-{
-    systemMessage: systemMessage
-}  
+module.exports = systemMessage;

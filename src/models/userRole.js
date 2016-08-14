@@ -6,12 +6,9 @@ var userRoleSchema = mongoose.Schema({
     	RoleName: String,
     	RoleDescription: String
     }
-});
+}, { strict: false, collection: 'UserRole' });
 
 mongoose.model('UserRole', userRoleSchema);
 var userRole = mongoose.model('UserRole');
 
-module.exports = 
-{
-    userRole: userRole
-}  
+module.exports = userRole;

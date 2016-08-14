@@ -17,7 +17,7 @@ var userSchema = mongoose.Schema({
         LastLoginDate: Date,
         RegistrationDate: Date
     }
-});
+}, { strict: false, collection: 'User' });
 
 userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
@@ -38,7 +38,4 @@ userSchema.methods.updateUser = function(request, response) {
 mongoose.model('User', userSchema);
 var user = mongoose.model('User');
 
-module.exports = 
-{
-    user: user
-}  
+module.exports = user;

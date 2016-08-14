@@ -5,12 +5,9 @@ var systemDefaultsSchema = mongoose.Schema({
         DefaultProfilePictureURL: String,
         DefaultBookPictureURL: String
     }
-});
+}, { strict: false, collection: 'SystemDefaults' });
 
 mongoose.model('SystemDefaults', systemDefaultsSchema);
 var systemDefaults = mongoose.model('SystemDefaults');
 
-module.exports = 
-{
-    systemDefaults: systemDefaults
-}  
+module.exports = systemDefaults;

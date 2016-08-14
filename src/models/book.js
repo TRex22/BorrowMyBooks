@@ -22,29 +22,8 @@ var bookSchema = mongoose.Schema({
         isSold: Boolean,
         isOnLoan: Boolean
     }
-});
+}, { strict: false, collection: 'Book' });
 
 var book = mongoose.model('Book', bookSchema);
 
-/*function find(book) {
-  // .find() without any arguments, will return all results
-  // the `-1` in .sort() means descending order
-  Message.find().sort('date', -1).execFind(function (arr,data) {
-    return data;
-  });
-}*/
-
-function post(book) {
-  // Create a new message model, fill it up and save it to Mongodb
-
-  book.creationDate = new Date();
-  book.save(function () {
-    
-  });
-}
-
-module.exports = 
-{
-    book: book,
-    post: post
-}   
+module.exports = book;

@@ -8,12 +8,9 @@ var userRatingSchema = mongoose.Schema({
         Rating: Number,
         RaterId: String
     }
-});
+}, { strict: false, collection: 'UserRating' });
 
 mongoose.model('UserRating', userRatingSchema);
 var userRating = mongoose.model('UserRating');
 
-module.exports = 
-{
-    userRating: userRating
-}  
+module.exports = userRating;

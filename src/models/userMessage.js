@@ -11,12 +11,9 @@ var userMessageSchema = mongoose.Schema({
     	BookId: String,
     	TransactionId: String
     }
-});
+}, { strict: false, collection: 'UserMessage' });
 
 mongoose.model('UserMessage', userMessageSchema);
 var userMessage = mongoose.model('UserMessage');
 
-module.exports = 
-{
-    userMessage: userMessage
-}  
+module.exports = userMessage;

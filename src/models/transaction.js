@@ -11,12 +11,9 @@ var transactionSchema = mongoose.Schema({
         Date: Date,
         AdminId: String
     }
-});
+}, { strict: false, collection: 'Transaction' });
 
 mongoose.model('Transaction', transactionSchema);
 var transaction = mongoose.model('Transaction');
 
-module.exports = 
-{
-    transaction: transaction
-}  
+module.exports = transaction;

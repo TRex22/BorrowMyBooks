@@ -14,11 +14,24 @@ var userRating = require('../models/userRating');
 
 function go() {
     //check dev environment
-    /*user.post('init', function(doc) {
-        logger.info('%s has been initialized from the db', doc._id);
+    var iUser = new user({
+        username: "Admin",
+        userId: "1",
+        email: "contact@jasonchalom.com",
+        salt: null,
+        hash: null,
+        name: "Administrator",
+        address: "Room 13",
+        phone: "1234567890",
+        interestId: [],
+        PicUrl: null,
+        UserRole: ["admin"],
+        LastLoginDate: null,
+        RegistrationDate: new Date()
     });
-*/
-    var iBook = new book.book({
+    iUser.save(); //TODO Password
+
+    var iBook = new book({
         bookId: "1234",
         title: "A Book about Tests",
         author: "me",
@@ -39,64 +52,41 @@ function go() {
         isSold: false,
         isOnLoan: false
     });
-    /* book.book.create({
-         bookId: "1234",
-         title: "A Book about Tests",
-         author: "me",
-         userId: "0",
-         noAvailable: 1,
-         isAvailable: false,
-         interestId: null,
-         picURL: null,
-         ISBN: null,
-         date: new Date(),
-         creationDate: new Date(),
-         language: "English",
-         edition: "1",
-         loanPrice: 500,
-         sellPrice: 600,
-         isForLoan: false,
-         isForSale: false,
-         isSold: false,
-         isOnLoan: false
-     }, function(err, small) {
-         if (err) {
-             logger.error(err);
-         } else {
-             logger.info("Book Created.");
-         }
-     });*/
+    iBook.save();
 
-    /*    iBook.save(function() {
-            logger.info("Book Created.");
-        });*/
+    /*var iInterest = new interest({
 
-    /*interest.post('init', function(doc) {
-        logger.info('%s has been initialized from the db', doc._id);
     });
+    var iInterest.save();
 
-    transaction.post('init', function(doc) {
-        logger.info('%s has been initialized from the db', doc._id);
+    var iTransaction = new transaction({
+
     });
+    iTransaction.save();
 
-    systemMessage.post('init', function(doc) {
-        logger.info('%s has been initialized from the db', doc._id);
+    var iSystemMessage = new systemMessage({
+
     });
+    iSystemMessage.save();
 
-    userMessage.post('init', function(doc) {
-        logger.info('%s has been initialized from the db', doc._id);
+    var iUserMessage = new userMessage({
+
     });
+    iUserMessage.save();
 
-    systemDefaults.post('init', function(doc) {
-        logger.info('%s has been initialized from the db', doc._id);
+    var iSystemDefaults = new systemDefaults({
+
     });
+    iSystemDefaults.save();
 
-    userRole.post('init', function(doc) {
-        logger.info('%s has been initialized from the db', doc._id);
+    var iUserRole = new userRole({
+
     });
+    iUserRole.save();
 
-    userRating.post('init', function(doc) {
-        logger.info('%s has been initialized from the db', doc._id);
-    });*/
+    var iUserRating = new userRating({
+
+    });
+    iUserRating.save();*/
 }
 module.exports = { go: go };
