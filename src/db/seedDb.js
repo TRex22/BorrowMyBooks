@@ -16,7 +16,6 @@ function go() {
     //check dev environment
     var iUser = new user({
         username: "Admin",
-        userId: "1",
         email: "contact@jasonchalom.com",
         salt: null,
         hash: null,
@@ -29,10 +28,10 @@ function go() {
         LastLoginDate: null,
         RegistrationDate: new Date()
     });
+    iUser.userId = iUser.generateUUID()
     iUser.save(); //TODO Password
 
     var iBook = new book({
-        bookId: "1234",
         title: "A Book about Tests",
         author: "me",
         userId: "0",
@@ -52,6 +51,7 @@ function go() {
         isSold: false,
         isOnLoan: false
     });
+    iBook.bookId = iBook.generateUUID();
     iBook.save();
 
 /*    var iInterest = new interest({

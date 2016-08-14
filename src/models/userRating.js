@@ -11,7 +11,7 @@ var userRatingSchema = mongoose.Schema({
     }
 }, { strict: false, collection: 'UserRating' });
 
-userRatingSchema..methods.generateUUID = function(){
+userRatingSchema.methods.generateUUID = function(){
     return uuid.v4();
 };
 

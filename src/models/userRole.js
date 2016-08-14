@@ -9,7 +9,7 @@ var userRoleSchema = mongoose.Schema({
     }
 }, { strict: false, collection: 'UserRole' });
 
-userRoleSchema..methods.generateUUID = function(){
+userRoleSchema.methods.generateUUID = function(){
     return uuid.v4();
 };
 

@@ -10,7 +10,7 @@ var systemMessageSchema = mongoose.Schema({
     }
 }, { strict: false, collection: 'SystemMessage' });
 
-systemMessageSchema..methods.generateUUID = function(){
+systemMessageSchema.methods.generateUUID = function(){
     return uuid.v4();
 };
 

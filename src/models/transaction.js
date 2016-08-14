@@ -14,7 +14,7 @@ var transactionSchema = mongoose.Schema({
     }
 }, { strict: false, collection: 'Transaction' });
 
-transactionSchema..methods.generateUUID = function(){
+transactionSchema.methods.generateUUID = function(){
     return uuid.v4();
 };
 
