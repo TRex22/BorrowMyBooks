@@ -9,7 +9,7 @@ var bookSchema = mongoose.Schema({
         userId: String,
         noAvailable: Number,
         isAvailable: Boolean,
-        interestId: [String],
+        interests: [String],
         picURL: String,
         ISBN: String,
         date: Date,
