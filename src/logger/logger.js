@@ -11,7 +11,7 @@ winston.emitErrs = true;
 
 var rotateOptions = {
     name: 'file',
-    level: 'info',
+    level: 'warn', //debug is too verbose { error: 0, warn: 1, info: 2, verbose: 3, debug: 4, silly: 5 }
     filename: config.filePaths.logPath+'/'+config.logFileName,
     datePattern: config.logFileDatePattern,
     handleExceptions: true,
