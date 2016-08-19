@@ -12,14 +12,12 @@ describe('#Routes', function() {
     beforeEach(function() {
         www.listen(config.port);
     });
-    afterEach(function() {
-        www.close();
-    });
 
     it('homepage should respond to GET', function() {
         http.get('http://localhost:' + config.port, function(res) {
             res.on('data', function(body) {
-                console.log(body)
+/*                console.log(body)*/
+                if (res.err) throw new Error(res.err);
                 expect(res).to.equal(200);
                 done();
             });
@@ -27,9 +25,10 @@ describe('#Routes', function() {
     });
 
     it('login should respond to GET', function() {
-        http.get('http://localhost:' + config.port + '/login', function(res) {
+        http.get('http://localhost:' + config.port + '/lofjgin', function(res) {
             res.on('data', function(body) {
-                console.log(body)
+/*                console.log(body)*/
+                if (res.err) throw new Error(res.err);
                 expect(res).to.equal(200);
                 done();
             });
@@ -39,7 +38,8 @@ describe('#Routes', function() {
     it('signup should respond to GET', function() {
         http.get('http://localhost:' + config.port + '/signup', function(res) {
             res.on('data', function(body) {
-                console.log(body)
+                /*                console.log(body)*/
+                if (res.err) throw new Error(res.err);
                 expect(res).to.equal(200);
                 done();
             });
@@ -49,7 +49,8 @@ describe('#Routes', function() {
     it('explore should respond to GET', function() {
         http.get('http://localhost:' + config.port + '/explore', function(res) {
             res.on('data', function(body) {
-                console.log(body)
+                /*                console.log(body)*/
+                if (res.err) throw new Error(res.err);
                 expect(res).to.equal(200);
                 done();
             });
@@ -59,10 +60,15 @@ describe('#Routes', function() {
     it('admin should respond to GET', function() {
         http.get('http://localhost:' + config.port + '/admin', function(res) {
             res.on('data', function(body) {
-                console.log(body)
+                /*                console.log(body)*/
+                if (res.err) throw new Error(res.err);
                 expect(res).to.equal(200);
                 done();
             });
         });
+    });
+
+    afterEach(function() {
+        www.close();
     });
 });

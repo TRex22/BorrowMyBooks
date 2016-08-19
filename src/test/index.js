@@ -11,12 +11,13 @@ describe('#Server Startup', function() {
     beforeEach(function() {
         www.listen(config.port+1); //use a different port
     });
-    afterEach(function() {
-        www.close();
-    });
 
     // tests here
     it('Server should be able to start up', function() {
-        
+        console.log("    started?");
+    });
+
+    afterEach(function() {
+        www.close();
     });
 });

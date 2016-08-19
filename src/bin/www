@@ -96,8 +96,8 @@ function onListening() {
 Test hooks
 Also only in dev env
 **/
-function listen() {
-  this.server.listen.apply(this.server, arguments);
+function listen(testPort) {
+  server.listen(testPort);
 }
 
 function close(callback) {
