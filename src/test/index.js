@@ -1,15 +1,22 @@
 var fs = require('fs');
 var util = require('util');
-var config = ("../config.json");
-
+var config = require('../config');
 var should = require('chai').should();
 
+var app = require('../app');
+var www = require('../bin/www');
 /*js to test*/
 
+describe('#Server Startup', function() {
+    beforeEach(function() {
+        www.listen(config.port);
+    });
+    afterEach(function() {
+        www.close();
+    });
 
-describe('#Tests', function() {
-  it('createTest', function(){
-   
-  });
-
+    // tests here
+    it('Server should be able to start up', function() {
+        
+    });
 });

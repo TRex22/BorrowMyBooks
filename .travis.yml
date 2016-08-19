@@ -7,12 +7,5 @@ node_js:
 - '5.0'
 - '4.1'
 - '4.0'
-before_deploy: scripts/before_deploy.sh
-deploy:
-  api_key:
-    secure: 
-  on:
-    repo: TRex22/BorrowMyBooks
-    branch: master
-  email: contact@jasonchalom.com
-  provider: npm
+services:
+- mongodb

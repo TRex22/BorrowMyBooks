@@ -91,3 +91,26 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+/**
+Test hooks
+Also only in dev env
+**/
+function listen() {
+  this.server.listen.apply(this.server, arguments);
+}
+
+function close(callback) {
+  this.server.close(callback);
+}
+
+if (process.env.NODE_ENV === 'test') {
+  module.exports = {
+      listen: listen,
+      close: close,
+      server: server
+  };
+};
+
+
+
