@@ -8,7 +8,7 @@ var app = require('../app');
 var www = require('../bin/www');
 /*js to test*/
 
-describe('#homepage', function() {
+describe('#Routes', function() {
     beforeEach(function() {
         www.listen(config.port);
     });
@@ -16,7 +16,7 @@ describe('#homepage', function() {
         www.close();
     });
 
-    it('should respond to GET', function() {
+    it('homepage should respond to GET', function() {
         http.get('http://localhost:' + config.port, function(res) {
             res.on('data', function(body) {
                 console.log(body)
@@ -25,17 +25,8 @@ describe('#homepage', function() {
             });
         });
     });
-});
 
-describe('#login', function() {
-    beforeEach(function() {
-        www.listen(config.port);
-    });
-    afterEach(function() {
-        www.close();
-    });
-
-    it('should respond to GET', function() {
+    it('login should respond to GET', function() {
         http.get('http://localhost:' + config.port + '/login', function(res) {
             res.on('data', function(body) {
                 console.log(body)
@@ -44,17 +35,8 @@ describe('#login', function() {
             });
         });
     });
-});
 
-describe('#signup', function() {
-    beforeEach(function() {
-        www.listen(config.port);
-    });
-    afterEach(function() {
-        www.close();
-    });
-
-    it('should respond to GET', function() {
+    it('signup should respond to GET', function() {
         http.get('http://localhost:' + config.port + '/signup', function(res) {
             res.on('data', function(body) {
                 console.log(body)
@@ -63,17 +45,8 @@ describe('#signup', function() {
             });
         });
     });
-});
 
-describe('#explore', function() {
-    beforeEach(function() {
-        www.listen(config.port);
-    });
-    afterEach(function() {
-        www.close();
-    });
-
-    it('should respond to GET', function() {
+    it('explore should respond to GET', function() {
         http.get('http://localhost:' + config.port + '/explore', function(res) {
             res.on('data', function(body) {
                 console.log(body)
@@ -82,17 +55,8 @@ describe('#explore', function() {
             });
         });
     });
-});
 
-describe('#admin', function() {
-    beforeEach(function() {
-        www.listen(config.port);
-    });
-    afterEach(function() {
-        www.close();
-    });
-
-    it('should respond to GET', function() {
+    it('admin should respond to GET', function() {
         http.get('http://localhost:' + config.port + '/admin', function(res) {
             res.on('data', function(body) {
                 console.log(body)

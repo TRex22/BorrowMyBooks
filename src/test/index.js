@@ -9,7 +9,7 @@ var www = require('../bin/www');
 
 describe('#Server Startup', function() {
     beforeEach(function() {
-        www.listen(config.port);
+        www.listen(config.port+1); //use a different port
     });
     afterEach(function() {
         www.close();
