@@ -8,5 +8,6 @@ echo 'move to source folder'
 cd src/
 
 echo'install all'
-sudo bash install.sh
+npm install
+bower install
 
