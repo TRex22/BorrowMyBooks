@@ -10,4 +10,3 @@ cd src/
 echo'install all'
 npm install
 bower install
-
