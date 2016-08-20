@@ -9,19 +9,50 @@
 <%- include('partials/navbar') %>
 <h1 class="center-align">Sign into Borrow My Books</h1>
 <form role="form" action="/signup" method="post" class="box login">
+
 	<div class="form-group">
-	  <input type="text" class="form-control" tabindex="1" placeholder="Name" name="username" required>
+	  <input type="text" class="form-control" tabindex="1" placeholder="Username" name="username" required>
 	</div>
+
+	<div class="form-group">
+	  <input type="text" class="form-control" tabindex="1" placeholder="Full Name" name="fullname" required>
+	</div>
+
 	<div class="form-group">
 	  <input type="text" class="form-control" tabindex="1" placeholder="Email Address" name="email" required>
 	</div>
+
+	<div class="form-group">
+	  <input type="text" class="form-control" tabindex="1" placeholder="Physical Address" name="address" required>
+	</div>
+
+	<div class="form-group">
+	  <input type="text" class="form-control" tabindex="1" placeholder="Phone Number" name="phonenumber" required>
+	</div>
+
 	<div class="form-group">
 	  <input type="password" class="form-control" tabindex="2"  placeholder="Password" name="password" required>
 	</div>
+
+	<div class="form-group">
+	<label for="interests">Select your interests (hold ctrl or shift (or drag with the mouse) to select more than one):</label>
+      <select multiple class="form-control" id="interests">
+	    <option>Mathematics</option>
+	    <option>Computer Science</option>
+	    <option>Biology</option>
+	    <option>Finance</option>
+	    <option>Chemistry</option>
+	    <option>Law</option>
+	    <option>Engineering</option>
+	    <option>Physics</option>
+	  </select>
+	</div>
+
 	<div>
 	  <input TYPE="button" class="btn btn-default" value="Login"  onClick="parent.location='/login'">
 	  <input type="submit" class="btn btn-default" value="SignUp" tabindex="1">
 	</div>
+
 
 </form>
 	<%- include('partials/footer') %>
