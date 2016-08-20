@@ -9,9 +9,87 @@
    <%- include('partials/navbar') %>
   	<div class="bs-component">
       <h1>Books</h1>
-      <ul>
-        <li>Book 1</li>
-      </ul>
+      
+      <!--
+        <div class="list-group">
+          <a class="list-group-item">
+            <h4 class="list-group-item-heading">Hearts in Atlantis</h4>
+            <img src="https://upload.wikimedia.org/wikipedia/en/7/70/HeartsInAtlantis.gif">
+            <p class="list-group-item-text">Stephen King</p>
+            <p class="list-group-item-text">Fantasy</p>
+            <p class="list-group-item-text">Best edition</p>
+          </a>
+
+          <a class="list-group-item">
+            <h4 class="list-group-item-heading">Odd Thomas</h4>
+            <img src="https://upload.wikimedia.org/wikipedia/en/7/72/Odd_Thomas.jpg">
+            <p class="list-group-item-text">Dean Koontz</p>
+            <p class="list-group-item-text">Fiction</p>
+            <p class="list-group-item-text">Great edition</p>
+          </a>
+
+        </div>
+      -->
+
+
+
+    <div class="list-group" id="results">
+              
+
+
+
+    <script>
+      var json = [ 
+                    {
+                    "title":"Hearts in Atlantis" , 
+                    "author":"Stephen King" , 
+                    "picURL":"https://upload.wikimedia.org/wikipedia/en/4/49/Dewey_-_The_Small-Town_Library_Cat_Who_Touched_the_World_(book_cover).jpg" ,
+                    "interests":"Fantasy" , 
+                    "edition":"Best edition"
+                    } , 
+
+                    {
+                    "title":"Odd Thomas" , 
+                    "author":"Dean Koontz" , 
+                    "picURL":"https://upload.wikimedia.org/wikipedia/en/4/49/Dewey_-_The_Small-Town_Library_Cat_Who_Touched_the_World_(book_cover).jpg" ,
+                    "interests":"Fiction" , 
+                    "edition":"Great edition"
+                    }
+                  ]
+
+
+      listResults(json);
+
+
+      function listResults(json){
+        var i;
+        var out = "";
+
+        for(i = 0;i < json.length;i++){
+            out += "<a href=\x22#\x22 class=\x22list-group-item\x22>"
+            + "<div class=\x22media\x22><div class=\x22media-left\x22><img class=\x22media-object\x22 src=\x22"
+            + json[i].picURL
+            + "\x22 alt=\x22...\x22></div><div class=\x22media-body\x22><h3 class=\x22media-heading\x22><strong>"
+            + json[i].title
+            + "</strong></h3>by<Strong>"
+            + json[i].author
+            + "</Strong><br>"
+            + json[i].edition
+            + "<br>"
+            + json[i].interests
+            + "<br></div></div></a>";
+
+        }
+        out += "</div>";
+        document.getElementById("results").innerHTML = out;
+
+      }
+    </script>            
+
+
+
+
+
     </div>
      <%- include('partials/footer') %>
   </body>
