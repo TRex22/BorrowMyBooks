@@ -5,6 +5,13 @@ var pkg = require('../package');
 // catch 400
 // route to display versions
 module.exports = function(app) {
+    // catch 404 and forward to error handler
+    app.use(function(req, res) {
+        res.status(404);
+        url = req.url;
+        res.render('404.ejs', { title: '404: Resource Not Found', url: url, statusCode: 404, 'buildVersion': pkg.version });
+    });
+    
     app.use(function(req, res) {
         res.status(400);
         url = req.url;
@@ -16,13 +23,6 @@ module.exports = function(app) {
         res.status(401);
         url = req.url;
         res.render('401.ejs', { title: '401: Unauthorized', url: url, statusCode: 401, 'buildVersion': pkg.version });
-    });
-
-    // catch 404 and forward to error handler
-    app.use(function(req, res) {
-        res.status(404);
-        url = req.url;
-        res.render('404.ejs', { title: '404: Resource Not Found', url: url, statusCode: 404, 'buildVersion': pkg.version });
     });
 
     // Handle 500

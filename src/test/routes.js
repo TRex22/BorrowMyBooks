@@ -20,6 +20,14 @@ describe('#Home Route', function() {
                 res.should.have.status(200);
             });
     });
+
+    it('should respond to POST with bad request', function() {
+        chai.request(app)
+            .post('/')
+            .end(function(err, res) {
+                res.should.have.status(404);
+            });
+    });
 });
 
 describe('#Login Route', function() {
@@ -68,6 +76,14 @@ describe('#Service Routes', function() {
             .get('/randomlol')
             .end(function(err, res) {
                 res.should.have.status(404);
+            });
+    });
+
+    it('should respond to GET (Unauthorised)', function() {
+        chai.request(app)
+            .get('/admin')
+            .end(function(err, res) {
+                res.should.have.status(401);
             });
     });
 });
