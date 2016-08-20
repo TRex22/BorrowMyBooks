@@ -25,7 +25,7 @@ describe('#Routes', function() {
     });
 
     it('login should respond to GET', function() {
-        http.get('http://localhost:' + config.port + '/lofjgin', function(res) {
+        http.get('http://localhost:' + config.port + '/login', function(res) {
             res.on('data', function(body) {
 /*                console.log(body)*/
                 if (res.err) throw new Error(res.err);

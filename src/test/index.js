@@ -8,7 +8,7 @@ var www = require('../bin/www-test');
 /*js to test*/
 
 describe('#Server Startup', function() {
-/*    beforeEach(function() {
+    beforeEach(function() {
         www.listen(config.port+1); //use a different port
     });
 
@@ -19,5 +19,5 @@ describe('#Server Startup', function() {
 
     afterEach(function() {
         www.close();
-    });*/
+    });
 });
