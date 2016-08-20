@@ -2,73 +2,54 @@ var fs = require('fs');
 var http = require('http');
 var util = require('util');
 var config = require('../config');
+var chai = require('chai');
+var chaiHttp = require('chai-http');
 var should = require('chai').should();
 
 var app = require('../app');
 var www = require('../bin/www-test');
 /*js to test*/
 
-describe('#Routes', function() {
-    beforeEach(function() {
-        www.listen(config.port);
-    });
+chai.use(chaiHttp);
 
+describe('#Routes', function() {
     it('homepage should respond to GET', function() {
-        http.get('http://localhost:' + config.port, function(res) {
-            res.on('data', function(body) {
-/*                console.log(body)*/
-                if (res.err) throw new Error(res.err);
-                expect(res).to.equal(200);
-                done();
-            });
+        chai.request(app)
+        .get('/')
+        .end(function(err, res){
+            res.should.have.status(200);
         });
     });
 
     it('login should respond to GET', function() {
-        http.get('http://localhost:' + config.port + '/login', function(res) {
-            res.on('data', function(body) {
-/*                console.log(body)*/
-                if (res.err) throw new Error(res.err);
-                expect(res).to.equal(200);
-                done();
-            });
+        chai.request(app)
+        .get('/login')
+        .end(function(err, res){
+            res.should.have.status(200);
         });
     });
 
     it('signup should respond to GET', function() {
-        http.get('http://localhost:' + config.port + '/signup', function(res) {
-            res.on('data', function(body) {
-                /*                console.log(body)*/
-                if (res.err) throw new Error(res.err);
-                expect(res).to.equal(200);
-                done();
-            });
+        chai.request(app)
+        .get('/signup')
+        .end(function(err, res){
+            res.should.have.status(200);
         });
     });
 
     it('explore should respond to GET', function() {
-        http.get('http://localhost:' + config.port + '/explore', function(res) {
-            res.on('data', function(body) {
-                /*                console.log(body)*/
-                if (res.err) throw new Error(res.err);
-                expect(res).to.equal(200);
-                done();
-            });
+        chai.request(app)
+        .get('/explore')
+        .end(function(err, res){
+            res.should.have.status(200);
         });
     });
 
     it('admin should respond to GET', function() {
-        http.get('http://localhost:' + config.port + '/admin', function(res) {
-            res.on('data', function(body) {
-                /*                console.log(body)*/
-                if (res.err) throw new Error(res.err);
-                expect(res).to.equal(200);
-                done();
-            });
+        chai.request(app)
+        .get('/admin')
+        .end(function(err, res){
+            res.should.have.status(200);
         });
-    });
-
-    afterEach(function() {
-        www.close();
     });
 });
