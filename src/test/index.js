@@ -4,7 +4,7 @@ var config = require('../config');
 var should = require('chai').should();
 
 var app = require('../app');
-var www = require('../bin/www');
+var www = require('../bin/www-test');
 /*js to test*/
 
 describe('#Server Startup', function() {

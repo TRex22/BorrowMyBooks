@@ -23,16 +23,6 @@ app.set('port', port);
 var server = http.createServer(app);
 
 /**
- * Listen on provided port, on all network interfaces.
- */
-
-console.log('\nStarting Borrow My Books backend...');
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
-console.log('listening on port %s',port);
-
-/**
  * Normalize a port into a number, string, or false.
  */
 
@@ -91,6 +81,34 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+/**
+Test hooks
+Also only in dev env
+**/
+function listen(testPort) {
+  /**
+ * Listen on provided port, on all network interfaces.
+ */
+
+  console.log('\nStarting Borrow My Books backend...');
+  server.listen(testPort);
+  server.on('error', onError);
+  server.on('listening', onListening);
+  console.log('listening on port %s',testPort);
+}
+
+function close(callback) {
+  this.server.close(callback);
+}
+
+if (process.env.NODE_ENV === 'test') {
+  module.exports = {
+      listen: listen,
+      close: close,
+      server: server
+  };
+};
 
 
 
