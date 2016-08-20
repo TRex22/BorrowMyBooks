@@ -12,44 +12,62 @@ var www = require('../bin/www-test');
 
 chai.use(chaiHttp);
 
-describe('#Routes', function() {
-    it('homepage should respond to GET', function() {
+describe('#Home Route', function() {
+    it('should respond to GET', function() {
         chai.request(app)
-        .get('/')
-        .end(function(err, res){
-            res.should.have.status(200);
-        });
+            .get('/')
+            .end(function(err, res) {
+                res.should.have.status(200);
+            });
     });
+});
 
-    it('login should respond to GET', function() {
+describe('#Login Route', function() {
+    it('should respond to GET', function() {
         chai.request(app)
-        .get('/login')
-        .end(function(err, res){
-            res.should.have.status(200);
-        });
+            .get('/login')
+            .end(function(err, res) {
+                res.should.have.status(200);
+            });
     });
+});
 
-    it('signup should respond to GET', function() {
+describe('#Signup Route', function() {
+    it('should respond to GET', function() {
         chai.request(app)
-        .get('/signup')
-        .end(function(err, res){
-            res.should.have.status(200);
-        });
+            .get('/signup')
+            .end(function(err, res) {
+                res.should.have.status(200);
+            });
     });
+});
 
-    it('explore should respond to GET', function() {
+describe('#Explore Route', function() {
+    it('should respond to GET', function() {
         chai.request(app)
-        .get('/explore')
-        .end(function(err, res){
-            res.should.have.status(200);
-        });
+            .get('/explore')
+            .end(function(err, res) {
+                res.should.have.status(200);
+            });
     });
+});
 
-    it('admin should respond to GET', function() {
+describe('#Admin Route', function() {
+    it('should respond to GET', function() {
         chai.request(app)
-        .get('/admin')
-        .end(function(err, res){
-            res.should.have.status(200);
-        });
+            .get('/admin')
+            .end(function(err, res) {
+                res.should.have.status(200);
+            });
+    });
+});
+
+describe('#Service Routes', function() {
+    it('should respond to GET (Not Found)', function() {
+        chai.request(app)
+            .get('/randomlol')
+            .end(function(err, res) {
+                res.should.have.status(404);
+            });
     });
 });
