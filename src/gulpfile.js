@@ -29,8 +29,8 @@ gulp.task('docs', function() {
         .pipe(gulp.dest('docs'));
 });
 
-gulp.task('pre-cover', function() { //'./*/**.js', 'app.js', '!test/', '!node_modules/', '!gulpfile.js' //['./**/*.js', '!test/', '!node_modules/', '!gulpfile.js']
-    return gulp.src(['./*.js', 'routes/*.js', 'models/*.js', 'db/*.js', '!db/seedDb.js', 'logger/*.js']) //'app.js', 'bin/*', 'routes/*.js', 'models/*.js', 'db/*.js'
+gulp.task('pre-cover', function() { 
+    return gulp.src(['./*.js', 'routes/*.js', 'models/*.js', 'db/*.js', '!db/seedDb.js', 'logger/*.js', 'public/javascripts/*.js']) 
         // Covering files
         .pipe(istanbul())
         // Force `require` to return covered files
