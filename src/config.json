@@ -7,6 +7,9 @@
 		"bowerRoot": "./bower_components",
         "logPath": "./logs"
 	},
+    "security": {
+        "saltLength": 256
+    },
     "port": 8080,    
     "liveReloadPort": 35729,
     "appPath": "./app.js",

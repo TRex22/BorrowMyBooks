@@ -28,7 +28,8 @@ function go() {
         lastLoginDate: null,
         registrationDate: new Date()
     });
-    iUser.userId = iUser.generateUUID()
+    iUser.userId = iUser.generateUUID();
+    iUser.salt = iUser.generateSalt();
     iUser.save(); //TODO Password
 
     var iBook = new book({

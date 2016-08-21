@@ -1,6 +1,7 @@
 var mongoose = require('../config/db.js').mongoose;
 var bcrypt = require('bcrypt-nodejs');
 var uuid = require('uuid');
+var config = require('./config.json');
 
 var userSchema = mongoose.Schema({
     user: {
@@ -20,12 +21,16 @@ var userSchema = mongoose.Schema({
     }
 }, { strict: false, collection: 'User' });
 
+userSchema.methods.generateSalt = function() {
+    return bcrypt.genSaltSync(config.security.saltLength);
+};
+
 userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+    return bcrypt.hashSync(password, this.user.salt, null);
 };
 
 userSchema.methods.verifyPassword = function(password) {
-    return bcrypt.compareSync(password, this.user.password);
+    return bcrypt.compareSync(generateHash(password), this.user.hash);
 };
 
 /* istanbul ignore next */ //TODO: JMC think about this
