@@ -49,7 +49,7 @@ gulp.task('docs', function() {
         .pipe(gulp.dest('docs'));
 });
 
-gulp.task('pre-test', function () {
+gulp.task('pre-cover', function () {
   return gulp.src(['lib/**/*.js'])
     // Covering files
     .pipe(istanbul())
@@ -57,7 +57,7 @@ gulp.task('pre-test', function () {
     .pipe(istanbul.hookRequire());
 });
 
-gulp.task('test', ['pre-test'], function () {
+gulp.task('cover', ['pre-test'], function () {
   return gulp.src(['test/*.js'])
     .pipe(mocha())
     // Creating the reports after tests ran

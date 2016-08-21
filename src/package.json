@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha"
+    "test": "test.sh"
   },
   "dependencies": {
     "async": "^2.0.0-rc.3",
@@ -46,8 +46,10 @@
     "chai": "^1.10.0",
     "chai-http": "^3.0.0",
     "gulp-istanbul": "^1.1.0",
+    "gulp-jshint": "^2.0.0",
     "gulp-mocha": "^3.0.1",
     "istanbul": "^0.4.4",
+    "jshint": "^2.9.1",
     "mocha": "^2.0.1",
     "mr-doc": "^3.2.1",
     "util": "^0.10.3"
