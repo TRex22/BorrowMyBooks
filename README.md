@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/TRex22/BorrowMyBooks.svg)](https://travis-ci.org/TRex22/BorrowMyBooks) [![Stories in Ready](https://badge.waffle.io/lmizrahi12/BorrowMyBooks.png?label=ready&title=Ready)](https://waffle.io/lmizrahi12/BorrowMyBooks) [![Build Dependencies](https://david-dm.org/username/repo.svg)](https://david-dm.org/TRex22/BorrowMyBooks.svg)
+[![Build Status](https://travis-ci.org/TRex22/BorrowMyBooks.svg)](https://travis-ci.org/TRex22/BorrowMyBooks) [![Stories in Ready](https://badge.waffle.io/lmizrahi12/BorrowMyBooks.png?label=ready&title=Ready)](https://waffle.io/lmizrahi12/BorrowMyBooks)
 # BorrowMyBooks
 ## COMS3009: Software Design Project.
 
