@@ -48,6 +48,7 @@ gulp.task('cover', ['pre-cover'], function () {
 
 gulp.task('test', ['lint', 'cover'], function() {
   console.log("All tests have completed.");
+  process.exit();
 });
 
 gulp.task('watch', gulpSync.async(['test']), function() {
