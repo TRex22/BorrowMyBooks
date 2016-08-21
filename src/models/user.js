@@ -1,7 +1,7 @@
 var mongoose = require('../config/db.js').mongoose;
 var bcrypt = require('bcrypt-nodejs');
 var uuid = require('uuid');
-var config = require('./config.json');
+var config = require('../config.json');
 
 var userSchema = mongoose.Schema({
     user: {
@@ -26,20 +26,11 @@ userSchema.methods.generateSalt = function() {
 };
 
 userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, this.user.salt, null);
+    return bcrypt.hashSync(password, this.salt, null);
 };
 
 userSchema.methods.verifyPassword = function(password) {
-    return bcrypt.compareSync(generateHash(password), this.user.hash);
-};
-
-/* istanbul ignore next */ //TODO: JMC think about this
-userSchema.methods.updateUser = function(request, response) {
-
-    this.user.name = request.body.name;
-    this.user.address = request.body.address;
-    this.user.save();
-    response.redirect('/user');
+    return bcrypt.compareSync(password, this.hash);
 };
 
 userSchema.methods.generateUUID = function(){
@@ -47,7 +38,7 @@ userSchema.methods.generateUUID = function(){
 };
 
 userSchema.methods.checkAdminRole = function(){
-    if (this.user.userRole.indexOf("admin") > -1)
+    if (this.userRole.indexOf("admin") > -1)
     {
         return true;
     }

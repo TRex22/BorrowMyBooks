@@ -30,6 +30,7 @@ function go() {
     });
     iUser.userId = iUser.generateUUID();
     iUser.salt = iUser.generateSalt();
+    iUser.hash = iUser.generateHash("123456");
     iUser.save(); //TODO Password
 
     var iBook = new book({
