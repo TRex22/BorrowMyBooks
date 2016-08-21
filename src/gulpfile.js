@@ -46,9 +46,12 @@ gulp.task('cover', ['pre-cover'], function() {
         .pipe(istanbul.enforceThresholds({ thresholds: { global: 70 } }));
 });
 
-gulp.task('test', ['lint', 'cover']);
+gulp.task('test', ['lint', 'cover'], function() {
+    console.log("All tests have completed.");
+    process.exit();
+});
 
-gulp.task('watch', gulpSync.async(['test']), function() {
+gulp.task('watch', gulpSync.async(['lint', 'cover']), function() {
     nodemon({
             script: config.startPath
         })
