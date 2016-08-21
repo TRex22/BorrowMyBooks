@@ -12,11 +12,10 @@
 
     <div class="list-group" id="results">
       <% for(var i=0; i<books.length; i++) {%>
-      <%= books[i] %>
          <a href=# class=list-group-item>
             <div class=media>
               <div class=media-left>
-                <img class=media-object src=<%= books[i].picURL %> alt="">
+                <img width="150" class=media-object src= <%if (books[i].picURL) {%>  <%= books[i].picURL %>  <%} else{%> <%= defaults.DefaultBookPictureURL %> <%}%> />
               </div>
               <div class=media-body>
                 <h3 class=media-heading>

@@ -102,6 +102,12 @@ function go() {
     iBook.bookId = iBook.generateUUID();
     iBook.save();
 
+    var iSystemDefaults = new systemDefaults({
+        DefaultProfilePictureURL: "/assets/avatar.png",
+        DefaultBookPictureURL: "/assets/cover.jpg"
+    });
+    iSystemDefaults.save();
+
 
     /*    var iInterest = new interest({
             InterestId: String,
@@ -124,12 +130,6 @@ function go() {
 
     });
     iUserMessage.save();*/
-
-    /* var iSystemDefaults = new systemDefaults({
-         DefaultProfilePictureURL: String,
-         DefaultBookPictureURL: String
-     });
-     iSystemDefaults.save();*/
 
     /*    var iUserRole = new userRole({
             RoleId: String,

@@ -33,6 +33,14 @@ function find(collec, query, callback) {
     });
 }
 
+/* istanbul ignore  next*/ //beware
+function dropCollection(collec) {
+    mongoose.connection.collections[collec].drop(function(err) {
+        console.log("collection " + collec + "dropped");
+    });
+}
+
 module.exports = {
-    find: find
+    find: find,
+    dropCollection: dropCollection
 };

@@ -71,4 +71,5 @@ console.log(util.inspect(users));*/
     }
 });*/
 
+/*require('./db/clearDb').go();*/
 require('./db/seedDb').go();
