@@ -29,27 +29,24 @@ gulp.task('docs', function() {
         .pipe(gulp.dest('docs'));
 });
 
-gulp.task('pre-cover', function () { //'./*/**.js', 'app.js', '!test/', '!node_modules/', '!gulpfile.js' //['./**/*.js', '!test/', '!node_modules/', '!gulpfile.js']
-  return gulp.src(['./*.js', 'routes/*.js', 'models/*.js', 'db/*.js', '!db/seedDb.js', 'logger/*.js']) //'app.js', 'bin/*', 'routes/*.js', 'models/*.js', 'db/*.js'
-    // Covering files
-    .pipe(istanbul())
-    // Force `require` to return covered files
-    .pipe(istanbul.hookRequire());
+gulp.task('pre-cover', function() { //'./*/**.js', 'app.js', '!test/', '!node_modules/', '!gulpfile.js' //['./**/*.js', '!test/', '!node_modules/', '!gulpfile.js']
+    return gulp.src(['./*.js', 'routes/*.js', 'models/*.js', 'db/*.js', '!db/seedDb.js', 'logger/*.js']) //'app.js', 'bin/*', 'routes/*.js', 'models/*.js', 'db/*.js'
+        // Covering files
+        .pipe(istanbul())
+        // Force `require` to return covered files
+        .pipe(istanbul.hookRequire());
 });
 
-gulp.task('cover', ['pre-cover'], function () {
-  return gulp.src(['test/*.js'])
-    .pipe(mocha())
-    // Creating the reports after tests ran
-    .pipe(istanbul.writeReports())
-    // Enforce a coverage of at least 70%
-    .pipe(istanbul.enforceThresholds({ thresholds: { global: 70 } }));
+gulp.task('cover', ['pre-cover'], function() {
+    return gulp.src(['test/*.js'])
+        .pipe(mocha())
+        // Creating the reports after tests ran
+        .pipe(istanbul.writeReports())
+        // Enforce a coverage of at least 70%
+        .pipe(istanbul.enforceThresholds({ thresholds: { global: 70 } }));
 });
 
-gulp.task('test', ['lint', 'cover'], function() {
-  console.log("All tests have completed.");
-  process.exit();
-});
+gulp.task('test', ['lint', 'cover']);
 
 gulp.task('watch', gulpSync.async(['test']), function() {
     nodemon({
