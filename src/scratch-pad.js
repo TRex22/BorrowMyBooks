@@ -12,10 +12,13 @@ var systemDefaults = require('./models/systemDefaults');
 var userRole = require('./models/userRole');
 var userRating = require('./models/userRating');
 
+var dbHelper = require('./db/dbHelper');
+
 var util = require('util');
+var async = require("async");
 
 /*console.log('Output: ' + util.inspect(book.schema.methods.generateUUID));*/
-console.log(book.schema.methods.generateUUID());
+/*console.log(book.schema.methods.generateUUID());
 
 var testPassword = "hello123";
 
@@ -43,4 +46,29 @@ iUser.salt = iUser.generateSalt();
 iUser.hash = iUser.generateHash(testPassword);
 
 console.log("hash: "+iUser.hash+" password: "+testPassword);
-console.log(iUser.verifyPassword(testPassword));
+console.log(iUser.verifyPassword(testPassword));*/
+/*
+var user = new user({});
+console.log('Output: ' + util.inspect(user.schema));*/
+//require('./db/seedDb').go();
+
+/*var result = dbHelper.find('User', { username: "Admin" }, function (err, docs){
+    console.log(util.inspect(docs));
+});*/
+
+/*var mongoose = require('./config/db.js').mongoose;
+console.log(util.inspect(mongoose.connection.db.collection));*/
+
+/*var users = dbHelper.listUsers();
+console.log(util.inspect(users));*/
+
+/*async.waterfall([
+    readFile,
+    processFile
+], function (error) {
+    if (error) {
+        //handle readFile error or processFile error here
+    }
+});*/
+
+require('./db/seedDb').go();

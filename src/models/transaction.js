@@ -2,7 +2,6 @@ var mongoose = require('../config/db.js').mongoose;
 var uuid = require('uuid');
 
 var transactionSchema = mongoose.Schema({
-    transaction: {
         TransactionId: String,
         FromUserId: String,
         ToUserId: String,
@@ -11,7 +10,6 @@ var transactionSchema = mongoose.Schema({
         hasBeenRevoked: Boolean,
         Date: Date,
         AdminId: String
-    }
 }, { strict: false, collection: 'Transaction' });
 
 transactionSchema.methods.generateUUID = function(){

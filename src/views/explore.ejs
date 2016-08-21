@@ -12,6 +12,7 @@
 
     <div class="list-group" id="results">
       <% for(var i=0; i<books.length; i++) {%>
+      <%= books[i] %>
          <a href=# class=list-group-item>
             <div class=media>
               <div class=media-left>
@@ -29,6 +30,6 @@
           </a>
       <% } %>
     </div>
-     <%- include('partials/footer') %>
+   <%- include('partials/footer') %>
   </body>
 </html>

@@ -4,7 +4,6 @@ var uuid = require('uuid');
 var config = require('../config.json');
 
 var userSchema = mongoose.Schema({
-    user: {
         username: String,
         userId: String,
         email: String,
@@ -18,7 +17,6 @@ var userSchema = mongoose.Schema({
         userRole: [String],
         lastLoginDate: Date,
         registrationDate: Date
-    }
 }, { strict: false, collection: 'User' });
 
 userSchema.methods.generateSalt = function() {

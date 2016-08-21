@@ -7,7 +7,7 @@
     "test": "gulp test --color"
   },
   "dependencies": {
-    "async": "^2.0.0-rc.3",
+    "async": "^2.0.1",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "1.13.2",
     "bower": "^1.7.9",

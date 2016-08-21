@@ -12,12 +12,10 @@ var options = {
 
 var mongoose = require('mongoose');
 mongoose.connect(config.mongodb, options);
-/*Schema = mongoose.Schema;*/
 
 module.exports = 
 {
 	mongoose : mongoose
-/*	schema: Schema*/
 };
 
 

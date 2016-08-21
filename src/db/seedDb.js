@@ -56,12 +56,59 @@ function go() {
     iBook.bookId = iBook.generateUUID();
     iBook.save();
 
-/*    var iInterest = new interest({
-        InterestId: String,
-        InterestName: String,
-        InterestDescription: String
+    iBook = new book({
+        title: "Hearts in Atlantis",
+        author: "Stephen King",
+        picURL: "https://upload.wikimedia.org/wikipedia/en/4/49/Dewey_-_The_Small-Town_Library_Cat_Who_Touched_the_World_(book_cover).jpg",
+        interests: ["Fantasy"],
+        edition: "First Edition",
+        userId: "0",
+        noAvailable: 1,
+        isAvailable: false,
+        ISBN: null,
+        date: new Date(),
+        creationDate: new Date(),
+        language: "English",
+        loanPrice: 500,
+        sellPrice: 600,
+        isForLoan: false,
+        isForSale: false,
+        isSold: false,
+        isOnLoan: false
     });
-    var iInterest.save();*/
+    iBook.bookId = iBook.generateUUID();
+    iBook.save();
+
+    iBook = new book({
+        title: "Odd Thomas",
+        author: "Dean Koontz",
+        picURL: "https://upload.wikimedia.org/wikipedia/en/4/49/Dewey_-_The_Small-Town_Library_Cat_Who_Touched_the_World_(book_cover).jpg",
+        interests: ["Fiction"],
+        edition: "second edition",
+        userId: "1",
+        noAvailable: 33,
+        isAvailable: false,
+        ISBN: null,
+        date: new Date(),
+        creationDate: new Date(),
+        language: "English",
+        loanPrice: 500,
+        sellPrice: 600,
+        isForLoan: false,
+        isForSale: false,
+        isSold: false,
+        isOnLoan: false
+    });
+    iBook.bookId = iBook.generateUUID();
+    iBook.save();
+
+
+    /*    var iInterest = new interest({
+            InterestId: String,
+            InterestName: String,
+            InterestDescription: String
+        });
+        var iInterest.save();*/
 
     /*var iTransaction = new transaction({
 
@@ -78,22 +125,22 @@ function go() {
     });
     iUserMessage.save();*/
 
-   /* var iSystemDefaults = new systemDefaults({
-        DefaultProfilePictureURL: String,
-        DefaultBookPictureURL: String
-    });
-    iSystemDefaults.save();*/
+    /* var iSystemDefaults = new systemDefaults({
+         DefaultProfilePictureURL: String,
+         DefaultBookPictureURL: String
+     });
+     iSystemDefaults.save();*/
 
-/*    var iUserRole = new userRole({
-        RoleId: String,
-        RoleName: String,
-        RoleDescription: String
-    });
-    iUserRole.save();*/
+    /*    var iUserRole = new userRole({
+            RoleId: String,
+            RoleName: String,
+            RoleDescription: String
+        });
+        iUserRole.save();*/
 
-/*    var iUserRating = new userRating({
+    /*    var iUserRating = new userRating({
 
-    });
-    iUserRating.save();*/
+        });
+        iUserRating.save();*/
 }
 module.exports = { go: go };

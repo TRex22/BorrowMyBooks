@@ -1,3 +1,3 @@
-$(window).on('beforeunload', function(){
+/*$(window).on('beforeunload', function(){
     socket.close();
-});
+});*/
