@@ -28,6 +28,7 @@ userSchema.methods.verifyPassword = function(password) {
     return bcrypt.compareSync(password, this.user.password);
 };
 
+/* istanbul ignore next */ //TODO: JMC think about this
 userSchema.methods.updateUser = function(request, response) {
 
     this.user.name = request.body.name;

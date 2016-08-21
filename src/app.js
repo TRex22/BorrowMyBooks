@@ -75,9 +75,4 @@ app.use('/explore', explore);
 require('./routes/accounts.js')(app, passport);
 require('./routes/errors.js')(app);
 
-function auth(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
-}
-
 module.exports = app;

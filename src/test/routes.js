@@ -10,6 +10,7 @@ var app = require('../app');
 var www = require('../bin/www-test');
 /*js to test*/
 
+//setup
 chai.use(chaiHttp);
 
 describe('#Home Route', function() {
@@ -84,6 +85,15 @@ describe('#Service Routes', function() {
             .get('/admin')
             .end(function(err, res) {
                 res.should.have.status(401);
+            });
+    });
+
+    it('should respond to GET (teapot)', function() {
+        chai.request(app)
+            .get('/teapot')
+            .end(function(err, res) {
+                res.should.have.status(418);
+                res.body.should.equal('I want to be a teapot');
             });
     });
 });

@@ -9,15 +9,15 @@ var www = require('../bin/www-test');
 
 describe('#Server Startup', function() {
     beforeEach(function() {
-        www.listen(config.port+1); //use a different port
-    });
-
-    // tests here
-    it('Server should be able to start up', function() {
-        console.log("    started?");
+        www.listen(config.port + 1); //use a different port
     });
 
     afterEach(function() {
         www.close();
+    });
+    
+    // tests here
+    it('Server should be able to start up', function() {
+        console.log("    started?");
     });
 });
