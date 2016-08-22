@@ -12,7 +12,7 @@ var systemDefaults = require('./models/systemDefaults');
 var userRole = require('./models/userRole');
 var userRating = require('./models/userRating');
 
-var dbHelper = require('./db/dbHelper');
+var dbHelper = require('./services/dbHelper');
 
 var util = require('util');
 var async = require("async");
@@ -72,4 +72,4 @@ console.log(util.inspect(users));*/
 });*/
 
 /*require('./db/clearDb').go();*/
-require('./db/seedDb').go();
+/*require('./db/seedDb').go();*/

@@ -2,7 +2,8 @@ var mongoose = require('../config/db.js').mongoose;
 var uuid = require('uuid');
 var systemDefaultsSchema = mongoose.Schema({
     DefaultProfilePictureURL: String,
-    DefaultBookPictureURL: String
+    DefaultBookPictureURL: String,
+    DefaultTheme: String
 }, { strict: false, collection: 'SystemDefaults' });
 
 systemDefaultsSchema.methods.generateUUID = function() {

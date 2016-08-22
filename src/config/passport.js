@@ -54,8 +54,11 @@ module.exports = function(passport) {
 
                     if (!user.verifyPassword(password))
                         return done(null, false, req.flash('error', 'Enter correct password'));
-                    else
+                    else {
+                        user.login = true;
                         return done(null, user);
+                    }
+
                 });
             });
 
@@ -73,6 +76,7 @@ module.exports = function(passport) {
                 if (!user.validPassword(password)) {
                     return done(null, false, { message: 'Incorrect password.' });
                 }
+                user.login = true;
                 return done(null, user);
             });
         }
@@ -82,17 +86,18 @@ module.exports = function(passport) {
         function(username, password, done) {
             User.findOne({ username: username }, function(err, user) {
                 if (err) {
-                    return done(err); }
+                    return done(err);
+                }
                 if (!user) {
                     return done(null, false, { message: 'Incorrect username.' });
                 }
                 if (!user.validPassword(password)) {
                     return done(null, false, { message: 'Incorrect password.' });
                 }
-                if (!user.checkAdminRole())
-                {
+                if (!user.checkAdminRole()) {
                     return done(null, false, { message: 'Not Authorised.' });
                 }
+                user.login = true;
                 return done(null, user);
             });
         }
@@ -123,6 +128,7 @@ module.exports = function(passport) {
                             newUser.save(function(err) {
                                 if (err)
                                     throw err;
+                                user.login = true;
                                 return done(null, newUser);
                             });
                         }

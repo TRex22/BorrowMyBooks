@@ -1,8 +1,19 @@
 var pkg = require('../package');
 
+var mongoose = require('../config/db.js').mongoose;
+var systemDefaults = require('../models/systemDefaults');
+sysDefault = mongoose.model('SystemDefaults', systemDefaults);
+
 module.exports = function(app, passport) {
     app.get('/login', function(req, res) {
-        res.render('login.ejs', { 'title': pkg.name, 'buildVersion': pkg.version });
+        var site = {};
+        site.buildVersion = pkg.version;
+
+        sysDefault.findOne({}, function(err, defaults) { //there should only be one set of defaults
+            site.defaults = defaults;
+
+            res.render('login.ejs', { 'title': pkg.name, 'site': site });
+        });
     });
     app.post('/login', passport.authenticate('login', {
         successRedirect: '/',
@@ -11,7 +22,14 @@ module.exports = function(app, passport) {
     }));
 
     app.get('/signup', function(req, res) {
-        res.render('signup.ejs', { 'title': pkg.name, 'buildVersion': pkg.version });
+        var site = {};
+        site.buildVersion = pkg.version;
+
+        sysDefault.findOne({}, function(err, defaults) { //there should only be one set of defaults
+            site.defaults = defaults;
+
+            res.render('signup.ejs', { 'title': pkg.name, 'site': site });
+        });
     });
 
     app.post('/signup', passport.authenticate('signup', {

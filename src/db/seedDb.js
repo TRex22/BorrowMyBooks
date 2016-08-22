@@ -32,6 +32,7 @@ function go() {
     iUser.salt = iUser.generateSalt();
     iUser.hash = iUser.generateHash("123456");
     iUser.save(); //TODO Password
+    logger.warn("created admin user");
 
     var iBook = new book({
         title: "A Book about Tests",
@@ -55,6 +56,7 @@ function go() {
     });
     iBook.bookId = iBook.generateUUID();
     iBook.save();
+    logger.warn("created book");
 
     iBook = new book({
         title: "Hearts in Atlantis",
@@ -78,6 +80,7 @@ function go() {
     });
     iBook.bookId = iBook.generateUUID();
     iBook.save();
+    logger.warn("created book");
 
     iBook = new book({
         title: "Odd Thomas",
@@ -101,12 +104,15 @@ function go() {
     });
     iBook.bookId = iBook.generateUUID();
     iBook.save();
+    logger.warn("created book");
 
     var iSystemDefaults = new systemDefaults({
         DefaultProfilePictureURL: "/assets/avatar.png",
-        DefaultBookPictureURL: "/assets/cover.jpg"
+        DefaultBookPictureURL: "/assets/cover.jpg",
+        DefaultTheme: "flatly"
     });
     iSystemDefaults.save();
+    logger.warn("created systemDefaults");
 
 
     /*    var iInterest = new interest({

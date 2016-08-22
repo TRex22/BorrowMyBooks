@@ -1,6 +1,5 @@
 'use strict'
 //use with caution!!!!
-var mongoose = require('mongoose');
 var logger = require("../logger/logger");
 var config = require("../config.json");
 
@@ -14,7 +13,7 @@ var systemDefaults = require('../models/systemDefaults');
 var userRole = require('../models/userRole');
 var userRating = require('../models/userRating');
 
-var dbHelper = require('./dbHelper.js');
+var dbHelper = require('../services/dbHelper.js');
 
 function go() {
     dbHelper.dropCollection("User");

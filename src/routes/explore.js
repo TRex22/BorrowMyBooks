@@ -4,7 +4,7 @@ var pkg = require('../package');
 var router = express.Router();
 
 var mongoose = require('../config/db.js').mongoose;
-var dbHelper = require('../db/dbHelper');
+var dbHelper = require('../services/dbHelper');
 var book = require('../models/book');
 var systemDefaults = require('../models/systemDefaults');
 
@@ -15,12 +15,16 @@ router.get('/', function(req, res, next) {
     sysDefault = mongoose.model('SystemDefaults', systemDefaults);
     Book = mongoose.model('Book', book);
 
+    var site = {};
+    site.buildVersion = pkg.version;
+
     sysDefault.findOne({}, function(err, defaults) { //there should only be one set of defaults
-        Book.find({}, function(err, books) {        	
-            res.render('explore', { title: 'Borrow My Books', buildVersion: pkg.version, books: books, defaults: defaults});
+        site.defaults = defaults;
+
+        Book.find({}, function(err, books) {
+            res.render('explore', { title: 'Borrow My Books', site: site, books: books});
         });
     });
-
 });
 
 module.exports = router;

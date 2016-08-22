@@ -23,5 +23,23 @@
     "mongoUser": "trex22",
     "mongoPassword": "123456",
     "apiMode": false,
-    "secret": "keybao097d cat"
+    "secret": "keybao097d cat",
+    "themes": [
+        "cerulean",
+        "cosmo",
+        "cyborg",
+        "darkly",
+        "flatly",
+        "journal",
+        "lumen",
+        "paper",
+        "readable",
+        "sandstone",
+        "simplex",
+        "slate",
+        "spacelab",
+        "superhero",
+        "united",
+        "yeti"
+    ]
 }
