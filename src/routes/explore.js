@@ -24,3 +24,17 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
+
+/*var callback = {};
+dbHelper.find("SystemDefaults", {}, callback) {
+    if (!callback.data.err) {
+        dbHelper.find("Book", {}, callback) {
+            res.render('explore', { title: 'Borrow My Books', buildVersion: pkg.version, books: callback.data.books, defaults: callback.data.defaults });
+        }
+    } else {
+        res.status(500);
+        url = req.url;
+        logger.error("Error Message: code(500) %s", error);
+        res.render('error.ejs', { title: '500: Internal Server Error', url: url, statusCode: 500, 'buildVersion': pkg.version });
+    }
+}*/
