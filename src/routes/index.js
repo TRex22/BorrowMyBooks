@@ -5,6 +5,6 @@ var router = express.Router();
 
 module.exports = function(app, passport, site) {
     router.get('/', function(req, res, next) {
-        res.render('index', {site: site });
+        res.render('index', {site: site});
     });
 };

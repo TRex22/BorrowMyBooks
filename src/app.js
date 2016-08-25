@@ -64,9 +64,9 @@ logger.info("Build Site Object");
 var site = siteBuilder.buildSite();
 
 logger.info("Initialize Routes");
-var teapot = require('./routes/teapot');
-
 app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
+
+var teapot = require('./routes/teapot');
 
 require('./routes/index.js')(app, passport, site);
 require('./routes/admin.js')(app, passport, site);

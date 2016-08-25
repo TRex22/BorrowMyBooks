@@ -31,7 +31,7 @@ function buildSite() {
 
     if (systemDefaults !== null) {
         site.defaults = systemDefaults;
-        console.log("sysdef: " + util.inspect(systemDefaults));
+        /*console.log("sysdef: " + util.inspect(systemDefaults));*/
     }
     return site;
 }
