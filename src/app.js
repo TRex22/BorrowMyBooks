@@ -57,6 +57,12 @@ app.use(flash()); //JMC: TODO add mesages
 app.use(passport.initialize());
 app.use(passport.session());
 
+logger.info("Build Site Object");
+var site = {};
+site.buildVersion = pkg.version;
+site.defaults = {};
+
+
 logger.info("Initialize Routes");
 var routes = require('./routes/index');
 var users = require('./routes/users');

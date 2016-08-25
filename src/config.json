@@ -41,5 +41,6 @@
         "superhero",
         "united",
         "yeti"
-    ]
+    ],
+    "defaultTheme": "flatly"
 }

@@ -3,7 +3,12 @@
 var logger = require("./logger/logger");
 
 //This is a db reset script
-require('./db/clearDb').go();
-require('./db/seedDb').go();
+var clear = require('./db/clearDb');
+var seed = require('./db/seedDb');
 
-process.exit();
+var async = require('asyncawait/async');
+var await = require('asyncawait/await');
+
+(async (function restoreDb(){
+	await (	logger.warn("clearDb"), clear.go(), logger.warn("\nseedDb"), seed.go(), process.exit());
+}))();

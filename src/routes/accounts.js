@@ -1,4 +1,5 @@
 var pkg = require('../package');
+var config = require('../config');
 
 var mongoose = require('../config/db.js').mongoose;
 var systemDefaults = require('../models/systemDefaults');
