@@ -1,26 +1,15 @@
 var dbHelper = require('./dbHelper');
-var async = require('asyncawait/async');
-var await = require('asyncawait/await');
+var mongoose = require('../config/db.js').mongoose;
+
+var systemDefaults = require('../models/systemDefaults');
+var sysDefault = mongoose.model('SystemDefaults', systemDefaults);
+
 var util = require('util');
 
 var pkg = require('../package.json');
 var config = require('../config.json');
 
-var systemDefaults = async(function() {
-    var mongoose = require('../config/db.js').mongoose;
-    var sysDefault = mongoose.model('SystemDefaults', systemDefaults);
-
-    var defs = null;
-    await (sysDefault.findOne({}, function(err, defaults) { //there should only be one set of defaults
-        /*callback.data.err = err;
-        callback.data.defaults = defaults;*/
-        defs = await (defaults);
-    }));
-
-    return defs;
-});
-
-function buildSite() {
+function* buildSite() {
     var site = {};
     site.buildVersion = pkg.version;
     site.defaults = {};
@@ -29,9 +18,21 @@ function buildSite() {
     site.defaults.DefaultProfilePictureURL = config.defaultProfilePictureURL;
     site.defaults.DefaultBookPictureURL = config.defaultBookPictureURL;
 
+    var systemDefaults = yield(sysDefault.findOne({}, function(err, defaults) {
+        return defaults; }));
+    console.log("sysdef: " + util.inspect(systemDefaults));
+
     if (systemDefaults !== null) {
-        site.defaults = systemDefaults;
-        /*console.log("sysdef: " + util.inspect(systemDefaults));*/
+        /*site.defaults = systemDefaults;*/
+        /*
+                sysDefault.findOne({}, function(err, defaults) { //there should only be one set of defaults
+                    callback.data.err = err;
+                    callback.data.defaults = defaults;
+                    return defaults;
+                });
+        */
+
+
     }
     return site;
 }
