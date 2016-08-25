@@ -22,7 +22,7 @@ var userRating = require('../models/userRating');
 }*/
 
 function listBooks(callback) {
-    Book = mongoose.model('Book', book);
+    var Book = mongoose.model('Book', book);
     Book.find({}, function(err, books) {
     	callback.data.err = err;
         books.toArray(callback.data.books);
@@ -30,11 +30,12 @@ function listBooks(callback) {
 }
 
 function getSystemDefaults(callback) {
-    sysDefault = mongoose.model('SystemDefaults', systemDefaults);
+    var sysDefault = mongoose.model('SystemDefaults', systemDefaults);
 
     sysDefault.findOne({}, function(err, defaults) { //there should only be one set of defaults
     	callback.data.err = err;
     	callback.data.defaults = defaults;
+        return defaults;
     });
 }
 

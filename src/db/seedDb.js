@@ -109,7 +109,8 @@ function go() {
     var iSystemDefaults = new systemDefaults({
         DefaultProfilePictureURL: "/assets/avatar.png",
         DefaultBookPictureURL: "/assets/cover.jpg",
-        DefaultTheme: "flatly"
+        DefaultTheme: "flatly",
+        Title: "Borrow My Books"
     });
     iSystemDefaults.save();
     logger.warn("created systemDefaults");

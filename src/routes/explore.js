@@ -6,28 +6,19 @@ var router = express.Router();
 var mongoose = require('../config/db.js').mongoose;
 var dbHelper = require('../services/dbHelper');
 var book = require('../models/book');
-var systemDefaults = require('../models/systemDefaults');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-    //TODO: JMC database connection
-    //also system defaults for alt
-    sysDefault = mongoose.model('SystemDefaults', systemDefaults);
-    Book = mongoose.model('Book', book);
-
-    var site = {};
-    site.buildVersion = pkg.version;
-
-    sysDefault.findOne({}, function(err, defaults) { //there should only be one set of defaults
-        site.defaults = defaults;
+module.exports = function(app, passport, site) {
+    router.get('/', function(req, res, next) {
+        //TODO: JMC database connection
+        //also system defaults for alt
+        var Book = mongoose.model('Book', book);
 
         Book.find({}, function(err, books) {
-            res.render('explore', { title: 'Borrow My Books', site: site, books: books});
+            res.render('explore', {site: site, books: books });
         });
     });
-});
+};
 
-module.exports = router;
 
 /*var callback = {};
 dbHelper.find("SystemDefaults", {}, callback) {

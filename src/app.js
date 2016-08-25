@@ -8,19 +8,21 @@ logger.
   debug
 */
 
+
 var logger = require("./logger/logger");
 logger.info("mongoose setup...");
 // mongoose setup
-require( './config/db' );
+require('./config/db');
 
 logger.info("passport setup...");
 var passport = require('passport');
-require('./config/passport')(passport); 
+require('./config/passport')(passport);
 
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-/*var logger = require('morgan');*/
+/*var async = require('async');*/
+
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -28,6 +30,7 @@ var flash = require('req-flash');
 
 var pkg = require('./package.json');
 var config = require('./config.json');
+var siteBuilder = require('./services/siteBuilder');
 
 var app = express();
 
@@ -38,10 +41,10 @@ app.use(require('morgan')("combined", { "stream": logger.stream }));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(function (req, res, next) {
-  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  logger.info('Connected IP:', ip);
-  next();
+app.use(function(req, res, next) {
+    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    logger.info('Connected IP:', ip);
+    next();
 });
 
 // uncomment after placing your favicon in /public
@@ -58,28 +61,18 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 logger.info("Build Site Object");
-var site = {};
-site.buildVersion = pkg.version;
-site.defaults = {};
-
+var site = siteBuilder.buildSite();
 
 logger.info("Initialize Routes");
-var routes = require('./routes/index');
-var users = require('./routes/users');
 var teapot = require('./routes/teapot');
-var admin = require('./routes/admin');
-var explore = require('./routes/explore');
 
-app.use('/bower_components',  express.static(path.join(__dirname, '/bower_components')));
+app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
 
-app.use('/', routes);
-app.use('/users', users);
+require('./routes/index.js')(app, passport, site);
+require('./routes/admin.js')(app, passport, site);
+require('./routes/explore.js')(app, passport, site);
+require('./routes/accounts.js')(app, passport, site);
+require('./routes/errors.js')(app, site);
 app.use('/teapot', teapot);
-app.use('/admin', admin(passport));
-app.use('/explore', explore);
-//TODO: JMC Fix
-
-require('./routes/accounts.js')(app, passport);
-require('./routes/errors.js')(app);
 
 module.exports = app;
