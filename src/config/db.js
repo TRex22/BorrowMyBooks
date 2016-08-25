@@ -1,5 +1,6 @@
 var pkg = require('../package.json');
 var config = require('../config.json');
+var logger = require("../logger/logger");
 
 var options = {
     /*db: { native_parser: true },
@@ -11,7 +12,14 @@ var options = {
 }
 
 var mongoose = require('mongoose');
-mongoose.connect(config.mongodb, options);
+
+try{
+	mongoose.connect(config.mongodb, options);
+	logger.info("connected to database.");
+}
+catch(error){
+	logger.error("Error connecting to db. Err: "+error);
+}
 
 module.exports = 
 {

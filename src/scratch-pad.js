@@ -13,6 +13,7 @@ var userRole = require('./models/userRole');
 var userRating = require('./models/userRating');
 
 var dbHelper = require('./services/dbHelper');
+var mongoose = require('./config/db.js').mongoose;
 
 var util = require('util');
 var async = require("async");
@@ -72,4 +73,14 @@ console.log(util.inspect(users));*/
 });*/
 
 /*require('./db/clearDb').go();*/
-/*require('./db/seedDb').go();*/
+require('./db/seedDb').go();
+
+
+/*function *test(){
+    var systemDefaults = yield(sysDefault.findOne({}, function(err, data){
+        console.log("sysdef: " + util.inspect(data));
+    }));
+    console.log("sysdef: " + util.inspect(systemDefaults));
+}
+
+test();*/
