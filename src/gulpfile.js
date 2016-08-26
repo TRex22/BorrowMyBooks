@@ -12,6 +12,7 @@ var gulpSync = require('gulp-sync')(gulp);
 var gulpDoxx = require('gulp-doxx');
 var istanbul = require('gulp-istanbul');
 var mocha = require('gulp-mocha');
+var install = require("gulp-install");
 
 gulp.task('lint', function() {
     return gulp.src(jsPath)
@@ -29,8 +30,8 @@ gulp.task('docs', function() {
         .pipe(gulp.dest('docs'));
 });
 
-gulp.task('pre-cover', function() { 
-    return gulp.src(['./*.js', 'routes/*.js', 'models/*.js', 'db/*.js', '!db/seedDb.js', 'logger/*.js', 'public/javascripts/*.js']) 
+gulp.task('pre-cover', function() {
+    return gulp.src(['./*.js', 'routes/*.js', 'models/*.js', 'db/*.js', '!db/seedDb.js', 'logger/*.js', 'public/javascripts/*.js'])
         // Covering files
         .pipe(istanbul())
         // Force `require` to return covered files
@@ -46,9 +47,14 @@ gulp.task('cover', ['pre-cover'], function() {
         .pipe(istanbul.enforceThresholds({ thresholds: { global: 70 } }));
 });
 
-gulp.task('test', ['lint', 'cover'], function() {
+gulp.task('test', ['install', 'lint', 'cover'], function() {
     console.log("All tests have completed.");
     process.exit();
+});
+
+gulp.task('install', function() {
+    gulp.src(['./bower.json', './package.json'])
+        .pipe(install());
 });
 
 gulp.task('watch', gulpSync.async(['lint', 'cover']), function() {
