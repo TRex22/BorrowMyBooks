@@ -6,16 +6,17 @@ var seedDb = require('../db/seedDb');
 
 module.exports = function(app, passport, site) {
     /* istanbul ignore next */ //TODO: JMC think about this
-    router.get('/', passport.authenticate('admin', {
+    app.get('/admin', passport.authenticate('admin', {
             successRedirect: '/admin',
             failureRedirect: '/login',
             failureFlash: true
         }),
         function(req, res, next) {
-            res.render('admin', {site: site });
+            res.render('admin', { site: site });
         });
+
     /* istanbul ignore next */ //TODO: JMC think about this
-    router.get('/initdb', passport.authenticate('admin', {
+    app.get('/admin/initdb', passport.authenticate('admin', {
             successRedirect: '/admin/initdb',
             failureRedirect: '/login',
             failureFlash: true
@@ -24,5 +25,4 @@ module.exports = function(app, passport, site) {
             seedDb.go();
             res.redirect('/');
         });
-    return router;
 };

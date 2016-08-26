@@ -67,12 +67,12 @@ logger.info("Initialize Routes");
 app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
 
 var teapot = require('./routes/teapot');
+app.use('/teapot', teapot);
 
 require('./routes/index.js')(app, passport, site);
 require('./routes/admin.js')(app, passport, site);
 require('./routes/explore.js')(app, passport, site);
 require('./routes/accounts.js')(app, passport, site);
 require('./routes/errors.js')(app, site);
-app.use('/teapot', teapot);
 
 module.exports = app;

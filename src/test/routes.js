@@ -5,7 +5,7 @@ var config = require('../config');
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = require('chai').should();
-var expect = require('chai').expect();
+var expect = require('chai').expect;
 
 var app = require('../app');
 var www = require('../bin/www-test');
@@ -19,9 +19,8 @@ describe('#Home Route', function() {
         chai.request(app)
             .get('/')
             .end(function(err, res) {
-                err.should.be.null;
-                expect(res).to.have.status(200);
-                done();
+                res.should.have.status(200);
+                done(err);
             });
     });
 
@@ -29,7 +28,6 @@ describe('#Home Route', function() {
         chai.request(app)
             .post('/')
             .end(function(err, res) {
-                err.should.be.null;
                 res.should.have.status(404);
                 done();
             });
@@ -41,7 +39,6 @@ describe('#Login Route', function() {
         chai.request(app)
             .get('/login')
             .end(function(err, res) {
-                err.should.be.null;
                 res.should.have.status(200);
                 done();
             });
@@ -53,7 +50,6 @@ describe('#Signup Route', function() {
         chai.request(app)
             .get('/signup')
             .end(function(err, res) {
-                err.should.be.null;
                 res.should.have.status(200);
                 done();
             });
@@ -65,7 +61,6 @@ describe('#Explore Route', function() {
         chai.request(app)
             .get('/explore')
             .end(function(err, res) {
-                err.should.be.null;
                 res.should.have.status(200);
                 done();
             });
@@ -77,7 +72,6 @@ describe('#Admin Route', function() {
         chai.request(app)
             .get('/admin')
             .end(function(err, res) {
-                err.should.be.null;
                 res.should.have.status(200);
                 done();
             });
@@ -89,7 +83,6 @@ describe('#Service Routes', function() {
         chai.request(app)
             .get('/randomlol')
             .end(function(err, res) {
-                err.should.be.null;
                 res.should.have.status(404);
                 done();
             });
@@ -99,8 +92,8 @@ describe('#Service Routes', function() {
         chai.request(app)
             .get('/admin')
             .end(function(err, res) {
-                err.should.be.null;
-                res.should.have.status(401);
+                res.redirects[0].should.include('/login');
+                res.should.have.status(200);
                 done();
             });
     });
@@ -109,9 +102,8 @@ describe('#Service Routes', function() {
         chai.request(app)
             .get('/teapot')
             .end(function(err, res) {
-                err.should.be.null;
                 res.should.have.status(418);
-                res.body.should.equal('I want to be a teapot');
+                res.text.should.equal("I want to be a teapot");
                 done();
             });
     });
