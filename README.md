@@ -19,6 +19,12 @@ Instructions for the database will be added when that part of the system is impl
 ## Introduction
 Massive Dynamic (MD) proposes a system which will help students trade, borrow and sell second hand books – mainly textbooks. The system’s main objective is to allow users to easily search for, locate and purchase the books through it. It will have gamification aspects like Uber where users can rate other users. Additionally, it will include a reporting function in order to allow reporting of abusive users. There will be an administrative profile/s in the system, to aid for the maintenance of the system. The technology we have chosen to implement this on is a web based technology, namely the MEAN stack. The system will not cover using online payment methods and will only facilitate the locating and transferral of physical goods.
 
+## Install
+### To Set-up the code:
+Install NodeJS 6.0 or above and mongodb.
+Using bash or git-bash (on Windows) run the script `./install.sh`
+To start the site up run the script `./start.sh`
+
 ## Purpose
 MD is focused on building a system that will help facilitate the borrowing and/or selling of textbooks and other books between students. The system will not allow the transfer of copyrighted materials but will rather facilitate the lending and selling of second-hand textbooks. i.e. trading.
 
