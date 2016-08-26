@@ -25,7 +25,7 @@ var rotateOptions = {
 var logger = new winston.Logger({
     transports: [
         new winston.transports.Console({
-            level: 'warn', //debug is too verbose { error: 0, warn: 1, info: 2, verbose: 3, debug: 4, silly: 5 }
+            level: 'info', //debug is too verbose { error: 0, warn: 1, info: 2, verbose: 3, debug: 4, silly: 5 }
             handleExceptions: true,
             json: false,
             colorize: true

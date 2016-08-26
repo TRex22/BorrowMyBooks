@@ -1,3 +1,5 @@
+var logger = require("../logger/logger");
+
 var dbHelper = require('./dbHelper');
 var mongoose = require('../config/db.js').mongoose;
 
@@ -9,7 +11,7 @@ var util = require('util');
 var pkg = require('../package.json');
 var config = require('../config.json');
 
-function* buildSite() {
+function initSite() {
     var site = {};
     site.buildVersion = pkg.version;
     site.defaults = {};
@@ -18,9 +20,14 @@ function* buildSite() {
     site.defaults.DefaultProfilePictureURL = config.defaultProfilePictureURL;
     site.defaults.DefaultBookPictureURL = config.defaultBookPictureURL;
 
-    var systemDefaults = yield(sysDefault.findOne({}, function(err, defaults) {
+    return site;
+}
+
+function updateSite(site){
+    logger.info("Updating site backpack from db.");
+/*    var systemDefaults = yield(sysDefault.findOne({}, function(err, defaults) {
         return defaults; }));
-    console.log("sysdef: " + util.inspect(systemDefaults));
+    console.log("sysdef: " + util.inspect(systemDefaults));*/
 
     if (systemDefaults !== null) {
         /*site.defaults = systemDefaults;*/
@@ -34,9 +41,11 @@ function* buildSite() {
 
 
     }
+
     return site;
 }
 
-module.exports = {
-    buildSite: buildSite
+module.exports = { 
+    initSite: initSite,
+    updateSite: updateSite
 };

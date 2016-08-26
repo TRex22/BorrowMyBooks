@@ -8,7 +8,6 @@ logger.
   debug
 */
 
-
 var logger = require("./logger/logger");
 logger.info("mongoose setup...");
 // mongoose setup
@@ -61,7 +60,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 logger.info("Build Site Object");
-var site = siteBuilder.buildSite();
+var site = siteBuilder.initSite();
+site = siteBuilder.updateSite(site); //to make sure there is a site object even if db fails
 
 logger.info("Initialize Routes");
 app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
