@@ -1,7 +1,6 @@
 var logger = require("../logger/logger");
 
 var dbHelper = require('./dbHelper');
-var generatorHelper = require('./generatorHelper');
 var mongoose = require('../config/db.js').mongoose;
 
 var systemDefaults = require('../models/systemDefaults');
@@ -14,6 +13,8 @@ var config = require('../config.json');
 
 function initSite() {
     var site = {};
+    site.user = {};
+    site.user.isAdmin = false; //security
     site.buildVersion = pkg.version;
     site.defaults = {};
     site.defaults.DefaultTheme = config.defaultTheme;

@@ -31,7 +31,7 @@ gulp.task('docs', function() {
 });
 
 gulp.task('pre-cover', function() {
-    return gulp.src(['./*.js', 'routes/*.js', 'models/*.js', 'db/*.js', '!db/seedDb.js', 'logger/*.js', 'public/javascripts/*.js'])
+    return gulp.src(['./*.js', 'routes/*.js', 'models/*.js', 'db/*.js', '!db/seedDb.js', 'logger/*.js', 'public/javascripts/*.js', 'services/*.js'])
         // Covering files
         .pipe(istanbul())
         // Force `require` to return covered files
@@ -67,7 +67,7 @@ gulp.task('watch', gulpSync.async(['lint', 'cover']), function() {
 
     lr.listen(config.liveReloadPort);
 
-    gulp.watch('server/**/*', function() {
+    gulp.watch('server/**/*', ['lint'], function() {
         var fileName = require('path').relative(config.port, event.path);
         lr.changed({
             body: {

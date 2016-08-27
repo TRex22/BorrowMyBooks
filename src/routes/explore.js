@@ -14,7 +14,7 @@ module.exports = function(app, passport) {
         var Book = mongoose.model('Book', book);
 
         Book.find({}, function(err, books) {
-            res.render('explore', { site: app.locals.site, books: books });
+            res.render('explore/explore', { site: app.locals.site, books: books });
         });
     });
 };

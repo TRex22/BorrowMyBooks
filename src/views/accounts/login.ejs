@@ -6,7 +6,7 @@
     <script src="/javascripts/script.js"></script>   
 </head>
 <body>
-<%- include('partials/navbar') %>
+<%- include('../partials/navbar') %>
 
 <h1 class="center-align">Sign into <%= site.defaults.Title %></h1>
 <form role="form" action="/login" method="post" class="box login">
@@ -26,6 +26,6 @@
 	<!-- </fieldset> -->
 </form>
 
-<%- include('partials/footer') %>
+<%- include('../partials/footer') %>
 </body>
 </html>

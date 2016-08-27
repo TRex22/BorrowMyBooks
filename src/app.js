@@ -13,10 +13,6 @@ logger.info("mongoose setup...");
 // mongoose setup
 require('./config/db');
 
-logger.info("passport setup...");
-var passport = require('passport');
-require('./config/passport')(passport);
-
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -32,6 +28,10 @@ var config = require('./config.json');
 var siteBuilder = require('./services/siteBuilder');
 
 var app = express();
+
+logger.info("passport setup...");
+var passport = require('passport');
+require('./config/passport')(app, passport);
 
 logger.info("Overriding 'Express' logger");
 app.use(require('morgan')("combined", { "stream": logger.stream }));

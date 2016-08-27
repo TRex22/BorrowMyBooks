@@ -24,7 +24,7 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 
 var User = require('../models/user');
 
-module.exports = function(passport) {
+module.exports = function(app, passport) {
 
     // Maintaining persistent login sessions
     // serialized  authenticated user to the session
@@ -39,48 +39,33 @@ module.exports = function(passport) {
         });
     });
 
-    passport.use('login', new LocalStrategy({
+    passport.use('local', new LocalStrategy({
             usernameField: 'email',
             passReqToCallback: true
         },
         function(req, email, password, done) {
             process.nextTick(function() {
-                User.findOne({ 'user.email': email }, function(err, user) {
+                User.findOne({ email: email }, function(err, user) {
                     if (err) {
+                        logger.err(err);
                         return done(err);
                     }
-                    if (!user)
+                    if (!user) {
+                        logger.warn('Incorrect username.');
                         return done(null, false, req.flash('error', 'User does not exist.'));
-
-                    if (!user.verifyPassword(password))
-                        return done(null, false, req.flash('error', 'Enter correct password'));
-                    else {
-                        user.login = true;
-                        return done(null, user);
                     }
+
+                    if (!user.verifyPassword(password)) {
+                        logger.warn('Incorrect password.');
+                        return done(null, false, req.flash('error', 'Enter correct password'));
+                    }
+                    user.login = true;
+                    return done(null, user);
 
                 });
             });
 
         }));
-
-    passport.use('local', new LocalStrategy(
-        function(username, password, done) {
-            User.findOne({ username: username }, function(err, user) {
-                if (err) {
-                    return done(err);
-                }
-                if (!user) {
-                    return done(null, false, { message: 'Incorrect username.' });
-                }
-                if (!user.validPassword(password)) {
-                    return done(null, false, { message: 'Incorrect password.' });
-                }
-                user.login = true;
-                return done(null, user);
-            });
-        }
-    ));
 
     passport.use('admin', new LocalStrategy(
         function(username, password, done) {

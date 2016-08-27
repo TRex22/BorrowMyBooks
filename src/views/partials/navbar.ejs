@@ -4,6 +4,9 @@
     <nav>
         <ul class="nav nav-pills pull-right">
             <li role="presentation"><a href="/">Home</a></li>
+            <%if (site.user.isAdmin) {%>
+            	<li><a class="btn btn-danger" href="/admin">Admin</a></li>
+            <% } %>
             <li><a href="/explore">Explore</a></li>
             <li><a href="/login">Login</a></li>
         </ul>

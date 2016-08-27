@@ -1,18 +1,24 @@
 var pkg = require('../package');
 var config = require('../config');
 
+var userHelper = require('../services/userHelper');
+
 module.exports = function(app, passport) {
     app.get('/login', function(req, res) {
-        res.render('login.ejs', {'site': app.locals.site });
+        res.render('accounts/login.ejs', { 'site': app.locals.site });
     });
-    app.post('/login', passport.authenticate('login', {
-        successRedirect: '/',
-        failureRedirect: '/login',
-        failureFlash: true
-    }));
+    app.post('/login', passport.authenticate('local', {
+            failureRedirect: '/login',
+            failureFlash: true
+        }),
+        function(req, res) {
+            app.locals.site.user = req.user;
+            app.locals.site.user.isAdmin = userHelper.isAdmin(req.user);
+            res.redirect(req.session.returnTo || '/');
+        });
 
     app.get('/signup', function(req, res) {
-        res.render('signup.ejs', {'site': app.locals.site });
+        res.render('accounts/signup.ejs', { 'site': app.locals.site });
     });
 
     app.post('/signup', passport.authenticate('signup', {
