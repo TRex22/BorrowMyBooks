@@ -1,6 +1,7 @@
 var logger = require("../logger/logger");
 
 var dbHelper = require('./dbHelper');
+var generatorHelper = require('./generatorHelper');
 var mongoose = require('../config/db.js').mongoose;
 
 var systemDefaults = require('../models/systemDefaults');
@@ -23,29 +24,27 @@ function initSite() {
     return site;
 }
 
-function updateSite(site){
-    logger.info("Updating site backpack from db.");
-/*    var systemDefaults = yield(sysDefault.findOne({}, function(err, defaults) {
-        return defaults; }));
-    console.log("sysdef: " + util.inspect(systemDefaults));*/
+function updateSite(app) {
+    logger.info("Updating site backpack from db ...");
 
-    if (systemDefaults !== null) {
-        /*site.defaults = systemDefaults;*/
-        /*
-                sysDefault.findOne({}, function(err, defaults) { //there should only be one set of defaults
-                    callback.data.err = err;
-                    callback.data.defaults = defaults;
-                    return defaults;
-                });
-        */
+    sysDefault.findOne({}).exec(function(err, defaults) { //there should only be one set of defaults
+        if (err) throw err; //TODO: FIX
 
+        if (defaults.DefaultTheme) {
+            app.locals.site.defaults = defaults._doc;        
+        }
+    });
 
-    }
+    app.locals.site.buildVersion = pkg.version;
+    logger.info("Done.");
 
-    return site;
+    return app.locals.site;
 }
 
-module.exports = { 
+module.exports = {
     initSite: initSite,
     updateSite: updateSite
 };
+/*
+var site = siteBuilder.initSite();
+site = siteBuilder.updateSite(site); //to make sure there is a site object even if db fails*/

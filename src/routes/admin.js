@@ -4,7 +4,7 @@ var pkg = require('../package');
 var router = express.Router();
 var seedDb = require('../db/seedDb');
 
-module.exports = function(app, passport, site) {
+module.exports = function(app, passport) {
     /* istanbul ignore next */ //TODO: JMC think about this
     app.get('/admin', passport.authenticate('admin', {
             successRedirect: '/admin',
@@ -12,7 +12,7 @@ module.exports = function(app, passport, site) {
             failureFlash: true
         }),
         function(req, res, next) {
-            res.render('admin', { site: site });
+            res.render('admin', { site: app.locals.site });
         });
 
     /* istanbul ignore next */ //TODO: JMC think about this

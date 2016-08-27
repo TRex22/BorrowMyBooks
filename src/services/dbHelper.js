@@ -35,7 +35,6 @@ function getSystemDefaults(callback) {
     sysDefault.findOne({}, function(err, defaults) { //there should only be one set of defaults
     	callback.data.err = err;
     	callback.data.defaults = defaults;
-        return defaults;
     });
 }
 

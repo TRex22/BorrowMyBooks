@@ -1,9 +1,9 @@
 var pkg = require('../package');
 var config = require('../config');
 
-module.exports = function(app, passport, site) {
+module.exports = function(app, passport) {
     app.get('/login', function(req, res) {
-        res.render('login.ejs', {'site': site });
+        res.render('login.ejs', {'site': app.locals.site });
     });
     app.post('/login', passport.authenticate('login', {
         successRedirect: '/',
@@ -12,7 +12,7 @@ module.exports = function(app, passport, site) {
     }));
 
     app.get('/signup', function(req, res) {
-        res.render('signup.ejs', {'site': site });
+        res.render('signup.ejs', {'site': app.locals.site });
     });
 
     app.post('/signup', passport.authenticate('signup', {

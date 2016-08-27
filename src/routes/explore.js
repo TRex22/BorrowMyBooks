@@ -7,14 +7,14 @@ var mongoose = require('../config/db.js').mongoose;
 var dbHelper = require('../services/dbHelper');
 var book = require('../models/book');
 
-module.exports = function(app, passport, site) {
+module.exports = function(app, passport) {
     app.get('/explore', function(req, res, next) {
         //TODO: JMC database connection
         //also system defaults for alt
         var Book = mongoose.model('Book', book);
 
         Book.find({}, function(err, books) {
-            res.render('explore', { site: site, books: books });
+            res.render('explore', { site: app.locals.site, books: books });
         });
     });
 };

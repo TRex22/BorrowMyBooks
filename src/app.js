@@ -60,8 +60,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 logger.info("Build Site Object");
-var site = siteBuilder.initSite();
-site = siteBuilder.updateSite(site); //to make sure there is a site object even if db fails
+app.locals.site = siteBuilder.initSite();
+app.locals.site = siteBuilder.updateSite(app); //to make sure there is a site object even if db fails
 
 logger.info("Initialize Routes");
 app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
@@ -69,10 +69,10 @@ app.use('/bower_components', express.static(path.join(__dirname, '/bower_compone
 var teapot = require('./routes/teapot');
 app.use('/teapot', teapot);
 
-require('./routes/index.js')(app, passport, site);
-require('./routes/admin.js')(app, passport, site);
-require('./routes/explore.js')(app, passport, site);
-require('./routes/accounts.js')(app, passport, site);
-require('./routes/errors.js')(app, site);
+require('./routes/index.js')(app, passport);
+require('./routes/admin.js')(app, passport);
+require('./routes/explore.js')(app, passport);
+require('./routes/accounts.js')(app, passport);
+require('./routes/errors.js')(app);
 
 module.exports = app;

@@ -10,5 +10,9 @@ var async = require('asyncawait/async');
 var await = require('asyncawait/await');
 
 (async (function restoreDb(){
-	await (	logger.warn("clearDb"), clear.go(), logger.warn("\nseedDb"), seed.go(), process.exit());
+	await (	logger.warn("clearDb"), clear.go(), logger.warn("\nseedDb"), seed.go());
+	
 }))();
+/*process.exit();*/
+
+//todo Fix
