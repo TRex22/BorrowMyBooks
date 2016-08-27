@@ -1,2 +1,3 @@
 #!/bin/bash
-node ./bin/www
+#node ./bin/www
+gulp watch-man

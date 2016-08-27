@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= site.defaults.Title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/javascripts/script.js"></script>
+</head>
+
+<body>
+    <%- include('../partials/navbar') %>
+        <div class="bs-component">
+            <h1>Change Theme</h1>
+            <form role="form" action="/admin/system-defaults" method="post" class="box login">
+                <div class="form-group">
+                    <input type="text" class="form-control" tabindex="1" placeholder="Site Title" name="title">
+                    <input type="text" class="form-control" tabindex="1" placeholder="Default Profile Picture URL" name="defaultProfilePictureURL">
+                    <input type="text" class="form-control" tabindex="1" placeholder="Default Book Cover URL" name="defaultBookPictureURL">
+                    <input type="text" class="form-control" tabindex="1" placeholder="Default Branding Text" name="defaultBrandingText">
+
+                    <input type="text" class="form-control" tabindex="1" placeholder="Default Profile Picture URL" name="defaultProfilePictureURL">
+
+                     <select name="theme">
+                        <%= for(var i=0; i<app.locals.site.themes.length; i++) {%>
+                            <option value=app.locals.site.themes[i]>app.locals.site.themes[i]</option>
+                        <% } %>
+                    </select>
+                </div>
+                
+                <div>
+                    <input type="submit" class="btn btn-default" value="Save" tabindex="1">
+                </div>
+            </form>
+        </div>
+        <%- include('../partials/footer') %>
+</body>
+
+</html>

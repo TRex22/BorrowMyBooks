@@ -110,6 +110,7 @@ function go() {
         DefaultProfilePictureURL: "/assets/avatar.png",
         DefaultBookPictureURL: "/assets/cover.jpg",
         DefaultTheme: "flatly",
+        DefaultBrandingText: "Borrow My Books",
         Title: "Borrow My Books"
     });
     iSystemDefaults.save();

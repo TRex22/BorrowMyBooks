@@ -45,5 +45,6 @@
     "defaultTheme": "flatly",
     "title": "Borrow My Books",
     "defaultProfilePictureURL": "/assets/avatar.png",
-    "defaultBookPictureURL": "/assets/cover.jpg"
+    "defaultBookPictureURL": "/assets/cover.jpg",
+    "defaultBrandingText": "Borrow My Books"
 }

@@ -15,7 +15,6 @@ var userMessage = require('../models/userMessage');
 var systemDefaults = require('../models/systemDefaults');
 var userRole = require('../models/userRole');
 var userRating = require('../models/userRating');
-/* istanbul ignore  next*/
 /*function listUsers() {
     var User = mongoose.model('User', user);
     return User.find({}, function(err, data) {});
@@ -45,6 +44,7 @@ function find(collec, query, callback) {
     });
 }
 
+/* istanbul ignore  next*/
 function dropCollection(collec) {
     mongoose.connection.collections[collec].drop(function(err) {
         logger.warn("collection " + collec + "dropped");

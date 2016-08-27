@@ -6,13 +6,15 @@ var logger = require("./logger/logger");
 var clear = require('./db/clearDb');
 var seed = require('./db/seedDb');
 
-var async = require('asyncawait/async');
-var await = require('asyncawait/await');
+var async = require('async');
 
-(async (function restoreDb(){
-	await (	logger.warn("clearDb"), clear.go(), logger.warn("\nseedDb"), seed.go());
-	
-}))();
+async.waterfall([
+    clear.go(),
+    seed.go()
+], function(error, success) {
+    if (error) { logger.err('Something is wrong!'); }
+    logger.info("db reinitialised.");
+});
 /*process.exit();*/
 
 //todo Fix

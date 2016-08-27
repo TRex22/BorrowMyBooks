@@ -76,3 +76,23 @@ gulp.task('watch', gulpSync.async(['lint', 'cover']), function() {
         });
     });
 });
+
+gulp.task('watch-man', gulpSync.async(['lint']), function() {
+    nodemon({
+            script: config.startPath
+        })
+        .on('restart', function() {
+            console.log('========================================');
+        });
+
+    lr.listen(config.liveReloadPort);
+
+    gulp.watch('server/**/*', ['lint'], function() {
+        var fileName = require('path').relative(config.port, event.path);
+        lr.changed({
+            body: {
+                files: [fileName]
+            }
+        });
+    });
+});
