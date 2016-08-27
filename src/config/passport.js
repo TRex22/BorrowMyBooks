@@ -43,9 +43,9 @@ module.exports = function(app, passport) {
             usernameField: 'email',
             passReqToCallback: true
         },
-        function(req, email, password, done) {
+        function(req, input, password, done) {
             process.nextTick(function() {
-                User.findOne({ email: email }, function(err, user) {
+                User.findOne({ $or: [ { email: input }, { username: input } ] }, function(err, user) {
                     if (err) {
                         logger.err(err);
                         return done(err);
