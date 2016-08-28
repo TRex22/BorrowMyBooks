@@ -15,6 +15,7 @@ function initSite() {
     var site = {};
     site.user = {};
     site.user.isAdmin = false; //security
+    site.user.isLoggedIn = false;
     site.buildVersion = pkg.version;
     site.defaults = {};
     site.defaults.DefaultTheme = config.defaultTheme;

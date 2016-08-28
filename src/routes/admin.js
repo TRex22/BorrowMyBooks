@@ -10,7 +10,7 @@ module.exports = function(app, passport) {
     /* istanbul ignore next */ //TODO: JMC think about this
     app.get('/admin',
         function(req, res, next) {
-            console.log(req.user);
+            /*console.log(req.user);*/
             if (req.user) {
                 if (userHelper.isAdmin(req.user)) {
                     res.render('admin/admin', { site: app.locals.site });
@@ -58,7 +58,23 @@ module.exports = function(app, passport) {
         function(req, res, next) {
             if (req.user) {
                 if (userHelper.isAdmin(req.user)) {
-                    console.log(req.body);
+                    //update system defaults and then re-render the page
+
+                    sysDefault.findOne({}).exec(function(err, defaults) { //there should only be one set of defaults
+                        if (err) throw err; //TODO: FIX
+
+                        if (defaults.DefaultTheme) {
+                            defaults.DefaultTheme = req.body.defaultTheme;
+                            defaults.Title = req.body.title;
+                            defaults.DefaultProfilePictureURL = req.body.defaultProfilePictureURL;
+                            defaults.DefaultBookPictureURL = req.body.defaultBookPictureURL;
+                            defaults.DefaultBrandingText = req.body.defaultBrandingText;
+
+                            app.locals.site.defaults = defaults;
+                        }
+                    });
+                    app.locals.site.themes = config.themes;
+                    res.render('admin/system-defaults', { site: app.locals.site });
                 } else {
                     res.status(401);
                     url = req.url;

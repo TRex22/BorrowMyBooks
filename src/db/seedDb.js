@@ -34,6 +34,26 @@ function go() {
     iUser.save(); //TODO Password
     logger.warn("created admin user");
 
+    iUser = new user({
+        username: "User",
+        email: "user@jasonchalom.com",
+        salt: null,
+        hash: null,
+        name: "User",
+        address: "Room 13",
+        phone: "1234567890",
+        interests: [],
+        picUrl: null,
+        userRole: [],
+        lastLoginDate: null,
+        registrationDate: new Date()
+    });
+    iUser.userId = iUser.generateUUID();
+    iUser.salt = iUser.generateSalt();
+    iUser.hash = iUser.generateHash("123456");
+    iUser.save(); //TODO Password
+    logger.warn("created user");
+
     var iBook = new book({
         title: "A Book about Tests",
         author: "me",

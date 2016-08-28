@@ -26,4 +26,10 @@ module.exports = function(app, passport) {
         failureRedirect: '/signup',
         failureFlash: true
     }));
+
+    app.get('/logout', function(req, res) {
+        req.logout();
+        app.locals.site.user = userHelper.resetUser(app.locals.site.user);
+        res.redirect('/');
+    });
 };

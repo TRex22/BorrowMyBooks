@@ -3,6 +3,15 @@ function isAdmin(user) {
     return false;
 }
 
+function resetUser(user) {
+	user = {};
+    user.isAdmin = false; //security
+    user.isLoggedIn = false;
+
+    return user;
+}
+
 module.exports = {
-    isAdmin: isAdmin
+    isAdmin: isAdmin,
+    resetUser: resetUser
 }
