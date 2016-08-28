@@ -1,4 +1,2 @@
-The group met and we did some documentation.
-We discussed the use cases and what should be put under the various headings in the Requirements Analysis document.
-
-Jason proposed the ability for an admin to ban users under certain conditions.
+The group agreed to meet in person later that day to do the requirements analysis document.
+The group submitted the proposal to the lecturer.

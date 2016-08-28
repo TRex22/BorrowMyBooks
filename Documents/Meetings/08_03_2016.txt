@@ -1,1 +1,4 @@
-Started working on the ISO document as well as some code for the login page.
+Jason started some base code.
+Jason also suggested we start working on the ISO document.
+Jason suggested we use Latex instead of Word Documents.
+Liron and Marko said nothing.

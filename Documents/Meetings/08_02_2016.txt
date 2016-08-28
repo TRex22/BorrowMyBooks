@@ -1,2 +1,2 @@
-We discussed to meet in person early that day at Wits.
-We started to install the neccessary software such as git, node, and roboMongo.
+The group met at 10:45.
+The group added to the Requirements Analysis document.

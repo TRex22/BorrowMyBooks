@@ -1,4 +1,3 @@
-We discussed to meet in person later that day.
-Marko was not able to make it.
-We discussed trying to have 15 minute meetings everyday over WhatsApp.
-Jason said we should set up milestones on Waffle to keep track our sprints.
+The group discussed trying to have 15 minute meetings per day on the whatsapp group.
+Jason proposed using milestones on waffle.io to keep track of sprints.
+The other members agreed.

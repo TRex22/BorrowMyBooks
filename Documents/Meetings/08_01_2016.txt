@@ -1,3 +1,4 @@
-We discussed to speak over skype later that day.
-Marko and Liron discussed learning NodeJS, bootstrap, and MongoDb.
-Jason discussed the documentation and we redid a few sections.
+The group discussed speaking over skype at 8pm that afternoon.
+The group spoke about future documentation and the different use cases.
+Jason suggests for Liron and Marko to learn NodeJS from various websites.
+The group agreed to meet in person tomorrow morning.

@@ -1,6 +1,5 @@
-We discussed what we have been doing for the project.
-Jason said he has added more tests.
-Liron said he did some styles and looked at some documentation.
+Jason said that he had been working on tests and the database model.
+Liron said he worked on the styles for the explore and login pages.
+Jason and Liron discussed whether tests should be run everytime the site is started up.
+Liron disagreed.
 Marko said nothing.
-
-Jason and Liron discussed whether tests should be run everytime the site is loaded or not.

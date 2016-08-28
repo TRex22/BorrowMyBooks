@@ -20,11 +20,16 @@
             </div>
             <div class="row">
           <% } %>
-            <div class="col-xs-4 col-sm-4 col-md-4 center-align"> 
+            <div class="col-xs-4 col-sm-4 col-md-4"> 
               <div class="center-align-col">
-                <a href=#>          
-                  <img width=250 height=350 class="thumbnail" src= <% if (books[i].picURL) {%> <%= books[i].picURL %> <%} else{%> <%= site.defaults.DefaultBookPictureURL %> <%} %> />
-                </a>
+                <div class="hovereffect thumbnail">
+                  <img width=250 height=350 src= <% if (books[i].picURL) {%> <%= books[i].picURL %> <%} else{%> <%= site.defaults.DefaultBookPictureURL %> <%} %> />
+
+                  <div class="overlay">
+                              <a class="title" href="#"><% if (books[i].title) {%> <%= books[i].title %> <%} %></a>
+                              <a class="author" href="#"><% if (books[i].author) {%> <%= books[i].author %> <%} %></a>
+                  </div>
+                </div>
               </div>
             </div>
         <% } %>

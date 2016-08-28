@@ -1,2 +1,2 @@
-Liron moved the repository to Jason's github.
-Jason did some continuous integration for the repository.
+Jason and Liron discussed moving the repo to Jason's github as Jason needed admin rights to do continuous integration.
+The other group members agreed and the repo was tranferred.

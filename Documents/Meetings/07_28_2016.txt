@@ -1,4 +1,4 @@
 Jason created the github repository.
-The ownership was transferred to the scrum master.
-
-Jason suggested we use Waffle.io to keep track of our backlog.
+The other members exchanged github details.
+The repo was then transferred to Liron's github.
+Jason proposed the idea of using waffle.io to keep track of the product backlog.

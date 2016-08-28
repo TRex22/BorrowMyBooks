@@ -1,11 +1,8 @@
-We discussed our proposals.
-Marko proposed a new idea for an electronic ordering system for restaurants.
-Liron said that the group should make a decision today as the due date for the proposal is today.
-Jason said that he did not like the ordering system and said his project would be a lot easier.
+Marko proposed a new idea of an electronic ordering system for restaurants.
+Jason explained how his idea would be easier and be a bigger scope.
+Liron agreed with jason.
+The group disscussed the technology stack to be used.
+The group agreed on NodeJS and MongoDB.
 
-We discussed our technology stack.
-Jason proposed we use NodeJs and MongDb.
-
-The group selected Liron as the Scrum Master.
-
-The group looked at the Requirements Analysis Document and started to do some documentation.
+The group started the Requirements analysis document.
+The group also discussed potential group roles.
