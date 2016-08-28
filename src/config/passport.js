@@ -40,12 +40,12 @@ module.exports = function(app, passport) {
     });
 
     passport.use('local', new LocalStrategy({
-            usernameField: 'email',
+            usernameField: 'username',
             passReqToCallback: true
         },
-        function(req, input, password, done) {
+        function(req, username, password, done) {
             process.nextTick(function() {
-                User.findOne({ $or: [ { email: input }, { username: input } ] }, function(err, user) {
+                User.findOne({ $or: [{ email: username }, { username: username }] }, function(err, user) {
                     if (err) {
                         logger.err(err);
                         return done(err);
@@ -66,27 +66,6 @@ module.exports = function(app, passport) {
             });
 
         }));
-
-    passport.use('admin', new LocalStrategy(
-        function(username, password, done) {
-            User.findOne({ username: username }, function(err, user) {
-                if (err) {
-                    return done(err);
-                }
-                if (!user) {
-                    return done(null, false, { message: 'Incorrect username.' });
-                }
-                if (!user.validPassword(password)) {
-                    return done(null, false, { message: 'Incorrect password.' });
-                }
-                if (!user.checkAdminRole()) {
-                    return done(null, false, { message: 'Not Authorised.' });
-                }
-                user.login = true;
-                return done(null, user);
-            });
-        }
-    ));
 
     passport.use('signup', new LocalStrategy({
             usernameField: 'email',

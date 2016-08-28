@@ -6,6 +6,7 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = require('chai').should();
 var expect = require('chai').expect;
+var validator = require('validator');
 
 var app = require('../app');
 var www = require('../bin/www-test');
@@ -43,6 +44,28 @@ describe('#Login Route', function() {
                 done();
             });
     });
+
+    it('should login sucessfully', function(done) {
+        chai.request(app)
+            .post('/login')
+            .send({ username: 'Admin', password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.not.contain('/login');
+                done();
+            });
+    });
+
+    it('should login unsucessfully', function(done) {
+        chai.request(app)
+            .post('/login')
+            .send({ username: 'Admin', password: 'sdggh' })
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/login');
+                done();
+            });
+    });
 });
 
 describe('#Signup Route', function() {
@@ -68,7 +91,7 @@ describe('#Explore Route', function() {
 });
 
 describe('#Admin Route', function() {
-    it('should respond to GET', function(done) {
+    it('admin should respond to GET', function(done) {
         chai.request(app)
             .get('/admin')
             .end(function(err, res) {
@@ -76,6 +99,44 @@ describe('#Admin Route', function() {
                 done();
             });
     });
+
+    it('system-defaults should respond to GET', function(done) {
+        chai.request(app)
+            .get('/admin/system-defaults')
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/login'); //redirect
+                done();
+            });
+    });
+
+    it('system-defaults should respond to GET logged in', function(done) {
+        chai.request(app)
+            .post('/login')
+            .send({ username: 'Admin', password: '123456' })
+            .then(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.not.contain('/login');
+            })
+            .get('/admin/system-defaults')
+            .end(function(err, res) {
+                res.should.have.status(200);
+                console.log(res)
+                done();
+            });;
+
+
+    });
+
+    it('should respond to GET', function(done) {
+        chai.request(app)
+            .get('/admin/system-defaults')
+            .end(function(err, res) {
+                res.should.have.status(200);
+                done();
+            });
+    });
+
 });
 
 describe('#Service Routes', function() {
