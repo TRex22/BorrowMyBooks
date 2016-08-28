@@ -1,0 +1,6 @@
+We discussed what we have been doing for the project.
+Jason said he has added more tests.
+Liron said he did some styles and looked at some documentation.
+Marko said nothing.
+
+Jason and Liron discussed whether tests should be run everytime the site is loaded or not.

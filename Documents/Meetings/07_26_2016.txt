@@ -1,0 +1,5 @@
+The group discussed the feedback of the proposal.
+
+It was sggested we add price suggesting or an auction feature.
+
+We discussed to leave those features to be in Sprint 3 or Sprint 4.

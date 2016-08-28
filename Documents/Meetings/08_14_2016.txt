@@ -1,0 +1,4 @@
+Met at Liron's house to do some code.
+Liron did the style for the login and signup page.
+Jason did the backend for the login and signup pages.
+Marko did some documentation.

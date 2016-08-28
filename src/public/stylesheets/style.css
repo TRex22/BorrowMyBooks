@@ -35,4 +35,10 @@ a {
 }
 .center-align{
 	text-align: center;
+	align-items: center;
+}
+
+.center-align-col{
+  display: table;
+  margin: 0 auto;
 }

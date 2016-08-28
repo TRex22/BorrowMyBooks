@@ -1,0 +1,2 @@
+We discussed to meet in person early that day at Wits.
+We started to install the neccessary software such as git, node, and roboMongo.
