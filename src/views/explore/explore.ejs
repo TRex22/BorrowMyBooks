@@ -7,27 +7,29 @@
   </head>
   <body>   
    <%- include('../partials/navbar') %>
+
   	<div class="bs-component">
       <h1>Books</h1>
+    </div>
 
-    <div class="list-group" id="results">
-      <% for(var i=0; i<books.length; i++) {%>
-         <a href=# class=list-group-item>
-            <div class=media>
-              <div class=media-left>
-                <img width="150" class=media-object src= <%if (books[i].picURL) {%>  <%= books[i].picURL %>  <%} else{%> <%= site.defaults.DefaultBookPictureURL %> <%}%> />
-              </div>
-              <div class=media-body>
-                <h3 class=media-heading>
-                  <strong><%= books[i].title %></strong>
-                </h3>
-                by <Strong><%= books[i].author %></Strong><br/>
-                  <%= books[i].edition %> <br/>
-                  <%= books[i].interests %> <br/>
+  <div class="center-align">
+    <div class="container">
+      <div class="row">
+        <% for(var i=0; i<books.length; i++) {%>
+          <% if (i%3 == 0 && i != 0) {%>
+            </div>
+            <div class="row">
+          <% } %>
+            <div class="col-xs-4 col-sm-4 col-md-4 center-align"> 
+              <div class="center-align-col">
+                <a href=#>          
+                  <img width=250 height=350 class="thumbnail" src= <% if (books[i].picURL) {%> <%= books[i].picURL %> <%} else{%> <%= site.defaults.DefaultBookPictureURL %> <%} %> />
+                </a>
               </div>
             </div>
-          </a>
-      <% } %>
+        <% } %>
+      </div>     
+    </div>
     </div>
    <%- include('../partials/footer') %>
   </body>

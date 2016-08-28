@@ -81,7 +81,7 @@ function go() {
     iBook = new book({
         title: "Hearts in Atlantis",
         author: "Stephen King",
-        picURL: "https://upload.wikimedia.org/wikipedia/en/4/49/Dewey_-_The_Small-Town_Library_Cat_Who_Touched_the_World_(book_cover).jpg",
+        picURL: "https://upload.wikimedia.org/wikipedia/en/7/70/HeartsInAtlantis.gif",
         interests: ["Fantasy"],
         edition: "First Edition",
         userId: "0",
@@ -105,7 +105,7 @@ function go() {
     iBook = new book({
         title: "Odd Thomas",
         author: "Dean Koontz",
-        picURL: "https://upload.wikimedia.org/wikipedia/en/4/49/Dewey_-_The_Small-Town_Library_Cat_Who_Touched_the_World_(book_cover).jpg",
+        picURL: "https://upload.wikimedia.org/wikipedia/en/7/72/Odd_Thomas.jpg",
         interests: ["Fiction"],
         edition: "second edition",
         userId: "1",
@@ -125,6 +125,110 @@ function go() {
     iBook.bookId = iBook.generateUUID();
     iBook.save();
     logger.warn("created book");
+
+
+
+
+    iBook = new book({
+        title: "A Book about Tests",
+        author: "me",
+        userId: "0",
+        noAvailable: 1,
+        isAvailable: false,
+        interests: null,
+        picURL: "https://s-media-cache-ak0.pinimg.com/236x/9e/b5/95/9eb595e51d197624cfe12e959179994d.jpg",  //girl who...
+        ISBN: null,
+        date: new Date(),
+        creationDate: new Date(),
+        language: "English",
+        edition: "1",
+        loanPrice: 500,
+        sellPrice: 600,
+        isForLoan: false,
+        isForSale: false,
+        isSold: false,
+        isOnLoan: false
+    });
+    iBook.bookId = iBook.generateUUID();
+    iBook.save();
+    logger.warn("created book");
+
+    iBook = new book({
+        title: "Hearts in Atlantis",
+        author: "Stephen King",
+        picURL: "http://ebookfriendly.com/wp-content/uploads/2014/03/Mr-Mercedes-Stephen-King-animated-book-cover.gif",  //mr merc
+        interests: ["Fantasy"],
+        edition: "First Edition",
+        userId: "0",
+        noAvailable: 1,
+        isAvailable: false,
+        ISBN: null,
+        date: new Date(),
+        creationDate: new Date(),
+        language: "English",
+        loanPrice: 500,
+        sellPrice: 600,
+        isForLoan: false,
+        isForSale: false,
+        isSold: false,
+        isOnLoan: false
+    });
+    iBook.bookId = iBook.generateUUID();
+    iBook.save();
+    logger.warn("created book");
+
+    iBook = new book({
+        title: "Odd Thomas",
+        author: "Dean Koontz",
+        picURL: "https://s-media-cache-ak0.pinimg.com/236x/a0/96/ff/a096ff3bafb7786b59ef9ba9d3e7ddf2.jpg",  //mockingbird
+        interests: ["Fiction"],
+        edition: "second edition",
+        userId: "1",
+        noAvailable: 33,
+        isAvailable: false,
+        ISBN: null,
+        date: new Date(),
+        creationDate: new Date(),
+        language: "English",
+        loanPrice: 500,
+        sellPrice: 600,
+        isForLoan: false,
+        isForSale: false,
+        isSold: false,
+        isOnLoan: false
+    });
+    iBook.bookId = iBook.generateUUID();
+    iBook.save();
+    logger.warn("created book");
+
+    iBook = new book({
+        title: "Odd Thomas",
+        author: "Dean Koontz",
+        picURL: null,
+        interests: ["Fiction"],
+        edition: "second edition",
+        userId: "1",
+        noAvailable: 33,
+        isAvailable: false,
+        ISBN: null,
+        date: new Date(),
+        creationDate: new Date(),
+        language: "English",
+        loanPrice: 500,
+        sellPrice: 600,
+        isForLoan: false,
+        isForSale: false,
+        isSold: false,
+        isOnLoan: false
+    });
+    iBook.bookId = iBook.generateUUID();
+    iBook.save();
+    logger.warn("created book");
+
+
+
+
+
 
     var iSystemDefaults = new systemDefaults({
         DefaultProfilePictureURL: "/assets/avatar.png",
