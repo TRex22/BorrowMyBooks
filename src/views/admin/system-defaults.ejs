@@ -12,19 +12,22 @@
 <body>
     <%- include('../partials/navbar') %>
         <div class="bs-component">
-            <h1>Change Theme</h1>
+            <h1 class="center-align">Change System Defaults</h1>
             <form role="form" action="/admin/system-defaults" method="post" class="box login">
                 <div class="form-group">
-                    <input type="text" class="form-control" tabindex="1" placeholder="Site Title" name="title">
-                    <input type="text" class="form-control" tabindex="1" placeholder="Default Profile Picture URL" name="defaultProfilePictureURL">
-                    <input type="text" class="form-control" tabindex="1" placeholder="Default Book Cover URL" name="defaultBookPictureURL">
-                    <input type="text" class="form-control" tabindex="1" placeholder="Default Branding Text" name="defaultBrandingText">
+                    <input type="text" class="form-control" tabindex="1" data-toggle="tooltip" title="Site Title" placeholder="Site Title" name="title" value="<%= site.defaults.Title %>">
 
-                    <input type="text" class="form-control" tabindex="1" placeholder="Default Profile Picture URL" name="defaultProfilePictureURL">
+                    <input type="text" class="form-control" tabindex="1" data-toggle="tooltip" title="Default Profile Picture URL" placeholder="Default Profile Picture URL" name="defaultProfilePictureURL" value="<%= site.defaults.DefaultProfilePictureURL %>">
 
-                     <select name="theme" class="form-control">
+                    <input type="text" class="form-control" tabindex="1" data-toggle="tooltip" title="Default Book Cover URL" placeholder="Default Book Cover URL" name="defaultBookPictureURL" value="<%= site.defaults.DefaultBookPictureURL%>">
+
+                    <input type="text" class="form-control" tabindex="1" data-toggle="tooltip" title="Default Branding Text" placeholder="Default Branding Text" name="defaultBrandingText" value="<%= site.defaults.DefaultBrandingText %>">
+
+                     <select name="theme" class="selectpicker form-control" data-live-search="true" data-toggle="tooltip" title="Default System Theme">
                         <% for(var i=0; i<site.themes.length; i++) {%>
-                            <option value=<%= site.themes[i] %>><%= site.themes[i] %></option>
+                            <option value=<%= site.themes[i] %> <% if(site.themes[i] === site.defaults.DefaultTheme) { %>selected<% } %>>
+                            <%= site.themes[i] %>
+                            </option>
                         <% } %>
                     </select>
                 </div>
@@ -36,5 +39,7 @@
         </div>
         <%- include('../partials/footer') %>
 </body>
+
+    <script src="/javascripts/jquery-script.js"></script>
 
 </html>
