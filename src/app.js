@@ -59,6 +59,10 @@ app.use(flash()); //JMC: TODO add mesages
 app.use(passport.initialize());
 app.use(passport.session());
 
+if (app.get('env') === 'development') {
+  app.use(require('connect-livereload')());
+}
+
 logger.info("Build Site Object");
 app.locals.site = siteBuilder.initSite();
 app.locals.site = siteBuilder.updateSite(app); //to make sure there is a site object even if db fails

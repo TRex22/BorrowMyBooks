@@ -23,7 +23,8 @@ function initSite() {
     site.defaults.DefaultProfilePictureURL = config.defaultProfilePictureURL;
     site.defaults.DefaultBookPictureURL = config.defaultBookPictureURL;
     site.defaults.DefaultBrandingText = config.defaultBrandingText;
-
+    
+    site.themes = config.themes;
     return site;
 }
 

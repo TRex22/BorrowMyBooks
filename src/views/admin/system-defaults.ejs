@@ -6,7 +6,8 @@
         <%= site.defaults.Title %>
     </title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script src="/javascripts/script.js"></script>
+    <script src="/javascripts/script.js"></script>    
+    <script src="/javascripts/jquery-script.js"></script>
 </head>
 
 <body>
@@ -15,21 +16,21 @@
             <h1 class="center-align">Change System Defaults</h1>
             <form role="form" action="/admin/system-defaults" method="post" class="box login">
                 <div class="form-group">
-                    <input type="text" class="form-control" tabindex="1" data-toggle="tooltip" title="Site Title" placeholder="Site Title" name="title" value="<%= site.defaults.Title %>">
+                    <input type="text" class="form-control" tabindex="1" data-toggle="tooltip" title="Site Title" placeholder="Site Title" name="title" value="<%= site.defaults.Title %>"><br/>
 
-                    <input type="text" class="form-control" tabindex="1" data-toggle="tooltip" title="Default Profile Picture URL" placeholder="Default Profile Picture URL" name="defaultProfilePictureURL" value="<%= site.defaults.DefaultProfilePictureURL %>">
+                    <input type="text" class="form-control" tabindex="1" data-toggle="tooltip" title="Default Profile Picture URL" placeholder="Default Profile Picture URL" name="defaultProfilePictureURL" value="<%= site.defaults.DefaultProfilePictureURL %>"><br/>
 
-                    <input type="text" class="form-control" tabindex="1" data-toggle="tooltip" title="Default Book Cover URL" placeholder="Default Book Cover URL" name="defaultBookPictureURL" value="<%= site.defaults.DefaultBookPictureURL%>">
+                    <input type="text" class="form-control" tabindex="1" data-toggle="tooltip" title="Default Book Cover URL" placeholder="Default Book Cover URL" name="defaultBookPictureURL" value="<%= site.defaults.DefaultBookPictureURL%>"><br/>
 
-                    <input type="text" class="form-control" tabindex="1" data-toggle="tooltip" title="Default Branding Text" placeholder="Default Branding Text" name="defaultBrandingText" value="<%= site.defaults.DefaultBrandingText %>">
+                    <input type="text" class="form-control" tabindex="1" data-toggle="tooltip" title="Default Branding Text" placeholder="Default Branding Text" name="defaultBrandingText" value="<%= site.defaults.DefaultBrandingText %>"><br/>
 
-                     <select name="theme" class="selectpicker form-control" data-live-search="true" data-toggle="tooltip" title="Default System Theme">
+                     <select name="defaultTheme" class="selectpicker form-control" data-live-search="true" data-toggle="tooltip" title="Default System Theme">
                         <% for(var i=0; i<site.themes.length; i++) {%>
                             <option value=<%= site.themes[i] %> <% if(site.themes[i] === site.defaults.DefaultTheme) { %>selected<% } %>>
                             <%= site.themes[i] %>
                             </option>
                         <% } %>
-                    </select>
+                    </select><br/>
                 </div>
                 
                 <div>
@@ -39,7 +40,4 @@
         </div>
         <%- include('../partials/footer') %>
 </body>
-
-    <script src="/javascripts/jquery-script.js"></script>
-
 </html>

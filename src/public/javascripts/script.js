@@ -22,9 +22,7 @@ loadScript("../../bower_components/bootstrap/dist/js/bootstrap.min.js");
 loadScript("../../bower_components/bootstrap-select/dist/js/bootstrap-select.min.js");
 
 
-/*$(window).on('beforeunload', function(){
-    socket.close();
-});
+/*
 
 document.ready(function(){
     document.getElementsByTagName('[data-toggle="tooltip"]').tooltip();   
