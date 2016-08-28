@@ -1,0 +1,3 @@
+We discussed to speak over skype later that day.
+Marko and Liron discussed learning NodeJS, bootstrap, and MongoDb.
+Jason discussed the documentation and we redid a few sections.

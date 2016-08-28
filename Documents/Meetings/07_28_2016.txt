@@ -1,0 +1,4 @@
+Jason created the github repository.
+The ownership was transferred to the scrum master.
+
+Jason suggested we use Waffle.io to keep track of our backlog.

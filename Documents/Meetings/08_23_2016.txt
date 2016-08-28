@@ -1,0 +1,2 @@
+Jason added a lot of issues to Waffle.io and added a resetDB.sh file to reset the database.
+Liron and Marko said nothing.
