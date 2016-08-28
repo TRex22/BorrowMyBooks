@@ -23,7 +23,7 @@
                     <input type="text" class="form-control" tabindex="1" placeholder="Default Profile Picture URL" name="defaultProfilePictureURL">
 
                      <select name="theme">
-                        <%= for(var i=0; i<site.themes.length; i++) {%>
+                        <% for(var i=0; i<site.themes.length; i++) {%>
                             <option value=site.themes[i]>site.themes[i]</option>
                         <% } %>
                     </select>
