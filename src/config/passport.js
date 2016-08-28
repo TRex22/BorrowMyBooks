@@ -3,6 +3,7 @@ var logger = require("../logger/logger");
 // local authentication
 // For more details go to https://github.com/jaredhanson/passport-local
 var LocalStrategy = require('passport-local').Strategy;
+var BasicStrategy = require('passport-http').BasicStrategy;
 
 // Facebook authentication
 // For more details go to https://github.com/jaredhanson/passport-facebook
@@ -21,6 +22,8 @@ var TWITTER_CONSUMER_SECRET = "<Insert Your Secret Key Here>";
 var GOOGLE_CONSUMER_KEY = "<Insert Your Key Here>";
 var GOOGLE_CONSUMER_SECRET = "<Insert Your Secret Key Here>";
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
+
+//TODO: passport-github
 
 var User = require('../models/user');
 
@@ -66,6 +69,27 @@ module.exports = function(app, passport) {
             });
 
         }));
+
+    passport.use('basic', new BasicStrategy(
+        function(userid, password, done) {
+            User.findOne({ username: userid }, function(err, user) {
+                if (err) {
+                    return done(err);
+                }
+                if (!user) {
+                    logger.warn('Incorrect username.');
+                    return done(null, false, req.flash('error', 'User does not exist.'));
+                }
+
+                if (!user.verifyPassword(password)) {
+                    logger.warn('Incorrect password.');
+                    return done(null, false, req.flash('error', 'Enter correct password'));
+                }
+                user.isLoggedIn = true;
+                return done(null, user);
+            });
+        }
+    ));
 
     passport.use('signup', new LocalStrategy({
             usernameField: 'email',

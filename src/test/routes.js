@@ -96,6 +96,7 @@ describe('#Admin Route', function() {
             .get('/admin')
             .end(function(err, res) {
                 res.should.have.status(200);
+                res.redirects[0].should.contain('/login'); //redirect
                 done();
             });
     });
@@ -111,31 +112,30 @@ describe('#Admin Route', function() {
     });
 
     it('system-defaults should respond to GET logged in', function(done) {
-        chai.request(app)
+        var agent = chai.request.agent(app);
+        agent
             .post('/login')
             .send({ username: 'Admin', password: '123456' })
-            .then(function(err, res) {
-                res.should.have.status(200);
-                res.redirects[0].should.not.contain('/login');
-            })
-            .get('/admin/system-defaults')
             .end(function(err, res) {
-                res.should.have.status(200);
-                console.log(res)
-                done();
-            });;
-
-
+                                console.log(res.headers)
+                res.req.header.should.have('connect.sid=');
+                return agent.get('/admin/system-defaults')
+                    .then(function(res) {
+                        expect(res).to.have.status(200);
+                        res.redirects[0].should.not.contain('/login'); //redirect
+                        done();
+                    })
+            });
     });
 
-    it('should respond to GET', function(done) {
+    /*it('should respond to GET', function(done) {
         chai.request(app)
             .get('/admin/system-defaults')
             .end(function(err, res) {
                 res.should.have.status(200);
                 done();
             });
-    });
+    });*/
 
 });
 
