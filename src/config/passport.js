@@ -59,7 +59,7 @@ module.exports = function(app, passport) {
                         logger.warn('Incorrect password.');
                         return done(null, false, req.flash('error', 'Enter correct password'));
                     }
-                    user.login = true;
+                    user.isLoggedIn = true;
                     return done(null, user);
 
                 });
@@ -92,7 +92,7 @@ module.exports = function(app, passport) {
                             newUser.save(function(err) {
                                 if (err)
                                     throw err;
-                                user.login = true;
+                                user.isLoggedIn = true;
                                 return done(null, newUser);
                             });
                         }
