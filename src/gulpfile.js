@@ -31,6 +31,7 @@ gulp.task('docs', function() {
 });
 
 gulp.task('pre-cover', function() {
+    process.env.NODE_ENV = 'test';
     return gulp.src(['./*.js', 'routes/*.js', 'models/*.js', 'db/*.js', '!db/seedDb.js', 'logger/*.js', 'public/javascripts/*.js', 'services/*.js'])
         // Covering files
         .pipe(istanbul())
@@ -58,6 +59,7 @@ gulp.task('install', function() {
 });
 
 gulp.task('watch', gulpSync.async(['lint', 'cover']), function() {
+    process.env.NODE_ENV = 'production';
     nodemon({
             script: config.startPath
         })
@@ -78,6 +80,7 @@ gulp.task('watch', gulpSync.async(['lint', 'cover']), function() {
 });
 
 gulp.task('watch-man', gulpSync.async(['lint']), function() {
+    process.env.NODE_ENV = 'production';
     nodemon({
             script: config.startPath
         })
@@ -95,4 +98,12 @@ gulp.task('watch-man', gulpSync.async(['lint']), function() {
             }
         });
     });
+});
+
+gulp.task('set-dev-node-env', function() {
+    return process.env.NODE_ENV = 'development';
+});
+
+gulp.task('set-prod-node-env', function() {
+    return process.env.NODE_ENV = 'production';
 });

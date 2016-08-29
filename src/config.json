@@ -20,6 +20,7 @@
     "logFileMaxSize": 5242880,
     "logFileMaxFiles": 5,
     "mongodb": "mongodb://localhost/BorrowMyBooks",
+    "mongodbTest": "mongodb://localhost/BorrowMyBooksTestDb",
     "mongoUser": "trex22",
     "mongoPassword": "123456",
     "apiMode": false,

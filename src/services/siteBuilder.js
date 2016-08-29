@@ -37,12 +37,27 @@ function updateSite(app) {
         if (defaults.DefaultTheme) {
             app.locals.site.defaults = defaults._doc;        
         }
+        else{
+            app.locals.site.defaults = initSite();
+        }
+
+        //make sure you cant break the site
+        if (!findTheme(app.locals.site.defaults.DefaultTheme)){
+            app.locals.site.defaults.DefaultTheme = config.defaultTheme;
+        }
     });
 
     app.locals.site.buildVersion = pkg.version;
     logger.info("Done.");
 
     return app.locals.site;
+}
+
+function findTheme(theme){
+    if (config.themes.indexOf(theme) > -1){
+        return true;
+    }
+    return false;
 }
 
 module.exports = {

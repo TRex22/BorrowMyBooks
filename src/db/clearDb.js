@@ -15,7 +15,7 @@ var userRating = require('../models/userRating');
 
 var dbHelper = require('../services/dbHelper.js');
 
-function go() {
+function go(db) {
     dbHelper.dropCollection("User");
     dbHelper.dropCollection("Book");
     dbHelper.dropCollection("SystemDefaults");

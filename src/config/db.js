@@ -6,24 +6,28 @@ var options = {
     /*db: { native_parser: true },
     server: { poolSize: 5 },
     replset: { rs_name: 'myReplicaSetName' },*/
-   /* user: config.mongoUser,
-    pass: config.mongoPassword*/
+    /* user: config.mongoUser,
+     pass: config.mongoPassword*/
     //TODO JMC Fix add db user
 }
 
 var mongoose = require('mongoose');
 
-try{
-	mongoose.connect(config.mongodb, options);
-	logger.info("connected to database.");
-}
-catch(error){
-	logger.error("Error connecting to db. Err: "+error);
+try {
+    if (process.env.NODE_ENV === 'test') {
+        logger.info("test db");
+        mongoose.connect(config.mongodbTest, options);
+        logger.info("connected to database.");
+    } else {
+        logger.info("production db");
+        mongoose.connect(config.mongodb, options);
+        logger.info("connected to database.");
+    }
+
+} catch (error) {
+    logger.error("Error connecting to db. Err: " + error);
 }
 
-module.exports = 
-{
-	mongoose : mongoose
+module.exports = {
+    mongoose: mongoose
 };
-
-
