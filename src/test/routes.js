@@ -63,12 +63,14 @@ describe('#Login Route', function() {
     });
 
     it('should login sucessfully', function(done) {
-        chai.request(app)
-            .post('/login')
-            .send({ username: 'Admin', password: '123456' })
+        this.timeout(3000);
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
             .end(function(err, res) {
-                res.should.have.status(200);
-                res.redirects[0].should.not.contain('/login');
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
                 done();
             });
     });
