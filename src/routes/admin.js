@@ -16,11 +16,12 @@ module.exports = function(app, passport) {
             /*console.log(req.user);*/
             if (req.user) {
                 if (userHelper.isAdmin(req.user)) {
-                    res.render('admin/admin', { site: app.locals.site });
+                    req = userHelper.processUser(req);
+                    res.render('admin/admin', { site: app.locals.site, user: req.user });
                 } else {
                     res.status(401);
                     url = req.url;
-                    res.render('errors/401.ejs', { title: '401: Unauthorized', url: url, statusCode: 401, site: app.locals.site });
+                    res.render('errors/401.ejs', { title: '401: Unauthorized', url: url, statusCode: 401, site: app.locals.site, user: req.user });
                 }
             } else {
                 res.redirect('/login');
@@ -29,14 +30,22 @@ module.exports = function(app, passport) {
     );
 
     /* istanbul ignore next */ //TODO: JMC think about this
-    app.get('/admin/initdb', passport.authenticate('local', {
-            successRedirect: '/admin/initdb',
-            failureRedirect: '/login',
-            failureFlash: true
-        }),
+    app.get('/admin/initdb',
         function(req, res, next) {
-            seedDb.go();
-            res.redirect('/');
+            if (req.user) {
+                if (userHelper.isAdmin(req.user)) {
+                    req = userHelper.processUser(req);
+                    seedDb.go();
+                    res.redirect('/');
+
+                } else {
+                    res.status(401);
+                    url = req.url;
+                    res.render('errors/401.ejs', { title: '401: Unauthorized', url: url, statusCode: 401, site: app.locals.site, user: req.user });
+                }
+            } else {
+                res.redirect('/login');
+            }
         }
     );
 
@@ -44,11 +53,12 @@ module.exports = function(app, passport) {
         function(req, res, next) {
             if (req.user) {
                 if (userHelper.isAdmin(req.user)) {
-                    res.render('admin/system-defaults', { site: app.locals.site });
+                    req = userHelper.processUser(req);
+                    res.render('admin/system-defaults', { site: app.locals.site, user: req.user });
                 } else {
                     res.status(401);
                     url = req.url;
-                    res.render('errors/401.ejs', { title: '401: Unauthorized', url: url, statusCode: 401, site: app.locals.site });
+                    res.render('errors/401.ejs', { title: '401: Unauthorized', url: url, statusCode: 401, site: app.locals.site, user: req.user });
                 }
             } else {
                 res.redirect('/login');
@@ -60,6 +70,7 @@ module.exports = function(app, passport) {
         function(req, res, next) {
             if (req.user) {
                 if (userHelper.isAdmin(req.user)) {
+                    req = userHelper.processUser(req);
                     //update system defaults and then re-render the page
 
                     sysDefault.findOne({}).exec(function(err, defaults) { //there should only be one set of defaults
@@ -76,13 +87,13 @@ module.exports = function(app, passport) {
 
                             defaults.save();
 
-                            res.render('admin/system-defaults', { site: app.locals.site });
+                            res.render('admin/system-defaults', { site: app.locals.site, user: req.user });
                         }
                     });
                 } else {
                     res.status(401);
                     url = req.url;
-                    res.render('errors/401.ejs', { title: '401: Unauthorized', url: url, statusCode: 401, site: app.locals.site });
+                    res.render('errors/401.ejs', { title: '401: Unauthorized', url: url, statusCode: 401, site: app.locals.site, user: req.user });
                 }
             } else {
                 res.redirect('/login');

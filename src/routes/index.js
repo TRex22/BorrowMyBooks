@@ -2,9 +2,11 @@
 var express = require('express');
 var pkg = require('../package');
 var router = express.Router();
+var userHelper = require('../services/userHelper.js');
 
 module.exports = function(app, passport) {
     app.get('/', function(req, res) {
-        res.render('index', { site: app.locals.site });
+        req = userHelper.processUser(req);
+        res.render('index', { site: app.locals.site, user: req.user });
     });
 };

@@ -1,5 +1,6 @@
 /*SOURCE: code from https://github.com/knoldus/Node.js_UserLogin_Template*/
 var logger = require("../logger/logger");
+var userHelper = require('../services/userHelper');
 // local authentication
 // For more details go to https://github.com/jaredhanson/passport-local
 var LocalStrategy = require('passport-local').Strategy;
@@ -51,18 +52,22 @@ module.exports = function(app, passport) {
                 User.findOne({ $or: [{ email: username }, { username: username }] }, function(err, user) {
                     if (err) {
                         logger.err(err);
+                        req = userHelper.processUser(req);
                         return done(err);
                     }
                     if (!user) {
                         logger.warn('Incorrect username.');
+                        req = userHelper.processUser(req);
                         return done(null, false, req.flash('error', 'User does not exist.'));
                     }
 
                     if (!user.verifyPassword(password)) {
                         logger.warn('Incorrect password.');
+                        req = userHelper.processUser(req);
                         return done(null, false, req.flash('error', 'Enter correct password'));
                     }
-                    user.isLoggedIn = true;
+
+                    req = userHelper.processUser(req);
                     return done(null, user);
 
                 });
@@ -74,18 +79,22 @@ module.exports = function(app, passport) {
         function(userid, password, done) {
             User.findOne({ username: userid }, function(err, user) {
                 if (err) {
+                    user.isLoggedIn = false;
                     return done(err);
                 }
                 if (!user) {
                     logger.warn('Incorrect username.');
+                    user.isLoggedIn = false;
                     return done(null, false, req.flash('error', 'User does not exist.'));
                 }
 
                 if (!user.verifyPassword(password)) {
                     logger.warn('Incorrect password.');
+                    user.isLoggedIn = false;
                     return done(null, false, req.flash('error', 'Enter correct password'));
                 }
-                user.isLoggedIn = true;
+
+                req = userHelper.processUser(req);
                 return done(null, user);
             });
         }

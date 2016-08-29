@@ -55,6 +55,7 @@ app.use(express.static('public'));
 app.use(cookieParser());
 app.use(bodyParser());
 app.use(session({ 
+	cookieName: 'session',
 	secret: config.secret, 
     saveUninitialized: true,
     resave: true 

@@ -225,11 +225,6 @@ function go() {
     iBook.save();
     logger.warn("created book");
 
-
-
-
-
-
     var iSystemDefaults = new systemDefaults({
         DefaultProfilePictureURL: "/assets/avatar.png",
         DefaultBookPictureURL: "/assets/cover.jpg",

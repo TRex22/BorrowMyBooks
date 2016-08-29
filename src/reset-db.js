@@ -8,7 +8,7 @@ var seed = require('./db/seedDb');
 
 var async = require('async');
 
-async.waterfall([
+async.series([
     clear.go(),
     seed.go()
 ], function(error, success) {
