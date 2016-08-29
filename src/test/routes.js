@@ -19,6 +19,9 @@ var mongoose = require('../config/db.js').mongoose;
 var systemDefaults = require('../models/systemDefaults');
 var sysDefault = mongoose.model('SystemDefaults', systemDefaults);
 
+var seed = require('../db/seedDb');
+var clear = require('../db/clearDb');
+
 /*js to test*/
 
 //setup
@@ -45,6 +48,11 @@ describe('#Home Route', function() {
 });
 
 describe('#Login Route', function() {
+    beforeEach(function() {
+        clear.go();
+        seed.go();
+    });
+
     it('should respond to GET', function(done) {
         chai.request(app)
             .get('/login')
