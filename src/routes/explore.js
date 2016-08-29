@@ -19,4 +19,20 @@ module.exports = function(app, passport) {
             res.render('explore/explore', { site: app.locals.site, books: books, user: req.user });
         });
     });
+
+    app.get('/explore/:bookId', function(req, res, next) {
+        //TODO: JMC database connection
+        //also system defaults for alt
+        req = userHelper.processUser(req);
+        var Book = mongoose.model('Book', book);
+
+        Book.findOne({_id: req.params.bookId}, function(err, book) {
+            if(book){
+            	res.render('explore/book', { site: app.locals.site, book: book, user: req.user });
+            }
+            else{
+            	res.redirect('/explore');
+            }
+        });
+    });
 };

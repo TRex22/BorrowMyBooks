@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <%- include('../partials/header') %>
+  <body>   
+   <%- include('../partials/navbar') %>
+
+  	<div class="bs-component">
+      <h1><%= book.title %></h1>
+    </div>
+
+  <div class="center-align">
+    <div class="book">
+        <a class="title"><% if (book.title) {%> <%= book.title %> <%} %></a>
+        <a class="author"><% if (book.author) {%> <%= book.author %> <%} %></a>
+
+    </div>
+  </div>
+  <%- include('../partials/footer') %>
+  </body>
+</html>

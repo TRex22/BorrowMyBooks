@@ -22,8 +22,8 @@
                   <img width=250 height=350 src= <% if (books[i].picURL) {%> <%= books[i].picURL %> <%} else{%> <%= site.defaults.DefaultBookPictureURL %> <%} %> />
 
                   <div class="overlay">
-                              <a class="title" href="#"><% if (books[i].title) {%> <%= books[i].title %> <%} %></a>
-                              <a class="author" href="#"><% if (books[i].author) {%> <%= books[i].author %> <%} %></a>
+                              <a class="title" href="explore/<%= books[i]._id %>"><% if (books[i].title) {%> <%= books[i].title %> <%} %></a>
+                              <a class="author" href="explore/<%= books[i]._id %>"><% if (books[i].author) {%> <%= books[i].author %> <%} %></a>
                   </div>
                 </div>
               </div>

@@ -45,6 +45,11 @@ function resetUser() {
     return user;
 }
 
+function auth(req, res) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login')
+}
+
 module.exports = {
     isAdmin: isAdmin,
     processUser: processUser
