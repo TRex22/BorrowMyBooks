@@ -18,6 +18,7 @@ module.exports = function(app, passport) {
         });
 
     app.get('/signup', function(req, res) {
+        req = userHelper.processUser(req);
         res.render('accounts/signup.ejs', { 'site': app.locals.site, user: req.user });
     });
 

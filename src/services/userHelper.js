@@ -15,6 +15,11 @@ function initUser(req) {
 }
 
 function processUser(req, logout) {
+    if(!req){
+        req = {};
+        req.session = {};
+    }
+
     if (!req.user) {
         req = initUser(req);
     } else {
@@ -41,16 +46,19 @@ function resetUser() {
     user = {};
     user.isAdmin = false; //security
     user.isLoggedIn = false;
+    user.userRole = [];
+    user.userRole = null;
 
     return user;
 }
 
-function auth(req, res) {
+/*function auth(req, res) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login')
-}
+}*/
 
 module.exports = {
     isAdmin: isAdmin,
-    processUser: processUser
+    processUser: processUser,
+    resetUser: resetUser
 }

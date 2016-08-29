@@ -62,6 +62,77 @@ describe('#User Helper', function() {
 
         userHelper.isAdmin(iUser).should.be.true;
     });
+
+    it('should process a new user session', function() {
+        var req = userHelper.processUser(req);
+        req.user.isAdmin.should.be.false;
+        req.user.isLoggedIn.should.be.false;
+        req.session.user.isAdmin.should.be.false;
+        req.session.user.isLoggedIn.should.be.false;
+    });
+
+    it('should process a new user session, where there is a req', function() {
+        var req = {};
+        req.session = {};
+        req = userHelper.processUser(req);
+        req.user.isAdmin.should.be.false;
+        req.user.isLoggedIn.should.be.false;
+        req.session.user.isAdmin.should.be.false;
+        req.session.user.isLoggedIn.should.be.false;
+    });
+
+    it('should process a current user session', function() {
+        var user = userHelper.resetUser();
+        var req = {};
+        req.session = {};
+        req.session.user = user;
+        req.user = user;
+
+        req = userHelper.processUser(req);
+        req.user.isAdmin.should.be.false;
+        req.user.isLoggedIn.should.be.true;
+        req.session.user.isAdmin.should.be.false;
+        req.session.user.isLoggedIn.should.be.true;
+    });
+
+    it('should process a current admin user session', function() {
+        var user = userHelper.resetUser();
+        user.userRole = ['admin'];
+        var req = {};
+        req.session = {};
+        req.session.user = user;
+        req.user = user;
+
+        req = userHelper.processUser(req);
+        req.user.isAdmin.should.be.true;
+        req.user.isLoggedIn.should.be.true;
+        req.session.user.isAdmin.should.be.true;
+        req.session.user.isLoggedIn.should.be.true;
+    });
+
+    it('should logout a user', function() {
+        var user = userHelper.resetUser();
+        user.userRole = ['admin'];
+        var req = {};
+        req.session = {};
+        req.session.user = user;
+        req.user = user;
+
+        req = userHelper.processUser(req, true);
+        (req.user.userRole === null).should.be.true;
+        req.user.isAdmin.should.be.false;
+        req.user.isLoggedIn.should.be.false;
+        req.session.user.isAdmin.should.be.false;
+        req.session.user.isLoggedIn.should.be.false;
+    });
+
+    it('should reset a user', function() {
+        var user = userHelper.resetUser();
+        user.isAdmin.should.be.false;
+        user.isLoggedIn.should.be.false;
+    });
+
+
 });
 
 describe('#SiteBuilder', function() {
@@ -82,17 +153,17 @@ describe('#SiteBuilder', function() {
 
     it('should get defaults from db', function() {
         var site = siteBuilder.updateSite(app);
-/*
-        site.user.isAdmin.should.be.false; //security
-        site.buildVersion.should.equal(pkg.version);
+        /*
+                site.user.isAdmin.should.be.false; //security
+                site.buildVersion.should.equal(pkg.version);
 
-        validator.isAscii(site.defaults.DefaultTheme).should.be.true;
+                validator.isAscii(site.defaults.DefaultTheme).should.be.true;
 
-        site.defaults.Title.should.be(config.title);
+                site.defaults.Title.should.be(config.title);
 
-        validator.isURL(site.defaults.DefaultProfilePictureURL).should.be.true;
-        validator.isURL(site.defaults.DefaultBookPictureURL).should.be.true;
+                validator.isURL(site.defaults.DefaultProfilePictureURL).should.be.true;
+                validator.isURL(site.defaults.DefaultBookPictureURL).should.be.true;
 
-        site.defaults.DefaultBrandingText.should.be(config.defaultBrandingText);*/
+                site.defaults.DefaultBrandingText.should.be(config.defaultBrandingText);*/
     });
 });

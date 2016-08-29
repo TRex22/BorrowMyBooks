@@ -77,14 +77,23 @@ module.exports = function(app, passport) {
                         if (err) throw err; //TODO: FIX
 
                         if (req.body && defaults) {
-                            defaults.DefaultTheme = req.body.defaultTheme;
-                            defaults.Title = req.body.title;
-                            defaults.DefaultProfilePictureURL = req.body.defaultProfilePictureURL;
-                            defaults.DefaultBookPictureURL = req.body.defaultBookPictureURL;
-                            defaults.DefaultBrandingText = req.body.defaultBrandingText;
+                            if (req.body.defaultTheme) {
+                                defaults.DefaultTheme = req.body.defaultTheme;
+                            }
+                            if (req.body.title) {
+                                defaults.Title = req.body.title;
+                            }
+                            if (req.body.defaultProfilePictureURL) {
+                                defaults.DefaultProfilePictureURL = req.body.defaultProfilePictureURL;
+                            }
+                            if (req.body.defaultBookPictureURL) {
+                                defaults.DefaultBookPictureURL = req.body.defaultBookPictureURL;
+                            }
+                            if (req.body.defaultBrandingText) {
+                                defaults.DefaultBrandingText = req.body.defaultBrandingText;
+                            }
 
                             app.locals.site.defaults = defaults;
-
                             defaults.save();
 
                             res.render('admin/system-defaults', { site: app.locals.site, user: req.user });

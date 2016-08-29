@@ -12,6 +12,13 @@ var validator = require('validator');
 
 var app = require('../app');
 var www = require('../bin/www-test');
+
+var testHelper = require('../services/testHelper');
+
+var mongoose = require('../config/db.js').mongoose;
+var systemDefaults = require('../models/systemDefaults');
+var sysDefault = mongoose.model('SystemDefaults', systemDefaults);
+
 /*js to test*/
 
 //setup
@@ -93,6 +100,8 @@ describe('#Explore Route', function() {
 });
 
 describe('#Admin Route', function() {
+    /*it('login', testHelper.loginUser());*/
+
     it('admin should respond to GET', function(done) {
         chai.request(app)
             .get('/admin')
@@ -111,34 +120,52 @@ describe('#Admin Route', function() {
                 res.redirects[0].should.contain('/login'); //redirect
                 done();
             });
+
     });
 
     it('system-defaults should respond to GET logged in', function(done) {
-        var agent = chai.request.agent(app);
-        agent
-            .post('/login')
-            .send({ username: 'Admin', password: '123456' })
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
             .end(function(err, res) {
-                                console.log(res.headers)
-                res.req.header.should.have('connect.sid=');
-                return agent.get('/admin/system-defaults')
-                    .then(function(res) {
-                        expect(res).to.have.status(200);
-                        res.redirects[0].should.not.contain('/login'); //redirect
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                request(app)
+                    .get('/admin/system-defaults')
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects.should.be.empty; //redirect
                         done();
-                    })
+                    });
+
             });
     });
 
-    /*it('should respond to GET', function(done) {
-        chai.request(app)
-            .get('/admin/system-defaults')
+    it('system-defaults should respond to POST logged in', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
             .end(function(err, res) {
-                res.should.have.status(200);
-                done();
-            });
-    });*/
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                request(app)
+                    .post('/admin/system-defaults')
+                    .send({ defaultTheme: "testtest" })
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects.should.be.empty; //redirect
 
+                        sysDefault.findOne({}).exec(function(err, defaults) { //there should only be one set of defaults
+                            if (err) done(err);
+                            
+                            defaults.DefaultTheme.should.equal("testtest");
+                            done();
+                        });
+                    });
+            });
+    });
 });
 
 describe('#Service Routes', function() {
