@@ -47,6 +47,7 @@
     "req-flash": "0.0.3",
     "serve-favicon": "2.3.0",
     "socket.io": "1.4.5",
+    "supertest": "^2.0.0",
     "tiny-lr": "0.2.1",
     "uuid": "^2.0.2",
     "validator": "^5.5.0",

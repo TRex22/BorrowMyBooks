@@ -2,10 +2,12 @@ var fs = require('fs');
 var http = require('http');
 var util = require('util');
 var config = require('../config');
+
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = require('chai').should();
 var expect = require('chai').expect;
+var request = require('supertest')
 var validator = require('validator');
 
 var app = require('../app');

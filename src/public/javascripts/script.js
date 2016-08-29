@@ -16,10 +16,9 @@ function loadScript(url, callback)
 }
 
 //bower libraries are here for now
-var jquery;
-loadScript("../../bower_components/jquery/dist/jquery.min.js");
+/*loadScript("../../bower_components/jquery/dist/jquery.min.js");
 loadScript("../../bower_components/bootstrap/dist/js/bootstrap.min.js");
-loadScript("../../bower_components/bootstrap-select/dist/js/bootstrap-select.min.js");
+loadScript("../../bower_components/bootstrap-select/dist/js/bootstrap-select.min.js");*/
 
 
 /*

@@ -54,7 +54,11 @@ logger.info("Initialize Authentication");
 app.use(express.static('public'));
 app.use(cookieParser());
 app.use(bodyParser());
-app.use(session({ secret: config.secret }));
+app.use(session({ 
+	secret: config.secret, 
+    saveUninitialized: true,
+    resave: true 
+}));
 app.use(flash()); //JMC: TODO add mesages
 app.use(passport.initialize());
 app.use(passport.session());
