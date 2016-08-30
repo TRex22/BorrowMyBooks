@@ -23,7 +23,7 @@ function initSite() {
     site.defaults.DefaultProfilePictureURL = config.defaultProfilePictureURL;
     site.defaults.DefaultBookPictureURL = config.defaultBookPictureURL;
     site.defaults.DefaultBrandingText = config.defaultBrandingText;
-    
+
     site.themes = config.themes;
     return site;
 }
@@ -32,17 +32,21 @@ function updateSite(app) {
     logger.info("Updating site backpack from db ...");
 
     sysDefault.findOne({}).exec(function(err, defaults) { //there should only be one set of defaults
+        /* istanbul ignore next */
         if (err) throw err; //TODO: FIX
 
+        /* istanbul ignore next */
         if (defaults.DefaultTheme) {
-            app.locals.site.defaults = defaults._doc;        
-        }
-        else{
+            app.locals.site.defaults = defaults._doc;
+        } else {
+            /* istanbul ignore next */
             app.locals.site.defaults = initSite();
         }
 
         //make sure you cant break the site
-        if (!findTheme(app.locals.site.defaults.DefaultTheme)){
+        /* istanbul ignore next */
+        if (!findTheme(app.locals.site.defaults.DefaultTheme)) {
+            /* istanbul ignore next */
             app.locals.site.defaults.DefaultTheme = config.defaultTheme;
         }
     });
@@ -53,8 +57,8 @@ function updateSite(app) {
     return app.locals.site;
 }
 
-function findTheme(theme){
-    if (config.themes.indexOf(theme) > -1){
+function findTheme(theme) {
+    if (config.themes.indexOf(theme) > -1) {
         return true;
     }
     return false;
@@ -62,8 +66,6 @@ function findTheme(theme){
 
 module.exports = {
     initSite: initSite,
-    updateSite: updateSite
+    updateSite: updateSite,
+    findTheme: findTheme
 };
-/*
-var site = siteBuilder.initSite();
-site = siteBuilder.updateSite(site); //to make sure there is a site object even if db fails*/

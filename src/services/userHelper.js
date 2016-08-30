@@ -2,10 +2,10 @@ function initUser(req) {
     if (!req.session.user) {
         req.session.user = {};
         req.session.user.isAdmin = false;
-        req.session.user.isLoggedIn = false;        
+        req.session.user.isLoggedIn = false;
     }
 
-    if(!req.user){
+    if (!req.user) {
         req.user = {};
         req.user.isAdmin = false;
         req.user.isLoggedIn = false;
@@ -15,7 +15,7 @@ function initUser(req) {
 }
 
 function processUser(req, logout) {
-    if(!req){
+    if (!req) {
         req = {};
         req.session = {};
     }
@@ -60,5 +60,6 @@ function resetUser() {
 module.exports = {
     isAdmin: isAdmin,
     processUser: processUser,
-    resetUser: resetUser
+    resetUser: resetUser,
+    initUser: initUser
 }
