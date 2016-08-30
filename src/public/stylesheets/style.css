@@ -18,9 +18,19 @@ a {
 	background-color: white;
 }
 .build-version{
-	text-align: right;
+	float:right;
 	padding-right: 25px;
 }
+
+.copyright{
+  text-align: left;
+  padding-right: 25px;
+}
+
+.footer {
+    padding-top: 20px;
+}
+
 .admin-functions{
 	padding-left: 185px;
 	padding-top: 10px;
