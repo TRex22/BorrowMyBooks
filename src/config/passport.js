@@ -75,9 +75,9 @@ module.exports = function(app, passport) {
 
         }));
 
-    passport.use('basic', new BasicStrategy(
-        function(userid, password, done) {
-            User.findOne({ username: userid }, function(err, user) {
+    passport.use('basic', new BasicStrategy( //TODO: JMC fix
+        function(username, password, done) {
+            User.findOne({ $or: [{ email: username }, { username: username }] }, function(err, user) {
                 if (err) {
                     user.isLoggedIn = false;
                     return done(err);
@@ -101,54 +101,48 @@ module.exports = function(app, passport) {
     ));
 
     passport.use('signup', new LocalStrategy({
-            usernameField: 'email',
+            usernameField: 'username',
             passReqToCallback: true
         },
-        function(req, email, password, done) {
+        function(req, username, password, done) {
 
             process.nextTick(function() {
 
                 if (!req.user) {
-                    User.findOne({ 'user.email': email }, function(err, user) {
+                    User.findOne({ $or: [{ email: username }, { username: username }] }, function(err, user) {
                         if (err) {
                             return done(err);
                         }
                         if (user) {
                             return done(null, false, req.flash('signuperror', 'User already exists'));
                         } else {
-                            var newUser = new User();
-                            newUser.user.username = req.body.username;
-                            newUser.user.email = email;
-                            newUser.user.password = newUser.generateHash(password);
-                            newUser.user.name = ''
-                            newUser.user.address = ''
+                            var newUser = userHelper.createNewUser(username, password, req.body);
                             newUser.save(function(err) {
                                 if (err)
-                                    throw err;
-                                user.isLoggedIn = true;
+                                    throw err; //TODO JMC Fix
+                                req.user = newUser;
+                                req = userHelper.processUser(req);
+                                logger.warn("created new user"); //todo: JMC more explicit?
+
                                 return done(null, newUser);
                             });
                         }
 
                     });
                 } else {
-                    var user = req.user;
-                    user.user.username = req.body.username;
-                    user.user.email = email;
-                    user.user.password = user.generateHash(password);
-                    user.user.name = ''
-                    user.user.address = ''
-
-                    user.save(function(err) {
+                    var newUser = userHelper.createNewUser(username, password, req.body);
+                    newUser.save(function(err) {
                         if (err)
                             throw err;
-                        return done(null, user);
-                    });
 
+                        req.user = newUser;
+                        req = userHelper.processUser(req);
+                        logger.warn("created new user");
+                        return done(null, newUser);
+                    });
                 }
 
             });
-
 
         }));
 

@@ -1,4 +1,3 @@
-var mongoose = require('mongoose');
 var logger = require("../logger/logger");
 var config = require("../config.json");
 
@@ -31,7 +30,7 @@ function go() {
     iUser.userId = iUser.generateUUID();
     iUser.salt = iUser.generateSalt();
     iUser.hash = iUser.generateHash("123456");
-    iUser.save(); //TODO Password
+    iUser.save(); 
     logger.warn("created admin user");
 
     iUser = new user({
@@ -51,7 +50,7 @@ function go() {
     iUser.userId = iUser.generateUUID();
     iUser.salt = iUser.generateSalt();
     iUser.hash = iUser.generateHash("123456");
-    iUser.save(); //TODO Password
+    iUser.save(); 
     logger.warn("created user");
 
     var iBook = new book({

@@ -14,8 +14,8 @@ var istanbul = require('gulp-istanbul');
 var mocha = require('gulp-mocha');
 var install = require("gulp-install");
 
-var clear = require('./db/clearDb');
-var seed = require('./db/seedDb');
+/*var clear = require('./db/clearDb');
+var seed = require('./db/seedDb');*/
 
 gulp.task('lint', function() {
     return gulp.src(jsPath)
@@ -103,7 +103,7 @@ gulp.task('watch-man', gulpSync.async(['lint']), function() {
     });
 });
 
-gulp.task('reset-db', gulpSync.sync(['clear-db', 'seed-db']));
+/*gulp.task('reset-db', gulpSync.sync(['clear-db', 'seed-db']));
 
 gulp.task('clear-db', function() {
     clear.go();
@@ -111,7 +111,7 @@ gulp.task('clear-db', function() {
 
 gulp.task('seed-db', function() {
     seed.go();
-});
+});*/
 
 gulp.task('set-dev-node-env', function() {
     return process.env.NODE_ENV = 'development';

@@ -23,10 +23,12 @@ module.exports = function(app, passport) {
     });
 
     app.post('/signup', passport.authenticate('signup', {
-        successRedirect: '/',
-        failureRedirect: '/signup',
-        failureFlash: true
-    }));
+            failureRedirect: '/signup',
+            failureFlash: true
+        }),
+        function(req, res) {
+            res.redirect(req.session.returnTo || '/');
+        });
 
     app.get('/logout', function(req, res) {
         req.logout();
