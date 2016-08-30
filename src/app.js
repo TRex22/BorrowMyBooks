@@ -10,6 +10,7 @@ logger.
 
 process.env.PWD = process.cwd();
 var directory = process.env.PWD;
+/* istanbul ignore next */
 if (process.env.NODE_ENV === 'production') {
     directory = directory + '/src';
 }
@@ -51,7 +52,7 @@ app.use(function(req, res, next) {
     logger.info('Connected IP:', ip);
     next();
 });
-
+/* istanbul ignore next */
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(directory, 'public')));
     app.use(favicon(path.join(directory, 'public', 'favicon.ico')));
