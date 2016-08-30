@@ -47,12 +47,12 @@ app.use(function(req, res, next) {
 });
 
 // uncomment after placing your favicon in /public
+app.use(express.static('public'));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
 
 logger.info("Initialize Authentication");
 
-app.use(express.static('public'));
 app.use(cookieParser());
 app.use(bodyParser());
 app.use(bodyParser.urlencoded());
