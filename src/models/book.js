@@ -11,7 +11,7 @@ var bookSchema = mongoose.Schema({
     interests: [String],
     picURL: String,
     ISBN: String,
-    date: Date,
+    publishDate: Date,
     creationDate: Date,
     language: String,
     edition: String,

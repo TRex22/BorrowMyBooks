@@ -8,13 +8,54 @@
       <h1><%= book.title %></h1>
     </div>
 
-  <div class="center-align">
+  <!-- <div class="center-align"> -->
     <div class="book">
-        <a class="title"><% if (book.title) {%> <%= book.title %> <%} %></a>
-        <a class="author"><% if (book.author) {%> <%= book.author %> <%} %></a>
+
+
+        <!-- Portfolio Item Row -->
+        <div class="row">
+
+            <div class="col-md-3">
+                <img class="img-responsive" src=<% if (book.picURL) {%> <%= book.picURL %> <%} else{%> <%= site.defaults.DefaultBookPictureURL %> <%} %> >
+            </div>
+
+            <div class="col-md-5">
+                <h3>Book Details</h3>
+                <ul>
+                    <li>Title: <%= book.title %></li>
+                    <li>Author: <%= book.author %></li>
+                    <li>Edition: <%= book.edition %></li>
+                    <li>ISBN: <%= book.ISBN %></li>
+                    <li>Interests: <% if (book.interests) {%> 
+                                    <%= book.interests[0]  %> 
+                                      <% for(var i=1; i<book.interests.length; i++) {%>
+                                         , <%= book.interests[0]  %>
+                                     <% } %> 
+                                   <%} %> </li>
+                    <li>Language: <%= book.language %></li>
+                    <li>Published: <%= book.publishDate %></li>
+                    
+                </ul>
+
+                <h3>Book Summary</h3>
+                <p> --Insert Summary--.</p>
+            </div>
+
+            <div class="col-md-4">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  Basic panel example
+                </div>
+              </div>
+            </div>
+
+        </div>
+        <!-- /.row -->
 
     </div>
-  </div>
+    
+
+  <!-- </div> -->
   <%- include('../partials/footer') %>
   </body>
 </html>
