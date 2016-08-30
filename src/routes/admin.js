@@ -36,7 +36,7 @@ module.exports = function(app, passport) {
                 if (userHelper.isAdmin(req.user)) {
                     req = userHelper.processUser(req);
                     seedDb.go();
-                    res.redirect('/');
+                    res.redirect(req.session.returnTo || '/');
 
                 } else {
                     res.status(401);

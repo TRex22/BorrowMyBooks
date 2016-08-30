@@ -126,12 +126,67 @@ describe('#User Helper', function() {
         req.session.user.isLoggedIn.should.be.false;
     });
 
+    it('should not logout a user', function() {
+        var user = userHelper.resetUser();
+        user.userRole = ['admin'];
+        var req = {};
+        req.session = {};
+        req.session.user = user;
+        req.user = user;
+
+        req = userHelper.processUser(req, false);
+        (req.user.userRole.indexOf('admin') > -1).should.be.true;
+        req.user.isAdmin.should.be.true;
+        req.user.isLoggedIn.should.be.true;
+        req.session.user.isAdmin.should.be.true;
+        req.session.user.isLoggedIn.should.be.true;
+    });
+
     it('should reset a user', function() {
         var user = userHelper.resetUser();
         user.isAdmin.should.be.false;
         user.isLoggedIn.should.be.false;
     });
 
+    it('should init a user', function() {
+        var user = userHelper.resetUser();
+        user.userRole = ['admin'];
+        var req = {};
+        req.session = {};
+        req.user = user;
+        req.session.user = user;
+
+        var initUser = userHelper.initUser(req);
+        initUser.user.isAdmin.should.be.false;
+        initUser.user.isLoggedIn.should.be.false;
+        initUser.session.user.isAdmin.should.be.false;
+        initUser.session.user.isLoggedIn.should.be.false;
+    });
+
+    it('should init a user without a session', function() {
+        var user = userHelper.resetUser();
+        user.userRole = ['admin'];
+        var req = {};
+        req.session = {};
+        req.user = user;
+
+        var initUser = userHelper.initUser(req);
+        initUser.user.isAdmin.should.be.false;
+        initUser.user.isLoggedIn.should.be.false;
+        initUser.session.user.isAdmin.should.be.false;
+        initUser.session.user.isLoggedIn.should.be.false;
+    });
+
+    it('should init a user without req.user', function() {
+        var req = {};
+        req.session = {};
+
+        var initUser = userHelper.initUser(req);
+        initUser.user.isAdmin.should.be.false;
+        initUser.user.isLoggedIn.should.be.false;
+        initUser.session.user.isAdmin.should.be.false;
+        initUser.session.user.isLoggedIn.should.be.false;
+    });
 
 });
 
@@ -151,19 +206,30 @@ describe('#SiteBuilder', function() {
     });
 
 
-    it('should get defaults from db', function() {
-        var site = siteBuilder.updateSite(app);
-        /*
-                site.user.isAdmin.should.be.false; //security
-                site.buildVersion.should.equal(pkg.version);
+    it('should get defaults from db', function*() {
+        var site = yield siteBuilder.updateSite(app);
 
-                validator.isAscii(site.defaults.DefaultTheme).should.be.true;
+        site.user.isAdmin.should.be.false; //security
+        site.buildVersion.should.equal(pkg.version);
 
-                site.defaults.Title.should.be(config.title);
+        validator.isAscii(site.defaults.DefaultTheme).should.be.true;
 
-                validator.isURL(site.defaults.DefaultProfilePictureURL).should.be.true;
-                validator.isURL(site.defaults.DefaultBookPictureURL).should.be.true;
+        site.defaults.Title.should.be(config.title);
 
-                site.defaults.DefaultBrandingText.should.be(config.defaultBrandingText);*/
+        validator.isURL(site.defaults.DefaultProfilePictureURL).should.be.true;
+        validator.isURL(site.defaults.DefaultBookPictureURL).should.be.true;
+
+        site.defaults.DefaultBrandingText.should.be(config.defaultBrandingText);
+
+        done();
+
+    });
+
+    it('should find theme in config themes array', function() {
+        siteBuilder.findTheme('flatly').should.be.true;
+    });
+
+    it('should find theme in config themes array', function() {
+        siteBuilder.findTheme('randomlol').should.be.false;
     });
 });

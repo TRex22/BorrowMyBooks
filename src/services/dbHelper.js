@@ -19,6 +19,7 @@ var userRating = require('../models/userRating');
     var User = mongoose.model('User', user);
     return User.find({}, function(err, data) {});
 }*/
+
 //TODO JMC Fix this to have proper tests
 /* istanbul ignore  next*/
 function listBooks(callback) {
