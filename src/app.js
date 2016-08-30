@@ -48,6 +48,7 @@ app.use(function(req, res, next) {
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
 
 logger.info("Initialize Authentication");
 
@@ -72,7 +73,6 @@ app.locals.site = siteBuilder.initSite();
 app.locals.site = siteBuilder.updateSite(app); //to make sure there is a site object even if db fails
 
 logger.info("Initialize Routes");
-app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
 
 var teapot = require('./routes/teapot');
 app.use('/teapot', teapot);
