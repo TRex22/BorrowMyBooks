@@ -1,6 +1,6 @@
 {
   "name": "BorrowMyBooks",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "scripts": {
     "start": "gulp watch --color",
@@ -54,6 +54,11 @@
     "winston": "2.1.1",
     "winston-daily-rotate-file": "1.0.1"
   },
+  "engines": {
+    "node": "6.1.0"
+  },
+  "author": "TRex22",
+  "license": "MIT",
   "devDependencies": {
     "mr-doc": "^3.2.1",
     "util": "^0.10.3"
