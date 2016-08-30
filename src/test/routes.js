@@ -32,7 +32,7 @@ describe('#Home Route', function() {
         clear.go();
         seed.go();
     });
-    
+
     it('should respond to GET', function(done) {
         chai.request(app)
             .get('/')
@@ -101,6 +101,9 @@ describe('#Signup Route', function() {
                 done();
             });
     });
+    //TODO: check if create user
+    //check if user already exisits
+    //req user exists
 });
 
 describe('#Explore Route', function() {
