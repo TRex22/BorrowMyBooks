@@ -55,7 +55,8 @@
     "winston-daily-rotate-file": "1.0.1"
   },
   "engines": {
-    "node": "6.1.0"
+    "node": "6.1.0",
+    "npm": "3.8.6"
   },
   "author": "TRex22",
   "license": "MIT",

@@ -8,6 +8,12 @@ logger.
   debug
 */
 
+process.env.PWD = process.cwd();
+var directory = process.env.PWD;
+if (process.env.NODE_ENV === 'production') {
+    directory = directory + '/src';
+}
+
 var logger = require("./logger/logger");
 logger.info("mongoose setup...");
 // mongoose setup
@@ -37,7 +43,7 @@ logger.info("Overriding 'Express' logger");
 app.use(require('morgan')("combined", { "stream": logger.stream }));
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(directory, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(function(req, res, next) {
@@ -46,21 +52,27 @@ app.use(function(req, res, next) {
     next();
 });
 
-// uncomment after placing your favicon in /public
-app.use(express.static('public'));
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(directory, 'public')));
+    app.use(favicon(path.join(directory, 'public', 'favicon.ico')));
+    app.use('/bower_components', express.static(path.join(directory, '/bower_components')));
+} else {
+    app.use(express.static('public'));
+    app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+    app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
+}
+
 
 logger.info("Initialize Authentication");
 
 app.use(cookieParser());
 app.use(bodyParser());
 app.use(bodyParser.urlencoded());
-app.use(session({ 
-	cookieName: 'session',
-	secret: config.secret, 
+app.use(session({
+    cookieName: 'session',
+    secret: config.secret,
     saveUninitialized: true,
-    resave: true 
+    resave: true
 }));
 app.use(flash()); //JMC: TODO add mesages
 app.use(passport.initialize());

@@ -59,7 +59,7 @@ gulp.task('install', function() {
 });
 
 gulp.task('watch', gulpSync.async(['lint', 'cover']), function() {
-    process.env.NODE_ENV = 'production';
+    process.env.NODE_ENV = 'development';
     nodemon({
             script: config.startPath
         })
@@ -80,7 +80,7 @@ gulp.task('watch', gulpSync.async(['lint', 'cover']), function() {
 });
 
 gulp.task('watch-man', gulpSync.async(['lint']), function() {
-    process.env.NODE_ENV = 'production';
+    process.env.NODE_ENV = 'development';
     nodemon({
             script: config.startPath
         })
