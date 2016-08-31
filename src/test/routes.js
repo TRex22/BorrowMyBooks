@@ -18,6 +18,8 @@ var testHelper = require('../services/testHelper');
 var mongoose = require('../config/db.js').mongoose;
 var systemDefaults = require('../models/systemDefaults');
 var sysDefault = mongoose.model('SystemDefaults', systemDefaults);
+var book = require('../models/book');
+var Book = mongoose.model('Book', book);
 
 var seed = require('../db/seedDb');
 var clear = require('../db/clearDb');
@@ -68,7 +70,6 @@ describe('#Login Route', function() {
     });
 
     it('should login sucessfully', function(done) {
-        this.timeout(3000);
         request(app)
             .post('/login?username=Admin&password=123456')
             .send({ username: "Admin", password: '123456' })
@@ -90,6 +91,46 @@ describe('#Login Route', function() {
                 done();
             });
     });
+
+    it('should logout', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                request(app)
+                    .get('/logout')
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(302);
+                        res.redirects.should.be.empty; //redirect
+                        res.res.client._httpMessage.path.should.be.equal('/logout');
+                        done();
+                    });
+            });
+    });
+
+    it('should logout with post', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                request(app)
+                    .post('/logout')
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(302);
+                        res.redirects.should.be.empty; //redirect
+                        res.res.client._httpMessage.path.should.be.equal('/logout');
+                        done();
+                    });
+            });
+    });
 });
 
 describe('#Signup Route', function() {
@@ -101,9 +142,41 @@ describe('#Signup Route', function() {
                 done();
             });
     });
-    //TODO: check if create user
-    //check if user already exisits
-    //req user exists
+
+    it('should respond to POST and try to create a user already in the db', function(done) {
+        chai.request(app)
+            .post('/signup?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/signup');
+                done();
+            });
+    });
+
+    /*    it('should respond to POST and try to create a new user but missing fields', function(done) {
+            chai.request(app)
+                .post('/signup?username=tty&password=123456')
+                .send({ username: "tty", password: '123456' })
+                .end(function(err, res) {
+                    res.should.have.status(200);
+                    res.redirects[0].should.contain('/signup');
+                    done();
+                });
+        });*/
+
+    it('should respond to POST and try to create a new user with sucess', function(done) {
+        chai.request(app)
+            .post('/signup?username=tty&password=123456')
+            .send({ username: "tty", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(200);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                res.res.client._httpMessage.path.should.be.equal('/');
+                done();
+            });
+    });
 });
 
 describe('#Explore Route', function() {
@@ -115,18 +188,65 @@ describe('#Explore Route', function() {
                 done();
             });
     });
+
+    it('should respond to GET for a book', function(done) {
+        Book.findOne({}, function(err, book) {
+            if (book) {
+                /*res.render('explore/book', { site: app.locals.site, book: book, user: req.user });*/
+                chai.request(app)
+                    .get('/explore/' + book._id)
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects.should.be.empty; //redirect
+                        res.res.client._httpMessage.path.should.be.equal("/explore/" + book._id);
+                        done();
+                    });
+            } else {
+                throw err;
+            }
+        });
+
+
+    });
+
+    it('should respond to GET for a book, not find the bok and redirect back', function(done) {
+        chai.request(app)
+            .get('/explore/' + "skjghsdkjghkjsdghkjsdh")
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/explore'); //redirect
+                done();
+            });
+    });
 });
 
 describe('#Admin Route', function() {
-    /*it('login', testHelper.loginUser());*/
-
-    it('admin should respond to GET', function(done) {
+    it('admin should respond to GET not logged in', function(done) {
         chai.request(app)
             .get('/admin')
             .end(function(err, res) {
                 res.should.have.status(200);
                 res.redirects[0].should.contain('/login'); //redirect
                 done();
+            });
+    });
+
+    it('admin should respond to GET logged in', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                request(app)
+                    .get('/admin')
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects.should.be.empty; //redirect
+                        done();
+                    });
             });
     });
 
@@ -160,6 +280,17 @@ describe('#Admin Route', function() {
             });
     });
 
+    it('system-defaults should respond to POST not logged in', function(done) {
+        request(app)
+            .post('/admin/system-defaults')
+            .send({ defaultTheme: "testtest" })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                done();
+            });
+
+    });
+
     it('system-defaults should respond to POST logged in', function(done) {
         request(app)
             .post('/login?username=Admin&password=123456')
@@ -177,7 +308,7 @@ describe('#Admin Route', function() {
 
                         sysDefault.findOne({}).exec(function(err, defaults) { //there should only be one set of defaults
                             if (err) done(err);
-                            
+
                             defaults.DefaultTheme.should.equal("testtest");
                             done();
                         });

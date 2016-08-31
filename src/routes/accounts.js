@@ -35,4 +35,10 @@ module.exports = function(app, passport) {
         req = userHelper.processUser(req, true);
         res.redirect('/');
     });
+
+    app.post('/logout', function(req, res) {
+        req.logout();
+        req = userHelper.processUser(req, true);
+        res.redirect('/');
+    });
 };

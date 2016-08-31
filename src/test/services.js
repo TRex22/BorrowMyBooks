@@ -188,6 +188,106 @@ describe('#User Helper', function() {
         initUser.session.user.isLoggedIn.should.be.false;
     });
 
+    it('should create a new user', function() {
+        var username = "testuser";
+        var password = "08489785";
+        var body = {};
+        body.email = "test@example.com";
+        body.name = "Test User";
+        body.address = "14 Grimwald Place London";
+        body.phone = "11223445656";
+        body.interests = ["Computer Science"];
+
+        var newUser = userHelper.createNewUser(username, password, body);
+
+        newUser.username.should.be.equal(username);
+        validator.isEmail(newUser.email).should.be.true;
+        newUser.name.should.be.equal(body.name);
+        newUser.address.should.be.equal(body.address);
+        /*        validator.isMobilePhone(newUser.phone, 'en-ZA').should.be.true;*/
+        newUser.phone.should.equal(body.phone);
+        newUser.interests[0].should.be.equal(body.interests[0]);
+        newUser.interests.length.should.be.equal(1);
+        (newUser.picUrl === null).should.be.true;
+        newUser.userRole.should.be.empty;
+        validator.isDate("" + newUser.lastLoginDate).should.be.true;
+        validator.isDate("" + newUser.registrationDate).should.be.true;
+        validator.isUUID(newUser.userId).should.be.true;
+
+        newUser.verifyPassword(password).should.be.true;
+    });
+
+    it('should auth a user successfully', function() {
+        var req = {};
+        var res = {};
+        var site = {};
+        req.user = user;
+
+        userHelper.auth(req, res, site, false).should.be.true;
+    });
+
+    it('should auth a user unsuccessfully', function() {
+        var req = {};
+        var res = {};
+
+        //mock response redirect
+        res.redirect = function(route) {
+            res.test = route;
+            res.status = 302;
+            return route;
+        };
+
+        var site = {};
+
+        userHelper.auth(req, res, site, false).should.be.false;
+        res.test.should.be.equal('/login');
+        res.status.should.be.equal(302);
+    });
+
+    it('should auth an admin user successfully', function() {
+        var req = {};
+        var res = {};
+        var site = {};
+        req.user = user;
+
+        req.user.userRole = ['admin'];
+        userHelper.auth(req, res, site, true).should.be.true;
+    });
+
+    it('should auth an admin user unsuccessfully', function() {
+        var req = {};
+        var res = {};
+        var site = {};
+        site.test = "haha";
+        req.user = user;
+        req.user.name = "bloob";
+        req.user.userRole = ['people'];
+        req.url = 'errors/401.ejs';
+
+        //mock response redirect
+        res.test = {};
+        res.status = function(code) {            
+            res.test.status = code;
+            return code;
+        };
+
+        res.render = function(url, obj) {
+            res.test.url = url;
+            res.test.obj = {};
+            res.test.obj = obj;
+            return res.test;
+        };
+
+        userHelper.auth(req, res, site, true).should.be.false;
+        res.test.status.should.be.equal(401);
+        res.test.url.should.be.equal('errors/401.ejs');
+        res.test.obj.title.should.be.equal('401: Unauthorized');
+        res.test.obj.url.should.be.equal('errors/401.ejs');
+        res.test.obj.statusCode.should.be.equal(401);
+        res.test.obj.site.should.be.equal(site);
+        res.test.obj.user.should.be.equal(req.user);
+    });
+
 });
 
 describe('#SiteBuilder', function() {
