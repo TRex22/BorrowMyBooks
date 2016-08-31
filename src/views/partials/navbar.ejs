@@ -1,17 +1,33 @@
 <!-- views/partials/navbar.ejs -->
 <div class="header clearfix">
     <nav>
-        <ul class="nav nav-pills pull-right">
-            <li role="presentation"><a href="/">Home</a></li>
-            <%if (user.isLoggedIn) {%> 
-                <%if (user.isAdmin) {%>
-                    <li><a class="btn btn-danger" href="/admin">Admin</a></li>
+        <div class="pull-right">
+            <ul class="nav nav-pills">
+                <li role="presentation"><a href="/">Home</a></li>
+                <%if (user.isLoggedIn) {%> 
+                    <%if (user.isAdmin) {%>
+                        <li><a class="btn-danger" href="/admin">Admin</a></li>
+                    <% } %>
+                <% } %>            
+                <li><a href="/explore">Explore</a></li>
+                <%if (!user.isLoggedIn) {%> <li><a href="/login">Login</a></li> <% } %>
+                <%if (user.isLoggedIn) {%>  
+
+                    <div class="dropdown profilePicture">
+                          <div class="dropdown-toggle" type="button" data-toggle="dropdown">
+                            <img class="img-circle circle-avatar" src="<% if(user.picUrl) {%> <%= user.picUrl %> <% } else { %> <%= site.defaults.DefaultProfilePictureURL %> <% } %>" alt="profile picture"/>
+                          </div>
+
+                          <ul class="dropdown-menu account-menu">
+                            <li><a href="/logout">Logout</a></li>
+                          </ul>
+                    </div>
+
                 <% } %>
-            <% } %>            
-            <li><a href="/explore">Explore</a></li>
-            <%if (!user.isLoggedIn) {%> <li><a href="/login">Login</a></li> <% } %>
-            <%if (user.isLoggedIn) {%> <li><a href="/logout">Logout</li> <% } %>
-        </ul>
+
+            </ul>
+        </div>
+            
         <h3 class="text-muted"><a href="/"><%= site.defaults.DefaultBrandingText %></a></h3>
     </nav>
 </div>

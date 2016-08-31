@@ -1,198 +1,245 @@
 /*bootstrap is injected in navbar.ejs due to changing themes*/
-@import "../../bower_components/bootstrap-select/dist/css/bootstrap-select.min.css";
 
+@import "../../bower_components/bootstrap-select/dist/css/bootstrap-select.min.css";
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
-}
-.jumbotron{
-	text-align: center;
-	padding: 85px;
-}
-.stack-trace, .api-routes{
-	text-align: left;
-	background-color: white;
-}
-.build-version{
-	float:right;
-	padding-right: 25px;
+    color: #00B7FF;
 }
 
-.copyright{
-  text-align: left;
-  padding-right: 25px;
+.jumbotron {
+    text-align: center;
+    padding: 85px;
+}
+
+.stack-trace,
+.api-routes {
+    text-align: left;
+    background-color: white;
+}
+
+.build-version {
+    float: right;
+    padding-right: 25px;
+}
+
+.copyright {
+    text-align: left;
+    padding-right: 25px;
 }
 
 .footer {
     padding-top: 20px;
 }
 
-.admin-functions{
-	padding-left: 185px;
-	padding-top: 10px;
-	padding-bottom: 80px;
-}
-.login{
-	padding-top: 2.5%;
-	padding-bottom: 8%;
-	padding-left: 34%;
-	padding-right: 34%;
-	border: 1px;
-}
-.center-align{
-	text-align: center;
-	align-items: center;
+.admin-functions {
+    padding-left: 185px;
+    padding-top: 10px;
+    padding-bottom: 80px;
 }
 
-.center-align-col{
-  display: table;
-  margin: 0 auto;
+.login {
+    padding-top: 2.5%;
+    padding-bottom: 8%;
+    padding-left: 34%;
+    padding-right: 34%;
+    border: 1px;
 }
+
+.center-align {
+    text-align: center;
+    align-items: center;
+}
+
+.center-align-col {
+    display: table;
+    margin: 0 auto;
+}
+
 .hovereffect {
-  width: 100%;
-  height: 100%;
-  float: left;
-  overflow: hidden;
-  position: relative;
-  text-align: left;
+    width: 100%;
+    height: 100%;
+    float: left;
+    overflow: hidden;
+    position: relative;
+    text-align: left;
 }
 
 .hovereffect .overlay {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  overflow: hidden;
-  top: 0;
-  left: 0;
- /*background-color: rgba(75,75,75,0.7);*/
-  -webkit-transition: all 0.4s  cubic-bezier(0.88,-0.99, 0, 1.81);
-  transition: all 0.4s  cubic-bezier(0.88,-0.99, 0, 1.81);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    /*background-color: rgba(75,75,75,0.7);*/
+    -webkit-transition: all 0.4s cubic-bezier(0.88, -0.99, 0, 1.81);
+    transition: all 0.4s cubic-bezier(0.88, -0.99, 0, 1.81);
 }
 
 .hovereffect:hover .overlay {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid #000;
-  border-style: double;
- /* border-radius: 25px;*/
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #000;
+    border-style: double;
+    /* border-radius: 25px;*/
 }
 
 .hovereffect img {
-  display: block;
-  position: relative;
+    display: block;
+    position: relative;
 }
 
 .hovereffect a.title {
-  display: flex;
-  text-decoration: none;
-  text-transform: uppercase;
-  color: #000;
-  background-color: transparent;
-  opacity: 0;
-  filter: alpha(opacity=0);
-  -webkit-transform: scale(0);
-  -ms-transform: scale(0);
-  transform: scale(0);
-  -webkit-transition: all 0.4s  cubic-bezier(0.88,-0.99, 0, 1.81);
-  transition: all 0.4s  cubic-bezier(0.88,-0.99, 0, 1.81);
-  font-weight: bold;
-  font-size: 30px;
-  white-space: pre-wrap;
-  padding: 20%;
-  overflow:hidden;
+    display: flex;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #000;
+    background-color: transparent;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    -webkit-transition: all 0.4s cubic-bezier(0.88, -0.99, 0, 1.81);
+    transition: all 0.4s cubic-bezier(0.88, -0.99, 0, 1.81);
+    font-weight: bold;
+    font-size: 30px;
+    white-space: pre-wrap;
+    padding: 20%;
+    overflow: hidden;
 }
 
 .hovereffect:hover a.title {
-  opacity: 1;
-  filter: alpha(opacity=100);
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
+    opacity: 1;
+    filter: alpha(opacity=100);
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
 }
 
-
 .hovereffect a.author {
-  display: flex;
-  text-decoration: none;
-  text-transform: uppercase;
-  color: #000;
-  background-color: transparent;
-  opacity: 0;
-  filter: alpha(opacity=0);
-  -webkit-transform: scale(0);
-  -ms-transform: scale(0);
-  transform: scale(0);
-  -webkit-transition: all 0.4s  cubic-bezier(0.88,-0.99, 0, 1.81);
-  transition: all 0.4s  cubic-bezier(0.88,-0.99, 0, 1.81);
-  font-weight: normal;
-  font-size: 20px;
-  white-space: pre-wrap;
-  padding-left: 20%;
-  padding-right: 20%;
-  padding-top: 20%;
-  padding-bottom: 35%;
-  overflow:hidden;
+    display: flex;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #000;
+    background-color: transparent;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    -webkit-transition: all 0.4s cubic-bezier(0.88, -0.99, 0, 1.81);
+    transition: all 0.4s cubic-bezier(0.88, -0.99, 0, 1.81);
+    font-weight: normal;
+    font-size: 20px;
+    white-space: pre-wrap;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 20%;
+    padding-bottom: 35%;
+    overflow: hidden;
 }
 
 .hovereffect:hover a.author {
-  opacity: 1;
-  filter: alpha(opacity=100);
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
+    opacity: 1;
+    filter: alpha(opacity=100);
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
 }
 
 .btn-buy {
-  padding-left: 20%;
-  padding-right: 20%;
-  background: #1c8644;
-  color: #FFFFFF;
-  border: none;
-  -moz-box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
+    padding-left: 20%;
+    padding-right: 20%;
+    background: #1c8644;
+    color: #FFFFFF;
+    border: none;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
 }
-.btn-buy:hover, .btn-buy:focus {
-  background: #499e69;
+
+.btn-buy:hover,
+.btn-buy:focus {
+    background: #499e69;
 }
+
 .btn-buy:active {
-  background: #2ac765;
+    background: #2ac765;
 }
 
 .btn-rent {
-  padding-left: 20%;
-  padding-right: 20%;
-  background: #0b79bf;
-  color: #FFFFFF;
-  border: none;
-  -moz-box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
+    padding-left: 20%;
+    padding-right: 20%;
+    background: #0b79bf;
+    color: #FFFFFF;
+    border: none;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
 }
-.btn-rent:hover, .btn-rent:focus {
-  background: #0c85d2;
+
+.btn-rent:hover,
+.btn-rent:focus {
+    background: #0c85d2;
 }
+
 .btn-rent:active {
-  background: #139bf1;
+    background: #139bf1;
 }
 
 .amount {
-  font-size: 25px;
-  color: #d50000;
-  padding-bottom: 1%;
+    font-size: 25px;
+    color: #d50000;
+    padding-bottom: 1%;
 }
 
 .or {
-  font-size: 20px;
-  font-weight: bold;
-  padding-top: 5%;
-  padding-bottom: 5%;
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 5%;
+    padding-bottom: 5%;
 }
 
-.noAvailable{
-  padding-top: 5%;
-  padding-bottom: 5%;
+.noAvailable {
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.circle-avatar {
+    display: inline;
+    position: absolute;
+    max-width: 100%;
+    width: 65px;
+    height: auto;
+}
+
+.profilePicture {
+    position: relative;
+    padding-right: 66px;
+    float: left;
+}
+
+.account-menu {
+    position: absolute;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    min-width: 15px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }

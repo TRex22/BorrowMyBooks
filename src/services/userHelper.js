@@ -30,6 +30,10 @@ function processUser(req, logout) {
         req.user.isLoggedIn = true;
     }
 
+/*    if(req.user.picUrl === null){
+        req.user.picUrl = 
+    }*/
+
     if (logout) {
         req.session.user = resetUser();
         req.user = resetUser();
