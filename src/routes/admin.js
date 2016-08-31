@@ -33,11 +33,11 @@ module.exports = function(app, passport) {
 
     /* istanbul ignore next */
     app.get('/admin/resetdb',
-        function*(req, res, next) {
+        function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site, true)) {
                 req = userHelper.processUser(req);
-                yield clearDb.go()
-                yield seedDb.go();
+                clearDb.go()
+                seedDb.go();
                 res.redirect(req.session.returnTo || '/');
             }
         }

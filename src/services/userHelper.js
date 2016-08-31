@@ -73,7 +73,7 @@ function createNewUser(username, password, body) {
     iUser.userId = iUser.generateUUID();
     iUser.salt = iUser.generateSalt();
     iUser.hash = iUser.generateHash(password);
-    /*iUser.save();*/  
+    /*iUser.save();*/
     //todo detect student
     return iUser;
 }
@@ -83,6 +83,7 @@ function auth(req, res, site, admin) {
         if (!isAdmin(req.user) && admin) {
             res.status(401);
             url = req.url;
+            req = processUser(req);
             res.render('errors/401.ejs', { title: '401: Unauthorized', url: url, statusCode: 401, site: site, user: req.user });
             return false;
 

@@ -255,18 +255,33 @@ describe('#User Helper', function() {
     });
 
     it('should auth an admin user unsuccessfully', function() {
+        var iUser = {
+            username: "bloob",
+            email: "contact@jasonchalom.com",
+            salt: null,
+            hash: null,
+            name: "Administrator",
+            address: "Room 13",
+            phone: "1234567890",
+            interests: [],
+            picUrl: null,
+            userRole: ["people"],
+            lastLoginDate: null,
+            registrationDate: new Date()
+        };
+
         var req = {};
         var res = {};
         var site = {};
+        req.session = {};
+        req.session.user = iUser;
         site.test = "haha";
-        req.user = user;
-        req.user.name = "bloob";
-        req.user.userRole = ['people'];
+        req.user = iUser;
         req.url = 'errors/401.ejs';
 
         //mock response redirect
         res.test = {};
-        res.status = function(code) {            
+        res.status = function(code) {
             res.test.status = code;
             return code;
         };
