@@ -20,7 +20,8 @@ var bookSchema = mongoose.Schema({
     isForLoan: Boolean,
     isForSale: Boolean,
     isSold: Boolean,
-    isOnLoan: Boolean
+    isOnLoan: Boolean,
+    summary: String
 }, { strict: false, collection: 'Book' });
 
 bookSchema.methods.generateUUID = function() {

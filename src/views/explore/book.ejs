@@ -40,16 +40,40 @@
                 <br>
 
                 <h3>Book Summary</h3>
-                <p> --Insert Summary--.</p>
+                <p> <% if (book.summary) {%> <%= book.summary %> <% } %> </p>
             </div>
 
+          <div class="center-align">
             <div class="col-md-4">
               <div class="panel panel-default">
                 <div class="panel-body">
-                  Basic panel example
+              <% if (book.isAvailable) {%>
+
+                <% if (book.isForSale) {%> 
+                  <div class="amount">
+                    Buy for R<% if (book.sellPrice) {%><%= book.sellPrice.toFixed(2) %> <% } %> 
+                  </div>
+                  <button type="button" class="btn btn-md btn-buy">Buy</button>
+                <% } %>
+
+                <% if (book.isForSale && book.isForLoan) {%> 
+                  <div class="or">OR</div>
+                <% } %>
+
+                <% if (book.isForLoan) {%>
+                  <div class="amount">
+                    Rent for R<% if (book.loanPrice) {%><%= book.loanPrice.toFixed(2) %> <% } %>
+                  </div>
+                  <button type="button" class="btn btn-md btn-rent">Rent</button>
+                <% } %>
+
+                  <div class="noAvailable text-muted">
+                    There <% if(book.noAvailable == 1) {%>is <% } else {%>are <% } %> <%= book.noAvailable %> available.
                 </div>
+              <% } else {%> <div class="noAvailable text-muted">There are none available.</div> <% } %>
               </div>
             </div>
+          </div>
 
         </div>
         <!-- /.row -->
@@ -58,7 +82,7 @@
         <div class="row">
 
             <div class="col-lg-12">
-                <h3 class="page-header">Related Projects</h3>
+                <h3 class="page-header">Related Books</h3>
             </div>
 
             <div class="col-sm-3 col-xs-6">

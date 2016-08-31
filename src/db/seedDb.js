@@ -58,7 +58,7 @@ function go() {
         author: "me",
         userId: "0",
         noAvailable: 1,
-        isAvailable: false,
+        isAvailable: true,
         interests: ["testInterest1"],
         picURL: null,
         ISBN: null,
@@ -69,9 +69,10 @@ function go() {
         loanPrice: 500,
         sellPrice: 600,
         isForLoan: false,
-        isForSale: false,
+        isForSale: true,
         isSold: false,
-        isOnLoan: false
+        isOnLoan: false,
+        summary: "This is a test summary about testing tests."
     });
     iBook.bookId = iBook.generateUUID();
     iBook.save();
@@ -85,17 +86,18 @@ function go() {
         edition: "First Edition",
         userId: "0",
         noAvailable: 1,
-        isAvailable: false,
-        ISBN: null,
+        isAvailable: true,
+        ISBN: "978-0-684-85351-2",
         publishDate: new Date(),
         creationDate: new Date(),
         language: "English",
         loanPrice: 500,
         sellPrice: 600,
-        isForLoan: false,
+        isForLoan: true,
         isForSale: false,
         isSold: false,
-        isOnLoan: false
+        isOnLoan: false,
+        summary: "The stories are about the baby boomer generation, specifically King's view that this generation (to which he belongs) failed to live up to its promise and ideals. Significantly, the opening epigraph of the collection is the Peter Fonda line from the end of Easy Rider: \x22We blew it.\x22 All of the stories are about the 1960s and the war in Vietnam, and in all of them the members of that generation fail profoundly, or are paying the costs of some profound failure on their part."
     });
     iBook.bookId = iBook.generateUUID();
     iBook.save();
@@ -109,17 +111,18 @@ function go() {
         edition: "second edition",
         userId: "1",
         noAvailable: 33,
-        isAvailable: false,
-        ISBN: null,
+        isAvailable: true,
+        ISBN: "0-553-58449-9",
         publishDate: new Date(),
         creationDate: new Date(),
         language: "English",
         loanPrice: 500,
         sellPrice: 600,
-        isForLoan: false,
-        isForSale: false,
+        isForLoan: true,
+        isForSale: true,
         isSold: false,
-        isOnLoan: false
+        isOnLoan: false,
+        summary: "In the beginning of the book, Odd Thomas is silently approached by the ghost of a young girl brutally raped and murdered, and through his unique ability to understand the dead, is psychically led to her killer, a former schoolmate named Harlo Landerson. With this opening, we are introduced to Odd's world. Koontz soon discloses how Odd was named and begins, layer by layer, to show how Odd's dysfunctional upbringing has shaped his life, and as those details are uncovered, his supernatural abilities begin to make more sense. We see Odd at work as a short order cook in a California desert town, and in a fateful 24-hour period, he meets a suspicious-looking man in the diner followed by bodachs, shadowy spirit creatures who appear only during times of death and disaster. This man, who Odd nicknames \x22Fungus Man\x22 (due to his waxy complexion and blond hair that resembles mold), has an unusually large swarm of bodachs following him, and Odd is convinced that this man is connected to some terrible catastrophe that is about to occur. To gather more information about him, Odd uses his gift of supernatural intuition, which his soulmate Bronwen (a.k.a. Stormy) Llewellyn calls \x22psychic magnetism,\x22 to track him down. Odd's sixth sense leads him to Fungus Man's home, and Odd begins to uncover more details about the man and a mysterious other-worldly link to the dark forces about to be unleashed on the town of Pico Mundo. Accompanied sometimes by the ghost of Elvis Presley and encountering other memorable spirits, including a murdered prostitute, Odd is soon deeply involved in an attempt to prevent the disastrous bloodshed he knows will happen the next day."
     });
     iBook.bookId = iBook.generateUUID();
     iBook.save();
@@ -146,7 +149,8 @@ function go() {
         isForLoan: false,
         isForSale: false,
         isSold: false,
-        isOnLoan: false
+        isOnLoan: false,
+        summary: "This is a test summary about testing tests."
     });
     iBook.bookId = iBook.generateUUID();
     iBook.save();
@@ -167,10 +171,11 @@ function go() {
         language: "English",
         loanPrice: 500,
         sellPrice: 600,
-        isForLoan: false,
-        isForSale: false,
+        isForLoan: true,
+        isForSale: true,
         isSold: false,
-        isOnLoan: false
+        isOnLoan: false,
+        summary: "This is a test summary about testing tests."
     });
     iBook.bookId = iBook.generateUUID();
     iBook.save();
@@ -194,7 +199,8 @@ function go() {
         isForLoan: false,
         isForSale: false,
         isSold: false,
-        isOnLoan: false
+        isOnLoan: false,
+        summary: "This is a test summary about testing tests."
     });
     iBook.bookId = iBook.generateUUID();
     iBook.save();
@@ -218,7 +224,8 @@ function go() {
         isForLoan: false,
         isForSale: false,
         isSold: false,
-        isOnLoan: false
+        isOnLoan: false,
+        summary: "This is a test summary about testing tests."
     });
     iBook.bookId = iBook.generateUUID();
     iBook.save();

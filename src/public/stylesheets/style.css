@@ -75,6 +75,9 @@ a {
 
 .hovereffect:hover .overlay {
   background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #000;
+  border-style: double;
+ /* border-radius: 25px;*/
 }
 
 .hovereffect img {
@@ -96,9 +99,10 @@ a {
   -webkit-transition: all 0.4s  cubic-bezier(0.88,-0.99, 0, 1.81);
   transition: all 0.4s  cubic-bezier(0.88,-0.99, 0, 1.81);
   font-weight: bold;
-  font-size: 25px;
+  font-size: 30px;
   white-space: pre-wrap;
-  padding: 40px;
+  padding: 20%;
+  overflow:hidden;
 }
 
 .hovereffect:hover a.title {
@@ -126,7 +130,11 @@ a {
   font-weight: normal;
   font-size: 20px;
   white-space: pre-wrap;
-  padding: 40px;
+  padding-left: 20%;
+  padding-right: 20%;
+  padding-top: 20%;
+  padding-bottom: 35%;
+  overflow:hidden;
 }
 
 .hovereffect:hover a.author {
@@ -135,4 +143,56 @@ a {
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
+}
+
+.btn-buy {
+  padding-left: 20%;
+  padding-right: 20%;
+  background: #1c8644;
+  color: #FFFFFF;
+  border: none;
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+.btn-buy:hover, .btn-buy:focus {
+  background: #499e69;
+}
+.btn-buy:active {
+  background: #2ac765;
+}
+
+.btn-rent {
+  padding-left: 20%;
+  padding-right: 20%;
+  background: #0b79bf;
+  color: #FFFFFF;
+  border: none;
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+.btn-rent:hover, .btn-rent:focus {
+  background: #0c85d2;
+}
+.btn-rent:active {
+  background: #139bf1;
+}
+
+.amount {
+  font-size: 25px;
+  color: #d50000;
+  padding-bottom: 1%;
+}
+
+.or {
+  font-size: 20px;
+  font-weight: bold;
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+
+.noAvailable{
+  padding-top: 5%;
+  padding-bottom: 5%;
 }
