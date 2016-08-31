@@ -47,5 +47,10 @@
     "title": "Borrow My Books",
     "defaultProfilePictureURL": "/assets/avatar.png",
     "defaultBookPictureURL": "/assets/cover.jpg",
-    "defaultBrandingText": "Borrow My Books"
+    "defaultBrandingText": "Borrow My Books",
+    "nodeinfo": true,
+    "socket": {
+        "interval": 5,
+        "limit": 1440
+    }
 }

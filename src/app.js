@@ -57,12 +57,13 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(directory, 'public')));
     app.use(favicon(path.join(directory, 'public', 'favicon.ico')));
     app.use('/bower_components', express.static(path.join(directory, '/bower_components')));
+    /*    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));*/ //TODO look at adding
 } else {
     app.use(express.static('public'));
     app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
     app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
+    /*    app.use(express.errorHandler());*/
 }
-
 
 logger.info("Initialize Authentication");
 

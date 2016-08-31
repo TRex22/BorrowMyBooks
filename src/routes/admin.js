@@ -6,6 +6,7 @@ var router = express.Router();
 var seedDb = require('../db/seedDb');
 var clearDb = require('../db/clearDb');
 var userHelper = require('../services/userHelper.js');
+var nodeinfo = require('node-info');
 
 var mongoose = require('../config/db.js').mongoose;
 var sysDefault = mongoose.model('SystemDefaults', require('../models/systemDefaults'));
@@ -91,4 +92,30 @@ module.exports = function(app, passport) {
         }
     );
 
+    app.get('/admin/system-information',
+        function(req, res, next) {
+            if (userHelper.auth(req, res, app.locals.site, true)) {
+                //use socket.io
+                //TODO: get mongo info
+                //TODO: get node server info https://nodejs.org/en/docs/guides/simple-profiling/
+
+                var info = require('simple-node-info');
+                req = userHelper.processUser(req);
+                var sysinfo = JSON.stringify(info.getStat());
+                res.render('admin/sys-info', { site: app.locals.site, user: req.user, sysinfo: sysinfo, socketvar: 'load averages',  jquery:true, socket:true});
+            }
+        }
+    );
+
+    if (config.nodeinfo) {
+        app.use(nodeinfo({
+            url: '/admin/system-information/node-info',
+            check: function(req, res, next) {
+                if (userHelper.auth(req, res, app.locals.site, true, true)) {
+                    // show nodeinfo
+                    return true;
+                }
+            }
+        }));
+    }
 };

@@ -78,20 +78,24 @@ function createNewUser(username, password, body) {
     return iUser;
 }
 
-function auth(req, res, site, admin) {
+function auth(req, res, site, admin, sysinfo) {
     if (req.user) {
         if (!isAdmin(req.user) && admin) {
             res.status(401);
             url = req.url;
             req = processUser(req);
-            res.render('errors/401.ejs', { title: '401: Unauthorized', url: url, statusCode: 401, site: site, user: req.user });
+            if (!sysinfo) {
+                res.render('errors/401.ejs', { title: '401: Unauthorized', url: url, statusCode: 401, site: site, user: req.user });
+            }
             return false;
 
         } else {
             return true; //next();
         }
     } else {
-        res.redirect('/login');
+        if (!sysinfo) {
+            res.redirect('/login');
+        }
         return false;
     }
 }

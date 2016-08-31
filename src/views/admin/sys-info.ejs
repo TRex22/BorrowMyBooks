@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<%- include('../partials/header') %>
+
+<body>
+    <%- include('../partials/navbar') %>
+        <script src="../../bower_components/Flot/jquery.flot.js"></script>
+        <script src="/javascripts/flot-info.js"></script>
+        <div class="bs-component">
+            <h1 class="center-align">System Information</h1>
+            <p>Flot Chart</p>
+            <p id="update_int_lbl">Update Interval</p>
+            <div id="update_int"></div>
+            <div id="legend"></div>
+            <div id="testflot"></div>
+
+
+            <p><%= sysinfo %></p><br/>
+            <a href="/admin/system-information/node-info">Node-Info</a>
+        </div>
+        <%- include('../partials/footer') %>
+</body>
+</html>
