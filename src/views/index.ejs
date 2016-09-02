@@ -5,9 +5,45 @@
    <%- include('partials/navbar') %>
   	<div class="bs-component">
       <div class="jumbotron">
-        <img height="300"src="books-and-mouse-2400px.png"/>
+        <div class="title-box">
+          <div class="circle">
+            <img class="title-image" src="assets/books-and-mouse-2400px.png"/>
+          </div>
+        </div>
         <h1><%= site.defaults.Title %></h1>
-        <p>Welcome to <%= site.defaults.Title %></p>   
+        <h2>A safe place to trade, lend and sell old books</h2>
+        <br/><br/><br/><br/>
+        <div class="row">
+          <div class="col-md-6">
+            <span class="glyphicon glyphicon-user home-glyphicons" aria-hidden="true"></span>
+            <h3>Made by Students for Students</h3>
+            <p>We are students who have built this site so that we have a place to go to get our textbooks. Other <strong>books</strong> are also welcome :)</p>
+            <br/><br/><br/>
+          </div>
+
+          <div class="col-md-6">
+            <span class="glyphicon glyphicon-search home-glyphicons" aria-hidden="true"></span>
+            <h3>Searchable</h3>
+            <p>Our book catalogue is fully searchable, even if you are not entirely sure about exact search terms.</p>
+            <br/><br/><br/>
+          </div>
+
+          <br/>
+
+          <div class="col-md-6">
+            <span class="glyphicon glyphicon-road home-glyphicons" aria-hidden="true"></span>
+            <h3>Student Friendly</h3>
+            <p>This is a site made by students looking for good deals on books. If you are a student and have a valid student email from a recognised institution then there will be special deals and discounts for you!</p>
+            <br/><br/><br/>
+          </div>
+
+          <div class="col-md-6">
+            <span class="glyphicon glyphicon-chevron-left home-glyphicons" aria-hidden="true"></span><span class="glyphicon glyphicon-chevron-right home-glyphicons" aria-hidden="true"></span>
+            <h3>Open Source</h3>
+            <p>All our code is on <a href="https://github.com/TRex22/BorrowMyBooks">GitHub!</a> Join us and help to contribute to the site, or just let us know about bugs and problems</p>
+            <br/><br/><br/>
+          </div>
+        </div>
       </div>
     </div>
      <%- include('partials/footer') %>

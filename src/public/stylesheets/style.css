@@ -6,6 +6,31 @@ body {
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+
+/*fixes for MDBoostrap*/
+
+.btn {
+    max-height: inherit;
+    max-width: inherit;
+    /*Because some devs are arseholes, I have to now do this*/
+    white-space: all !important;
+    border-left: none;
+    margin: inherit;
+    box-sizing: content-box;
+}
+
+.form-control .form-group .form {
+    box-sizing: content-box;
+    margin: inherit;
+}
+
+.selectpicker {
+    /*Because some devs are arseholes, I have to now do this*/
+    white-space: all !important;
+    box-sizing: content-box;
+    margin: inherit;
+}
+
 a {
     color: #00B7FF;
 }
@@ -231,7 +256,7 @@ a {
     display: none;
     position: absolute;
     min-width: 15px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
@@ -242,4 +267,34 @@ a {
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.title-box {}
+
+.title-image {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    height: 350px;
+    width: 350px;
+}
+
+.circle {
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    width: 440px;
+    height: 440px;
+    background: white;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.home-glyphicons {
+    text-shadow: 2em;
+    font-size: 9em;
+    color: #e65100;
 }
