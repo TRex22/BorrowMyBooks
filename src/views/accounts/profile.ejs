@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <%- include('../partials/header') %>
+  <body>   
+   <%- include('../partials/navbar') %>
+
+  	<div class="site-margin">
+      <h1><%= user.username %></h1>
+    </div>
+
+  <!-- <div class="center-align"> -->
+    <div class="user site-margin">
+
+
+        <!-- Portfolio Item Row -->
+        <div class="row">
+
+            <div class="col-md-3">
+                <img class="img-responsive" src=<% if (user.picURL) {%> <%= user.picURL %> <%} else{%> <%= site.defaults.DefaultProfilePictureURL %> <%} %> >
+            </div>
+
+            <div class="col-md-5">
+                <h3><%= user.name %></h3>
+                <ul>
+                    <li>Username: <%= user.username %></li>
+                    <li>Name: <%= user.name %></li>
+                    <li>Email: <%= user.email %></li>
+                    <li>userId: <%= user.userId %></li>
+                    <li>Interests: <% if (user.interests) {%> 
+                                    <%= user.interests[0]  %> 
+                                      <% for(var i=1; i<user.interests.length; i++) {%>
+                                         , <%= user.interests[0]  %>
+                                     <% } %> 
+                                   <%} %> </li>
+                    <li>Address: <%= user.address %></li>
+                    <li>Phone: <%= user.phone %></li>
+                    <li>Last Login Date: <%= user.lastLoginDate %></li>
+                    <li>Registration Date: <%= user.registrationDate %></li>
+                </ul>
+
+                <br>
+            </div>
+    </div>
+    
+
+  <!-- </div> -->
+  <%- include('../partials/footer') %>
+  </body>
+</html>

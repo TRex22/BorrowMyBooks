@@ -22,17 +22,6 @@ module.exports = function(app, passport) {
     );
 
     /* istanbul ignore next */
-    app.get('/admin/initdb',
-        function(req, res, next) {
-            if (userHelper.auth(req, res, app.locals.site, true)) {
-                req = userHelper.processUser(req);
-                seedDb.go();
-                res.redirect(req.session.returnTo || '/');
-            }
-        }
-    );
-
-    /* istanbul ignore next */
     app.get('/admin/resetdb',
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site, true)) {

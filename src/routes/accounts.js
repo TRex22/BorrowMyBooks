@@ -30,6 +30,24 @@ module.exports = function(app, passport) {
             res.redirect(req.session.returnTo || '/');
         });
 
+    app.get('/profile',
+        function(req, res, next) {
+            if (userHelper.auth(req, res, app.locals.site)) {
+                req = userHelper.processUser(req);
+                res.render('accounts/profile', { site: app.locals.site, user: req.user });
+            }
+        }
+    );
+
+    app.post('/profile',
+        function(req, res, next) {
+            if (userHelper.auth(req, res, app.locals.site)) {
+                req = userHelper.processUser(req);
+                res.render('accounts/profile', { site: app.locals.site, user: req.user });
+            }
+        }
+    );
+
     app.get('/logout', function(req, res) {
         req.logout();
         req = userHelper.processUser(req, true);
