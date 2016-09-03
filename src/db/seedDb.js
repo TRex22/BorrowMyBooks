@@ -10,6 +10,7 @@ var userMessage = require('../models/userMessage');
 var systemDefaults = require('../models/systemDefaults');
 var userRole = require('../models/userRole');
 var userRating = require('../models/userRating');
+var schoolDomain = require('../models/schoolDomain');
 
 function go() {
     //check dev environment
@@ -28,11 +29,11 @@ function go() {
         registrationDate: new Date()
     });
     iUser.userId = iUser.generateUUID();
-    var adminId = iUser.userId;    
+    var adminId = iUser.userId;
 
     iUser.salt = iUser.generateSalt();
     iUser.hash = iUser.generateHash("123456");
-    iUser.save(); 
+    iUser.save();
     logger.warn("created admin user");
 
     iUser = new user({
@@ -52,7 +53,7 @@ function go() {
     iUser.userId = iUser.generateUUID();
     iUser.salt = iUser.generateSalt();
     iUser.hash = iUser.generateHash("123456");
-    iUser.save(); 
+    iUser.save();
     logger.warn("created user");
 
     var iBook = new book({
@@ -140,7 +141,7 @@ function go() {
         noAvailable: 1,
         isAvailable: false,
         interests: null,
-        picURL: "https://s-media-cache-ak0.pinimg.com/236x/9e/b5/95/9eb595e51d197624cfe12e959179994d.jpg",  //girl who...
+        picURL: "https://s-media-cache-ak0.pinimg.com/236x/9e/b5/95/9eb595e51d197624cfe12e959179994d.jpg", //girl who...
         ISBN: null,
         publishDate: new Date(),
         creationDate: new Date(),
@@ -161,7 +162,7 @@ function go() {
     iBook = new book({
         title: "Hearts in Atlantis",
         author: "Stephen King",
-        picURL: "http://ebookfriendly.com/wp-content/uploads/2014/03/Mr-Mercedes-Stephen-King-animated-book-cover.gif",  //mr merc
+        picURL: "http://ebookfriendly.com/wp-content/uploads/2014/03/Mr-Mercedes-Stephen-King-animated-book-cover.gif", //mr merc
         interests: ["Fantasy"],
         edition: "First Edition",
         userId: "0",
@@ -186,7 +187,7 @@ function go() {
     iBook = new book({
         title: "Odd Thomas",
         author: "Dean Koontz",
-        picURL: "https://s-media-cache-ak0.pinimg.com/236x/a0/96/ff/a096ff3bafb7786b59ef9ba9d3e7ddf2.jpg",  //mockingbird
+        picURL: "https://s-media-cache-ak0.pinimg.com/236x/a0/96/ff/a096ff3bafb7786b59ef9ba9d3e7ddf2.jpg", //mockingbird
         interests: ["Fiction"],
         edition: "second edition",
         userId: adminId,
@@ -242,6 +243,15 @@ function go() {
     });
     iSystemDefaults.save();
     logger.warn("created systemDefaults");
+
+    var schoolObj = require('./school-domains');
+    var iSchoolDomain = new schoolDomain({
+        date: new Date(),
+        category: schoolObj.domains.category,
+        domains: schoolObj.domains.domain
+    });
+    iSchoolDomain.save();
+    logger.warn("created schoolDomain");
 
 
     /*    var iInterest = new interest({
