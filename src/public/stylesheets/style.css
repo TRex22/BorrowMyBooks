@@ -319,3 +319,16 @@ a {
     color: #e65100;
     left: 85px;
 }
+
+.title{
+    font-weight: bold;
+    font-size: 35px;
+    padding-top: 20%;
+    padding-bottom: 10%;
+}
+.author{
+    font-weight: normal;
+    font-size: 25px;
+    padding-left: 20%;
+    padding-right: 20%;
+}
