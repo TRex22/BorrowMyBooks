@@ -58,6 +58,7 @@ describe('#Login Route', function() {
     beforeEach(function() {
         clear.go();
         seed.go();
+        this.timeout(3000);
     });
 
     it('should respond to GET', function(done) {
