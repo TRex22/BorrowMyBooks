@@ -188,17 +188,28 @@ describe('#Explore Route', function() {
                 done();
             });
     });
+});
+
+describe('#Book Route', function() {
+    it('should respond to GET', function(done) {
+        chai.request(app)
+            .get('/book')
+            .end(function(err, res) {
+                res.should.have.status(404); //nothing here
+                done();
+            });
+    });
 
     it('should respond to GET for a book', function(done) {
         Book.findOne({}, function(err, book) {
             if (book) {
                 /*res.render('explore/book', { site: app.locals.site, book: book, user: req.user });*/
                 chai.request(app)
-                    .get('/explore/' + book._id)
+                    .get('/book/' + book._id)
                     .end(function(err, res) {
                         res.should.have.status(200);
                         res.redirects.should.be.empty; //redirect
-                        res.res.client._httpMessage.path.should.be.equal("/explore/" + book._id);
+                        res.res.client._httpMessage.path.should.be.equal("/book/" + book._id);
                         done();
                     });
             } else {
@@ -206,12 +217,11 @@ describe('#Explore Route', function() {
             }
         });
 
-
     });
 
-    it('should respond to GET for a book, not find the bok and redirect back', function(done) {
+    it('should respond to GET for a book, not find the bok and redirect back to explore', function(done) {
         chai.request(app)
-            .get('/explore/' + "skjghsdkjghkjsdghkjsdh")
+            .get('/book/' + "skjghsdkjghkjsdghkjsdh")
             .end(function(err, res) {
                 res.should.have.status(200);
                 res.redirects[0].should.contain('/explore'); //redirect
