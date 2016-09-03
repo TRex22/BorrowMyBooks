@@ -20,6 +20,7 @@ var systemDefaults = require('../models/systemDefaults');
 var sysDefault = mongoose.model('SystemDefaults', systemDefaults);
 var book = require('../models/book');
 var Book = mongoose.model('Book', book);
+var User = mongoose.model('User', require('../models/user'));
 
 var seed = require('../db/seedDb');
 var clear = require('../db/clearDb');
@@ -180,6 +181,111 @@ describe('#Signup Route', function() {
     });
 });
 
+describe('#Profile Route', function() {
+    it('should respond to GET not logged in', function(done) {
+        chai.request(app)
+            .get('/profile')
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/login'); //redirect
+                done();
+            });
+    });
+
+    it('should respond to GET logged in', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                request(app)
+                    .get('/profile')
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects.should.be.empty; //redirect
+                        done();
+                    });
+            });
+    });
+
+    it('settings should respond to GET not logged in', function(done) {
+        chai.request(app)
+            .get('/profile/settings')
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/login'); //redirect
+                done();
+            });
+    });
+
+    it('settings should respond to GET logged in', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                request(app)
+                    .get('/profile/settings')
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects.should.be.empty; //redirect
+                        done();
+                    });
+            });
+    });
+
+    it('settings should respond to POST not logged in', function(done) {
+        chai.request(app)
+            .post('/profile/settings')
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/login'); //redirect
+                done();
+            });
+    });
+
+    it('settings should respond to POST logged in and update user details', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                User.findOne({ username: "Admin" }, function(err, user) {
+                    request(app)
+                        .post("/profile/settings?fullname=Test")
+                        .set('cookie', cookie)
+                        .send({ fullname: "Test" })
+                        .end(function(err, res) {
+                            res.should.have.status(302);
+                            res.redirects.should.be.empty; //redirect
+                            res.res.client._httpMessage.path.should.contain("/profile");
+
+                            chai.request(app)
+                                .get('/profile/settings')
+                                .end(function(err, res) {
+                                    User.findOne({ _id: user._id }, function(err, tuser) {
+                                        res.should.have.status(200);
+                                        console.log(res)
+                                        tuser.name.should.be.equal("Test");
+                                        done();
+                                    });
+                                });
+                        });
+                });
+            });
+    });
+
+
+});
+
 describe('#Explore Route', function() {
     it('should respond to GET', function(done) {
         chai.request(app)
@@ -187,6 +293,35 @@ describe('#Explore Route', function() {
             .end(function(err, res) {
                 res.should.have.status(200);
                 done();
+            });
+    });
+
+    it('my books should respond to GET no logged in', function(done) {
+        chai.request(app)
+            .get('/explore/mine')
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/login'); //redirect
+                done();
+            });
+    });
+
+    it('settings should respond to GET logged in', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                request(app)
+                    .get('/explore/mine')
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects.should.be.empty; //redirect
+                        done();
+                    });
             });
     });
 });
@@ -324,6 +459,36 @@ describe('#Admin Route', function() {
                             done();
                         });
                     });
+            });
+    });
+
+    it('system-defaults should respond to GET', function(done) {
+        chai.request(app)
+            .get('/admin/system-information')
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/login'); //redirect
+                done();
+            });
+
+    });
+
+    it('system-defaults should respond to GET logged in', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                request(app)
+                    .get('/admin/system-information')
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects.should.be.empty; //redirect
+                        done();
+                    });
+
             });
     });
 });
