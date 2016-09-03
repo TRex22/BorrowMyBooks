@@ -32,6 +32,7 @@
                 </a> -->
 
               <div class="view overlay hm-white-strong">
+                <a href="book/<%= books[i]._id %>">
                 <img width=250 height=350 src= <% if (books[i].picURL) {%> <%= books[i].picURL %> <%} else{%> <%= site.defaults.DefaultBookPictureURL %> <%} %> />
                 <div class="mask">
                   <p class="black-text font-weight-bold text-capitalize title">
@@ -39,6 +40,7 @@
                   <p class="black-text text-capitalize author">
                     <% if (books[i].author) {%><%=books[i].author %> <%} %></p>
                 </div>
+                </a>
               </div>
 
 
