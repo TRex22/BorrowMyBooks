@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <%- include('../partials/header') %>
+  <body>   
+   <%- include('../partials/navbar') %>
+
+  	<div class="site-margin">
+      <h1>Your Profile Settings</h1>
+    </div>
+
+  <!-- <div class="center-align"> -->
+    <div class="user site-margin">
+
+
+        <!-- Portfolio Item Row -->
+        <div class="row">
+
+            <div class="col-md-3">
+                <img class="img-responsive account-picture" src=<% if (user.picURL) {%> <%= user.picURL %> <%} else{%> <%= site.defaults.DefaultProfilePictureURL %> <%} %> >
+            </div>
+
+<form role="form" action="/profile/settings" method="post" class="box login">
+<p>Change profile picture ... a box or url from image?</p>
+  <div class="form-group">
+    <input type="text" class="form-control" tabindex="1" placeholder="Username" name="username" required>
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" tabindex="1" placeholder="Full Name" name="fullname" required>
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" tabindex="1" placeholder="Email Address" name="email" required>
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" tabindex="1" placeholder="Physical Address" name="address" required>
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" tabindex="1" placeholder="Phone Number" name="phone" required>
+  </div>
+
+  <div class="form-group">
+    <input type="password" class="form-control" tabindex="2"  placeholder="Password" name="password" required>
+  </div>
+
+  <div class="form-group">
+  <label>Select your interests:</label> <br>
+      <select class="selectpicker form-control" data-live-search="true" name="interests" multiple>
+      <option>Mathematics</option>
+      <option>Computer Science</option>
+      <option>Biology</option>
+      <option>Finance</option>
+      <option>Chemistry</option>
+      <option>Law</option>
+      <option>Engineering</option>
+      <option>Physics</option>
+    </select>
+  </div>
+
+  <br>
+
+  <div>
+    <input type="submit" class="btn btn-default" value="Save" tabindex="1">
+  </div>
+
+</form>
+    
+
+  <!-- </div> -->
+  <%- include('../partials/footer') %>
+  </body>
+</html>

@@ -94,6 +94,7 @@ app.use('/teapot', teapot);
 require('./routes/index.js')(app, passport);
 require('./routes/admin.js')(app, passport);
 require('./routes/explore.js')(app, passport);
+require('./routes/book.js')(app, passport);
 require('./routes/accounts.js')(app, passport);
 require('./routes/errors.js')(app);
 

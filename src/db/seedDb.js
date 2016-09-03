@@ -28,6 +28,8 @@ function go() {
         registrationDate: new Date()
     });
     iUser.userId = iUser.generateUUID();
+    var adminId = iUser.userId;    
+
     iUser.salt = iUser.generateSalt();
     iUser.hash = iUser.generateHash("123456");
     iUser.save(); 
@@ -84,7 +86,7 @@ function go() {
         picURL: "https://upload.wikimedia.org/wikipedia/en/7/70/HeartsInAtlantis.gif",
         interests: ["Fantasy"],
         edition: "First Edition",
-        userId: "0",
+        userId: adminId,
         noAvailable: 1,
         isAvailable: true,
         ISBN: "978-0-684-85351-2",
@@ -187,7 +189,7 @@ function go() {
         picURL: "https://s-media-cache-ak0.pinimg.com/236x/a0/96/ff/a096ff3bafb7786b59ef9ba9d3e7ddf2.jpg",  //mockingbird
         interests: ["Fiction"],
         edition: "second edition",
-        userId: "1",
+        userId: adminId,
         noAvailable: 33,
         isAvailable: false,
         ISBN: null,
@@ -212,7 +214,7 @@ function go() {
         picURL: null,
         interests: ["Fiction"],
         edition: "second edition",
-        userId: "1",
+        userId: adminId,
         noAvailable: 33,
         isAvailable: false,
         ISBN: null,

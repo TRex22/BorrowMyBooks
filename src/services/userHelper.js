@@ -84,6 +84,9 @@ function createNewUser(username, password, body) {
 
 function auth(req, res, site, admin, sysinfo) {
     if (req.user) {
+/*        if(!req.user.isLoggedIn){
+            res.redirect('/login');
+        }*/
         if (!isAdmin(req.user) && admin) {
             res.status(401);
             url = req.url;

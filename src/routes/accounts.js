@@ -39,7 +39,16 @@ module.exports = function(app, passport) {
         }
     );
 
-    app.post('/profile',
+    app.get('/profile/settings',
+        function(req, res, next) {
+            if (userHelper.auth(req, res, app.locals.site)) {
+                req = userHelper.processUser(req);
+                res.render('accounts/profile-settings', { site: app.locals.site, user: req.user });
+            }
+        }
+    );
+
+    app.post('/profile/settings',
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site)) {
                 req = userHelper.processUser(req);

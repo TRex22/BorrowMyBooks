@@ -16,7 +16,7 @@
         <div class="row">
 
             <div class="col-md-3">
-                <img class="img-responsive" src=<% if (user.picURL) {%> <%= user.picURL %> <%} else{%> <%= site.defaults.DefaultProfilePictureURL %> <%} %> >
+                <img class="img-responsive account-picture" src=<% if (user.picURL) {%> <%= user.picURL %> <%} else{%> <%= site.defaults.DefaultProfilePictureURL %> <%} %> >
             </div>
 
             <div class="col-md-5">
@@ -37,8 +37,16 @@
                     <li>Last Login Date: <%= user.lastLoginDate %></li>
                     <li>Registration Date: <%= user.registrationDate %></li>
                 </ul>
+                <div class="row">
+                  <div class=col-md-6>
+                    <h3>Books Borrowed:</h3>
+                  </div>
 
-                <br>
+                  <div class=col-md-6>
+                    <h3>Books Traded Away:</h3>
+                  </div>
+              </div>
+              <br>
             </div>
     </div>
     
