@@ -252,7 +252,7 @@ a {
 
 .account-picture {
     border: 3px solid #607d8b;
-/*    border-radius: 100px;*/
+    /*    border-radius: 100px;*/
 }
 
 .account-menu {
@@ -262,10 +262,12 @@ a {
 .dropdown-menu {
     display: none;
     position: absolute;
-    min-width: 15px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-    margin-right: 85px;
+    min-width: 160px;
+    margin-right: 185px;
+    top: 65px;
+    left: -84.5px;
 }
 
 .dropdown {

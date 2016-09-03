@@ -14,11 +14,11 @@
                 <%if (user.isLoggedIn) {%>  
 
                     <div class="dropdown profilePicture">
-                          <div class="dropdown-toggle" type="button" data-toggle="dropdown">
+                          <div class="dropbtn" type="button" data-toggle="dropdown">
                             <img class="img-circle circle-avatar" src="<% if(user.picUrl) {%> <%= user.picUrl %> <% } else { %> <%= site.defaults.DefaultProfilePictureURL %> <% } %>" alt="profile picture"/>
                           </div>
 
-                          <ul class="dropdown-menu account-menu">
+                          <ul class="dropdown-menu dropdown-content account-menu">
                             <li><a href="/book/new"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Upload a Book</a></li>
                             <li><a href="/explore/mine"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> My Books</a></li>
                             <li><a href="/profile"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
