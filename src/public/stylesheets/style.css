@@ -312,3 +312,10 @@ a {
 .site-margin {
     padding-left: 65px;
 }
+
+.stats-glyph {
+    text-shadow: 2em;
+    font-size: 16em;
+    color: #e65100;
+    left: 85px;
+}

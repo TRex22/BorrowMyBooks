@@ -11,6 +11,8 @@ var util = require('util');
 var pkg = require('../package.json');
 var config = require('../config.json');
 
+var moment = require('moment');
+
 function initSite() {
     var site = {};
     site.user = {};
@@ -25,6 +27,8 @@ function initSite() {
     site.defaults.DefaultBrandingText = config.defaultBrandingText;
 
     site.themes = config.themes;
+
+    site.moment = moment;
     return site;
 }
 

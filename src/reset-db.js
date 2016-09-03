@@ -12,7 +12,7 @@ async.series([
     clear.go(),
     seed.go()
 ], function(error, success) {
-    if (error) { logger.err('Something is wrong!'); }
+    if (error) { logger.error('Something is wrong!'); }
     logger.info("db reinitialised.");
 });
 /*process.exit();*/

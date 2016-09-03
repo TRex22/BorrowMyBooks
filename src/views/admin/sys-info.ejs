@@ -8,8 +8,41 @@
         <div class="bs-component">
             <h1 class="center-align">System Information</h1>
 
-            <p><%= sysinfo %></p><br/>
-            <a href="/admin/system-information/node-info">Node-Info</a>
+            <div class="row">
+
+	            <div class="col-md-3">
+	                <span class="glyphicon glyphicon-stats stats-glyph" aria-hidden="true"></span>
+	            </div>
+
+	            <div class="col-md-5">
+	                <h3>System Summary</h3>
+	                <ul>
+	                	<li>Up Time: <%= sysinfo.upTime %> seconds</li>
+	                    <li title="<%= sysinfo.startTime %>">Start Time: <%= site.moment(sysinfo.startTime).format('LLL'); %></li>
+	                    <li>Node Version: <%= sysinfo.nodeVersion %></li>
+	                    <li>Node PID: <%= sysinfo.pid %></li>
+	                    <li>Load Average: <% if (sysinfo.loadAvg) {%> 
+	                                    <%= sysinfo.loadAvg[0]  %> 
+	                                      <% for(var i=1; i<sysinfo.loadAvg.length; i++) {%>
+	                                         , <%= sysinfo.loadAvg[0]  %> 
+	                                     <% } %> 
+	                                   <%} %> </li>
+	                    <li>Free Memory: <%= sysinfo.freeMemory %></li>
+	                    <li>Used Memory: <%= sysinfo.memoryUsage %></li>
+						<li>Environment: <%= sysinfo.env %></li>
+	                    <li>Hostname: <%= sysinfo.hostname %></li>
+	                    <li>Server Ip: <% if (sysinfo.serverIp) {%> 
+	                                    <%= sysinfo.serverIp[0]  %> 
+	                                      <% for(var i=1; i<sysinfo.serverIp.length; i++) {%>
+	                                         , <%= sysinfo.serverIp[0]  %>
+	                                     <% } %> 
+	                                   <%} %> </li>                  
+	                </ul>
+
+	                <br>
+
+	            </div>
+			</div>
         </div>
         <%- include('../partials/footer') %>
 </body>
