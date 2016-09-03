@@ -1,5 +1,6 @@
 var pkg = require('../package');
 var config = require('../config');
+var logger = require("../logger/logger");
 
 var userHelper = require('../services/userHelper');
 var mongoose = require('../config/db.js').mongoose;
@@ -53,8 +54,42 @@ module.exports = function(app, passport) {
     app.post('/profile/settings',
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site)) {
-                req = userHelper.processUser(req);
-                res.render('accounts/profile', { site: app.locals.site, user: req.user });
+                user.findOne({ userId: req.user.userId },
+                    function(err, user) {
+                        if(err) throw err; //todo fix
+
+                        if (req.body.username) {
+                            user.username = req.body.username;
+                        }
+
+                        if (req.body.fullname) {
+                            user.name = req.body.fullname;
+                        }
+
+                        if (req.body.email) {
+                            user.email = req.body.email;
+                        }
+
+                        if (req.body.address) {
+                            user.address = req.body.address;
+                        }
+
+                        if (req.body.phone) {
+                            user.phone = req.body.phone;
+                        }
+
+                        if (req.body.interests) {
+                            user.interests = req.body.interests;
+                        }
+
+                        req.user = user;
+                        req.session.user = user;
+                        user.save();
+                    });
+
+                logger.warn("user updated info");
+
+                res.redirect('/profile');
             }
         }
     );
