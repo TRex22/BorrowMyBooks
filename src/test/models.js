@@ -16,6 +16,36 @@ var userMessage = require('../models/userMessage');
 var systemDefaults = require('../models/systemDefaults');
 var userRole = require('../models/userRole');
 var userRating = require('../models/userRating');
+var schoolDomain = require('../models/schoolDomain');
+
+var seed = require('../db/seedDb');
+var clear = require('../db/clearDb');
+
+describe('#School Domain Schema', function() {
+    beforeEach(function() {
+        clear.go();
+        seed.go();
+    });
+
+    // tests here
+    it('should be able to determine that an email is a student', function() {
+        var email = "student@wits.ac.za";
+        var SchoolDomain = mongoose.model('SchoolDomain', schoolDomain);
+
+        schoolDomain.findOne({}, function(err, domainObj) {
+            domainObj.isStudentEmail(email).should.be.true;
+        });
+    });
+
+    it('should be able to determine that an email is not a student', function() {
+        var email = "student@yahoo.com";
+        var SchoolDomain = mongoose.model('SchoolDomain', schoolDomain);
+
+        schoolDomain.findOne({}, function(err, domainObj) {
+            domainObj.isStudentEmail(email).should.be.false;
+        });
+    });
+});
 
 describe('#Book Schema', function() {
     // tests here

@@ -2,6 +2,7 @@ const os = require('os');
 /*var logger = require("../logger/logger");*/
 var simpleInfo = require('simple-node-info');
 
+/* istanbul ignore next */
 function vmstat() {
     var isWin = (os.platform() === 'win32' || os.platform() === 'win64');
     if (isWin) {
@@ -36,7 +37,7 @@ function winvmstat() {
     var b = "0"; //todo
 
     var swpd = "0"; //todo
-    var free = "2742600";//todo + info.freeMemory;
+    var free = "2742600"; //todo + info.freeMemory;
     var buff = "0"; //todo
     var cache = "0"; //todo
 
@@ -55,7 +56,7 @@ function winvmstat() {
     var wa = "0"; //todo
 
     output += r + " " + b + " " + swpd + " " + free + " " + buff + " " + cache + " " + si + " " + so + " " + bi + " " + bo + " " + _in + " " + cs + " " + us + " " + sy + " " + id + " " + wa;
-//Note: the memory, swap, and I/O statistics are in blocks, not in bytes. In Linux, blocks are usually 1,024 bytes (1 KB).
+    //Note: the memory, swap, and I/O statistics are in blocks, not in bytes. In Linux, blocks are usually 1,024 bytes (1 KB).
     return output;
 }
 

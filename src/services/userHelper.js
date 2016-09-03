@@ -82,6 +82,7 @@ function createNewUser(username, password, body) {
     return iUser;
 }
 
+/* istanbul ignore next */
 function auth(req, res, site, admin, sysinfo) {
     if (req.user) {
 /*        if(!req.user.isLoggedIn){
