@@ -17,26 +17,26 @@
 	            <div class="col-md-5">
 	                <h3>System Summary</h3>
 	                <ul>
-	                	<li>Up Time: <%= sysinfo.upTime %> seconds</li>
-	                    <li title="<%= sysinfo.startTime %>">Start Time: <%= site.moment(sysinfo.startTime).format('LLL'); %></li>
-	                    <li>Node Version: <%= sysinfo.nodeVersion %></li>
-	                    <li>Node PID: <%= sysinfo.pid %></li>
-	                    <li>Load Average: <% if (sysinfo.loadAvg) {%> 
+	                	<li>Up Time: <strong><%= sysinfo.upTime %> seconds</strong></li>
+	                    <li title="<%= sysinfo.startTime %>">Start Time: <strong><%= site.moment(sysinfo.startTime).format('LLL'); %></strong></li>
+	                    <li>Node Version: <strong><%= sysinfo.nodeVersion %></strong></li>
+	                    <li>Node PID: <strong><%= sysinfo.pid %></strong></li>
+	                    <li>Load Average: <strong><% if (sysinfo.loadAvg) {%> 
 	                                    <%= sysinfo.loadAvg[0]  %> 
 	                                      <% for(var i=1; i<sysinfo.loadAvg.length; i++) {%>
 	                                         , <%= sysinfo.loadAvg[0]  %> 
 	                                     <% } %> 
-	                                   <%} %> </li>
-	                    <li>Free Memory: <%= sysinfo.freeMemory %></li>
-	                    <li>Used Memory: <%= sysinfo.memoryUsage %></li>
-						<li>Environment: <%= sysinfo.env %></li>
-	                    <li>Hostname: <%= sysinfo.hostname %></li>
-	                    <li>Server Ip: <% if (sysinfo.serverIp) {%> 
+	                                   <%} %> </strong></li>
+	                    <li>Free Memory: <strong><%= sysinfo.freeMemory %></strong></li>
+	                    <li>Used Memory: <strong><%= sysinfo.memoryUsage %></strong></li>
+						<li>Environment: <strong><%= sysinfo.env %></strong></li>
+	                    <li>Hostname: <strong><%= sysinfo.hostname %></strong></li>
+	                    <li>Server Ip: <strong><% if (sysinfo.serverIp) {%> 
 	                                    <%= sysinfo.serverIp[0]  %> 
 	                                      <% for(var i=1; i<sysinfo.serverIp.length; i++) {%>
-	                                         , <%= sysinfo.serverIp[0]  %>
+	                                       , <%= sysinfo.serverIp[0]  %>
 	                                     <% } %> 
-	                                   <%} %> </li>                  
+	                                   <%} %> </strong></li>                  
 	                </ul>
 
 	                <br>
