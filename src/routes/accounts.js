@@ -2,6 +2,8 @@ var pkg = require('../package');
 var config = require('../config');
 
 var userHelper = require('../services/userHelper');
+var mongoose = require('../config/db.js').mongoose;
+var user = mongoose.model('User', require('../models/user'));
 
 module.exports = function(app, passport) {
     app.get('/login', function(req, res) {

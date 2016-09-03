@@ -23,17 +23,19 @@ module.exports = function(app, passport) {
     app.get('/explore/mine', function(req, res, next) {
         //TODO: JMC database connection
         //also system defaults for alt
-        req = userHelper.processUser(req);
-        var Book = mongoose.model('Book', book);
+        if (userHelper.auth(req, res, app.locals.site)) {
+            req = userHelper.processUser(req);
+            var Book = mongoose.model('Book', book);
 
-        Book.find({}, function(err, books) {
-            var usrBooks = [];
-            for (var i = 0; i < books.length; i++){
-                if (books[i].userId === req.user.userId) {
-                    usrBooks.push(books[i]);
+            Book.find({}, function(err, books) {
+                var usrBooks = [];
+                for (var i = 0; i < books.length; i++) {
+                    if (books[i].userId === req.user.userId) {
+                        usrBooks.push(books[i]);
+                    }
                 }
-            }
-            res.render('explore/explore-mine', { site: app.locals.site, books: usrBooks, user: req.user });
-        });
+                res.render('explore/explore-mine', { site: app.locals.site, books: usrBooks, user: req.user });
+            });
+        }
     });
 };

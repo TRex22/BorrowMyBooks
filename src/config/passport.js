@@ -67,6 +67,9 @@ module.exports = function(app, passport) {
                         return done(null, false, req.flash('error', 'Enter correct password'));
                     }
 
+                    user.lastLoginDate = new Date();
+                    user.save();
+
                     req = userHelper.processUser(req);
                     return done(null, user);
 
@@ -93,6 +96,9 @@ module.exports = function(app, passport) {
                     user.isLoggedIn = false;
                     return done(null, false, req.flash('error', 'Enter correct password'));
                 }
+                
+                user.lastLoginDate = new Date();
+                user.save();
 
                 req = userHelper.processUser(req);
                 return done(null, user);
