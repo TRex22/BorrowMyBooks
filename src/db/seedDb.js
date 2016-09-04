@@ -234,6 +234,31 @@ function go() {
     iBook.save();
     logger.warn("created book");
 
+    iBook = new book({
+        title: "Harry Potter and the Philosopher's Stone",
+        author: "J. K. Rowling",
+        userId: adminId,
+        noAvailable: 55,
+        isAvailable: true,
+        picURL: "http://images.techtimes.com/data/images/full/182239/harry-potter-olly-moss-philosophers-stone-400x600-png.png?w=600",
+        ISBN: "dfhdfhdfh",
+        publishDate: new Date(),
+        creationDate: new Date(),
+        language: "English",
+        edition: "6th Edition",
+        loanPrice: 500,
+        sellPrice: 5000,
+        isForLoan: true,
+        isForSale: true,
+        summary: "A book wow!",
+        interests: [
+            "Computer Science"
+        ]
+    });
+    iBook.bookId = iBook.generateUUID();
+    iBook.save();
+    logger.warn("created book");
+
     var iSystemDefaults = new systemDefaults({
         DefaultProfilePictureURL: "/assets/avatar.png",
         DefaultBookPictureURL: "/assets/cover.jpg",

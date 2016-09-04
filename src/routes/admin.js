@@ -97,7 +97,8 @@ module.exports = function(app, passport) {
             }
         }
     );
-
+    
+    /* istanbul ignore next */ 
     if (config.nodeinfo) {
         var nodeinfo = require('node-info');
         app.use(nodeinfo({
