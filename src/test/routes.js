@@ -273,7 +273,6 @@ describe('#Profile Route', function() {
                                 .end(function(err, res) {
                                     User.findOne({ _id: user._id }, function(err, tuser) {
                                         res.should.have.status(200);
-                                        console.log(res)
                                         tuser.name.should.be.equal("Test");
                                         done();
                                     });
