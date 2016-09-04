@@ -31,8 +31,8 @@
                   </div>
                 </a> -->
 
-              <div class="view overlay hm-white-strong">
-                <a href="book/<%= books[i]._id %>">
+            <div class="view overlay hm-white-strong">
+              <a href="book/<%= books[i]._id %>">
                 <img width=250 height=350 src= <% if (books[i].picURL) {%> <%= books[i].picURL %> <%} else{%> <%= site.defaults.DefaultBookPictureURL %> <%} %> />
                 <div class="mask">
                   <p class="black-text font-weight-bold text-capitalize title">
@@ -40,8 +40,8 @@
                   <p class="black-text text-capitalize author">
                     <% if (books[i].author) {%><%=books[i].author %> <%} %></p>
                 </div>
-                </a>
-              </div>
+              </a>
+            </div>
 
 
 
@@ -54,11 +54,3 @@
    <%- include('../partials/footer') %>
   </body>
 </html>
-
-
-<!-- <div class="view overlay hm-red-strong">
-    <img src="http://mdbootstrap.com/images/regular/nature/img%20(34).jpg" class="img-fluid " alt="">
-    <div class="mask flex-center">
-        <p class="white-text">Strong overlay</p>
-    </div>
-</div> -->

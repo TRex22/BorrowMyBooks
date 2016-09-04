@@ -112,7 +112,7 @@ function go() {
         picURL: "https://upload.wikimedia.org/wikipedia/en/7/72/Odd_Thomas.jpg",
         interests: ["Fiction"],
         edition: "second edition",
-        userId: "1",
+        userId: "6d914516-c54e-4b0d-8d5f-3c16b1dd54f5",
         noAvailable: 33,
         isAvailable: true,
         ISBN: "0-553-58449-9",
@@ -137,7 +137,7 @@ function go() {
     iBook = new book({
         title: "A Book about Tests",
         author: "me",
-        userId: "0",
+        userId: "6d914516-c54e-4b0d-8d5f-3c16b1dd54f5",
         noAvailable: 1,
         isAvailable: false,
         interests: null,
@@ -165,7 +165,7 @@ function go() {
         picURL: "http://ebookfriendly.com/wp-content/uploads/2014/03/Mr-Mercedes-Stephen-King-animated-book-cover.gif", //mr merc
         interests: ["Fantasy"],
         edition: "First Edition",
-        userId: "0",
+        userId: "6d914516-c54e-4b0d-8d5f-3c16b1dd54f5",
         noAvailable: 1,
         isAvailable: false,
         ISBN: null,

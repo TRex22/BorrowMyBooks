@@ -11,6 +11,8 @@
   <div class="center-align">
     <div class="container">
       <div class="row p-b-6">
+      <script> console.log(<%= books.length %>);
+               console.log(<%= user.userId %>); </script>
         <% for(var i=0; i<books.length; i++) {%>
           <% if (i%3 == 0 && i != 0) {%>
             </div>
