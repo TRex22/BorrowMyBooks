@@ -74,6 +74,15 @@ a {
     border: 1px;
 }
 
+.new-book {
+    padding-top: 2.5%;
+    padding-bottom: 8%;
+    padding-left: 20%;
+    padding-right: 20%;
+    border: 1px;
+    max-width: 100%;
+}
+
 .center-align {
     text-align: center;
     align-items: center;
