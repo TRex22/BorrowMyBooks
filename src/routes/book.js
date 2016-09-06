@@ -10,6 +10,9 @@ var dbHelper = require('../services/dbHelper');
 var userHelper = require('../services/userHelper.js');
 var Book = mongoose.model('Book', require('../models/book'));
 
+var transaction = require('../models/transaction');
+var Transaction = mongoose.model('Transaction', transaction);
+
 module.exports = function(app, passport) {
     app.get('/book/new', function(req, res, next) {
         //TODO: JMC database connection
@@ -50,6 +53,137 @@ module.exports = function(app, passport) {
                 iBook.bookId = iBook.generateUUID();
                 iBook.save();
                 logger.warn("created book");
+            }
+
+            res.redirect('/book/' + iBook.bookId);
+        }
+    });
+
+    app.post('/book/:bookId/rent', function(req, res, next) {
+        //TODO: JMC database connection
+        if (userHelper.auth(req, res, app.locals.site)) {
+            if (req.body) { //TODO check and perhpas fix this
+                Book.findOne({ _id: req.params.bookId }, function(err, book) {
+                    if (book) {
+                        //check if book is for rent
+                        if (book.isForLoan && !book.isOnLoan && book.noAvailable > 0 && book.isAvailable === true) {
+                            iTransaction = new transaction({
+                                fromUserId: book.userId,
+                                toUserId: req.user.userId,
+                                bookId: book.bookId,
+                                amount: req.amount,
+                                cost: req.cost,
+                                isPurchase: false,
+                                isRent: true,
+                                hasBeenReturned: false,
+                                returnDate: null,
+                                hasBeenRevoked: false,
+                                Date: new Date(),
+                                AdminId: null
+                            });
+                            iTransaction.TransactionId = iTransaction.generateUUID();
+                            iTransaction.save();
+
+                            book.noAvailable = book.noAvailable - req.body.number;
+                            /*book.isOnLoan = true;*/
+                            book.save();
+                        } else {
+                            req.flash('error', 'Book is not for rent.'); //todo fix? how does this work?    
+                            res.render('book/book', { site: app.locals.site, book: book, user: req.user });
+                        }
+                    } else {
+                        res.redirect('/explore');
+                    }
+                });
+            }
+
+            res.redirect('/book/' + iBook.bookId);
+        }
+    });
+
+    app.post('/book/:bookId/return', function(req, res, next) {
+        //TODO: JMC database connection
+        if (userHelper.auth(req, res, app.locals.site)) {
+            if (req.body) { //TODO check and perhpas fix this
+                Book.findOne({ _id: req.params.bookId }, function(err, book) {
+                    if (book) {
+                        //check if book is for rent and loaned out
+                        if (book.isForLoan && book.isOnLoan) {
+                            Transaction.findOne({
+                                    toUserId: req.user.userId,
+                                    bookId: book.bookId
+                                },
+                                function(err, itransaction) {
+                                    if (itransaction) {
+                                        //check if right user
+                                        if (itransaction.userId === req.user.userId) {
+                                            itransaction.hasBeenReturned = true;
+                                            itransaction.returnDate = new Date();
+                                            itransaction.save();
+
+                                            book.noAvailable = book.noAvailable + itransaction.amount;
+                                            /*book.isOnLoan = false;*/
+                                            book.save();
+                                        } else {
+                                            req.flash('error', 'Wrong user.'); //todo fix? how does this work?    
+                                            res.render('book/book', { site: app.locals.site, book: book, user: req.user });
+                                        }
+                                    } else {
+                                        req.flash('error', 'No such transaction.'); //todo fix? how does this work?    
+                                        res.render('book/book', { site: app.locals.site, book: book, user: req.user });
+                                    }
+                                });
+                        } else {
+                            req.flash('error', 'Book is not for rent.'); //todo fix? how does this work?    
+                            res.render('book/book', { site: app.locals.site, book: book, user: req.user });
+                        }
+                    } else {
+                        res.redirect('/explore');
+                    }
+                });
+            }
+
+            res.redirect('/book/' + iBook.bookId);
+        }
+    });
+
+    app.post('/book/:bookId/buy', function(req, res, next) {
+        //TODO: JMC database connection
+        if (userHelper.auth(req, res, app.locals.site)) {
+            if (req.body) { //TODO check and perhpas fix this
+                Book.findOne({ _id: req.params.bookId }, function(err, book) {
+                    if (book) {
+                        //check if book is for rent
+                        //TODO: check cost and amounts
+                        if (book.isForLoan && !book.isOnLoan && book.noAvailable > 0 && book.isAvailable === true) {
+                            iTransaction = new transaction({
+                                fromUserId: book.userId,
+                                toUserId: req.user.userId,
+                                bookId: book.bookId,
+                                amount: req.amount,
+                                cost: req.cost,
+                                isPurchase: true,
+                                isRent: false,
+                                hasBeenReturned: false,
+                                returnDate: null,
+                                hasBeenRevoked: false,
+                                Date: new Date(),
+                                AdminId: null
+                            });
+                            iTransaction.TransactionId = iTransaction.generateUUID();
+                            iTransaction.save();
+
+                            book.noAvailable = book.noAvailable - req.body.number;
+                            /*book.isOnLoan = true;*/
+                            book.save();
+                        } else {
+                            req.flash('error', 'Book is not for sale.'); //todo fix? how does this work?    
+                            res.render('book/book', { site: app.locals.site, book: book, user: req.user });
+                        }
+                    } else {
+                        res.redirect('/explore');
+                    }
+                });
             }
 
             res.redirect('/book/' + iBook.bookId);

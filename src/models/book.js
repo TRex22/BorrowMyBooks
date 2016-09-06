@@ -19,8 +19,8 @@ var bookSchema = mongoose.Schema({
     sellPrice: Number,
     isForLoan: Boolean,
     isForSale: Boolean,
-    isSold: Boolean,
-    isOnLoan: Boolean,
+/*    isSold: Boolean,*/
+/*    isOnLoan: Boolean,*/
     summary: String
 }, { strict: false, collection: 'Book' });
 
