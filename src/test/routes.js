@@ -363,6 +363,57 @@ describe('#Book Route', function() {
                 done();
             });
     });
+
+    it('should respond to buy post not logged in', function(done) {
+        Book.findOne({}, function(err, book) {
+            if (book) {
+                /*res.render('explore/book', { site: app.locals.site, book: book, user: req.user });*/
+                chai.request(app)
+                    .post('/book/' + book._id + '/buy')
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects[0].should.contain('/login'); //redirect
+                        done();
+                    });
+            } else {
+                throw err;
+            }
+        });
+    });
+
+    it('should respond to rent post not logged in', function(done) {
+        Book.findOne({}, function(err, book) {
+            if (book) {
+                /*res.render('explore/book', { site: app.locals.site, book: book, user: req.user });*/
+                chai.request(app)
+                    .post('/book/' + book._id + '/rent')
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects[0].should.contain('/login'); //redirect
+                        done();
+                    });
+            } else {
+                throw err;
+            }
+        });
+    });
+
+    it('should respond to return post not logged in', function(done) {
+        Book.findOne({}, function(err, book) {
+            if (book) {
+                /*res.render('explore/book', { site: app.locals.site, book: book, user: req.user });*/
+                chai.request(app)
+                    .post('/book/' + book._id + '/return')
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects[0].should.contain('/login'); //redirect
+                        done();
+                    });
+            } else {
+                throw err;
+            }
+        });
+    });
 });
 
 describe('#Admin Route', function() {
