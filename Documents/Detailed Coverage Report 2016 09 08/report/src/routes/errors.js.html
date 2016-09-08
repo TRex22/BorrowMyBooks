@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src\routes\errors.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">src/routes/</a> errors.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>26/26</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>5/5</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>26/26</span>
+      </div>
+      <div class='fl pad1y'>
+        <span class="strong">13 statements, 3 functions</span>
+        <span class="quiet">Ignored</span>  &nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var logger = require("../logger/logger");
+var pkg = require('../package');
+&nbsp;
+var mongoose = require('../config/db.js').mongoose;
+var userHelper = require('../services/userHelper.js');
+&nbsp;
+// error handlers - 404 and 500 others check the logs
+// catch 400
+// route to display versions
+module.exports = function(app) {
+    // catch 404 and forward to error handler
+    /* istanbul ignore next */ //TODO: JMC think about this
+    app.use(function(req, res) {
+        res.status(404);
+        url = req.url;
+        req = userHelper.processUser(req);
+        res.render('errors/404.ejs', { title: '404: Resource Not Found', url: url, statusCode: 404, site: app.locals.site, user: req.user });
+    });
+    /* istanbul ignore next */ //TODO: JMC think about this
+    app.use(<span class="fstat-skip" title="function not covered" >function(req, res) {</span>
+<span class="cstat-skip" title="statement not covered" >        res.status(400);</span>
+<span class="cstat-skip" title="statement not covered" >        url = req.url;</span>
+<span class="cstat-skip" title="statement not covered" >        req = userHelper.processUser(req);</span>
+<span class="cstat-skip" title="statement not covered" >        res.render('errors/400.ejs', { title: '400: Bad Request', url: url, statusCode: 400, site: app.locals.site, user: req.user });</span>
+    });
+    /* istanbul ignore next */ //TODO: JMC think about this
+    app.use(<span class="fstat-skip" title="function not covered" >function(req, res) {</span>
+<span class="cstat-skip" title="statement not covered" >        res.status(401);</span>
+<span class="cstat-skip" title="statement not covered" >        url = req.url;</span>
+<span class="cstat-skip" title="statement not covered" >        req = userHelper.processUser(req);</span>
+<span class="cstat-skip" title="statement not covered" >        res.render('errors/401.ejs', { title: '401: Unauthorized', url: url, statusCode: 401, site: app.locals.site, user: req.user });</span>
+    });
+    /* istanbul ignore next */ //TODO: JMC think about this
+    // Handle 500
+    app.use(<span class="fstat-skip" title="function not covered" >function(error, req, res, next) {</span>
+<span class="cstat-skip" title="statement not covered" >        res.status(500);</span>
+<span class="cstat-skip" title="statement not covered" >        url = req.url;</span>
+<span class="cstat-skip" title="statement not covered" >        req = userHelper.processUser(req);</span>
+<span class="cstat-skip" title="statement not covered" >        res.render('errors/error.ejs', { title: '500: Internal Server Error', url: url, statusCode: 500, site: app.locals.site, user: req.user });</span>
+<span class="cstat-skip" title="statement not covered" >        logger.error("Error Message: code(500) %s", error);</span>
+    });
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Sep 08 2016 02:11:18 GMT+0200 (South Africa Standard Time)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

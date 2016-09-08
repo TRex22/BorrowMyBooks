@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src\routes\book.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">src/routes/</a> book.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">30.49% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>25/82</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">10.87% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>5/46</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>6/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">30.49% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>25/82</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* jshint node: true */
+var logger = require("../logger/logger");
+&nbsp;
+var express = require('express');
+var pkg = require('../package');
+var router = express.Router();
+&nbsp;
+var mongoose = require('../config/db.js').mongoose;
+var dbHelper = require('../services/dbHelper');
+var userHelper = require('../services/userHelper.js');
+var Book = mongoose.model('Book', require('../models/book'));
+&nbsp;
+var transaction = require('../models/transaction');
+var Transaction = mongoose.model('Transaction', transaction);
+&nbsp;
+module.exports = function(app, passport) {
+    app.get('/book/new', <span class="fstat-no" title="function not covered" >function(req, res, next) {</span>
+        //TODO: JMC database connection
+        //also system defaults for alt
+<span class="cstat-no" title="statement not covered" >        req = userHelper.processUser(req);</span>
+<span class="cstat-no" title="statement not covered" >        if (userHelper.auth(req, res, app.locals.site)) {</span>
+<span class="cstat-no" title="statement not covered" >            req = userHelper.processUser(req);</span>
+<span class="cstat-no" title="statement not covered" >            res.render('book/new-book', { site: app.locals.site, user: req.user });</span>
+        }
+    });
+&nbsp;
+    app.post('/book/new', <span class="fstat-no" title="function not covered" >function(req, res, next) {</span>
+        //TODO: JMC database connection
+        //also system defaults for alt
+<span class="cstat-no" title="statement not covered" >        if (userHelper.auth(req, res, app.locals.site)) {</span>
+<span class="cstat-no" title="statement not covered" >            if (req.body) { //TODO check and perhpas fix this</span>
+<span class="cstat-no" title="statement not covered" >                var iBook = new Book({</span>
+                    title: req.body.title,
+                    author: req.body.author,
+                    userId: req.user.userId,
+                    noAvailable: req.body.noAvailable,
+                    isAvailable: req.body.isAvailable,
+                    interests: req.body.interests,
+                    picURL: req.body.picURL,
+                    ISBN: req.body.ISBN,
+                    publishDate: app.locals.site.moment(req.body.publishDate, 'DD-MM-YYYY'),
+                    creationDate: new Date(),
+                    language: req.body.language,
+                    edition: req.body.edition,
+                    loanPrice: req.body.loanPrice,
+                    sellPrice: req.body.sellPrice,
+                    isForLoan: req.body.isForLoan,
+                    isForSale: req.body.isForSale,
+                    isSold: req.body.isSold,
+                    isOnLoan: req.body.isOnLoan,
+                    summary: req.body.summary
+                });
+<span class="cstat-no" title="statement not covered" >                iBook.bookId = iBook.generateUUID();</span>
+<span class="cstat-no" title="statement not covered" >                iBook.save();</span>
+<span class="cstat-no" title="statement not covered" >                logger.warn("created book");</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            res.redirect('/book/' + iBook.bookId);</span>
+        }
+    });
+&nbsp;
+    app.post('/book/:bookId/rent', function(req, res, next) {
+        //TODO: JMC database connection
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (userHelper.auth(req, res, app.locals.site)) {
+<span class="cstat-no" title="statement not covered" >            if (req.body) { //TODO check and perhpas fix this</span>
+<span class="cstat-no" title="statement not covered" >                Book.findOne({ _id: req.params.bookId }, <span class="fstat-no" title="function not covered" >function(err, book) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    if (book) {</span>
+                        //check if book is for rent
+<span class="cstat-no" title="statement not covered" >                        if (book.isForLoan &amp;&amp; !book.isOnLoan &amp;&amp; book.noAvailable &gt; 0 &amp;&amp; book.isAvailable === true) {</span>
+<span class="cstat-no" title="statement not covered" >                            iTransaction = new transaction({</span>
+                                fromUserId: book.userId,
+                                toUserId: req.user.userId,
+                                bookId: book.bookId,
+                                amount: req.amount,
+                                cost: req.cost,
+                                isPurchase: false,
+                                isRent: true,
+                                hasBeenReturned: false,
+                                returnDate: null,
+                                hasBeenRevoked: false,
+                                Date: new Date(),
+                                AdminId: null
+                            });
+<span class="cstat-no" title="statement not covered" >                            iTransaction.TransactionId = iTransaction.generateUUID();</span>
+<span class="cstat-no" title="statement not covered" >                            iTransaction.save();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                            book.noAvailable = book.noAvailable - req.body.number;</span>
+                            /*book.isOnLoan = true;*/
+<span class="cstat-no" title="statement not covered" >                            book.save();</span>
+                        } else {
+<span class="cstat-no" title="statement not covered" >                            req.flash('error', 'Book is not for rent.'); </span>//todo fix? how does this work?    
+<span class="cstat-no" title="statement not covered" >                            res.render('book/book', { site: app.locals.site, book: book, user: req.user });</span>
+                        }
+                    } else {
+<span class="cstat-no" title="statement not covered" >                        res.redirect('/explore');</span>
+                    }
+                });
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            res.redirect('/book/' + iBook.bookId);</span>
+        }
+    });
+&nbsp;
+    app.post('/book/:bookId/return', function(req, res, next) {
+        //TODO: JMC database connection
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (userHelper.auth(req, res, app.locals.site)) {
+<span class="cstat-no" title="statement not covered" >            if (req.body) { //TODO check and perhpas fix this</span>
+<span class="cstat-no" title="statement not covered" >                Book.findOne({ _id: req.params.bookId }, <span class="fstat-no" title="function not covered" >function(err, book) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    if (book) {</span>
+                        //check if book is for rent and loaned out
+<span class="cstat-no" title="statement not covered" >                        if (book.isForLoan &amp;&amp; book.isOnLoan) {</span>
+<span class="cstat-no" title="statement not covered" >                            Transaction.findOne({</span>
+                                    toUserId: req.user.userId,
+                                    bookId: book.bookId
+                                },
+<span class="fstat-no" title="function not covered" >                                function(err, itransaction) {</span>
+<span class="cstat-no" title="statement not covered" >                                    if (itransaction) {</span>
+                                        //check if right user
+<span class="cstat-no" title="statement not covered" >                                        if (itransaction.userId === req.user.userId) {</span>
+<span class="cstat-no" title="statement not covered" >                                            itransaction.hasBeenReturned = true;</span>
+<span class="cstat-no" title="statement not covered" >                                            itransaction.returnDate = new Date();</span>
+<span class="cstat-no" title="statement not covered" >                                            itransaction.save();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                            book.noAvailable = book.noAvailable + itransaction.amount;</span>
+                                            /*book.isOnLoan = false;*/
+<span class="cstat-no" title="statement not covered" >                                            book.save();</span>
+                                        } else {
+<span class="cstat-no" title="statement not covered" >                                            req.flash('error', 'Wrong user.'); </span>//todo fix? how does this work?    
+<span class="cstat-no" title="statement not covered" >                                            res.render('book/book', { site: app.locals.site, book: book, user: req.user });</span>
+                                        }
+                                    } else {
+<span class="cstat-no" title="statement not covered" >                                        req.flash('error', 'No such transaction.'); </span>//todo fix? how does this work?    
+<span class="cstat-no" title="statement not covered" >                                        res.render('book/book', { site: app.locals.site, book: book, user: req.user });</span>
+                                    }
+                                });
+                        } else {
+<span class="cstat-no" title="statement not covered" >                            req.flash('error', 'Book is not for rent.'); </span>//todo fix? how does this work?    
+<span class="cstat-no" title="statement not covered" >                            res.render('book/book', { site: app.locals.site, book: book, user: req.user });</span>
+                        }
+                    } else {
+<span class="cstat-no" title="statement not covered" >                        res.redirect('/explore');</span>
+                    }
+                });
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            res.redirect('/book/' + iBook.bookId);</span>
+        }
+    });
+&nbsp;
+    app.post('/book/:bookId/buy', function(req, res, next) {
+        //TODO: JMC database connection
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (userHelper.auth(req, res, app.locals.site)) {
+<span class="cstat-no" title="statement not covered" >            if (req.body) { //TODO check and perhpas fix this</span>
+<span class="cstat-no" title="statement not covered" >                Book.findOne({ _id: req.params.bookId }, <span class="fstat-no" title="function not covered" >function(err, book) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    if (book) {</span>
+                        //check if book is for rent
+                        //TODO: check cost and amounts
+<span class="cstat-no" title="statement not covered" >                        if (book.isForLoan &amp;&amp; !book.isOnLoan &amp;&amp; book.noAvailable &gt; 0 &amp;&amp; book.isAvailable === true) {</span>
+<span class="cstat-no" title="statement not covered" >                            iTransaction = new transaction({</span>
+                                fromUserId: book.userId,
+                                toUserId: req.user.userId,
+                                bookId: book.bookId,
+                                amount: req.amount,
+                                cost: req.cost,
+                                isPurchase: true,
+                                isRent: false,
+                                hasBeenReturned: false,
+                                returnDate: null,
+                                hasBeenRevoked: false,
+                                Date: new Date(),
+                                AdminId: null
+                            });
+<span class="cstat-no" title="statement not covered" >                            iTransaction.TransactionId = iTransaction.generateUUID();</span>
+<span class="cstat-no" title="statement not covered" >                            iTransaction.save();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                            book.noAvailable = book.noAvailable - req.body.number;</span>
+                            /*book.isOnLoan = true;*/
+<span class="cstat-no" title="statement not covered" >                            book.save();</span>
+                        } else {
+<span class="cstat-no" title="statement not covered" >                            req.flash('error', 'Book is not for sale.'); </span>//todo fix? how does this work?    
+<span class="cstat-no" title="statement not covered" >                            res.render('book/book', { site: app.locals.site, book: book, user: req.user });</span>
+                        }
+                    } else {
+<span class="cstat-no" title="statement not covered" >                        res.redirect('/explore');</span>
+                    }
+                });
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            res.redirect('/book/' + iBook.bookId);</span>
+        }
+    });
+&nbsp;
+    app.get('/book/:bookId', function(req, res, next) {
+        //TODO: JMC database connection
+        //also system defaults for alt
+        req = userHelper.processUser(req);
+&nbsp;
+        Book.findOne({ _id: req.params.bookId }, function(err, book) {
+            if (book) {
+                res.render('book/book', { site: app.locals.site, book: book, user: req.user });
+            } else {
+                res.redirect('/explore');
+            }
+        });
+    });
+&nbsp;
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Sep 08 2016 02:11:18 GMT+0200 (South Africa Standard Time)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
