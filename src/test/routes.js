@@ -2,88 +2,574 @@ var fs = require('fs');
 var http = require('http');
 var util = require('util');
 var config = require('../config');
+
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = require('chai').should();
+var expect = require('chai').expect;
+var request = require('supertest')
+var validator = require('validator');
 
 var app = require('../app');
 var www = require('../bin/www-test');
+
+var testHelper = require('../services/testHelper');
+
+var mongoose = require('../config/db.js').mongoose;
+var systemDefaults = require('../models/systemDefaults');
+var sysDefault = mongoose.model('SystemDefaults', systemDefaults);
+var book = require('../models/book');
+var Book = mongoose.model('Book', book);
+var User = mongoose.model('User', require('../models/user'));
+
+var seed = require('../db/seedDb');
+var clear = require('../db/clearDb');
+
 /*js to test*/
 
+//setup
 chai.use(chaiHttp);
 
 describe('#Home Route', function() {
-    it('should respond to GET', function() {
+    beforeEach(function() {
+        clear.go();
+        seed.go();
+    });
+
+    it('should respond to GET', function(done) {
         chai.request(app)
             .get('/')
             .end(function(err, res) {
                 res.should.have.status(200);
+                done(err);
             });
     });
 
-    it('should respond to POST with bad request', function() {
+    it('should respond to POST with bad request', function(done) {
         chai.request(app)
             .post('/')
             .end(function(err, res) {
                 res.should.have.status(404);
+                done();
             });
     });
 });
 
 describe('#Login Route', function() {
-    it('should respond to GET', function() {
+    beforeEach(function() {
+        clear.go();
+        seed.go();
+        this.timeout(3000);
+    });
+
+    it('should respond to GET', function(done) {
         chai.request(app)
             .get('/login')
             .end(function(err, res) {
                 res.should.have.status(200);
+                done();
+            });
+    });
+
+    it('should login sucessfully', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                done();
+            });
+    });
+
+    it('should login unsucessfully', function(done) {
+        chai.request(app)
+            .post('/login')
+            .send({ username: 'Admin', password: 'sdggh' })
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/login');
+                done();
+            });
+    });
+
+    it('should logout', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                request(app)
+                    .get('/logout')
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(302);
+                        res.redirects.should.be.empty; //redirect
+                        res.res.client._httpMessage.path.should.be.equal('/logout');
+                        done();
+                    });
+            });
+    });
+
+    it('should logout with post', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                request(app)
+                    .post('/logout')
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(302);
+                        res.redirects.should.be.empty; //redirect
+                        res.res.client._httpMessage.path.should.be.equal('/logout');
+                        done();
+                    });
             });
     });
 });
 
 describe('#Signup Route', function() {
-    it('should respond to GET', function() {
+    it('should respond to GET', function(done) {
         chai.request(app)
             .get('/signup')
             .end(function(err, res) {
                 res.should.have.status(200);
+                done();
+            });
+    });
+
+    it('should respond to POST and try to create a user already in the db', function(done) {
+        chai.request(app)
+            .post('/signup?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/signup');
+                done();
+            });
+    });
+
+    /*    it('should respond to POST and try to create a new user but missing fields', function(done) {
+            chai.request(app)
+                .post('/signup?username=tty&password=123456')
+                .send({ username: "tty", password: '123456' })
+                .end(function(err, res) {
+                    res.should.have.status(200);
+                    res.redirects[0].should.contain('/signup');
+                    done();
+                });
+        });*/
+
+    it('should respond to POST and try to create a new user with sucess', function(done) {
+        chai.request(app)
+            .post('/signup?username=tty&password=123456')
+            .send({ username: "tty", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(200);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                res.res.client._httpMessage.path.should.be.equal('/');
+                done();
             });
     });
 });
 
+describe('#Profile Route', function() {
+    it('should respond to GET not logged in', function(done) {
+        chai.request(app)
+            .get('/profile')
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/login'); //redirect
+                done();
+            });
+    });
+
+    it('should respond to GET logged in', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                request(app)
+                    .get('/profile')
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects.should.be.empty; //redirect
+                        done();
+                    });
+            });
+    });
+
+    it('settings should respond to GET not logged in', function(done) {
+        chai.request(app)
+            .get('/profile/settings')
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/login'); //redirect
+                done();
+            });
+    });
+
+    it('settings should respond to GET logged in', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                request(app)
+                    .get('/profile/settings')
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects.should.be.empty; //redirect
+                        done();
+                    });
+            });
+    });
+
+    it('settings should respond to POST not logged in', function(done) {
+        chai.request(app)
+            .post('/profile/settings')
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/login'); //redirect
+                done();
+            });
+    });
+
+    it('settings should respond to POST logged in and update user details', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                User.findOne({ username: "Admin" }, function(err, user) {
+                    request(app)
+                        .post("/profile/settings?fullname=Test")
+                        .set('cookie', cookie)
+                        .send({ fullname: "Test" })
+                        .end(function(err, res) {
+                            res.should.have.status(302);
+                            res.redirects.should.be.empty; //redirect
+                            res.res.client._httpMessage.path.should.contain("/profile");
+
+                            chai.request(app)
+                                .get('/profile/settings')
+                                .end(function(err, res) {
+                                    User.findOne({ _id: user._id }, function(err, tuser) {
+                                        res.should.have.status(200);
+                                        tuser.name.should.be.equal("Test");
+                                        done();
+                                    });
+                                });
+                        });
+                });
+            });
+    });
+
+
+});
+
 describe('#Explore Route', function() {
-    it('should respond to GET', function() {
+    it('should respond to GET', function(done) {
         chai.request(app)
             .get('/explore')
             .end(function(err, res) {
                 res.should.have.status(200);
+                done();
+            });
+    });
+
+    it('my books should respond to GET no logged in', function(done) {
+        chai.request(app)
+            .get('/explore/mine')
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/login'); //redirect
+                done();
+            });
+    });
+
+    it('settings should respond to GET logged in', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                request(app)
+                    .get('/explore/mine')
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects.should.be.empty; //redirect
+                        done();
+                    });
             });
     });
 });
 
+describe('#Book Route', function() {
+    it('should respond to GET', function(done) {
+        chai.request(app)
+            .get('/book')
+            .end(function(err, res) {
+                res.should.have.status(404); //nothing here
+                done();
+            });
+    });
+
+    it('should respond to GET for a book', function(done) {
+        Book.findOne({}, function(err, book) {
+            if (book) {
+                /*res.render('explore/book', { site: app.locals.site, book: book, user: req.user });*/
+                chai.request(app)
+                    .get('/book/' + book._id)
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects.should.be.empty; //redirect
+                        res.res.client._httpMessage.path.should.be.equal("/book/" + book._id);
+                        done();
+                    });
+            } else {
+                throw err;
+            }
+        });
+
+    });
+
+    it('should respond to GET for a book, not find the bok and redirect back to explore', function(done) {
+        chai.request(app)
+            .get('/book/' + "skjghsdkjghkjsdghkjsdh")
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/explore'); //redirect
+                done();
+            });
+    });
+
+    it('should respond to buy post not logged in', function(done) {
+        Book.findOne({}, function(err, book) {
+            if (book) {
+                /*res.render('explore/book', { site: app.locals.site, book: book, user: req.user });*/
+                chai.request(app)
+                    .post('/book/' + book._id + '/buy')
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects[0].should.contain('/login'); //redirect
+                        done();
+                    });
+            } else {
+                throw err;
+            }
+        });
+    });
+
+    it('should respond to rent post not logged in', function(done) {
+        Book.findOne({}, function(err, book) {
+            if (book) {
+                /*res.render('explore/book', { site: app.locals.site, book: book, user: req.user });*/
+                chai.request(app)
+                    .post('/book/' + book._id + '/rent')
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects[0].should.contain('/login'); //redirect
+                        done();
+                    });
+            } else {
+                throw err;
+            }
+        });
+    });
+
+    it('should respond to return post not logged in', function(done) {
+        Book.findOne({}, function(err, book) {
+            if (book) {
+                /*res.render('explore/book', { site: app.locals.site, book: book, user: req.user });*/
+                chai.request(app)
+                    .post('/book/' + book._id + '/return')
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects[0].should.contain('/login'); //redirect
+                        done();
+                    });
+            } else {
+                throw err;
+            }
+        });
+    });
+});
+
 describe('#Admin Route', function() {
-    it('should respond to GET', function() {
+    it('admin should respond to GET not logged in', function(done) {
         chai.request(app)
             .get('/admin')
             .end(function(err, res) {
                 res.should.have.status(200);
+                res.redirects[0].should.contain('/login'); //redirect
+                done();
+            });
+    });
+
+    it('admin should respond to GET logged in', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                request(app)
+                    .get('/admin')
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects.should.be.empty; //redirect
+                        done();
+                    });
+            });
+    });
+
+    it('system-defaults should respond to GET', function(done) {
+        chai.request(app)
+            .get('/admin/system-defaults')
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/login'); //redirect
+                done();
+            });
+
+    });
+
+    it('system-defaults should respond to GET logged in', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                request(app)
+                    .get('/admin/system-defaults')
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects.should.be.empty; //redirect
+                        done();
+                    });
+
+            });
+    });
+
+    it('system-defaults should respond to POST not logged in', function(done) {
+        request(app)
+            .post('/admin/system-defaults')
+            .send({ defaultTheme: "testtest" })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                done();
+            });
+
+    });
+
+    it('system-defaults should respond to POST logged in', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                request(app)
+                    .post('/admin/system-defaults')
+                    .send({ defaultTheme: "testtest" })
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects.should.be.empty; //redirect
+
+                        sysDefault.findOne({}).exec(function(err, defaults) { //there should only be one set of defaults
+                            if (err) done(err);
+
+                            defaults.DefaultTheme.should.equal("testtest");
+                            done();
+                        });
+                    });
+            });
+    });
+
+    it('system-defaults should respond to GET', function(done) {
+        chai.request(app)
+            .get('/admin/system-information')
+            .end(function(err, res) {
+                res.should.have.status(200);
+                res.redirects[0].should.contain('/login'); //redirect
+                done();
+            });
+
+    });
+
+    it('system-defaults should respond to GET logged in', function(done) {
+        request(app)
+            .post('/login?username=Admin&password=123456')
+            .send({ username: "Admin", password: '123456' })
+            .end(function(err, res) {
+                res.should.have.status(302);
+                var cookie = res.headers['set-cookie'];
+                request(app)
+                    .get('/admin/system-information')
+                    .set('cookie', cookie)
+                    .end(function(err, res) {
+                        res.should.have.status(200);
+                        res.redirects.should.be.empty; //redirect
+                        done();
+                    });
+
             });
     });
 });
 
 describe('#Service Routes', function() {
-    it('should respond to GET (Not Found)', function() {
+    it('should respond to GET (Not Found)', function(done) {
         chai.request(app)
             .get('/randomlol')
             .end(function(err, res) {
                 res.should.have.status(404);
+                done();
             });
     });
 
-    it('should respond to GET (Unauthorised)', function() {
+    it('should respond to GET (Unauthorised)', function(done) {
         chai.request(app)
             .get('/admin')
             .end(function(err, res) {
-                res.should.have.status(401);
+                res.redirects[0].should.include('/login');
+                res.should.have.status(200);
+                done();
+            });
+    });
+
+    it('should respond to GET (teapot)', function(done) {
+        chai.request(app)
+            .get('/teapot')
+            .end(function(err, res) {
+                res.should.have.status(418);
+                res.text.should.equal("I want to be a teapot");
+                done();
             });
     });
 });

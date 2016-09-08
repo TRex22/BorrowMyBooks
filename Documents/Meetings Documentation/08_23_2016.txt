@@ -1,0 +1,3 @@
+Jason and Liron discussed adding a lot of issues to waffle.io for the next sprint.
+Jason created a resetDB.sh to reset the database.
+Marko said nothing.

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <%- include('../partials/header') %>
+  <body>   
+   <%- include('../partials/navbar') %>
+
+  	<div class="site-margin">
+      <h1><%= book.title %></h1>
+    </div>
+
+  <!-- <div class="center-align"> -->
+    <div class="book site-margin">
+
+
+        <!-- Portfolio Item Row -->
+        <div class="row">
+
+            <div class="col-md-3">
+                <img class="img-responsive" src=<% if (book.picURL) {%> <%= book.picURL %> <%} else{%> <%= site.defaults.DefaultBookPictureURL %> <%} %> >
+            </div>
+
+            <div class="col-md-5">
+                <h3>Book Details</h3>
+                <ul>
+                    <li>Title: <%= book.title %></li>
+                    <li>Author: <%= book.author %></li>
+                    <li>Edition: <%= book.edition %></li>
+                    <li>ISBN: <%= book.ISBN %></li>
+                    <li>Interests: <% if (book.interests) {%> 
+                                    <%= book.interests[0]  %> 
+                                      <% for(var i=1; i<book.interests.length; i++) {%>
+                                         , <%= book.interests[0]  %>
+                                     <% } %> 
+                                   <%} %> </li>
+                    <li>Language: <%= book.language %></li>
+                    <li title="<%= book.publishDate %>">Published: <%= site.moment(book.publishDate).format('LLL'); %></li>
+                    
+                </ul>
+
+                <br>
+
+                <h3>Book Summary</h3>
+                <p> <% if (book.summary) {%> <%= book.summary %> <% } %> </p>
+            </div>
+
+          <div class="center-align">
+            <div class="col-md-4">
+              <div class="panel panel-default">
+                <div class="panel-body">
+              <% if (book.isAvailable) {%>
+
+                <% if (book.isForSale) {%> 
+                  <div class="amount">
+                    Buy for R<% if (book.sellPrice) {%><%= book.sellPrice.toFixed(2) %> <% } %> 
+                  </div>
+                  <button type="button" class="btn btn-lg btn-buy btn-cyan">Buy</button>
+                <% } %>
+
+                <% if (book.isForSale && book.isForLoan) {%> 
+                  <div class="or">OR</div>
+                <% } %>
+
+                <% if (book.isForLoan) {%>
+                  <div class="amount">
+                    Rent for R<% if (book.loanPrice) {%><%= book.loanPrice.toFixed(2) %> <% } %>
+                  </div>
+                  <button type="button" class="btn btn-lg btn-rent btn-light-green">Rent</button>
+                <% } %>
+
+                  <div class="noAvailable text-muted">
+                    There <% if(book.noAvailable == 1) {%>is <% } else {%>are <% } %> <%= book.noAvailable %> available.
+                </div>
+              <% } else {%> <div class="noAvailable text-muted">There are none available.</div> <% } %>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.row -->
+
+        <!-- Related Books Row -->
+        <div class="row">
+
+            <div class="col-lg-12">
+                <h3 class="page-header">Related Books</h3>
+            </div>
+
+            <div class="col-sm-3 col-xs-6">
+                <a href="#">
+                    <img class="img-responsive portfolio-item" src="/assets/placeholder236x356.png" alt="236X356">
+                </a>
+            </div>
+
+            <div class="col-sm-3 col-xs-6">
+                <a href="#">
+                    <img class="img-responsive portfolio-item" src="/assets/placeholder236x356.png" alt="236X356">
+                </a>
+            </div>
+
+            <div class="col-sm-3 col-xs-6">
+                <a href="#">
+                    <img class="img-responsive portfolio-item" src="/assets/placeholder236x356.png" alt="236X356">
+                </a>
+            </div>
+
+            <div class="col-sm-3 col-xs-6">
+                <a href="#">
+                    <img class="img-responsive portfolio-item" src="/assets/placeholder236x356.png" alt="236X356">
+                </a>
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    
+
+  <!-- </div> -->
+  <%- include('../partials/footer') %>
+  </body>
+</html>

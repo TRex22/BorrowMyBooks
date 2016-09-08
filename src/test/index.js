@@ -5,19 +5,22 @@ var should = require('chai').should();
 
 var app = require('../app');
 var www = require('../bin/www-test');
+
+var seed = require('../db/seedDb');
 /*js to test*/
 
 describe('#Server Startup', function() {
     beforeEach(function() {
-        www.listen(config.port+1); //use a different port
-    });
-
-    // tests here
-    it('Server should be able to start up', function() {
-        console.log("    started?");
+        www.listen(config.port + 1); //use a different port
+        seed.go();
     });
 
     afterEach(function() {
         www.close();
+    });
+    
+    // tests here
+    it('Server should be able to start up', function() {
+        console.log("    started?");
     });
 });

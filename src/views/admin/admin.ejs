@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<%- include('../partials/header') %>
+
+<body>
+    <%- include('../partials/navbar') %>
+        <div class="bs-component">
+            <div class="jumbotron">
+                <h1>Administration</h1>
+            </div>
+        </div>
+        <div class="admin-functions">
+            <ul class="pull-left">
+                <li><a href="/admin/system-information"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> View system information</a></li>
+                <li><a href="/admin/system-defaults"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Edit system defaults</a></li>
+                <li><a href="/admin/resetdb"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> Reset Database With Test Data (Caution!!!)</a></li>
+            </ul>
+        </div>
+        <%- include('../partials/footer') %>
+</body>
+
+</html>

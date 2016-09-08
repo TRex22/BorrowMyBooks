@@ -1,0 +1,4 @@
+Jason created the github repository.
+The other members exchanged github details.
+The repo was then transferred to Liron's github.
+Jason proposed the idea of using waffle.io to keep track of the product backlog.

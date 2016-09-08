@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <%- include('../partials/header') %>
+  <body>   
+    <%- include('../partials/navbar') %>
+  	<div class="bs-component">
+      <div class="jumbotron">
+        <h1>Error <%= title %></h1>
+    		<p><%= statusCode %></p>
+    		<pre class="stack-trace">
+    			You are not authorised.
+    		</pre>
+      </div>
+    </div>
+    <%- include('../partials/footer') %>
+  </body>
+</html>

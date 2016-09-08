@@ -1,11 +1,37 @@
 <!-- views/partials/navbar.ejs -->
 <div class="header clearfix">
     <nav>
-        <ul class="nav nav-pills pull-right">
-            <li role="presentation"><a href="/">Home</a></li>
-            <li><a href="/explore">Explore</a></li>
-            <li><a href="/login">Login</a></li>
-        </ul>
-        <h3 class="text-muted"><a href="/">Borrow My Books</a></h3>
+        <div class="pull-right">
+            <ul class="nav nav-pills">
+                <li role="presentation"><a href="/">Home</a></li>
+                <%if (user.isLoggedIn) {%> 
+                    <%if (user.isAdmin) {%>
+                        <li><a class="btn-danger" href="/admin">Admin</a></li>
+                    <% } %>
+                <% } %>            
+                <li><a href="/explore">Explore</a></li>
+                <%if (!user.isLoggedIn) {%> <li><a href="/login"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login</a></li> <% } %>
+                <%if (user.isLoggedIn) {%>  
+                    <li>
+                    <div class="dropdown profilePicture">
+                          <!-- <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"> -->
+                            <img class="img-circle circle-avatar btn-default dropdown-toggle" data-toggle="dropdown" src="<% if(user.picUrl) {%> <%= user.picUrl %> <% } else { %> <%= site.defaults.DefaultProfilePictureURL %> <% } %>" alt="profile picture"/>
+                          <!-- </button> -->
+
+                          <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                            <li><a href="/book/new"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Upload a Book</a></li>
+                            <li><a href="/explore/mine"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> My Books</a></li>
+                            <li><a href="/profile"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</a></li>
+                            <li><a href="/profile/settings"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings</a></li>
+                            <li><a href="/logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a></li>
+                          </ul>
+                    </div>
+                    </li>
+                <% } %>
+
+            </ul>
+        </div>
+            
+        <h3 class="text-muted"><a href="/"><%= site.defaults.DefaultBrandingText %></a></h3>
     </nav>
 </div>

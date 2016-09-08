@@ -2,7 +2,6 @@ var mongoose = require('../config/db.js').mongoose;
 var uuid = require('uuid');
 
 var userMessageSchema = mongoose.Schema({
-    userMessage: {
     	Message: String,
     	Priority: Number,
     	Date: Date,
@@ -11,7 +10,6 @@ var userMessageSchema = mongoose.Schema({
     	ToUserId: String,
     	BookId: String,
     	TransactionId: String
-    }
 }, { strict: false, collection: 'UserMessage' });
 
 userMessageSchema.methods.generateUUID = function(){

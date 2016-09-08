@@ -1,0 +1,3 @@
+The group had the first sprint review meeting.
+The group met afterwards to discuss the meeting and also started sprint 2.
+The group updated the issues on waffle.io to sprint 2 as well as assigned priorities to issues for the next sprint.

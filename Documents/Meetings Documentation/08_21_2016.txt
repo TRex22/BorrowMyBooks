@@ -1,0 +1,5 @@
+Jason said that he had been working on tests and the database model.
+Liron said he worked on the styles for the explore and login pages.
+Jason and Liron discussed whether tests should be run everytime the site is started up.
+Liron disagreed.
+Marko said nothing.

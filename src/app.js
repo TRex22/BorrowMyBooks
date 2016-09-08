@@ -1,3 +1,4 @@
+'use strict'
 /* jshint node: true */
 
 /*
@@ -7,19 +8,23 @@ logger.
   debug
 */
 
+process.env.PWD = process.cwd();
+var directory = process.env.PWD;
+/* istanbul ignore next */
+if (process.env.NODE_ENV === 'production') {
+    directory = directory + '/src';
+}
+
 var logger = require("./logger/logger");
 logger.info("mongoose setup...");
 // mongoose setup
-require( './config/db' );
-
-logger.info("passport setup...");
-var passport = require('passport');
-require('./config/passport')(passport); 
+require('./config/db');
 
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-/*var logger = require('morgan');*/
+/*var async = require('async');*/
+
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -27,57 +32,70 @@ var flash = require('req-flash');
 
 var pkg = require('./package.json');
 var config = require('./config.json');
+var siteBuilder = require('./services/siteBuilder');
 
 var app = express();
+
+logger.info("passport setup...");
+var passport = require('passport');
+require('./config/passport')(app, passport);
 
 logger.info("Overriding 'Express' logger");
 app.use(require('morgan')("combined", { "stream": logger.stream }));
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(directory, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(function (req, res, next) {
-  var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  logger.info('Connected IP:', ip);
-  next();
+app.use(function(req, res, next) {
+    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    logger.info('Connected IP:', ip);
+    next();
 });
-
-// uncomment after placing your favicon in /public
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+/* istanbul ignore next */
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(directory, 'public')));
+    app.use(favicon(path.join(directory, 'public', 'favicon.ico')));
+    app.use('/bower_components', express.static(path.join(directory, '/bower_components')));
+    /*    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));*/ //TODO look at adding
+} else {
+    app.use(express.static('public'));
+    app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+    app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
+    /*    app.use(express.errorHandler());*/
+}
 
 logger.info("Initialize Authentication");
 
-app.use(express.static('public'));
 app.use(cookieParser());
 app.use(bodyParser());
-app.use(session({ secret: config.secret }));
+app.use(bodyParser.urlencoded());
+app.use(session({
+    cookieName: 'session',
+    secret: config.secret,
+    saveUninitialized: true,
+    resave: true
+}));
 app.use(flash()); //JMC: TODO add mesages
 app.use(passport.initialize());
 app.use(passport.session());
 
+/*app.use(require('connect-livereload')());*/
+
+logger.info("Build Site Object");
+app.locals.site = siteBuilder.initSite();
+app.locals.site = siteBuilder.updateSite(app); //to make sure there is a site object even if db fails
+
 logger.info("Initialize Routes");
-var routes = require('./routes/index');
-var users = require('./routes/users');
+
 var teapot = require('./routes/teapot');
-var admin = require('./routes/admin');
-var explore = require('./routes/explore');
-
-app.use('/bower_components',  express.static(path.join(__dirname, '/bower_components')));
-
-app.use('/', routes);
-app.use('/users', users);
 app.use('/teapot', teapot);
-app.use('/admin', admin(passport));
-app.use('/explore', explore);
-//TODO: JMC Fix
 
+require('./routes/index.js')(app, passport);
+require('./routes/admin.js')(app, passport);
+require('./routes/explore.js')(app, passport);
+require('./routes/book.js')(app, passport);
 require('./routes/accounts.js')(app, passport);
 require('./routes/errors.js')(app);
-
-function auth(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
-}
 
 module.exports = app;

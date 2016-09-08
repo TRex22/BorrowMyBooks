@@ -2,11 +2,9 @@ var mongoose = require('../config/db.js').mongoose;
 var uuid = require('uuid');
 
 var userRoleSchema = mongoose.Schema({
-    userRole: {
     	RoleId: String,
     	RoleName: String,
     	RoleDescription: String
-    }
 }, { strict: false, collection: 'UserRole' });
 
 userRoleSchema.methods.generateUUID = function(){

@@ -19,6 +19,10 @@
   "dependencies": {
     "bootstrap-material-design": "^0.5.8",
     "bootstrap": "^3.3.6",
-    "bootswatch": "~3.3.7"
+    "bootswatch": "~3.3.7",
+    "bootstrap-select": "~1.11.0",
+    "jquery": "~3.1.0",
+    "MDBootstrap": "*",
+    "moment": "^2.14.1"
   }
 }

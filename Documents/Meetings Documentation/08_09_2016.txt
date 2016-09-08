@@ -1,0 +1,5 @@
+The group discussed the kind of architecture being used for the project.
+Jason said that it is a hybrid Model-View-Controller and client-server architecture.
+Marko said he did work on the stakeholder's section of the ISO document.
+Marko decided the group should just use word documents.
+Jason and Liron created a new branch for developing code.

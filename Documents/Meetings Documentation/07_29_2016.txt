@@ -1,0 +1,3 @@
+The group discussed trying to have 15 minute meetings per day on the whatsapp group.
+Jason proposed using milestones on waffle.io to keep track of sprints.
+The other members agreed.

@@ -1,0 +1,8 @@
+Marko proposed a new idea of an electronic ordering system for restaurants.
+Jason explained how his idea would be easier and be a bigger scope.
+Liron agreed with jason.
+The group disscussed the technology stack to be used.
+The group agreed on NodeJS and MongoDB.
+
+The group started the Requirements analysis document.
+The group also discussed potential group roles.

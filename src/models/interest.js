@@ -2,14 +2,12 @@ var mongoose = require('../config/db.js').mongoose;
 var uuid = require('uuid');
 
 var interestSchema = mongoose.Schema({
-    interest: {
-        InterestId: String,
-        InterestName: String,
-        InterestDescription: String
-    }
+    InterestId: String,
+    InterestName: String,
+    InterestDescription: String
 }, { strict: false, collection: 'Interest' });
 
-interestSchema.methods.generateUUID = function(){
+interestSchema.methods.generateUUID = function() {
     return uuid.v4();
 };
 

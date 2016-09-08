@@ -1,8 +1,10 @@
 /*SOURCE: code from https://github.com/knoldus/Node.js_UserLogin_Template*/
 var logger = require("../logger/logger");
+var userHelper = require('../services/userHelper');
 // local authentication
 // For more details go to https://github.com/jaredhanson/passport-local
 var LocalStrategy = require('passport-local').Strategy;
+var BasicStrategy = require('passport-http').BasicStrategy;
 
 // Facebook authentication
 // For more details go to https://github.com/jaredhanson/passport-facebook
@@ -22,9 +24,11 @@ var GOOGLE_CONSUMER_KEY = "<Insert Your Key Here>";
 var GOOGLE_CONSUMER_SECRET = "<Insert Your Secret Key Here>";
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 
+//TODO: passport-github
+
 var User = require('../models/user');
 
-module.exports = function(passport) {
+module.exports = function(app, passport) {
 
     // Maintaining persistent login sessions
     // serialized  authenticated user to the session
@@ -39,113 +43,112 @@ module.exports = function(passport) {
         });
     });
 
-    passport.use('login', new LocalStrategy({
-            usernameField: 'email',
+    passport.use('local', new LocalStrategy({
+            usernameField: 'username',
             passReqToCallback: true
         },
-        function(req, email, password, done) {
+        function(req, username, password, done) {
             process.nextTick(function() {
-                User.findOne({ 'user.email': email }, function(err, user) {
+                User.findOne({ $or: [{ email: username }, { username: username }] }, function(err, user) {
                     if (err) {
+                        logger.err(err);
+                        req = userHelper.processUser(req);
                         return done(err);
                     }
-                    if (!user)
+                    if (!user) {
+                        logger.warn('Incorrect username.');
+                        req = userHelper.processUser(req);
                         return done(null, false, req.flash('error', 'User does not exist.'));
+                    }
 
-                    if (!user.verifyPassword(password))
+                    if (!user.verifyPassword(password)) {
+                        logger.warn('Incorrect password.');
+                        req = userHelper.processUser(req);
                         return done(null, false, req.flash('error', 'Enter correct password'));
-                    else
-                        return done(null, user);
+                    }
+
+                    user.lastLoginDate = new Date();
+                    user.save();
+
+                    req = userHelper.processUser(req);
+                    return done(null, user);
+
                 });
             });
 
         }));
 
-    passport.use('local', new LocalStrategy(
+    passport.use('basic', new BasicStrategy( //TODO: JMC fix
         function(username, password, done) {
-            User.findOne({ username: username }, function(err, user) {
+            User.findOne({ $or: [{ email: username }, { username: username }] }, function(err, user) {
                 if (err) {
+                    user.isLoggedIn = false;
                     return done(err);
                 }
                 if (!user) {
-                    return done(null, false, { message: 'Incorrect username.' });
+                    logger.warn('Incorrect username.');
+                    user.isLoggedIn = false;
+                    return done(null, false, req.flash('error', 'User does not exist.'));
                 }
-                if (!user.validPassword(password)) {
-                    return done(null, false, { message: 'Incorrect password.' });
-                }
-                return done(null, user);
-            });
-        }
-    ));
 
-    passport.use('admin', new LocalStrategy(
-        function(username, password, done) {
-            User.findOne({ username: username }, function(err, user) {
-                if (err) {
-                    return done(err); }
-                if (!user) {
-                    return done(null, false, { message: 'Incorrect username.' });
+                if (!user.verifyPassword(password)) {
+                    logger.warn('Incorrect password.');
+                    user.isLoggedIn = false;
+                    return done(null, false, req.flash('error', 'Enter correct password'));
                 }
-                if (!user.validPassword(password)) {
-                    return done(null, false, { message: 'Incorrect password.' });
-                }
-                if (!user.checkAdminRole())
-                {
-                    return done(null, false, { message: 'Not Authorised.' });
-                }
+                
+                user.lastLoginDate = new Date();
+                user.save();
+
+                req = userHelper.processUser(req);
                 return done(null, user);
             });
         }
     ));
 
     passport.use('signup', new LocalStrategy({
-            usernameField: 'email',
+            usernameField: 'username',
             passReqToCallback: true
         },
-        function(req, email, password, done) {
+        function(req, username, password, done) {
 
             process.nextTick(function() {
 
                 if (!req.user) {
-                    User.findOne({ 'user.email': email }, function(err, user) {
+                    User.findOne({ $or: [{ email: username }, { username: username }] }, function(err, user) {
                         if (err) {
                             return done(err);
                         }
                         if (user) {
                             return done(null, false, req.flash('signuperror', 'User already exists'));
                         } else {
-                            var newUser = new User();
-                            newUser.user.username = req.body.username;
-                            newUser.user.email = email;
-                            newUser.user.password = newUser.generateHash(password);
-                            newUser.user.name = ''
-                            newUser.user.address = ''
+                            var newUser = userHelper.createNewUser(username, password, req.body);
                             newUser.save(function(err) {
                                 if (err)
-                                    throw err;
+                                    throw err; //TODO JMC Fix
+                                req.user = newUser;
+                                req = userHelper.processUser(req);
+                                logger.warn("created new user"); //todo: JMC more explicit?
+
                                 return done(null, newUser);
                             });
                         }
 
                     });
                 } else {
-                    var user = req.user;
-                    user.user.username = req.body.username;
-                    user.user.email = email;
-                    user.user.password = user.generateHash(password);
-                    user.user.name = ''
-                    user.user.address = ''
-
-                    user.save(function(err) {
+                    var newUser = userHelper.createNewUser(username, password, req.body);
+                    newUser.save(function(err) {
                         if (err)
                             throw err;
-                        return done(null, user);
-                    });
 
+                        req.user = newUser;
+                        req = userHelper.processUser(req);
+                        logger.warn("created new user");
+                        return done(null, newUser);
+                    });
                 }
 
             });
-
 
         }));
 

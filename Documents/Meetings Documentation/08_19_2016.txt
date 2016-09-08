@@ -1,0 +1,2 @@
+Jason and Liron discussed moving the repo to Jason's github as Jason needed admin rights to do continuous integration.
+The other group members agreed and the repo was tranferred.
