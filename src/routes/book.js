@@ -59,7 +59,7 @@ module.exports = function(app, passport) {
         }
     });
 
-    app.get('/book/:bookId/rent', function(req, res, next) {
+    app.post('/book/:bookId/rent', function(req, res, next) {
         //TODO: JMC database connection
         if (userHelper.auth(req, res, app.locals.site)) {
             if (req.body) { //TODO check and perhpas fix this
@@ -71,8 +71,8 @@ module.exports = function(app, passport) {
                                 fromUserId: book.userId,
                                 toUserId: req.user.userId,
                                 bookId: book.bookId,
-                                amount: req.amount,
-                                cost: req.cost,
+                                amount: req.body.amount,
+                                cost: req.body.amount * book.loanPrice,
                                 isPurchase: false,
                                 isRent: true,
                                 hasBeenReturned: false,
@@ -84,7 +84,7 @@ module.exports = function(app, passport) {
                             iTransaction.TransactionId = iTransaction.generateUUID();
                             iTransaction.save();
 
-                            book.noAvailable = book.noAvailable - req.body.number;
+                            book.noAvailable = book.noAvailable - req.body.amount;
                             /*book.isOnLoan = true;*/
                             book.save();
                         } else {
@@ -101,7 +101,7 @@ module.exports = function(app, passport) {
         }
     });
 
-    app.get('/book/:bookId/return', function(req, res, next) {
+    app.post('/book/:bookId/return', function(req, res, next) {
         //TODO: JMC database connection
         if (userHelper.auth(req, res, app.locals.site)) {
             if (req.body) { //TODO check and perhpas fix this
@@ -147,7 +147,7 @@ module.exports = function(app, passport) {
         }
     });
 
-    app.get('/book/:bookId/buy', function(req, res, next) {
+    app.post('/book/:bookId/buy', function(req, res, next) {
         //TODO: JMC database connection
         if (userHelper.auth(req, res, app.locals.site)) {
             if (req.body) { //TODO check and perhpas fix this
@@ -160,8 +160,8 @@ module.exports = function(app, passport) {
                                 fromUserId: book.userId,
                                 toUserId: req.user.userId,
                                 bookId: book.bookId,
-                                amount: req.amount,
-                                cost: req.cost,
+                                amount: req.body.amount,
+                                cost: req.body.amount * book.loanPrice,
                                 isPurchase: true,
                                 isRent: false,
                                 hasBeenReturned: false,
@@ -173,7 +173,7 @@ module.exports = function(app, passport) {
                             iTransaction.TransactionId = iTransaction.generateUUID();
                             iTransaction.save();
 
-                            book.noAvailable = book.noAvailable - req.body.number;
+                            book.noAvailable = book.noAvailable - req.body.amount;
                             /*book.isOnLoan = true;*/
                             book.save();
                         } else {

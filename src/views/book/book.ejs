@@ -53,7 +53,9 @@
                   <div class="amount">
                     Buy for R<% if (book.sellPrice) {%><%= book.sellPrice.toFixed(2) %> <% } %> 
                   </div>
-                  <a href="/book/<%= book._id %>/buy" class="btn btn-lg btn-buy btn-cyan">Buy</a>                  
+                  <button type="button" class="btn btn-lg btn-buy btn-cyan" data-toggle="modal" data-target="#buyModal">
+                    Buy
+                  </button>               
                 <% } %>
 
                 <% if (book.isForSale && book.isForLoan) {%> 
@@ -64,7 +66,9 @@
                   <div class="amount">
                     Rent for R<% if (book.loanPrice) {%><%= book.loanPrice.toFixed(2) %> <% } %>
                   </div>
-                  <a href="/book/<%= book._id %>/rent" class="btn btn-lg btn-rent btn-light-green">Rent</a> 
+                  <button type="button" class="btn btn-lg btn-rent btn-light-green" data-toggle="modal" data-target="#rentModal">
+                    Rent
+                  </button>
                 <% } %>
 
                   <div class="noAvailable text-muted">
@@ -111,9 +115,61 @@
 
         </div>
         <!-- /.row -->
-
     </div>
-    
+
+    <!-- Buy Modal -->
+    <div class="modal fade" id="buyModal" tabindex="-1" role="document">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Buy <%= book.title %></h4>
+          </div>
+
+          <form role="form" action="/book/<%= book._id %>/buy" method="post" class="box">
+
+            <div class="modal-body login">
+                  <div class="form-group">
+                      <p>Amount to purchase: </p><input type="number" class="form-control" tabindex="1" min="1" max="<%= book.noAvailable %>" name="amount" value="1"><br/> 
+                      <p>You will pay: R<%= 1 * book.sellPrice %></p>             
+                  </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary btn-cyan">Buy</button>            
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rent Modal -->
+    <div class="modal fade" id="rentModal" tabindex="-1" role="document">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Rent <%= book.title %></h4>
+          </div>
+
+          <form role="form" action="/book/<%= book._id %>/rent" method="post" class="box">
+
+            <div class="modal-body login">
+                  <div class="form-group">
+                      <p>Amount to rent: </p><input type="number" class="form-control" tabindex="1" min="1" max="<%= book.noAvailable %>" name="amount" value="1"><br/> 
+                      <p>You will pay: R<%= 1 * book.loanPrice %></p>             
+                  </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary btn-light-green">Rent</button>            
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
 
   <!-- </div> -->
   <%- include('../partials/footer') %>

@@ -72,7 +72,7 @@ describe('#Book Route', function() {
         Book.findOne({}, function(err, book) {
             if (book) {
                 chai.request(app)
-                    .get('/book/' + book._id + '/buy')
+                    .post('/book/' + book._id + '/buy')
                     .end(function(err, res) {
                         res.should.have.status(200);
                         res.redirects[0].should.contain('/login'); //redirect
@@ -95,7 +95,7 @@ describe('#Book Route', function() {
                         var cookie = res.headers['set-cookie'];
                         cookie.should.have.elements;
                         request(app)
-                            .get('/book/' + book._id + '/buy')
+                            .post('/book/' + book._id + '/buy')
                             .set('cookie', cookie)
                             .end(function(err, res) {
                                 res.should.have.status(302);
@@ -114,7 +114,7 @@ describe('#Book Route', function() {
         Book.findOne({}, function(err, book) {
             if (book) {
                 chai.request(app)
-                    .get('/book/' + book._id + '/rent')
+                    .post('/book/' + book._id + '/rent')
                     .end(function(err, res) {
                         res.should.have.status(200);
                         res.redirects[0].should.contain('/login'); //redirect
@@ -137,7 +137,7 @@ describe('#Book Route', function() {
                         var cookie = res.headers['set-cookie'];
                         cookie.should.have.elements;
                         chai.request(app)
-                            .get('/book/' + book._id + '/rent')
+                            .post('/book/' + book._id + '/rent')
                             .set('cookie', cookie)
                             .end(function(err, res) {
                                 res.should.have.status(200);
@@ -156,7 +156,7 @@ describe('#Book Route', function() {
         Book.findOne({}, function(err, book) {
             if (book) {
                 chai.request(app)
-                    .get('/book/' + book._id + '/return')
+                    .post('/book/' + book._id + '/return')
                     .end(function(err, res) {
                         res.should.have.status(200);
                         res.redirects[0].should.contain('/login'); //redirect
@@ -179,7 +179,7 @@ describe('#Book Route', function() {
                         var cookie = res.headers['set-cookie'];
                         cookie.should.have.elements;
                         chai.request(app)
-                            .get('/book/' + book._id + '/return')
+                            .post('/book/' + book._id + '/return')
                             .set('cookie', cookie)
                             .end(function(err, res) {
                                 res.should.have.status(200);

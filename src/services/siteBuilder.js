@@ -12,6 +12,7 @@ var pkg = require('../package.json');
 var config = require('../config.json');
 
 var moment = require('moment');
+var validator = require('validator');
 
 function initSite() {
     var site = {};
@@ -29,6 +30,7 @@ function initSite() {
     site.themes = config.themes;
 
     site.moment = moment;
+    site.validator = validator;
     return site;
 }
 
