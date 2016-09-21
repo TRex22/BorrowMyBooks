@@ -1,0 +1,23 @@
+var fs = require('fs');
+var http = require('http');
+var util = require('util');
+var validator = require('validator');
+var should = require('chai').should();
+
+var config = require('../../config');
+
+var mongoose = require('mongoose');
+
+var seed = require('../../db/seedDb');
+var clear = require('../../db/clearDb');
+
+//models
+var transaction = require('../../models/transaction');
+
+describe('#Transaction Schema', function() {
+    // tests here
+    it('should be able to generate a valid UUID', function() {
+        var testStr = transaction.schema.methods.generateUUID();
+        validator.isUUID(testStr).should.be.true;
+    });
+});
