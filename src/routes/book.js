@@ -59,7 +59,7 @@ module.exports = function(app, passport) {
         }
     });
 
-    app.post('/book/:bookId/rent', function(req, res, next) {
+    app.get('/book/:bookId/rent', function(req, res, next) {
         //TODO: JMC database connection
         if (userHelper.auth(req, res, app.locals.site)) {
             if (req.body) { //TODO check and perhpas fix this
@@ -97,11 +97,11 @@ module.exports = function(app, passport) {
                 });
             }
 
-            res.redirect('/book/' + iBook.bookId);
+            res.redirect('/book/' + req.params.bookId);
         }
     });
 
-    app.post('/book/:bookId/return', function(req, res, next) {
+    app.get('/book/:bookId/return', function(req, res, next) {
         //TODO: JMC database connection
         if (userHelper.auth(req, res, app.locals.site)) {
             if (req.body) { //TODO check and perhpas fix this
@@ -143,11 +143,11 @@ module.exports = function(app, passport) {
                 });
             }
 
-            res.redirect('/book/' + iBook.bookId);
+            res.redirect('/book/' + req.params.bookId);
         }
     });
 
-    app.post('/book/:bookId/buy', function(req, res, next) {
+    app.get('/book/:bookId/buy', function(req, res, next) {
         //TODO: JMC database connection
         if (userHelper.auth(req, res, app.locals.site)) {
             if (req.body) { //TODO check and perhpas fix this
@@ -186,7 +186,7 @@ module.exports = function(app, passport) {
                 });
             }
 
-            res.redirect('/book/' + iBook.bookId);
+            res.redirect('/book/' + req.params.bookId);
         }
     });
 

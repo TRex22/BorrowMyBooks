@@ -338,7 +338,6 @@ describe('#Book Route', function() {
     it('should respond to GET for a book', function(done) {
         Book.findOne({}, function(err, book) {
             if (book) {
-                /*res.render('explore/book', { site: app.locals.site, book: book, user: req.user });*/
                 chai.request(app)
                     .get('/book/' + book._id)
                     .end(function(err, res) {
@@ -354,7 +353,7 @@ describe('#Book Route', function() {
 
     });
 
-    it('should respond to GET for a book, not find the bok and redirect back to explore', function(done) {
+    it('should respond to GET for an unknown book, not find the book and redirect back to explore', function(done) {
         chai.request(app)
             .get('/book/' + "skjghsdkjghkjsdghkjsdh")
             .end(function(err, res) {
@@ -367,13 +366,38 @@ describe('#Book Route', function() {
     it('should respond to buy post not logged in', function(done) {
         Book.findOne({}, function(err, book) {
             if (book) {
-                /*res.render('explore/book', { site: app.locals.site, book: book, user: req.user });*/
                 chai.request(app)
-                    .post('/book/' + book._id + '/buy')
+                    .get('/book/' + book._id + '/buy')
                     .end(function(err, res) {
                         res.should.have.status(200);
                         res.redirects[0].should.contain('/login'); //redirect
                         done();
+                    });
+            } else {
+                throw err;
+            }
+        });
+    });
+
+    it('should respond to buy post logged in', function(done) {
+        Book.findOne({}, function(err, book) {
+            if (book) {
+                request(app)
+                    .post('/login?username=Admin&password=123456')
+                    .send({ username: "Admin", password: '123456' })
+                    .end(function(err, res) {
+                        res.should.have.status(302);
+                        var cookie = res.headers['set-cookie'];
+                        cookie.should.have.elements;
+                        request(app)
+                            .get('/book/' + book._id + '/buy')
+                            .set('cookie', cookie)
+                            .end(function(err, res) {
+                                res.should.have.status(302);
+                                res.redirects.should.be.empty; //redirect
+                                //TODO: JMC more ridgid tests
+                                done();
+                            });
                     });
             } else {
                 throw err;
@@ -384,9 +408,8 @@ describe('#Book Route', function() {
     it('should respond to rent post not logged in', function(done) {
         Book.findOne({}, function(err, book) {
             if (book) {
-                /*res.render('explore/book', { site: app.locals.site, book: book, user: req.user });*/
                 chai.request(app)
-                    .post('/book/' + book._id + '/rent')
+                    .get('/book/' + book._id + '/rent')
                     .end(function(err, res) {
                         res.should.have.status(200);
                         res.redirects[0].should.contain('/login'); //redirect
@@ -398,12 +421,37 @@ describe('#Book Route', function() {
         });
     });
 
+    it('should respond to rent post logged in', function(done) {
+        Book.findOne({}, function(err, book) {
+            if (book) {
+                request(app)
+                    .post('/login?username=Admin&password=123456')
+                    .send({ username: "Admin", password: '123456' })
+                    .end(function(err, res) {
+                        res.should.have.status(302);
+                        var cookie = res.headers['set-cookie'];
+                        cookie.should.have.elements;
+                        chai.request(app)
+                            .get('/book/' + book._id + '/rent')
+                            .set('cookie', cookie)
+                            .end(function(err, res) {
+                                res.should.have.status(200);
+                                res.redirects[0].should.contain('/book/' + book._id); //redirect
+                                //TODO: JMC more ridgid tests
+                                done();
+                            });
+                    });
+            } else {
+                throw err;
+            }
+        });
+    });
+
     it('should respond to return post not logged in', function(done) {
         Book.findOne({}, function(err, book) {
             if (book) {
-                /*res.render('explore/book', { site: app.locals.site, book: book, user: req.user });*/
                 chai.request(app)
-                    .post('/book/' + book._id + '/return')
+                    .get('/book/' + book._id + '/return')
                     .end(function(err, res) {
                         res.should.have.status(200);
                         res.redirects[0].should.contain('/login'); //redirect
@@ -414,6 +462,33 @@ describe('#Book Route', function() {
             }
         });
     });
+
+    it('should respond to return post logged in', function(done) {
+        Book.findOne({}, function(err, book) {
+            if (book) {
+                request(app)
+                    .post('/login?username=Admin&password=123456')
+                    .send({ username: "Admin", password: '123456' })
+                    .end(function(err, res) {
+                        res.should.have.status(302);
+                        var cookie = res.headers['set-cookie'];
+                        cookie.should.have.elements;
+                        chai.request(app)
+                            .get('/book/' + book._id + '/return')
+                            .set('cookie', cookie)
+                            .end(function(err, res) {
+                                res.should.have.status(200);
+                                res.redirects[0].should.contain('/book/' + book._id); //redirect
+                                //TODO: JMC more ridgid tests
+                                done();
+                            });
+                    });
+            } else {
+                throw err;
+            }
+        });
+    });
+
 });
 
 describe('#Admin Route', function() {

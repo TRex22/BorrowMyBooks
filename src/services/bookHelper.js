@@ -16,6 +16,8 @@ function getAmazonBookCover(ISBN) {
     //http://images.amazon.com/images/P/0738202967
     url = "http://images.amazon.com/images/P/" + 0738202967;
     ISBN = 0738202967;
+
+    
     
 }
 

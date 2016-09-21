@@ -53,7 +53,7 @@
                   <div class="amount">
                     Buy for R<% if (book.sellPrice) {%><%= book.sellPrice.toFixed(2) %> <% } %> 
                   </div>
-                  <button type="button" class="btn btn-lg btn-buy btn-cyan">Buy</button>
+                  <a href="/book/<%= book._id %>/buy" class="btn btn-lg btn-buy btn-cyan">Buy</a>                  
                 <% } %>
 
                 <% if (book.isForSale && book.isForLoan) {%> 
@@ -64,7 +64,7 @@
                   <div class="amount">
                     Rent for R<% if (book.loanPrice) {%><%= book.loanPrice.toFixed(2) %> <% } %>
                   </div>
-                  <button type="button" class="btn btn-lg btn-rent btn-light-green">Rent</button>
+                  <a href="/book/<%= book._id %>/rent" class="btn btn-lg btn-rent btn-light-green">Rent</a> 
                 <% } %>
 
                   <div class="noAvailable text-muted">
