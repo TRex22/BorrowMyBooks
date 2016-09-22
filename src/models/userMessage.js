@@ -12,6 +12,22 @@ var userMessageSchema = mongoose.Schema({
     	TransactionId: String
 }, { strict: false, collection: 'UserMessage' });
 
+
+//Validated schema. Commented out because dont know how to pass to front-end.
+/*var userMessageSchema = mongoose.Schema({
+    	Message: {
+            type: String,
+            required: true
+        },
+    	Priority: Number,
+    	Date: Date,
+    	AdminId: String,
+    	FromUserId: String,
+    	ToUserId: String,
+    	BookId: String,
+    	TransactionId: String
+}, { strict: false, collection: 'UserMessage' });*/
+
 userMessageSchema.methods.generateUUID = function(){
     return uuid.v4();
 };
