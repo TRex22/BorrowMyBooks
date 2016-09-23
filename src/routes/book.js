@@ -70,7 +70,7 @@ module.exports = function(app, passport) {
                             iTransaction = new transaction({
                                 fromUserId: book.userId,
                                 toUserId: req.user.userId,
-                                bookId: book.bookId,
+                                bookId: book._id,
                                 amount: req.body.amount,
                                 cost: req.body.amount * book.loanPrice,
                                 isPurchase: false,
@@ -111,7 +111,7 @@ module.exports = function(app, passport) {
                         if (book.isForLoan && book.isOnLoan) {
                             Transaction.findOne({
                                     toUserId: req.user.userId,
-                                    bookId: book.bookId
+                                    bookId: book._id
                                 },
                                 function(err, itransaction) {
                                     if (itransaction) {
@@ -159,7 +159,7 @@ module.exports = function(app, passport) {
                             iTransaction = new transaction({
                                 fromUserId: book.userId,
                                 toUserId: req.user.userId,
-                                bookId: book.bookId,
+                                bookId: book._id,
                                 amount: req.body.amount,
                                 cost: req.body.amount * book.loanPrice,
                                 isPurchase: true,

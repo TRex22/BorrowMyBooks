@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <%- include('../partials/header') %>
+  <body>   
+   <%- include('../partials/navbar') %>
+
+  	<div class="site-margin">
+      <h1>Your Transactions</h1>
+    </div>
+
+    <div class="transactions site-margin">
+
+    <h2>Books you have rented / bought</h2>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    
+    <% if(toTransactions.length > 0) { %>
+      <% for(var i=0; i<toTransactions.length; i++) { %>
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-<%= toTransactions[i]._id %>">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= toTransactions[i]._id %>" aria-expanded="false" aria-controls="<%= toTransactions[i]._id %>">
+                  Transaction #<%= i+1 %>
+                </a>
+              </h4>
+            </div>
+            <div id="<%= toTransactions[i]._id %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-<%= toTransactions[i]._id %>">
+              <div class="panel-body">
+                <h3>Transaction Details</h3>
+                <ul>
+                    <li><a href="/book/<%= toTransactions[i].bookId %>">Book Title: </a></li>
+                    <li>Author: </li>
+                    
+                    
+                </ul>
+              </div>
+            </div>
+          </div>
+      <% } %>
+    <% } %>
+
+    <% if(toTransactions.length === 0) { %>
+      <h3>You have not yet purchased or rented any books.</h3>
+    <% } %>
+
+    </div>
+
+    <br/>
+
+    <h2>Books you have put on the market</h2>
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    
+    <% if(fromTransactions.length > 0) { %>
+      <% for(var i=0; i<fromTransactions.length; i++) { %>
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  Collapsible Group Item #1
+                </a>
+              </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+              </div>
+            </div>
+          </div>
+      <% } %>
+    <% } %>
+
+    <% if(fromTransactions.length === 0) { %>
+      <h3>You have not yet purchased or rented any books.</h3>
+    <% } %>
+
+    </div>
+
+    </div>
+
+  <%- include('../partials/footer') %>
+  </body>
+</html>
