@@ -4,12 +4,15 @@ var logger = require("../logger/logger");
 var express = require('express');
 var pkg = require('../package');
 var router = express.Router();
+var wrap = require('co-express');
 
 var mongoose = require('../config/db.js').mongoose;
 var dbHelper = require('../services/dbHelper');
 var userHelper = require('../services/userHelper.js');
-var Book = mongoose.model('Book', require('../models/book'));
 
+var bookHelper = require('../services/bookHelper.js');
+
+var Book = mongoose.model('Book', require('../models/book'));
 var transaction = require('../models/transaction');
 var Transaction = mongoose.model('Transaction', transaction);
 
@@ -190,18 +193,25 @@ module.exports = function(app, passport) {
         }
     });
 
-    app.get('/book/:bookId', function(req, res, next) {
+    app.get('/book/:bookId', wrap(function*(req, res, next) {
         //TODO: JMC database connection
         //also system defaults for alt
         req = userHelper.processUser(req);
 
-        Book.findOne({ _id: req.params.bookId }, function(err, book) {
+        var book;
+
+        try {
+            book = yield bookHelper.getBook(req.params.bookId);
+
             if (book) {
                 res.render('book/book', { site: app.locals.site, book: book, user: req.user });
             } else {
                 res.redirect('/explore');
             }
-        });
-    });
+
+        } catch (e) {
+            res.redirect('/explore');
+        }
+    }));
 
 };
