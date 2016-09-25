@@ -199,17 +199,20 @@ module.exports = function(app, passport) {
         req = userHelper.processUser(req);
 
         var book;
+        var relatedBooks;
 
         try {
             book = yield bookHelper.getBook(req.params.bookId);
-
+            relatedBooks = yield bookHelper.getRelatedBooks(req.params.bookId);
+            
             if (book) {
-                res.render('book/book', { site: app.locals.site, book: book, user: req.user });
+                res.render('book/book', { site: app.locals.site, book: book, relatedBooks: relatedBooks, user: req.user });
             } else {
                 res.redirect('/explore');
             }
 
         } catch (e) {
+            logger.error(e)
             res.redirect('/explore');
         }
     }));

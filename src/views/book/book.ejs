@@ -34,7 +34,7 @@
                                    <%} %> </li>
                     <li>Language: <%= book.language %></li>
                     <li title="<%= book.publishDate %>">Published: <%= site.moment(book.publishDate).format('LLL'); %></li>
-                    
+                    <li>Uploaded by: <%= book.userId %></li>                    
                 </ul>
 
                 <br>
@@ -89,29 +89,24 @@
                 <h3 class="page-header">Related Books</h3>
             </div>
 
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/assets/placeholder236x356.png" alt="236X356">
-                </a>
-            </div>
-
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/assets/placeholder236x356.png" alt="236X356">
-                </a>
-            </div>
-
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/assets/placeholder236x356.png" alt="236X356">
-                </a>
-            </div>
-
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/assets/placeholder236x356.png" alt="236X356">
-                </a>
-            </div>
+            <% for(var i=0; (i < 4 && i < relatedBooks.length); i++) {%>
+               <div class="col-sm-3 col-xs-6">
+                  <a href="#">
+                      <!-- <img class="img-responsive portfolio-item" src="/assets/placeholder236x356.png" alt="236X356"> -->
+                      <div class="view overlay hm-white-strong">
+                        <a href="/book/<%= relatedBooks[i]._id %>">
+                          <img width=250 height=350 src= <% if (relatedBooks[i].picURL) {%> <%= relatedBooks[i].picURL %> <%} else{%> <%= site.defaults.DefaultBookPictureURL %> <%} %> />
+                          <div class="mask">
+                            <p class="black-text font-weight-bold text-capitalize title">
+                              <% if (relatedBooks[i].title) {%><%=relatedBooks[i].title %> <%} %></p>
+                            <p class="black-text text-capitalize author">
+                              <% if (relatedBooks[i].author) {%><%=relatedBooks[i].author %> <%} %></p>
+                          </div>
+                        </a>
+                      </div>
+                  </a>
+              </div>                          
+            <% } %>            
 
         </div>
         <!-- /.row -->
