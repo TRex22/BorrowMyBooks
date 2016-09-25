@@ -1,3 +1,22 @@
+/* jshint node: true */
+var logger = require("../logger/logger");
+
+var mongoose = require('../config/db.js').mongoose;
+var Book = mongoose.model('Book', require('../models/book'));
+
+function getBook(bookId) {
+    return new Promise(function(resolve, reject) {
+        Book.findOne({ _id: bookId }, function(err, book) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            resolve(book);
+        });
+    });
+}
+
 function checkIfBookIsForLoan(book) {
 
 }
@@ -15,19 +34,8 @@ function convertToISBN13(ISBN10) {
 }
 
 function convertToISBN10(ISBN13) {
-	//must begin with 978
-	
-}
+    //must begin with 978
 
-function getAmazonBookCover(ISBN) {
-    var url = "http://images.amazon.com/images/P/" + ISBN;
-    //eg ISBN 0738202967 isbn-10
-    //http://images.amazon.com/images/P/0738202967
-    url = "http://images.amazon.com/images/P/" + 0738202967;
-    ISBN = 0738202967;
-
-	//remove dashes    
-    
 }
 
 /*
@@ -48,7 +56,18 @@ This is the result as a number between 1 and 10, unless the figure is 10 then th
 x_13 = (10 - (x_1 + 3x_2 + x_3 + 3x_4 + ... + x_11 + 3x_12) mod10 ) mod 10
 */
 
+function getAmazonBookCover(ISBN) {
+    var url = "http://images.amazon.com/images/P/" + ISBN;
+    //eg ISBN 0738202967 isbn-10
+    //http://images.amazon.com/images/P/0738202967
+    url = "http://images.amazon.com/images/P/" + 0738202967;
+    ISBN = 0738202967;
+
+    //remove dashes    
+
+}
 
 module.exports = {
-    getAmazonBookCover: getAmazonBookCover
+    getAmazonBookCover: getAmazonBookCover,
+    getBook: getBook
 }
