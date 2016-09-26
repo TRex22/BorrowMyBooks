@@ -80,9 +80,7 @@ console.log(util.inspect(users));*/
 var clearDb = require('./db/clearDb').go();
 var seed = require('./db/seedDb');
 
-co(function*() {
-    var sd = yield seed.go();
-});
+seed.go();
 /*var seedDb = require('./db/seedDb').go();*/
 
 /*wrap(function*(){
