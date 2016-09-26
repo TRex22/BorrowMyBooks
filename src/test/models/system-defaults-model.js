@@ -8,9 +8,6 @@ var config = require('../../config');
 
 var mongoose = require('mongoose');
 
-var seed = require('../../db/seedDb');
-var clear = require('../../db/clearDb');
-
 //models
 var systemDefaults = require('../../models/systemDefaults');
 

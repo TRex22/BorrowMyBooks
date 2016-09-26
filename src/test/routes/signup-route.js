@@ -28,7 +28,13 @@ var clear = require('../../db/clearDb');
 //setup
 chai.use(chaiHttp);
 
-describe('#Signup Route', function() {
+describe('#Admin Route', function() {
+    beforeEach(function*() {
+        clear.go();
+        var sd = yield seed.go();
+        this.timeout(3000);
+    });
+   
     it('should respond to GET', function(done) {
         chai.request(app)
             .get('/signup')

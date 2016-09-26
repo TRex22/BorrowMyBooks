@@ -19,6 +19,7 @@ var util = require('util');
 var async = require("async");
 
 var wrap = require('co-express');
+var co = require('co');
 
 var bookHelper = require('./services/bookHelper');
 
@@ -77,7 +78,12 @@ console.log(util.inspect(users));*/
 });*/
 
 var clearDb = require('./db/clearDb').go();
-var seedDb = require('./db/seedDb').go();
+var seed = require('./db/seedDb');
+
+co(function*() {
+    var sd = yield seed.go();
+});
+/*var seedDb = require('./db/seedDb').go();*/
 
 /*wrap(function*(){
     clearDb.go();

@@ -28,10 +28,10 @@ var clear = require('../../db/clearDb');
 //setup
 chai.use(chaiHttp);
 
-describe('#Login Route', function() {
-    beforeEach(function() {
+describe('#Admin Route', function() {
+    beforeEach(function*() {
         clear.go();
-        seed.go();
+        var sd = yield seed.go();
         this.timeout(3000);
     });
 

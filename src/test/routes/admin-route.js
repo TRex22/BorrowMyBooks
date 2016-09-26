@@ -29,6 +29,12 @@ var clear = require('../../db/clearDb');
 chai.use(chaiHttp);
 
 describe('#Admin Route', function() {
+    beforeEach(function*() {
+        clear.go();
+        var sd = yield seed.go();
+        this.timeout(3000);
+    });
+
     it('admin should respond to GET not logged in', function(done) {
         chai.request(app)
             .get('/admin')

@@ -28,7 +28,13 @@ var clear = require('../../db/clearDb');
 //setup
 chai.use(chaiHttp);
 
-describe('#Book Route', function() {
+describe('#Admin Route', function() {
+    beforeEach(function*() {
+        clear.go();
+        var sd = yield seed.go();
+        this.timeout(3000);
+    });
+    
     it('should respond to GET', function(done) {
         chai.request(app)
             .get('/book')
@@ -58,7 +64,7 @@ describe('#Book Route', function() {
 
     it('should respond to GET for an unknown book, not find the book and redirect back to explore', function(done) {
         chai.request(app)
-            .get('/book/' + "skjghsdkjghkjsdghkjsdh")
+            .get('/book/' + "57e67e6d6515d73854cb51f0")
             .end(function(err, res) {
                 res.should.have.status(200);
                 res.redirects[0].should.contain('/explore'); //redirect

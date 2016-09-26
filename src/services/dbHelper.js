@@ -53,7 +53,7 @@ function dropCollection(collec) {
     if (mongoose.connection.collections[collec]) {
         mongoose.connection.collections[collec].drop(function(err) {
             if (err) {
-                logger.error("Delete Error on Collection: " + collec + " " + err);
+                logger.warn("Delete Error on Collection: " + collec + " " + err);
             }
             logger.warn("collection " + collec + " dropped");
         });

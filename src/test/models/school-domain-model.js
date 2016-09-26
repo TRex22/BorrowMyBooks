@@ -4,20 +4,32 @@ var util = require('util');
 var validator = require('validator');
 var should = require('chai').should();
 
+var chai = require('chai');
+var chaiHttp = require('chai-http');
+var should = require('chai').should();
+var expect = require('chai').expect;
+var request = require('supertest')
+var validator = require('validator');
 var config = require('../../config');
 
 var mongoose = require('mongoose');
 
-var seed = require('../../db/seedDb');
-var clear = require('../../db/clearDb');
-
 //models
 var schoolDomain = require('../../models/schoolDomain');
 
+var seed = require('../../db/seedDb');
+var clear = require('../../db/clearDb');
+
+/*js to test*/
+
+//setup
+chai.use(chaiHttp);
+
 describe('#School Domain Schema', function() {
-    beforeEach(function() {
+    beforeEach(function*() {
         clear.go();
-        seed.go();
+        var sd = yield seed.go();
+        this.timeout(3000);
     });
 
     // tests here

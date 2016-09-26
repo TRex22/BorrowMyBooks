@@ -3,6 +3,8 @@ var logger = require("../logger/logger");
 
 var wrap = require('co-express');
 
+var util = require('util');
+
 var mongoose = require('../config/db.js').mongoose;
 var Book = mongoose.model('Book', require('../models/book'));
 
@@ -22,9 +24,13 @@ function getBook(bookId) {
 var getRelatedBooks = wrap(function*(bookId) {
     //using interests and then price
     var book = yield getBook(bookId);
-    return new Promise(function(resolve, reject) {
+    var interests = book.interests
+    if(!util.isArray(interests)){
+        interests = [interests];
+    }
 
-        Book.find({ $and: [{ _id: { $ne: book._id } }, { interests: { $elemMatch: { $in: book.interests } } }] }).exec(function(err, relatedBooks) {
+    return new Promise(function(resolve, reject) {
+        Book.find({ $and: [{ _id: { $ne: book._id } }, { interests: { $elemMatch: { $in: interests } } }] }).exec(function(err, relatedBooks) {
             /* istanbul ignore next */
             if (err) {
                 return reject(err);

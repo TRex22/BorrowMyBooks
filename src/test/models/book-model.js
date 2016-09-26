@@ -10,9 +10,6 @@ var mongoose = require('mongoose');
 //models
 var book = require('../../models/book');
 
-var seed = require('../../db/seedDb');
-var clear = require('../../db/clearDb');
-
 describe('#Book Schema', function() {
     // tests here
     it('should be able to generate a valid UUID', function() {

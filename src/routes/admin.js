@@ -3,7 +3,6 @@ var express = require('express');
 var pkg = require('../package');
 var config = require('../config.json');
 var router = express.Router();
-var seedDb = require('../db/seedDb');
 var clearDb = require('../db/clearDb');
 var userHelper = require('../services/userHelper.js');
 var statHelper = require('../services/statHelper.js');
@@ -25,11 +24,11 @@ module.exports = function(app, passport) {
 
     /* istanbul ignore next */
     app.get('/admin/resetdb',
-        function(req, res, next) {
+        function*(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site, true)) {
                 req = userHelper.processUser(req);
                 clearDb.go()
-                seedDb.go();
+                var seedDb = yield require('../db/seedDb').go();
                 res.redirect(req.session.returnTo || '/');
             }
         }

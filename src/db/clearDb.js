@@ -21,6 +21,9 @@ function go(db) {
     dbHelper.dropCollection("Book");
     dbHelper.dropCollection("SystemDefaults");
     dbHelper.dropCollection("Transaction");
+    dbHelper.dropCollection("UserMessage");
+    dbHelper.dropCollection("UserRating");
+    dbHelper.dropCollection("UserRole");
 }
 
 module.exports = { go: go };
