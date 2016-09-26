@@ -35,7 +35,7 @@ module.exports = function(app, passport) {
                 var iBook = new Book({
                     title: req.body.title,
                     author: req.body.author,
-                    userId: req.user.userId,
+                    userId: req.user._id,
                     noAvailable: req.body.noAvailable,
                     isAvailable: req.body.isAvailable,
                     interests: req.body.interests,
@@ -72,7 +72,7 @@ module.exports = function(app, passport) {
                         if (book.isForLoan && !book.isOnLoan && book.noAvailable > 0 && book.isAvailable === true) {
                             iTransaction = new transaction({
                                 fromUserId: book.userId,
-                                toUserId: req.user.userId,
+                                toUserId: req.user._id,
                                 bookId: book._id,
                                 amount: req.body.amount,
                                 cost: req.body.amount * book.loanPrice,
@@ -113,7 +113,7 @@ module.exports = function(app, passport) {
                         //check if book is for rent and loaned out
                         if (book.isForLoan && book.isOnLoan) {
                             Transaction.findOne({
-                                    toUserId: req.user.userId,
+                                    toUserId: req.user._id,
                                     bookId: book._id
                                 },
                                 function(err, itransaction) {
@@ -161,7 +161,7 @@ module.exports = function(app, passport) {
                         if (book.isForLoan && !book.isOnLoan && book.noAvailable > 0 && book.isAvailable === true) {
                             iTransaction = new transaction({
                                 fromUserId: book.userId,
-                                toUserId: req.user.userId,
+                                toUserId: req.user._id,
                                 bookId: book._id,
                                 amount: req.body.amount,
                                 cost: req.body.amount * book.loanPrice,
@@ -199,14 +199,17 @@ module.exports = function(app, passport) {
         req = userHelper.processUser(req);
 
         var book;
-        var relatedBooks;
+        var bookUser;
+        var relatedBooks = [];
 
         try {
             book = yield bookHelper.getBook(req.params.bookId);
-            relatedBooks = yield bookHelper.getRelatedBooks(req.params.bookId);
-            
+
             if (book) {
-                res.render('book/book', { site: app.locals.site, book: book, relatedBooks: relatedBooks, user: req.user });
+                bookUser = yield userHelper.getUser(book.userId);
+                relatedBooks = yield bookHelper.getRelatedBooks(req.params.bookId);
+                
+                res.render('book/book', { site: app.locals.site, book: book, bookUser: bookUser, relatedBooks: relatedBooks, user: req.user });
             } else {
                 res.redirect('/explore');
             }

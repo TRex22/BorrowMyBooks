@@ -1,3 +1,6 @@
+var mongoose = require('../config/db.js').mongoose;
+var User = mongoose.model('User', require('../models/user'));
+
 function initUser(req) {
     if (!req.session.user) {
         req.session.user = {};
@@ -30,9 +33,9 @@ function processUser(req, logout) {
         req.user.isLoggedIn = true;
     }
 
-/*    if(req.user.picUrl === null){
-        req.user.picUrl = 
-    }*/
+    /*    if(req.user.picUrl === null){
+            req.user.picUrl = 
+        }*/
 
     if (logout) {
         req.session.user = resetUser();
@@ -77,7 +80,7 @@ function createNewUser(username, password, body) {
     iUser.userId = iUser.generateUUID();
     iUser.salt = iUser.generateSalt();
     iUser.hash = iUser.generateHash(password);
-    /*iUser.save();*/
+
     //todo detect student
     return iUser;
 }
@@ -85,9 +88,9 @@ function createNewUser(username, password, body) {
 /* istanbul ignore next */
 function auth(req, res, site, admin, sysinfo) {
     if (req.user) {
-/*        if(!req.user.isLoggedIn){
-            res.redirect('/login');
-        }*/
+        /*        if(!req.user.isLoggedIn){
+                    res.redirect('/login');
+                }*/
         if (!isAdmin(req.user) && admin) {
             res.status(401);
             url = req.url;
@@ -98,7 +101,7 @@ function auth(req, res, site, admin, sysinfo) {
             return false;
 
         } else {
-            return true; //next();
+            return true;
         }
     } else {
         if (!sysinfo) {
@@ -108,11 +111,39 @@ function auth(req, res, site, admin, sysinfo) {
     }
 }
 
+function getUser(userId) {
+    return new Promise(function(resolve, reject) {
+        User.findOne({ _id: userId }, function(err, user) {
+            /* istanbul ignore next */
+            if (err) {                
+                return reject(err);
+            }
+
+            resolve(user);
+        });
+    });
+}
+
+function findUser(userIdent) {
+    return new Promise(function(resolve, reject) {
+        User.findOne({ $or: [{ username: userIdent }, { email: userIdent }, { name: userIdent }] }, function(err, user) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            resolve(user);
+        });
+    });
+}
+
 module.exports = {
     isAdmin: isAdmin,
     processUser: processUser,
     resetUser: resetUser,
     initUser: initUser,
     auth: auth,
-    createNewUser: createNewUser
+    createNewUser: createNewUser,
+    getUser: getUser,
+    findUser: findUser
 }

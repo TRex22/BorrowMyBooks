@@ -12,7 +12,12 @@ var userRole = require('../models/userRole');
 var userRating = require('../models/userRating');
 var schoolDomain = require('../models/schoolDomain');
 
-function go() {
+var wrap = require('co-express');
+
+var bookHelper = require('../services/bookHelper.js');
+var userHelper = require('../services/userHelper.js');
+
+var go = wrap(function*() {
     //check dev environment
     var iUser = new user({
         username: "Admin",
@@ -28,15 +33,13 @@ function go() {
         lastLoginDate: null,
         registrationDate: new Date()
     });
-    iUser.userId = iUser.generateUUID();
-    var adminId = iUser.userId;
 
     iUser.salt = iUser.generateSalt();
     iUser.hash = iUser.generateHash("123456");
     iUser.save();
     logger.warn("created admin user");
 
-    iUser = new user({
+    iUser2 = new user({
         username: "User",
         email: "user@jasonchalom.com",
         salt: null,
@@ -50,16 +53,27 @@ function go() {
         lastLoginDate: null,
         registrationDate: new Date()
     });
-    iUser.userId = iUser.generateUUID();
-    iUser.salt = iUser.generateSalt();
-    iUser.hash = iUser.generateHash("123456");
-    iUser.save();
+    iUser2.salt = iUser.generateSalt();
+    iUser2.hash = iUser.generateHash("123456");
+    iUser2.save();
     logger.warn("created user");
+
+    var adminId;
+    var userId;
+
+    try{
+        admin = yield userHelper.findUser(iUser.username);
+        user = yield userHelper.findUser(iUser2.username);
+    } catch(e){
+        console.log("error in the engine room.");
+        console.log(e);
+        throw e;
+    }
 
     var iBook = new book({
         title: "A Book about Tests",
         author: "me",
-        userId: "0",
+        userId: admin._id,
         noAvailable: 1,
         isAvailable: true,
         interests: ["testInterest1"],
@@ -87,7 +101,7 @@ function go() {
         picURL: "https://upload.wikimedia.org/wikipedia/en/7/70/HeartsInAtlantis.gif",
         interests: ["Fantasy"],
         edition: "First Edition",
-        userId: adminId,
+        userId: admin._id,
         noAvailable: 1,
         isAvailable: true,
         ISBN: "978-0-684-85351-2",
@@ -112,7 +126,7 @@ function go() {
         picURL: "https://upload.wikimedia.org/wikipedia/en/7/72/Odd_Thomas.jpg",
         interests: ["Fiction"],
         edition: "second edition",
-        userId: "6d914516-c54e-4b0d-8d5f-3c16b1dd54f5",
+        userId: user._id,
         noAvailable: 33,
         isAvailable: true,
         ISBN: "0-553-58449-9",
@@ -132,12 +146,10 @@ function go() {
     logger.warn("created book");
 
 
-
-
     iBook = new book({
         title: "A Book about Tests",
         author: "me",
-        userId: "6d914516-c54e-4b0d-8d5f-3c16b1dd54f5",
+        userId: user._id,
         noAvailable: 1,
         isAvailable: false,
         interests: null,
@@ -165,7 +177,7 @@ function go() {
         picURL: "http://ebookfriendly.com/wp-content/uploads/2014/03/Mr-Mercedes-Stephen-King-animated-book-cover.gif", //mr merc
         interests: ["Fantasy"],
         edition: "First Edition",
-        userId: "6d914516-c54e-4b0d-8d5f-3c16b1dd54f5",
+        userId: user._id,
         noAvailable: 1,
         isAvailable: false,
         ISBN: null,
@@ -190,7 +202,7 @@ function go() {
         picURL: "https://s-media-cache-ak0.pinimg.com/236x/a0/96/ff/a096ff3bafb7786b59ef9ba9d3e7ddf2.jpg", //mockingbird
         interests: ["Fiction"],
         edition: "second edition",
-        userId: adminId,
+        userId: admin._id,
         noAvailable: 33,
         isAvailable: false,
         ISBN: null,
@@ -215,7 +227,7 @@ function go() {
         picURL: null,
         interests: ["Fiction"],
         edition: "second edition",
-        userId: adminId,
+        userId: admin._id,
         noAvailable: 33,
         isAvailable: false,
         ISBN: null,
@@ -237,7 +249,7 @@ function go() {
     iBook = new book({
         title: "Harry Potter and the Philosopher's Stone",
         author: "J. K. Rowling",
-        userId: adminId,
+        userId: user._id,
         noAvailable: 55,
         isAvailable: true,
         picURL: "http://images.techtimes.com/data/images/full/182239/harry-potter-olly-moss-philosophers-stone-400x600-png.png?w=600",
@@ -262,7 +274,7 @@ function go() {
     var iSystemDefaults = new systemDefaults({
         DefaultProfilePictureURL: "/assets/avatar.png",
         DefaultBookPictureURL: "/assets/cover.jpg",
-        DefaultTheme: "flatly",
+        DefaultTheme: "cyborg",
         DefaultBrandingText: "Borrow My Books",
         Title: "Borrow My Books"
     });
@@ -312,5 +324,6 @@ function go() {
 
         });
         iUserRating.save();*/
-}
+});
+
 module.exports = { go: go };

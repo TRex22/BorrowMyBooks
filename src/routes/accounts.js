@@ -1,6 +1,7 @@
 var pkg = require('../package');
 var config = require('../config');
 var logger = require("../logger/logger");
+var wrap = require('co-express');
 
 var userHelper = require('../services/userHelper');
 var mongoose = require('../config/db.js').mongoose;
@@ -11,6 +12,7 @@ module.exports = function(app, passport) {
         req = userHelper.processUser(req);
         res.render('accounts/login.ejs', { 'site': app.locals.site, user: req.user });
     });
+
     app.post('/login', passport.authenticate('local', {
             failureRedirect: '/login',
             failureFlash: true
@@ -37,7 +39,7 @@ module.exports = function(app, passport) {
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site)) {
                 req = userHelper.processUser(req);
-                res.render('accounts/profile', { site: app.locals.site, user: req.user });
+                res.render('accounts/user', { site: app.locals.site, user: req.user });
             }
         }
     );
@@ -46,7 +48,7 @@ module.exports = function(app, passport) {
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site)) {
                 req = userHelper.processUser(req);
-                res.render('accounts/profile-settings', { site: app.locals.site, user: req.user });
+                res.render('accounts/user-settings', { site: app.locals.site, user: req.user });
             }
         }
     );
@@ -90,8 +92,97 @@ module.exports = function(app, passport) {
                     });
 
                 logger.warn("user updated info");
-
                 res.redirect('/profile');
+            }
+        }
+    );
+
+    app.get('/user/:userId',
+        wrap(function*(req, res, next) {
+            if (userHelper.auth(req, res, app.locals.site)) {
+                req = userHelper.processUser(req);
+                var user;
+
+                try {
+                    user = yield userHelper.getUser(req.params.userId);
+
+                    if (user) {
+                        res.render('accounts/user', { site: app.locals.site, user: user });
+                    } else {
+                        res.redirect(req.session.backURL || '/');
+                    }
+
+                } catch (e) {
+                    logger.warn(e)
+                    res.redirect(req.session.backURL || '/');
+                }
+            }
+        })
+    );
+
+    app.get('/user/:userId/settings',
+        wrap(function*(req, res, next) {
+            if (userHelper.auth(req, res, app.locals.site, true)) {
+                req = userHelper.processUser(req);
+                var user;
+
+                try {
+                    user = yield userHelper.getUser(req.params.userId);
+
+                    if (user) {
+                        res.render('accounts/user-settings', { site: app.locals.site, user: user });
+                    } else {
+                        res.redirect(req.session.backURL || '/');
+                    }
+
+                } catch (e) {
+                    logger.warn(e)
+                    res.redirect(req.session.backURL || '/');
+                }
+            }
+        })
+    );
+
+    app.post('/user/:userId/settings',
+        function(req, res, next) {
+            if (userHelper.auth(req, res, app.locals.site, true)) {
+                user.findOne({ userId: req.params.userId },
+                    function(err, user) {
+                        /* istanbul ignore next */
+                        if (err) throw err; //todo fix
+
+                        /* istanbul ignore next */
+                        if (req.body.username) {
+                            user.username = req.body.username;
+                        }
+                        /* istanbul ignore next */
+                        if (req.body.fullname) {
+                            user.name = req.body.fullname;
+                        }
+                        /* istanbul ignore next */
+                        if (req.body.email) {
+                            user.email = req.body.email;
+                        }
+                        /* istanbul ignore next */
+                        if (req.body.address) {
+                            user.address = req.body.address;
+                        }
+                        /* istanbul ignore next */
+                        if (req.body.phone) {
+                            user.phone = req.body.phone;
+                        }
+                        /* istanbul ignore next */
+                        if (req.body.interests) {
+                            user.interests = req.body.interests;
+                        }
+
+                        req.user = user;
+                        req.session.user = user;
+                        user.save();
+                    });
+
+                logger.warn("admin updated info");
+                res.redirect('/user/' + req.params.userId);
             }
         }
     );

@@ -30,7 +30,7 @@ module.exports = function(app, passport) {
             Book.find({}, function(err, books) {
                 var usrBooks = [];
                 for (var i = 0; i < books.length; i++) {
-                    if (books[i].userId === req.user.userId) {
+                    if (books[i].userId === "" + req.user._id) {
                         usrBooks.push(books[i]);
                     }
                 }

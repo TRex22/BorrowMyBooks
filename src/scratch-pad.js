@@ -18,6 +18,8 @@ var mongoose = require('./config/db.js').mongoose;
 var util = require('util');
 var async = require("async");
 
+var wrap = require('co-express');
+
 var bookHelper = require('./services/bookHelper');
 
 /*console.log('Output: ' + util.inspect(book.schema.methods.generateUUID));*/
@@ -74,7 +76,14 @@ console.log(util.inspect(users));*/
     }
 });*/
 
-/*require('./db/clearDb').go();*/
-//require('./db/seedDb').go();
+var clearDb = require('./db/clearDb').go();
+var seedDb = require('./db/seedDb').go();
 
-bookHelper.getAmazonBookCover();
+/*wrap(function*(){
+    clearDb.go();
+    yield seedDb.go();
+});*/
+
+
+
+/*bookHelper.getAmazonBookCover();*/

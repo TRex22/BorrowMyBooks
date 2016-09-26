@@ -8,6 +8,8 @@ var clearDb = require('../db/clearDb');
 var userHelper = require('../services/userHelper.js');
 var statHelper = require('../services/statHelper.js');
 
+var wrap = require('co-express');
+
 var mongoose = require('../config/db.js').mongoose;
 var sysDefault = mongoose.model('SystemDefaults', require('../models/systemDefaults'));
 
@@ -98,8 +100,7 @@ module.exports = function(app, passport) {
         }
     );
     
-    /* istanbul ignore next */ 
-    if (config.nodeinfo) {
+    /*if (config.nodeinfo) {
         var nodeinfo = require('node-info');
         app.use(nodeinfo({
             url: '/admin/system-information/node-info',
@@ -110,5 +111,5 @@ module.exports = function(app, passport) {
                 }
             }
         }));
-    }
+    }*/
 };

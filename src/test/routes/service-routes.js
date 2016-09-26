@@ -13,8 +13,6 @@ var validator = require('validator');
 var app = require('../../app');
 var www = require('../../bin/www-test');
 
-var testHelper = require('../../services/testHelper');
-
 var mongoose = require('../../config/db.js').mongoose;
 var systemDefaults = require('../../models/systemDefaults');
 var sysDefault = mongoose.model('SystemDefaults', systemDefaults);

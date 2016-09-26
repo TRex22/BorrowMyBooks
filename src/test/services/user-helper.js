@@ -221,6 +221,22 @@ describe('#User Helper', function() {
         var req = {};
         var res = {};
         var site = {};
+
+        var user = {
+            username: "Admin",
+            email: "contact@jasonchalom.com",
+            salt: null,
+            hash: null,
+            name: "Administrator",
+            address: "Room 13",
+            phone: "1234567890",
+            interests: [],
+            picUrl: null,
+            userRole: ["user"],
+            lastLoginDate: null,
+            registrationDate: new Date()
+        };
+
         req.user = user;
 
         userHelper.auth(req, res, site, false).should.be.true;
@@ -248,6 +264,21 @@ describe('#User Helper', function() {
         var req = {};
         var res = {};
         var site = {};
+
+        var user = {
+            username: "Admin",
+            email: "contact@jasonchalom.com",
+            salt: null,
+            hash: null,
+            name: "Administrator",
+            address: "Room 13",
+            phone: "1234567890",
+            interests: [],
+            picUrl: null,
+            userRole: ["user"],
+            lastLoginDate: null,
+            registrationDate: new Date()
+        };
         req.user = user;
 
         req.user.userRole = ['admin'];

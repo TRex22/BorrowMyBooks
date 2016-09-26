@@ -34,7 +34,7 @@
                                    <%} %> </li>
                     <li>Language: <%= book.language %></li>
                     <li title="<%= book.publishDate %>">Published: <%= site.moment(book.publishDate).format('LLL'); %></li>
-                    <li>Uploaded by: <%= book.userId %></li>                    
+                    <li>Uploaded by: <a href="/user/<%= bookUser._id %>"><%= bookUser.username %></a></li>                    
                 </ul>
 
                 <br>
@@ -47,7 +47,7 @@
             <div class="col-md-4">
               <div class="panel panel-default">
                 <div class="panel-body">
-              <% if (book.isAvailable) {%>
+              <% if (book.isAvailable && book.userId !== ""+user._id) { %>
 
                 <% if (book.isForSale) {%> 
                   <div class="amount">
@@ -74,6 +74,7 @@
                   <div class="noAvailable text-muted">
                     There <% if(book.noAvailable == 1) {%>is <% } else {%>are <% } %> <%= book.noAvailable %> available.
                 </div>
+              <% } else if (book.userId === ""+user._id) { %> <div class="noAvailable text-muted">You cannot transact with your own book.</div>
               <% } else {%> <div class="noAvailable text-muted">There are none available.</div> <% } %>
               </div>
             </div>
@@ -107,11 +108,16 @@
                   </a>
               </div>                          
             <% } %>            
-
+          <% if (relatedBooks.length === 0) {%>
+            <div class="col-sm-3 col-xs-6">
+              <p class="noAvailable text-muted">There are no related books.</p>
+            </div> 
+          <% } %> 
         </div>
         <!-- /.row -->
     </div>
 
+<% if (book.isForSale && book.userId !== ""+user._id) {%> 
     <!-- Buy Modal -->
     <div class="modal fade" id="buyModal" tabindex="-1" role="document">
       <div class="modal-dialog" role="document">
@@ -138,7 +144,9 @@
         </div>
       </div>
     </div>
+<% } %> 
 
+<% if (book.isForLoan && book.userId !== ""+user._id) {%>
     <!-- Rent Modal -->
     <div class="modal fade" id="rentModal" tabindex="-1" role="document">
       <div class="modal-dialog" role="document">
@@ -165,6 +173,7 @@
         </div>
       </div>
     </div>
+<% } %> 
 
   <!-- </div> -->
   <%- include('../partials/footer') %>

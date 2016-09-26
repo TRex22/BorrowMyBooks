@@ -44,7 +44,7 @@
                           <li title="<%= toTransactions[i].Date %>">Return date: <%= site.moment(toTransactions[i].Date).format('LLL'); %></li>
                         <% } %>
                     <% } %>
-                    <li>Owner of Book: <%= toTransactions[i].fromUserId %></li>
+                    <li>Owner of Book: <a href="/user/<%= toTransactions[i].toUser._id %>"><%= toTransactions[i].toUser.username %></a></li>
                     <li>Amount of books: <%= toTransactions[i].amount %></li>
                     <li>Cost of transaction: <%= toTransactions[i].cost %></li>
                     <li>Admin invertvention?: 
@@ -65,7 +65,7 @@
     <% } %>
 
     <% if(toTransactions.length === 0) { %>
-      <h3>You have not yet purchased or rented any books.</h3>
+      <p class="text-muted">You have not yet purchased or rented any books.</p>
     <% } %>
 
     </div>
@@ -78,7 +78,7 @@
     
     <% if(fromTransactions.length > 0) { %>
       <% for(var i=0; i<fromTransactions.length; i++) { %>
-                    <div class="panel panel-default">
+          <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="heading-<%= fromTransactions[i]._id %>">
               <h4 class="panel-title">
                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= fromTransactions[i]._id %>" aria-expanded="false" aria-controls="<%= fromTransactions[i]._id %>">
@@ -107,7 +107,7 @@
                           <li title="<%= fromTransactions[i].Date %>">Return date: <%= site.moment(fromTransactions[i].Date).format('LLL'); %></li>
                         <% } %>
                     <% } %>
-                    <li>Customer: <%= fromTransactions[i].toUserId %></li>
+                    <li>Customer: <a href="/user/<%= fromTransactions[i].fromUser._id %>"><%= fromTransactions[i].fromUser.username %></a></li>
                     <li>Amount of books: <%= fromTransactions[i].amount %></li>
                     <li>Cost of transaction: <%= fromTransactions[i].cost %></li>
                     <li>Admin invertvention?: 
@@ -128,7 +128,7 @@
     <% } %>
 
     <% if(fromTransactions.length === 0) { %>
-      <h3>You have not yet purchased or rented any books.</h3>
+      <p class="text-muted">None of your books have been rented or bought.</p>
     <% } %>
 
     </div>
