@@ -16,7 +16,7 @@ module.exports = function(app, passport) {
         var Book = mongoose.model('Book', book);
 
         Book.find({}, function(err, books) {
-            res.render('explore/explore', { site: app.locals.site, books: books, user: req.user });
+            res.render('explore/explore', { site: app.locals.site, books: books, user: req.user, messages: req.flash('info') });
         });
     });
 
@@ -34,7 +34,7 @@ module.exports = function(app, passport) {
                         usrBooks.push(books[i]);
                     }
                 }
-                res.render('explore/explore-mine', { site: app.locals.site, books: usrBooks, user: req.user });
+                res.render('explore/explore-mine', { site: app.locals.site, books: usrBooks, user: req.user, messages: req.flash('info') });
             });
         }
     });

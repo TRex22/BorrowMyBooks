@@ -6,8 +6,15 @@
     <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
     <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../../bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-    <!-- <script src="../../bower_components/moment/min/moment.min.js"></script> -->
     <script src="/javascripts/script.js"></script>
     <script src="/javascripts/jquery-script.js"></script>
-<!--     <script src="../../bower_components/MDBootstrap/js/mdb.min.js"></script> -->
+
+    <link href="../../node_modules/toastr/build/toastr.min.css" rel="stylesheet"/> 
+    <script src="../../node_modules/toastr/build/toastr.min.js"></script>
+    <% if (messages) { %>
+        <script>
+            // Display an info toast with no title
+            toastr.info("" + messages);
+        </script>
+    <% } %>
 </head>

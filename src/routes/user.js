@@ -14,7 +14,7 @@ module.exports = function(app, passport) {
             if (userHelper.auth(req, res, app.locals.site)) {
                 req = userHelper.processUser(req);
 
-                res.render('accounts/profile', { site: app.locals.site, user: req.user });
+                res.render('accounts/profile', { site: app.locals.site, user: req.user, messages: req.flash('info') });
             }
         });
 };

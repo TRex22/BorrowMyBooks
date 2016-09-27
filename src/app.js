@@ -76,7 +76,7 @@ app.use(session({
     saveUninitialized: true,
     resave: true
 }));
-app.use(flash()); //JMC: TODO add mesages
+app.use(flash()); 
 app.use(passport.initialize());
 app.use(passport.session());
 

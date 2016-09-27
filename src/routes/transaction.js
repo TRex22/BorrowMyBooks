@@ -29,7 +29,7 @@ module.exports = function(app, passport) {
                     }
                 }
 
-                res.render('transaction/transaction-mine', { site: app.locals.site, fromTransactions: fromTransactions, toTransactions: toTransactions, user: req.user });
+                res.render('transaction/transaction-mine', { site: app.locals.site, fromTransactions: fromTransactions, toTransactions: toTransactions, user: req.user, messages: req.flash('info') });
             } catch (e) {
                 logger.error(e)
                 res.redirect('/explore');

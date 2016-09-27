@@ -7,6 +7,6 @@ var userHelper = require('../services/userHelper.js');
 module.exports = function(app, passport) {
     app.get('/', function(req, res) {
         req = userHelper.processUser(req);
-        res.render('index', { site: app.locals.site, user: req.user });
+        res.render('index', { site: app.locals.site, user: req.user, messages: req.flash('info') });
     });
 };

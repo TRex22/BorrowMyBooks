@@ -10,7 +10,7 @@ var user = mongoose.model('User', require('../models/user'));
 module.exports = function(app, passport) {
     app.get('/login', function(req, res) {
         req = userHelper.processUser(req);
-        res.render('accounts/login.ejs', { 'site': app.locals.site, user: req.user });
+        res.render('accounts/login.ejs', { 'site': app.locals.site, user: req.user, messages: req.flash('info') });
     });
 
     app.post('/login', passport.authenticate('local', {
@@ -24,7 +24,7 @@ module.exports = function(app, passport) {
 
     app.get('/signup', function(req, res) {
         req = userHelper.processUser(req);
-        res.render('accounts/signup.ejs', { 'site': app.locals.site, user: req.user });
+        res.render('accounts/signup.ejs', { 'site': app.locals.site, user: req.user, messages: req.flash('info') });
     });
 
     app.post('/signup', passport.authenticate('signup', {
@@ -39,7 +39,7 @@ module.exports = function(app, passport) {
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site)) {
                 req = userHelper.processUser(req);
-                res.render('accounts/user', { site: app.locals.site, user: req.user });
+                res.render('accounts/user', { site: app.locals.site, user: req.user, messages: req.flash('info') });
             }
         }
     );
@@ -48,7 +48,7 @@ module.exports = function(app, passport) {
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site)) {
                 req = userHelper.processUser(req);
-                res.render('accounts/user-settings', { site: app.locals.site, user: req.user });
+                res.render('accounts/user-settings', { site: app.locals.site, user: req.user, messages: req.flash('info') });
             }
         }
     );
@@ -107,7 +107,8 @@ module.exports = function(app, passport) {
                     user = yield userHelper.getUser(req.params.userId);
 
                     if (user) {
-                        res.render('accounts/user', { site: app.locals.site, user: user });
+                        req.flash('User Info Updated', 'User Info Updated');
+                        res.render('accounts/user', { site: app.locals.site, user: user, messages: req.flash('info') });
                     } else {
                         res.redirect(req.session.backURL || '/');
                     }
@@ -130,7 +131,7 @@ module.exports = function(app, passport) {
                     user = yield userHelper.getUser(req.params.userId);
 
                     if (user) {
-                        res.render('accounts/user-settings', { site: app.locals.site, user: user });
+                        res.render('accounts/user-settings', { site: app.locals.site, user: user, messages: req.flash('info') });
                     } else {
                         res.redirect(req.session.backURL || '/');
                     }
@@ -182,6 +183,7 @@ module.exports = function(app, passport) {
                     });
 
                 logger.warn("admin updated info");
+                req.flash('User Info Updated', 'User Info Updated'); //todo fix? how does this work?    
                 res.redirect('/user/' + req.params.userId);
             }
         }
