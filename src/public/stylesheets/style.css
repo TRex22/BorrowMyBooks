@@ -329,3 +329,13 @@ a {
     padding-left: 20%;
     padding-right: 20%;
 }
+.purchase{
+    padding-left: 5%;
+    padding-right: 20%;
+}
+.amount-for{
+    padding-top: 3%;
+    padding-left: 20%;
+    padding-right: 5%;
+    font-size: 25px;
+}

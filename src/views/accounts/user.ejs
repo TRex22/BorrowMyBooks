@@ -4,16 +4,17 @@
   <body>   
    <%- include('../partials/navbar') %>
 
-  	<div class="site-margin">
+  <div class="site-margin">
       <h1><%= user.username %>'s Profile</h1>
-    </div>
 
-<div class="container">
+
+  <!-- <div class="container"> -->
     <div class="row">
       <div class="col-sm-4"><!--left col-->
               
           <ul class="list-group">
             <li class="list-group-item text-muted">Profile</li>
+            <li class="list-group-item center-align"><img src= <% if (user.picURL) {%> <%= user.picURL %> <%} else{%> <%= site.defaults.DefaultProfilePictureURL %> <%} %> /></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Username</strong></span> <%= user.username %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Name</strong></span> <%= user.name %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Email</strong></span> <%= user.email %></li>
@@ -21,19 +22,11 @@
             <li class="list-group-item text-right"><span class="pull-left"><strong>Phone</strong></span> <%= user.phone %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Last Seen</strong></span> <%= site.moment(user.lastLoginDate).format('LLL'); %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> <%= site.moment(user.registrationDate).format('LLL'); %></li>
-            
           </ul>               
-          
-          
-          <ul class="list-group">
-            <li class="list-group-item text-muted">Activity</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Books Sold</strong></span> 125</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Books Bought</strong></span> 13</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Books Borrowed</strong></span> 37</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Books Rented Away</strong></span> 78</li>
-          </ul> 
-               
-          <div class="panel panel-default">
+
+
+         <!--  Social Media Panel. Will implement later -->
+          <!-- <div class="panel panel-default">
             <div class="panel-heading">Social Media</div>
             <div class="panel-body">
               <img src="assets/glyphicons-social/glyphicons-social-31-facebook.png">  
@@ -42,10 +35,10 @@
               <img src="assets/glyphicons-social/glyphicons-social-3-google-plus.png">  
               <img src="assets/glyphicons-social/glyphicons-social-1-pinterest.png">  
             </div>
-          </div>
+          </div> -->
           
-        </div><!--/col-3-->
-      <div class="col-sm-8">         
+      </div><!--/col-4-->
+      <div class="col-sm-5">         
               
           <div class="tab-content">
             <div class="tab-pane active" id="home">
@@ -78,10 +71,34 @@
               </div>
               
              </div><!--/tab-pane-->
-          </div><!--/tab-pane-->
+          
         </div><!--/tab-content-->
-      </div><!--/col-9-->
+      </div><!--/col-5-->
+
+      <div class="col-sm-3">
+        <ul class="list-group">
+          <li class="list-group-item text-muted">Activity</li>
+          <li class="list-group-item text-right"><span class="pull-left"><strong>Books Sold</strong></span> 125</li>
+          <li class="list-group-item text-right"><span class="pull-left"><strong>Books Bought</strong></span> 13</li>
+          <li class="list-group-item text-right"><span class="pull-left"><strong>Books Borrowed</strong></span> 37</li>
+          <li class="list-group-item text-right"><span class="pull-left"><strong>Books Rented Away</strong></span> 78</li>
+        </ul>
+
+        <ul class="list-group">
+          <li class="list-group-item text-muted">Interests</li>
+          <% if (user.interests.length > 0) {%>
+            <% for(var i=0; i<user.interests.length; i++) {%>
+              <li class="list-group-item"><span><strong><%=user.interests[i]%></strong></span></li>
+            <% } %>
+          <%} else{%>
+            <li class="list-group-item text-right"><span class="pull-left"><strong></strong></span>No Interests</li>
+          <%}%>
+        </ul> 
+      </div><!--/col-3-->
+
     </div><!--/row-->
+  <!-- </div> --><!-- /container -->
+</div><!-- /site margin -->
 
   <%- include('../partials/footer') %>
   </body>
