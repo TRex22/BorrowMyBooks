@@ -26,10 +26,15 @@ module.exports = function(app, passport) {
     app.get('/admin/resetdb',
         function*(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site, true)) {
-                req = userHelper.processUser(req);
+                /*req = userHelper.processUser(req);
                 clearDb.go()
-                var seedDb = yield require('../db/seedDb').go();
-                res.redirect(req.session.returnTo || '/');
+                var seedDb = require('../db/seedDb');
+                res.redirect(req.session.returnTo || '/');*/
+                res.status(500);
+                url = req.url;
+                req = userHelper.processUser(req);
+                res.render('errors/error.ejs', { title: '500: Internal Server Error, Disabled due to issues.', url: url, statusCode: 500, site: app.locals.site, user: req.user });
+                logger.error("Error Message: code(500) %s", error);
             }
         }
     );
@@ -98,7 +103,7 @@ module.exports = function(app, passport) {
             }
         }
     );
-    
+
     /*if (config.nodeinfo) {
         var nodeinfo = require('node-info');
         app.use(nodeinfo({
