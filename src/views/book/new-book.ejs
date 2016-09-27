@@ -4,9 +4,7 @@
   <body>   
    <%- include('../partials/navbar') %>
 
- <!--  	<div class="site-margin">
-      <h1>Upload a New Book</h1>
-    </div> -->
+
     <h1 class="center-align">Upload a New Book</h1>
 
 
@@ -92,78 +90,66 @@
               <textarea class="form-control" tabindex="1" rows="5" id="summary" required></textarea>
             </div>
 
+
+          <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> Sell/Loan Details</h3>
+            </div>     
+          </div>
+
+    <!--  Sell/Loan Details Row  -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isAvailable" required="">Is This Book Available?</label>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="noAvailable">Number of Books Available: </label>
+                <input type="text" class="form-control" tabindex="1" name="noAvailable" placeholder="Number Available" required>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isForLoan" required="">Is This Book Loanable?</label>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="loanPrice">Book Loan Price: </label>
+                <input type="text" class="form-control" tabindex="1" name="loanPrice" placeholder="Loan Price" required>
+              </div>
+            </div>
+
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isForSale" required="">Is This Book For Sale?</label>
+              </div>
+            </div>
             
-
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="sellPrice">Book Sell Price: </label>
+                <input type="text" class="form-control" tabindex="1" name="sellPrice" placeholder="Sell Price" required>
+              </div>
+            </div>
             
-      <!-- <div class="form-group">
-        <input type="checkbox" class="form-control" tabindex="1" name="isForLoan" placeholder="Is This Book Loanable?" required>
-      </div>
-
-      <div class="form-group">
-        <input type="checkbox" class="form-control" tabindex="1" name="isForSale" placeholder="Is This Book For Sale?" required>
-      </div> -->
-
-
-
-      <div class="row">
-        <div class="col-lg-12">
-            <h3 class="page-header"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> Sell/Loan Details</h3>
-        </div>     
-      </div>
-
-<!--  Sell/Loan Details Row  -->
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isAvailable" required="">Is This Book Available?</label>
           </div>
-        </div>
+    <!--  End Sell/Loan Details Row  -->
 
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="noAvailable">Number of Books Available: </label>
-            <input type="text" class="form-control" tabindex="1" name="noAvailable" placeholder="Number Available" required>
+          <br>
+          <br>
+
+          <div class="">
+            <div>
+              <input type="submit" class="btn btn-default btn-lg" value="Upload" tabindex="1">
+            </div>
           </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group">
-            <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isForLoan" required="">Is This Book Loanable?</label>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="loanPrice">Book Loan Price: </label>
-            <input type="text" class="form-control" tabindex="1" name="loanPrice" placeholder="Loan Price" required>
-          </div>
-        </div>
-
-
-        <div class="col-md-6">
-          <div class="form-group">
-            <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isForSale" required="">Is This Book For Sale?</label>
-          </div>
-        </div>
-        
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="sellPrice">Book Sell Price: </label>
-            <input type="text" class="form-control" tabindex="1" name="sellPrice" placeholder="Sell Price" required>
-          </div>
-        </div>
-        
-      </div>
-<!--  End Sell/Loan Details Row  -->
-
-      <br>
-      <br>
-
-      <div class="">
-        <div>
-          <input type="submit" class="btn btn-default btn-lg" value="Upload" tabindex="1">
-        </div>
-      </div>
 
     </form>
     

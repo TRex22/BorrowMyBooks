@@ -47,39 +47,39 @@
             <div class="col-md-4">
               <div class="panel panel-default">
                 <div class="panel-body">
-              <% if (book.isAvailable && book.userId !== ""+user._id) { %>
+                  <% if (book.isAvailable && book.userId !== ""+user._id) { %>
 
-                <% if (book.isForSale) {%> 
-                  <div class="amount">
-                    Buy for R<% if (book.sellPrice) {%><%= book.sellPrice.toFixed(2) %> <% } %> 
-                  </div>
-                  <button type="button" class="btn btn-lg btn-buy btn-cyan" data-toggle="modal" data-target="#buyModal">
-                    Buy
-                  </button>               
-                <% } %>
+                    <% if (book.isForSale) {%> 
+                      <div class="amount">
+                        Buy for R<% if (book.sellPrice) {%><%= book.sellPrice.toFixed(2) %> <% } %> 
+                      </div>
+                      <button type="button" class="btn btn-lg btn-buy btn-cyan" data-toggle="modal" data-target="#buyModal">
+                        Buy
+                      </button>               
+                    <% } %>
 
-                <% if (book.isForSale && book.isForLoan) {%> 
-                  <div class="or">OR</div>
-                <% } %>
+                    <% if (book.isForSale && book.isForLoan) {%> 
+                      <div class="or">OR</div>
+                    <% } %>
 
-                <% if (book.isForLoan) {%>
-                  <div class="amount">
-                    Rent for R<% if (book.loanPrice) {%><%= book.loanPrice.toFixed(2) %> <% } %>
-                  </div>
-                  <button type="button" class="btn btn-lg btn-rent btn-light-green" data-toggle="modal" data-target="#rentModal">
-                    Rent
-                  </button>
-                <% } %>
+                    <% if (book.isForLoan) {%>
+                      <div class="amount">
+                        Rent for R<% if (book.loanPrice) {%><%= book.loanPrice.toFixed(2) %> <% } %>
+                      </div>
+                      <button type="button" class="btn btn-lg btn-rent btn-light-green" data-toggle="modal" data-target="#rentModal">
+                        Rent
+                      </button>
+                    <% } %>
 
-                  <div class="noAvailable text-muted">
-                    There <% if(book.noAvailable == 1) {%>is <% } else {%>are <% } %> <%= book.noAvailable %> available.
+                      <div class="noAvailable text-muted">
+                        There <% if(book.noAvailable == 1) {%>is <% } else {%>are <% } %> <%= book.noAvailable %> available.
+                    </div>
+                    <% } else if (book.userId === ""+user._id) { %> <div class="noAvailable text-muted">You cannot transact with your own book.</div>
+                    <% } else {%> <div class="noAvailable text-muted">There are none available.</div> <% } %>
                 </div>
-              <% } else if (book.userId === ""+user._id) { %> <div class="noAvailable text-muted">You cannot transact with your own book.</div>
-              <% } else {%> <div class="noAvailable text-muted">There are none available.</div> <% } %>
               </div>
             </div>
           </div>
-
         </div>
         <!-- /.row -->
 
@@ -133,7 +133,7 @@
 
           <form role="form" action="/book/<%= book._id %>/buy" method="post" class="box">
 
-            <div class="modal-body login">
+            <div class="modal-body new-book">
                   <div class="form-group">
                       <p>Amount to purchase: </p><input type="number" class="form-control" tabindex="1" min="1" max="<%= book.noAvailable %>" name="amount" value="1"><br/> 
                       <p>You will pay: R<%= 1 * book.sellPrice %></p>             
@@ -162,7 +162,7 @@
 
           <form role="form" action="/book/<%= book._id %>/rent" method="post" class="box">
 
-            <div class="modal-body login">
+            <div class="modal-body new-book">
                   <div class="form-group">
                       <p>Amount to rent: </p><input type="number" class="form-control" tabindex="1" min="1" max="<%= book.noAvailable %>" name="amount" value="1"><br/> 
                       <p>You will pay: R<%= 1 * book.loanPrice %></p>             

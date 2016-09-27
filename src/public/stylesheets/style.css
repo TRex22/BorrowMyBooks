@@ -339,3 +339,7 @@ a {
     padding-right: 5%;
     font-size: 25px;
 }
+.transparent{
+    background: none;
+    background-color: none;
+}
