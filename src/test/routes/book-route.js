@@ -20,7 +20,6 @@ var book = require('../../models/book');
 var Book = mongoose.model('Book', book);
 var User = mongoose.model('User', require('../../models/user'));
 
-var seed = require('../../db/seedDb');
 var clear = require('../../db/clearDb');
 
 /*js to test*/
@@ -31,7 +30,7 @@ chai.use(chaiHttp);
 describe('#Admin Route', function() {
     beforeEach(function*() {
         clear.go();
-        var sd = yield seed.go();
+        var seed = require('../../db/seedDb');
         this.timeout(3000);
     });
     

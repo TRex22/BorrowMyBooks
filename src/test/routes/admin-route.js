@@ -20,7 +20,6 @@ var book = require('../../models/book');
 var Book = mongoose.model('Book', book);
 var User = mongoose.model('User', require('../../models/user'));
 
-var seed = require('../../db/seedDb');
 var clear = require('../../db/clearDb');
 
 /*js to test*/
@@ -30,9 +29,9 @@ chai.use(chaiHttp);
 
 describe('#Admin Route', function() {
     beforeEach(function*() {
-        clear.go();
-        var sd = yield seed.go();
         this.timeout(3000);
+        clear.go();
+        var seed = require('../../db/seedDb');        
     });
 
     it('admin should respond to GET not logged in', function(done) {
@@ -48,7 +47,7 @@ describe('#Admin Route', function() {
     it('admin should respond to GET logged in', function(done) {
         request(app)
             .post('/login?username=Admin&password=123456')
-            .send({ username: "Admin", password: '123456' })
+            .send({ username: 'Admin', password: '123456' })
             .end(function(err, res) {
                 res.should.have.status(302);
                 var cookie = res.headers['set-cookie'];
@@ -114,7 +113,7 @@ describe('#Admin Route', function() {
                 var cookie = res.headers['set-cookie'];
                 request(app)
                     .post('/admin/system-defaults')
-                    .send({ defaultTheme: "testtest" })
+                    .send({ defaultTheme: "flatly" })
                     .set('cookie', cookie)
                     .end(function(err, res) {
                         res.should.have.status(200);
@@ -123,7 +122,7 @@ describe('#Admin Route', function() {
                         sysDefault.findOne({}).exec(function(err, defaults) { //there should only be one set of defaults
                             if (err) done(err);
 
-                            defaults.DefaultTheme.should.equal("testtest");
+                            defaults.DefaultTheme.should.equal("flatly");
                             done();
                         });
                     });

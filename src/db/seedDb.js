@@ -331,6 +331,6 @@ function go() {
 
 }
 
-/*go();*/
+go();
 
 module.exports = { go: go };

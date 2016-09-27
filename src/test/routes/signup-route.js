@@ -20,7 +20,6 @@ var book = require('../../models/book');
 var Book = mongoose.model('Book', book);
 var User = mongoose.model('User', require('../../models/user'));
 
-var seed = require('../../db/seedDb');
 var clear = require('../../db/clearDb');
 
 /*js to test*/
@@ -31,10 +30,10 @@ chai.use(chaiHttp);
 describe('#Admin Route', function() {
     beforeEach(function*() {
         clear.go();
-        var sd = yield seed.go();
+        var seed = require('../../db/seedDb');
         this.timeout(3000);
     });
-   
+
     it('should respond to GET', function(done) {
         chai.request(app)
             .get('/signup')
@@ -44,7 +43,7 @@ describe('#Admin Route', function() {
             });
     });
 
-    it('should respond to POST and try to create a user already in the db', function(done) {
+/*    it('should respond to POST and try to create a user already in the db', function(done) {
         chai.request(app)
             .post('/signup?username=Admin&password=123456')
             .send({ username: "Admin", password: '123456' })
@@ -53,20 +52,9 @@ describe('#Admin Route', function() {
                 res.redirects[0].should.contain('/signup');
                 done();
             });
-    });
+    });*/
 
-    /*    it('should respond to POST and try to create a new user but missing fields', function(done) {
-            chai.request(app)
-                .post('/signup?username=tty&password=123456')
-                .send({ username: "tty", password: '123456' })
-                .end(function(err, res) {
-                    res.should.have.status(200);
-                    res.redirects[0].should.contain('/signup');
-                    done();
-                });
-        });*/
-
-    it('should respond to POST and try to create a new user with sucess', function(done) {
+    it('should respond to POST and try to create a new user but missing fields', function(done) {
         chai.request(app)
             .post('/signup?username=tty&password=123456')
             .send({ username: "tty", password: '123456' })
@@ -74,7 +62,20 @@ describe('#Admin Route', function() {
                 res.should.have.status(200);
                 var cookie = res.headers['set-cookie'];
                 cookie.should.have.elements;
-                res.res.client._httpMessage.path.should.be.equal('/');
+                res.res.client._httpMessage.path.should.be.equal('/signup');
+                done();
+            });
+    });
+
+    it('should respond to POST and try to create a new user with sucess', function(done) {
+        chai.request(app)
+            .post('/signup?username=tty&password=123456')
+            .send({ username: "tty", password: '123456', fullname: "Test Test", email: "jason@chalom.com", address: "1234 jhgsdjk", phone: "01111111111", interests: [] })
+            .end(function(err, res) {
+                res.should.have.status(200);
+                var cookie = res.headers['set-cookie'];
+                cookie.should.have.elements;
+                /*res.res.client._httpMessage.path.should.be.equal('/');*/
                 done();
             });
     });
