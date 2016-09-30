@@ -135,8 +135,8 @@
 
             <div class="modal-body new-book">
                   <div class="form-group">
-                      <p>Amount to purchase: </p><input type="number" class="form-control" tabindex="1" min="1" max="<%= book.noAvailable %>" name="amount" value="1"><br/> 
-                      <p>You will pay: R<%= 1 * book.sellPrice %></p>             
+                      <p>Amount to purchase: </p><input type="number" class="form-control" tabindex="1" min="1" max="<%= book.noAvailable %>" id="buy-amount" value="1" oninput="updateBuyPrice()"><br/> 
+                      <p id="buy-total">You will pay: R<%= 1 * book.sellPrice %></p>             
                   </div>
             </div>
             <div class="modal-footer">
@@ -149,6 +149,7 @@
       </div>
     </div>
 <% } %> 
+
 
 <% if (book.isForLoan && book.userId !== ""+user._id) {%>
     <!-- Rent Modal -->
@@ -164,8 +165,8 @@
 
             <div class="modal-body new-book">
                   <div class="form-group">
-                      <p>Amount to rent: </p><input type="number" class="form-control" tabindex="1" min="1" max="<%= book.noAvailable %>" name="amount" value="1"><br/> 
-                      <p>You will pay: R<%= 1 * book.loanPrice %></p>             
+                      <p>Amount to rent: </p><input type="number" class="form-control" tabindex="1" min="1" max="<%= book.noAvailable %>" id="rent-amount" value="1" oninput="updateRentPrice()"><br/> 
+                      <p id="rent-total">You will pay: R<%= 1 * book.loanPrice %></p>             
                   </div>
             </div>
             <div class="modal-footer">
@@ -177,7 +178,24 @@
         </div>
       </div>
     </div>
-<% } %> 
+<% } %>
+
+
+<script>
+function updateBuyPrice(){
+  var amount = document.getElementById("buy-amount").value;
+  var total = amount * <%= book.sellPrice%>;
+  document.getElementById("buy-total").innerHTML = "You will pay: R" + total;
+}
+
+function updateRentPrice(){
+  var amount = document.getElementById("rent-amount").value;
+  var total = amount * <%= book.loanPrice%>;
+  document.getElementById("rent-total").innerHTML = "You will pay: R" + total;
+}
+</script>
+
+ 
 
   <!-- </div> -->
   <%- include('../partials/footer') %>
