@@ -38,6 +38,7 @@ module.exports = function(app, passport) {
     app.get('/profile',
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site)) {
+                user.main = true;
                 req = userHelper.processUser(req);
                 res.render('accounts/user', { site: app.locals.site, user: req.user, messages: req.flash('info') });
             }
@@ -47,6 +48,7 @@ module.exports = function(app, passport) {
     app.get('/profile/settings',
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site)) {
+                user.main = true;
                 req = userHelper.processUser(req);
                 res.render('accounts/user-settings', { site: app.locals.site, user: req.user, messages: req.flash('info') });
             }
@@ -56,6 +58,7 @@ module.exports = function(app, passport) {
     app.post('/profile/settings',
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site)) {
+                user.main = true;
                 user.findOne({ userId: req.user.userId },
                     function(err, user) {
                         /* istanbul ignore next */
@@ -92,7 +95,7 @@ module.exports = function(app, passport) {
                     });
 
                 logger.warn("user updated info");
-                res.redirect('/profile');
+                res.redirect(req.session.backURL || '/');
             }
         }
     );
@@ -101,20 +104,20 @@ module.exports = function(app, passport) {
         wrap(function*(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site)) {
                 req = userHelper.processUser(req);
-                var user;
-
+                var userInfo;
+                user.main = false;
                 try {
-                    user = yield userHelper.getUser(req.params.userId);
-
-                    if (user) {
+                    userInfo = yield userHelper.getUser(req.params.userId);
+                    if (userInfo) {
                         req.flash('User Info Updated', 'User Info Updated');
-                        res.render('accounts/user', { site: app.locals.site, user: user, messages: req.flash('info') });
+                        res.render('accounts/user', { site: app.locals.site, user: req.user, userInfo: userInfo, messages: req.flash('info') });
                     } else {
                         res.redirect(req.session.backURL || '/');
                     }
 
                 } catch (e) {
-                    logger.warn(e)
+                    logger.warn(e);
+                    req.flash("No user of that id.");
                     res.redirect(req.session.backURL || '/');
                 }
             }
@@ -125,19 +128,20 @@ module.exports = function(app, passport) {
         wrap(function*(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site, true)) {
                 req = userHelper.processUser(req);
-                var user;
-
+                var userInfo;
+                user.main = false;
                 try {
-                    user = yield userHelper.getUser(req.params.userId);
+                    userInfo = yield userHelper.getUser(req.params.userId);
 
-                    if (user) {
-                        res.render('accounts/user-settings', { site: app.locals.site, user: user, messages: req.flash('info') });
+                    if (userInfo) {
+                        res.render('accounts/user-settings', { site: app.locals.site, user: req.user, userInfo: userInfo, messages: req.flash('info') });
                     } else {
                         res.redirect(req.session.backURL || '/');
                     }
 
                 } catch (e) {
-                    logger.warn(e)
+                    logger.warn(e);
+                    req.flash("No user of that id.");
                     res.redirect(req.session.backURL || '/');
                 }
             }
@@ -147,10 +151,14 @@ module.exports = function(app, passport) {
     app.post('/user/:userId/settings',
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site, true)) {
+                user.main = false;
                 user.findOne({ userId: req.params.userId },
                     function(err, user) {
                         /* istanbul ignore next */
-                        if (err) throw err; //todo fix
+                        if (err) {
+                                logger.error(err);
+                                throw err; 
+                            } //todo fix
 
                         /* istanbul ignore next */
                         if (req.body.username) {
@@ -177,8 +185,6 @@ module.exports = function(app, passport) {
                             user.interests = req.body.interests;
                         }
 
-                        req.user = user;
-                        req.session.user = user;
                         user.save();
                     });
 

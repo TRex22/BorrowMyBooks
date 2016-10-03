@@ -4,6 +4,7 @@
   <body>   
    <%- include('../partials/navbar') %>
 
+    <% if(!user.isMain) { user=userInfo } %>
   	<div class="center-align">
       <h1>Your Profile Settings</h1>
     </div>
@@ -52,7 +53,8 @@
 
             <div class="form-group">
               <img class="img-responsive account-picture" width="50" src=<% if (user.picURL) {%> <%= user.picURL %> <%} else{%> <%= site.defaults.DefaultProfilePictureURL %> <%} %> >
-              <button>Upload new picture</button>
+              <!-- <button>Upload new picture</button> -->
+              <input type="text" class="form-control" tabindex="1" name="picURL" placeholder="Picture URL" required>
             </div>
 
             <div class="form-group">
