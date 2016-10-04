@@ -105,6 +105,7 @@ describe('#Admin Route', function() {
     });
 
     it('system-defaults should respond to POST logged in', function(done) {
+        this.timeout(3000);
         request(app)
             .post('/login?username=Admin&password=123456')
             .send({ username: "Admin", password: '123456' })
