@@ -53,7 +53,7 @@ module.exports = function(app, passport) {
                     if (err) {
                         logger.err(err);
                         req = userHelper.processUser(req);
-                        return done(err);
+                        return done(err, req.flash('error', '' + err));
                     }
                     if (!user) {
                         logger.warn('Incorrect username.');
@@ -69,9 +69,9 @@ module.exports = function(app, passport) {
 
                     user.lastLoginDate = new Date();
                     user.save();
-
+                    
                     req = userHelper.processUser(req);
-                    return done(null, user);
+                    return done(null, user, req.flash('success', 'user logged in.'));
 
                 });
             });
@@ -83,11 +83,11 @@ module.exports = function(app, passport) {
             User.findOne({ $or: [{ email: username }, { username: username }] }, function(err, user) {
                 if (err) {
                     user.isLoggedIn = false;
-                    return done(err);
+                    return done(err, req.flash('error', '' + err));
                 }
                 if (!user) {
-                    logger.warn('Incorrect username.');
                     user.isLoggedIn = false;
+                    logger.warn('User does not exist');
                     return done(null, false, req.flash('error', 'User does not exist.'));
                 }
 
@@ -96,12 +96,12 @@ module.exports = function(app, passport) {
                     user.isLoggedIn = false;
                     return done(null, false, req.flash('error', 'Enter correct password'));
                 }
-                
+
                 user.lastLoginDate = new Date();
                 user.save();
 
                 req = userHelper.processUser(req);
-                return done(null, user);
+                return done(null, user, req.flash('success', 'user logged in.'));
             });
         }
     ));
@@ -117,10 +117,10 @@ module.exports = function(app, passport) {
                 if (!req.user) {
                     User.findOne({ $or: [{ email: username }, { username: username }] }, function(err, user) {
                         if (err) {
-                            return done(err);
+                            return done(err, req.flash('error', '' + err));
                         }
                         if (user) {
-                            return done(null, false, req.flash('signuperror', 'User already exists'));
+                            return done(null, false, req.flash('error', 'User already exists', null));
                         } else {
                             var newUser = userHelper.createNewUser(username, password, req.body);
                             newUser.save(function(err) {
@@ -128,9 +128,9 @@ module.exports = function(app, passport) {
                                     throw err; //TODO JMC Fix
                                 req.user = newUser;
                                 req = userHelper.processUser(req);
-                                logger.warn("created new user"); //todo: JMC more explicit?
-
-                                return done(null, newUser);
+                                logger.warn("created new user");
+                                
+                                return done(null, newUser, req.flash('success', 'created new user'));
                             });
                         }
 
@@ -144,7 +144,8 @@ module.exports = function(app, passport) {
                         req.user = newUser;
                         req = userHelper.processUser(req);
                         logger.warn("created new user");
-                        return done(null, newUser);
+
+                        return done(null, newUser, req.flash('success', 'created new user'));
                     });
                 }
 

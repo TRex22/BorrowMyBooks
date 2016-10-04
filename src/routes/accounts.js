@@ -10,7 +10,7 @@ var user = mongoose.model('User', require('../models/user'));
 module.exports = function(app, passport) {
     app.get('/login', function(req, res) {
         req = userHelper.processUser(req);
-        res.render('accounts/login.ejs', { 'site': app.locals.site, user: req.user, messages: req.flash('info') });
+        res.render('accounts/login.ejs', { 'site': app.locals.site, user: req.user, req: req });
     });
 
     app.post('/login', passport.authenticate('local', {
@@ -18,13 +18,13 @@ module.exports = function(app, passport) {
             failureFlash: true
         }),
         function(req, res) {
-            req = userHelper.processUser(req);
+            req = userHelper.processUser(req);            
             res.redirect(req.session.returnTo || '/');
         });
 
     app.get('/signup', function(req, res) {
         req = userHelper.processUser(req);
-        res.render('accounts/signup.ejs', { 'site': app.locals.site, user: req.user, messages: req.flash('info') });
+        res.render('accounts/signup.ejs', { 'site': app.locals.site, user: req.user, req: req });
     });
 
     app.post('/signup', passport.authenticate('signup', {
@@ -38,9 +38,9 @@ module.exports = function(app, passport) {
     app.get('/profile',
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site)) {
-                user.main = true;
+                req.user.isMain = true;
                 req = userHelper.processUser(req);
-                res.render('accounts/user', { site: app.locals.site, user: req.user, messages: req.flash('info') });
+                res.render('accounts/user', { site: app.locals.site, user: req.user, req: req });
             }
         }
     );
@@ -48,9 +48,9 @@ module.exports = function(app, passport) {
     app.get('/profile/settings',
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site)) {
-                user.main = true;
+                req.user.isMain = true;
                 req = userHelper.processUser(req);
-                res.render('accounts/user-settings', { site: app.locals.site, user: req.user, messages: req.flash('info') });
+                res.render('accounts/user-settings', { site: app.locals.site, user: req.user, req: req });
             }
         }
     );
@@ -58,11 +58,11 @@ module.exports = function(app, passport) {
     app.post('/profile/settings',
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site)) {
-                user.main = true;
+                req.user.isMain = true;
                 user.findOne({ userId: req.user.userId },
                     function(err, user) {
                         /* istanbul ignore next */
-                        if (err) throw err; //todo fix
+                        if (err) req.flash('error', '' + err); //todo fix
 
                         /* istanbul ignore next */
                         if (req.body.username) {
@@ -95,6 +95,7 @@ module.exports = function(app, passport) {
                     });
 
                 logger.warn("user updated info");
+                req.flash('warn', 'User Info Updated');
                 res.redirect(req.session.backURL || '/');
             }
         }
@@ -105,19 +106,20 @@ module.exports = function(app, passport) {
             if (userHelper.auth(req, res, app.locals.site)) {
                 req = userHelper.processUser(req);
                 var userInfo;
-                user.main = false;
+                user.isMain = false;
                 try {
                     userInfo = yield userHelper.getUser(req.params.userId);
                     if (userInfo) {
                         req.flash('User Info Updated', 'User Info Updated');
-                        res.render('accounts/user', { site: app.locals.site, user: req.user, userInfo: userInfo, messages: req.flash('info') });
+                        res.render('accounts/user', { site: app.locals.site, user: req.user, userInfo: userInfo, req: req });
                     } else {
+                        req.flash('error', "No user of that id.");
                         res.redirect(req.session.backURL || '/');
                     }
 
                 } catch (e) {
                     logger.warn(e);
-                    req.flash("No user of that id.");
+                    req.flash('error', "No user of that id.");
                     res.redirect(req.session.backURL || '/');
                 }
             }
@@ -129,19 +131,20 @@ module.exports = function(app, passport) {
             if (userHelper.auth(req, res, app.locals.site, true)) {
                 req = userHelper.processUser(req);
                 var userInfo;
-                user.main = false;
+                user.isMain = false;
                 try {
                     userInfo = yield userHelper.getUser(req.params.userId);
 
                     if (userInfo) {
-                        res.render('accounts/user-settings', { site: app.locals.site, user: req.user, userInfo: userInfo, messages: req.flash('info') });
+                        res.render('accounts/user-settings', { site: app.locals.site, user: req.user, userInfo: userInfo, req: req });
                     } else {
+                        req.flash('error', "No user of that id.");
                         res.redirect(req.session.backURL || '/');
                     }
 
                 } catch (e) {
                     logger.warn(e);
-                    req.flash("No user of that id.");
+                    req.flash('error', "No user of that id.");
                     res.redirect(req.session.backURL || '/');
                 }
             }
@@ -151,14 +154,14 @@ module.exports = function(app, passport) {
     app.post('/user/:userId/settings',
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site, true)) {
-                user.main = false;
+                user.isMain = false;
                 user.findOne({ userId: req.params.userId },
                     function(err, user) {
                         /* istanbul ignore next */
                         if (err) {
-                                logger.error(err);
-                                throw err; 
-                            } //todo fix
+                            logger.error(err);
+                            throw err;
+                        } //todo fix
 
                         /* istanbul ignore next */
                         if (req.body.username) {
@@ -188,8 +191,8 @@ module.exports = function(app, passport) {
                         user.save();
                     });
 
-                logger.warn("admin updated info");
-                req.flash('User Info Updated', 'User Info Updated'); //todo fix? how does this work?    
+                logger.warn("admin updated info");  
+                req.flash('warn', 'User Info Updated');
                 res.redirect('/user/' + req.params.userId);
             }
         }
@@ -197,12 +200,14 @@ module.exports = function(app, passport) {
 
     app.get('/logout', function(req, res) {
         req.logout();
+        req.flash('success', 'Logged out successfully');
         req = userHelper.processUser(req, true);
         res.redirect('/');
     });
 
     app.post('/logout', function(req, res) {
         req.logout();
+        req.flash('success', 'Logged out successfully');
         req = userHelper.processUser(req, true);
         res.redirect('/');
     });

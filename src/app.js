@@ -29,16 +29,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var flash = require('req-flash');
+var toastr = require('express-toastr');
 
 var pkg = require('./package.json');
 var config = require('./config.json');
 var siteBuilder = require('./services/siteBuilder');
 
 var app = express();
-
-logger.info("passport setup...");
-var passport = require('passport');
-require('./config/passport')(app, passport);
 
 logger.info("Overriding 'Express' logger");
 app.use(require('morgan')("combined", { "stream": logger.stream }));
@@ -76,7 +73,28 @@ app.use(session({
     saveUninitialized: true,
     resave: true
 }));
-app.use(flash()); 
+
+app.use(flash());
+
+// Load express-toastr
+// You can pass an object of default options to toastr(), see example/index.coffee
+app.use(toastr({
+    closeButton: true,
+    newestOnTop: true
+}));
+
+
+app.use(function (req, res, next)
+{
+    req.toastr.clear(); //fix for undefined error in ejs
+    res.locals.toasts = req.toastr.render();
+    next();
+});
+
+logger.info("passport setup...");
+var passport = require('passport');
+require('./config/passport')(app, passport);
+
 app.use(passport.initialize());
 app.use(passport.session());
 

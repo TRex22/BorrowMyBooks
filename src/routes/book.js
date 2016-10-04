@@ -23,7 +23,7 @@ module.exports = function(app, passport) {
         req = userHelper.processUser(req);
         if (userHelper.auth(req, res, app.locals.site)) {
             req = userHelper.processUser(req);
-            res.render('book/new-book', { site: app.locals.site, user: req.user, messages: req.flash('info') });
+            res.render('book/new-book', { site: app.locals.site, user: req.user, req: req });
         }
     });
 
@@ -56,9 +56,10 @@ module.exports = function(app, passport) {
                 iBook.bookId = iBook.generateUUID();
                 iBook.save();
                 logger.warn("created book");
-            }
 
-            res.redirect('/book/' + iBook.bookId);
+                req.flash('warn', "created new book, " + iBook.title);
+                res.redirect('/book/' + iBook.bookId);
+            }
         }
     });
 
@@ -90,11 +91,13 @@ module.exports = function(app, passport) {
                             book.noAvailable = book.noAvailable - req.body.amount;
                             /*book.isOnLoan = true;*/
                             book.save();
+                            req.flash('success', book.title + " successfully rented."); 
                         } else {
-                            req.flash('error', 'Book is not for rent.'); //todo fix? how does this work?    
-                            res.render('book/book', { site: app.locals.site, book: book, user: req.user, messages: req.flash('info') });
+                            req.flash('error', 'Book is not for rent.');    
+                            res.render('book/book', { site: app.locals.site, book: book, user: req.user, req: req });
                         }
                     } else {
+                        req.flash('error', 'Book not found.'); 
                         res.redirect('/explore');
                     }
                 });
@@ -127,20 +130,22 @@ module.exports = function(app, passport) {
                                             book.noAvailable = book.noAvailable + itransaction.amount;
                                             /*book.isOnLoan = false;*/
                                             book.save();
+                                            req.flash('success', book.title + " successfully returned."); 
                                         } else {
                                             req.flash('error', 'Wrong user.'); //todo fix? how does this work?    
-                                            res.render('book/book', { site: app.locals.site, book: book, user: req.user, messages: req.flash('info') });
+                                            res.render('book/book', { site: app.locals.site, book: book, user: req.user, req: req });
                                         }
                                     } else {
                                         req.flash('error', 'No such transaction.'); //todo fix? how does this work?    
-                                        res.render('book/book', { site: app.locals.site, book: book, user: req.user, messages: req.flash('info') });
+                                        res.render('book/book', { site: app.locals.site, book: book, user: req.user, req: req });
                                     }
                                 });
                         } else {
                             req.flash('error', 'Book is not for rent.'); //todo fix? how does this work?    
-                            res.render('book/book', { site: app.locals.site, book: book, user: req.user, messages: req.flash('info') });
+                            res.render('book/book', { site: app.locals.site, book: book, user: req.user, req: req });
                         }
                     } else {
+                        req.flash('error', 'Book not found.'); 
                         res.redirect('/explore');
                     }
                 });
@@ -178,11 +183,14 @@ module.exports = function(app, passport) {
 
                             book.noAvailable = book.noAvailable - req.body.amount;
                             book.save();
+
+                            req.flash('success', book.title + " successfully purchased.");
                         } else {
                             req.flash('error', 'Book is not for sale.'); //todo fix? how does this work?    
-                            res.render('book/book', { site: app.locals.site, book: book, user: req.user, messages: req.flash('info') });
+                            res.render('book/book', { site: app.locals.site, book: book, user: req.user, req: req });
                         }
                     } else {
+                        req.flash('error', 'Book not found.'); 
                         res.redirect('/explore');
                     }
                 });
@@ -212,13 +220,15 @@ module.exports = function(app, passport) {
                     bookUser = false;
                 }
 
-                res.render('book/book', { site: app.locals.site, book: book, bookUser: bookUser, relatedBooks: relatedBooks, user: req.user, messages: req.flash('info') });
+                res.render('book/book', { site: app.locals.site, book: book, bookUser: bookUser, relatedBooks: relatedBooks, user: req.user, req: req });
             } else {
+                req.flash('error', 'Book not found.'); 
                 res.redirect('/explore');
             }
 
         } catch (e) {
             logger.error(e)
+            req.flash('error', ""+e); 
             res.redirect('/explore');
         }
     }));

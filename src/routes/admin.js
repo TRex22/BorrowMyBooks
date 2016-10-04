@@ -17,7 +17,7 @@ module.exports = function(app, passport) {
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site, true)) {
                 req = userHelper.processUser(req);
-                res.render('admin/admin', { site: app.locals.site, user: req.user, messages: req.flash('info') });
+                res.render('admin/admin', { site: app.locals.site, user: req.user, req: req });
             }
         }
     );
@@ -33,7 +33,8 @@ module.exports = function(app, passport) {
                 res.status(500);
                 url = req.url;
                 req = userHelper.processUser(req);
-                res.render('errors/error.ejs', { title: '500: Internal Server Error, Disabled due to issues.', url: url, statusCode: 500, site: app.locals.site, user: req.user, messages: req.flash('info') });
+                //TODO FIX
+                res.render('errors/error.ejs', { title: '500: Internal Server Error, Disabled due to issues.', url: url, statusCode: 500, site: app.locals.site, user: req.user, req: req });
                 logger.error("Error Message: code(500) %s", error);
             }
         }
@@ -44,7 +45,7 @@ module.exports = function(app, passport) {
             /* istanbul ignore next */
             if (userHelper.auth(req, res, app.locals.site, true)) {
                 req = userHelper.processUser(req);
-                res.render('admin/system-defaults', { site: app.locals.site, user: req.user, messages: req.flash('info') });
+                res.render('admin/system-defaults', { site: app.locals.site, user: req.user, req: req });
             }
         }
     );
@@ -79,8 +80,8 @@ module.exports = function(app, passport) {
 
                         app.locals.site.defaults = defaults;
                         defaults.save();
-
-                        res.render('admin/system-defaults', { site: app.locals.site, user: req.user, messages: req.flash('info') });
+                        req.flash('warn', 'updated system defaults.');
+                        res.render('admin/system-defaults', { site: app.locals.site, user: req.user, req: req });
                     }
                 });
             }
@@ -99,21 +100,8 @@ module.exports = function(app, passport) {
                 var info = require('simple-node-info');
                 req = userHelper.processUser(req);
                 var sysinfo = info.getStat();
-                res.render('admin/sys-info', { site: app.locals.site, user: req.user, sysinfo: sysinfo, socketvar: 'load averages', jquery: true, socket: true, messages: req.flash('info') });
+                res.render('admin/sys-info', { site: app.locals.site, user: req.user, sysinfo: sysinfo, socketvar: 'load averages', jquery: true, socket: true, req: req });
             }
         }
     );
-
-    /*if (config.nodeinfo) {
-        var nodeinfo = require('node-info');
-        app.use(nodeinfo({
-            url: '/admin/system-information/node-info',
-            check: function(req, res, next) {
-                if (userHelper.auth(req, res, app.locals.site, true, true)) {
-                    // show nodeinfo
-                    return true;
-                }
-            }
-        }));
-    }*/
 };

@@ -20,18 +20,19 @@ module.exports = function(app, passport) {
                 transactions = yield transactionHelper.getTransactions(req.user._id);
 
                 for (var i = 0; i < transactions.length; i++) {
-                    if (transactions[i].fromUserId === ""+req.user._id) {
+                    if (transactions[i].fromUserId === "" + req.user._id) {
                         fromTransactions.push(transactions[i]);
                     }
 
-                    if (transactions[i].toUserId === ""+req.user._id) {
+                    if (transactions[i].toUserId === "" + req.user._id) {
                         toTransactions.push(transactions[i]);
                     }
                 }
 
-                res.render('transaction/transaction-mine', { site: app.locals.site, fromTransactions: fromTransactions, toTransactions: toTransactions, user: req.user, messages: req.flash('info') });
+                res.render('transaction/transaction-mine', { site: app.locals.site, fromTransactions: fromTransactions, toTransactions: toTransactions, user: req.user, req: req });
             } catch (e) {
                 logger.error(e)
+                req.flash('error', '' + e);
                 res.redirect('/explore');
             }
         }

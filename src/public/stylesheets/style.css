@@ -9,6 +9,11 @@ body {
 
 /*fixes for MDBoostrap*/
 
+/*.row {
+    margin-left: 0;
+}
+*/
+
 .btn {
     max-height: inherit;
     max-width: inherit;
@@ -317,29 +322,33 @@ a {
     left: 85px;
 }
 
-.title{
+.title {
     font-weight: bold;
     font-size: 35px;
     padding-top: 20%;
     padding-bottom: 10%;
 }
-.author{
+
+.author {
     font-weight: normal;
     font-size: 25px;
     padding-left: 20%;
     padding-right: 20%;
 }
-.purchase{
+
+.purchase {
     padding-left: 5%;
     padding-right: 20%;
 }
-.amount-for{
+
+.amount-for {
     padding-top: 3%;
     padding-left: 20%;
     padding-right: 5%;
     font-size: 25px;
 }
-.transparent{
+
+.transparent {
     background: none;
     background-color: none;
 }

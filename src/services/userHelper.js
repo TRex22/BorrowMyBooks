@@ -1,7 +1,13 @@
 var mongoose = require('../config/db.js').mongoose;
 var User = mongoose.model('User', require('../models/user'));
 
+var messageHelper = require('../services/messageHelper');
+
 function initUser(req) {
+    if (!req.session) {
+        req.session = {};
+    }
+
     if (!req.session.user) {
         req.session.user = {};
         req.session.user.isAdmin = false;
@@ -40,6 +46,10 @@ function processUser(req, logout) {
     if (logout) {
         req.session.user = resetUser();
         req.user = resetUser();
+    }
+
+    if (req.flash) {
+        req = messageHelper.processMessages(req);
     }
 
     return req;
@@ -115,7 +125,7 @@ function getUser(userId) {
     return new Promise(function(resolve, reject) {
         User.findOne({ _id: userId }, function(err, user) {
             /* istanbul ignore next */
-            if (err) {                
+            if (err) {
                 return reject(err);
             }
 

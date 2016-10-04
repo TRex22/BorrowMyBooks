@@ -31,6 +31,7 @@ function initSite() {
 
     site.moment = moment;
     site.validator = validator;
+    site.util = util;
     return site;
 }
 

@@ -1,4 +1,9 @@
 <!-- views/partials/navbar.ejs -->
+
+<% if (req.toastr) { %>
+    <%- req.toastr.render() %>
+<% } %>
+
 <div class="header clearfix">
     <nav>
         <div class="pull-right">
