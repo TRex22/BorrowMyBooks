@@ -13,6 +13,7 @@ function getBook(bookId) {
         Book.findOne({ _id: bookId }, function(err, book) {
             /* istanbul ignore next */
             if (err) {
+                logger.error(err);
                 return reject(err);
             }
 
@@ -33,6 +34,7 @@ var getRelatedBooks = wrap(function*(bookId) {
         Book.find({ $and: [{ _id: { $ne: book._id } }, { interests: { $elemMatch: { $in: interests } } }] }).exec(function(err, relatedBooks) {
             /* istanbul ignore next */
             if (err) {
+                logger.error(err);
                 return reject(err);
             }
 
