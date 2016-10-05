@@ -29,8 +29,8 @@ module.exports = function(app, passport) {
             if (userHelper.auth(req, res, app.locals.site, true)) {
                 req = userHelper.processUser(req);
                 logger.warn("started db reset");
-                clearDb.go();
-                var seedDb = require('../db/seedDb');
+                /*clearDb.go();*/
+                require('../db/seedDb');
                 req.flash('warn', 'database reset');
                 res.redirect(req.session.returnTo || '/');
             }

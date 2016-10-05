@@ -34,11 +34,21 @@ var toastr = require('express-toastr');
 var pkg = require('./package.json');
 var config = require('./config.json');
 var siteBuilder = require('./services/siteBuilder');
+var userHelper = require('./services/userHelper');
+var co = require('co');
 
 var app = express();
 
 logger.info("Overriding 'Express' logger");
 app.use(require('morgan')("combined", { "stream": logger.stream }));
+
+co(function*(){
+    var admin = yield userHelper.findUser("Admin");
+    if(!admin){
+        logger.warn("Emergency db Rebuild");
+        require('./db/seedDb');
+    }
+});
 
 // view engine setup
 app.set('views', path.join(directory, 'views'));
@@ -49,6 +59,7 @@ app.use(function(req, res, next) {
     logger.info('Connected IP:', ip);
     next();
 });
+
 /* istanbul ignore next */
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(directory, 'public')));
@@ -84,8 +95,7 @@ app.use(toastr({
 }));
 
 
-app.use(function (req, res, next)
-{
+app.use(function(req, res, next) {
     req.toastr.clear(); //fix for undefined error in ejs
     res.locals.toasts = req.toastr.render();
     next();
@@ -98,7 +108,7 @@ require('./config/passport')(app, passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-/*app.use(require('connect-livereload')());*/
+app.use(require('connect-livereload')());
 
 logger.info("Build Site Object");
 app.locals.site = siteBuilder.initSite();
