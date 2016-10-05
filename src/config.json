@@ -43,7 +43,7 @@
         "united",
         "yeti"
     ],
-    "defaultTheme": "flatly",
+    "defaultTheme": "cyborg",
     "title": "Borrow My Books",
     "defaultProfilePictureURL": "/assets/profile.jpg",
     "defaultBookPictureURL": "/assets/cover.jpg",
