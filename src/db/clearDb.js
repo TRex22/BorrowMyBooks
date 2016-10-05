@@ -15,7 +15,7 @@ var userRating = require('../models/userRating');
 
 var dbHelper = require('../services/dbHelper.js');
 
-function go(db) {
+function go() {
     dbHelper.dropCollection("SchoolDomain");
     dbHelper.dropCollection("User");
     dbHelper.dropCollection("Book");

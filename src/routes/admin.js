@@ -1,4 +1,5 @@
 /* jshint node: true */
+var logger = require("../logger/logger");
 var express = require('express');
 var pkg = require('../package');
 var config = require('../config.json');
@@ -24,18 +25,14 @@ module.exports = function(app, passport) {
 
     /* istanbul ignore next */
     app.get('/admin/resetdb',
-        function*(req, res, next) {
+        function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site, true)) {
-                /*req = userHelper.processUser(req);
-                clearDb.go()
-                var seedDb = require('../db/seedDb');
-                res.redirect(req.session.returnTo || '/');*/
-                res.status(500);
-                url = req.url;
                 req = userHelper.processUser(req);
-                //TODO FIX
-                res.render('errors/error.ejs', { title: '500: Internal Server Error, Disabled due to issues.', url: url, statusCode: 500, site: app.locals.site, user: req.user, req: req });
-                logger.error("Error Message: code(500) %s", error);
+                logger.warn("started db reset");
+                clearDb.go();
+                var seedDb = require('../db/seedDb');
+                req.flash('warn', 'database reset');
+                res.redirect(req.session.returnTo || '/');
             }
         }
     );

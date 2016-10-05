@@ -14,10 +14,37 @@
             <ul class="pull-left">
                 <li><a href="/admin/system-information"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> View system information</a></li>
                 <li><a href="/admin/system-defaults"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Edit system defaults</a></li>
-                <li><a href="/admin/resetdb"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> Reset Database With Test Data (Caution!!!)</a></li>
+                <li> <button type="button" class="btn btn-lg btn-rent btn-light-green" data-toggle="modal" data-target="#rentModal">Reset Database With Test Data (Caution!!!)</button></li>
+
             </ul>
         </div>
         <%- include('../partials/footer') %>
+
+        <!-- Modal -->
+        <div class="modal fade" id="rentModal" tabindex="-1" role="document">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Reset Database With Test Data (Caution!!!)</h4>
+              </div>
+
+              <form role="form" action="/admin/resetdb" method="get" class="box">
+                <div class="modal-body new-book">
+                      <div class="form-group">
+                          <p>Are you sure?</p>             
+                      </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary btn-light-green">Reset Db</button>            
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+
 </body>
 
 </html>
