@@ -43,18 +43,6 @@ var getRelatedBooks = wrap(function*(bookId) {
     });
 });
 
-function checkIfBookIsForLoan(book) {
-
-}
-
-function checkIfBookIsForSale(book) {
-
-}
-
-function checkIfUserCanReturnBook(book) {
-
-}
-
 function convertToISBN13(ISBN10) {
 
 }
