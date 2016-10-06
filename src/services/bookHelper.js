@@ -24,6 +24,7 @@ function getBook(bookId) {
 
 var getRelatedBooks = wrap(function*(bookId) {
     //using interests and then price
+    return [];
     var book = yield getBook(bookId);
     var interests = book.interests
     if(!util.isArray(interests)){
