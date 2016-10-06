@@ -333,9 +333,11 @@ function go() {
 
 setTimeout(function() {
     system();
+}, 10);
+setTimeout(function() {
+    system();
     go();
 }, 1000);
-
 
 module.exports = {
     go: go,
