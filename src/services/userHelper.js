@@ -2,6 +2,7 @@ var mongoose = require('../config/db.js').mongoose;
 var User = mongoose.model('User', require('../models/user'));
 
 var messageHelper = require('../services/messageHelper');
+var util = require('util');
 
 function initUser(req) {
     if (!req.session) {
@@ -38,10 +39,6 @@ function processUser(req, logout) {
         req.user.isAdmin = isAdmin(req.user);
         req.user.isLoggedIn = true;
     }
-
-    /*    if(req.user.picUrl === null){
-            req.user.picUrl = 
-        }*/
 
     if (logout) {
         req.session.user = resetUser();
@@ -96,6 +93,32 @@ function createNewUser(username, password, body) {
 }
 
 /* istanbul ignore next */
+function getPath(req) {
+    var path = null
+
+    if (req.params) {
+        if (req.route.path.indexOf("buy") > -1 || req.route.path.indexOf("rent") > -1 || req.route.path.indexOf("return") > -1) {
+            path = "/book/" + req.params.bookId;
+            return path;
+        }
+
+        if (req.route.path.indexOf("userId") > -1) {
+            path = "/user/" + req.params.userId;
+
+            if (req.route.path.indexOf("settings") > -1) {
+                path += "/settings";
+            }
+
+            return path;
+        }
+    } else {
+        path = req.route.path;
+    }
+
+    return path;
+}
+
+/* istanbul ignore next */
 function auth(req, res, site, admin, sysinfo) {
     if (req.user) {
         /*        if(!req.user.isLoggedIn){
@@ -115,6 +138,7 @@ function auth(req, res, site, admin, sysinfo) {
         }
     } else {
         if (!sysinfo) {
+            req.session.returnTo = getPath(req);
             res.redirect('/login');
         }
         return false;
@@ -155,5 +179,6 @@ module.exports = {
     auth: auth,
     createNewUser: createNewUser,
     getUser: getUser,
-    findUser: findUser
+    findUser: findUser,
+    getPath: getPath
 }

@@ -8,7 +8,7 @@ var mongoose = require('../config/db.js').mongoose;
 var user = mongoose.model('User', require('../models/user'));
 
 module.exports = function(app, passport) {
-    app.get('/login', function(req, res) {
+    app.get('/login', function(req, res) {        
         req = userHelper.processUser(req);
         res.render('accounts/login.ejs', { 'site': app.locals.site, user: req.user, req: req });
     });

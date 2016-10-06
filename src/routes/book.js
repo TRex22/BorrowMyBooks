@@ -5,6 +5,7 @@ var express = require('express');
 var pkg = require('../package');
 var router = express.Router();
 var wrap = require('co-express');
+var util = require('util');
 
 var mongoose = require('../config/db.js').mongoose;
 var dbHelper = require('../services/dbHelper');
@@ -104,9 +105,6 @@ module.exports = function(app, passport) {
                     }
                 });
             }
-
-            req.flash('error', 'Something.'); 
-            res.redirect('/book/' + req.params.bookId);
         }
     });
 
@@ -155,9 +153,6 @@ module.exports = function(app, passport) {
                     }
                 });
             }
-
-            req.flash('error', 'Something.'); 
-            res.redirect('/book/' + req.params.bookId);
         }
     });
 
@@ -203,9 +198,6 @@ module.exports = function(app, passport) {
                     }
                 });
             }
-
-            req.flash('error', 'Something.'); 
-            res.redirect('/book/' + req.params.bookId);
         }
     });
 
