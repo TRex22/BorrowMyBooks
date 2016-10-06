@@ -57,8 +57,8 @@ module.exports = function(app, passport) {
                 iBook.save();
                 logger.warn("created book");
 
-                req.flash('warn', "created new book, " + iBook.title);
-                res.redirect('/book/' + iBook.bookId);
+                req.flash('success', "created new book, " + iBook.title);
+                res.redirect('/book/' + iBook._id);
             }
         }
     });
@@ -68,6 +68,7 @@ module.exports = function(app, passport) {
         if (userHelper.auth(req, res, app.locals.site)) {
             if (req.body) { //TODO check and perhpas fix this
                 Book.findOne({ _id: req.params.bookId }, function(err, book) {
+                    if (err) req.flash('error', '' + err);
                     if (book) {
                         //check if book is for rent
                         if (book.isForLoan && !book.isOnLoan && book.noAvailable > 0 && book.isAvailable === true) {
@@ -92,6 +93,7 @@ module.exports = function(app, passport) {
                             /*book.isOnLoan = true;*/
                             book.save();
                             req.flash('success', book.title + " successfully rented."); 
+                            res.redirect('/book/' + req.params.bookId);
                         } else {
                             req.flash('error', 'Book is not for rent.');    
                             res.render('book/book', { site: app.locals.site, book: book, user: req.user, req: req });
@@ -103,6 +105,7 @@ module.exports = function(app, passport) {
                 });
             }
 
+            req.flash('error', 'Something.'); 
             res.redirect('/book/' + req.params.bookId);
         }
     });
@@ -112,6 +115,7 @@ module.exports = function(app, passport) {
         if (userHelper.auth(req, res, app.locals.site)) {
             if (req.body) { //TODO check and perhpas fix this
                 Book.findOne({ _id: req.params.bookId }, function(err, book) {
+                    if (err) req.flash('error', '' + err);
                     if (book) {
                         //check if book is for rent and loaned out
                         if (book.isForLoan && book.isOnLoan) {
@@ -131,6 +135,7 @@ module.exports = function(app, passport) {
                                             /*book.isOnLoan = false;*/
                                             book.save();
                                             req.flash('success', book.title + " successfully returned."); 
+                                            res.redirect('/book/' + req.params.bookId);
                                         } else {
                                             req.flash('error', 'Wrong user.'); //todo fix? how does this work?    
                                             res.render('book/book', { site: app.locals.site, book: book, user: req.user, req: req });
@@ -151,6 +156,7 @@ module.exports = function(app, passport) {
                 });
             }
 
+            req.flash('error', 'Something.'); 
             res.redirect('/book/' + req.params.bookId);
         }
     });
@@ -160,6 +166,7 @@ module.exports = function(app, passport) {
         if (userHelper.auth(req, res, app.locals.site)) {
             if (req.body) { //TODO check and perhpas fix this
                 Book.findOne({ _id: req.params.bookId }, function(err, book) {
+                    if (err) req.flash('error', '' + err); 
                     if (book) {
                         //check if book is for rent
                         //TODO: check cost and amounts
@@ -185,6 +192,7 @@ module.exports = function(app, passport) {
                             book.save();
 
                             req.flash('success', book.title + " successfully purchased.");
+                            res.redirect('/book/' + req.params.bookId);
                         } else {
                             req.flash('error', 'Book is not for sale.'); //todo fix? how does this work?    
                             res.render('book/book', { site: app.locals.site, book: book, user: req.user, req: req });
@@ -196,6 +204,7 @@ module.exports = function(app, passport) {
                 });
             }
 
+            req.flash('error', 'Something.'); 
             res.redirect('/book/' + req.params.bookId);
         }
     });
