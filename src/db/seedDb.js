@@ -20,7 +20,25 @@ var userHelper = require('../services/userHelper.js');
 
 function go() {
     co(function*() {
-        //check dev environment
+        var iSystemDefaults = new systemDefaults({
+            DefaultProfilePictureURL: "/assets/avatar.png",
+            DefaultBookPictureURL: "/assets/cover.jpg",
+            DefaultTheme: "cyborg",
+            DefaultBrandingText: "Borrow My Books",
+            Title: "Borrow My Books"
+        });
+        iSystemDefaults.save();
+        logger.warn("created systemDefaults");
+
+        var schoolObj = require('./school-domains');
+        var iSchoolDomain = new schoolDomain({
+            date: new Date(),
+            category: schoolObj.domains.category,
+            domains: schoolObj.domains.domain
+        });
+        iSchoolDomain.save();
+        logger.warn("created schoolDomain");
+
         var iUser = new user({
             username: "Admin",
             email: "contact@jasonchalom.com",
@@ -272,26 +290,6 @@ function go() {
         iBook.bookId = iBook.generateUUID();
         iBook.save();
         logger.warn("created book");
-
-        var iSystemDefaults = new systemDefaults({
-            DefaultProfilePictureURL: "/assets/avatar.png",
-            DefaultBookPictureURL: "/assets/cover.jpg",
-            DefaultTheme: "cyborg",
-            DefaultBrandingText: "Borrow My Books",
-            Title: "Borrow My Books"
-        });
-        iSystemDefaults.save();
-        logger.warn("created systemDefaults");
-
-        var schoolObj = require('./school-domains');
-        var iSchoolDomain = new schoolDomain({
-            date: new Date(),
-            category: schoolObj.domains.category,
-            domains: schoolObj.domains.domain
-        });
-        iSchoolDomain.save();
-        logger.warn("created schoolDomain");
-
 
         /*    var iInterest = new interest({
                 InterestId: String,
