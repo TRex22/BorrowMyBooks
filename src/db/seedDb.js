@@ -333,7 +333,7 @@ var go = function() {
 
 setTimeout(function() {
     system();
-}, 10);
+}, 1000);
 setTimeout(function() {
     system();
     go();

@@ -18,7 +18,7 @@ var mongoose = require('mongoose');
 var schoolDomain = require('../../models/schoolDomain');
 
 var clear = require('../../db/clearDb');
-var seed = require('../../db/seedDb');
+
 
 /*js to test*/
 
@@ -27,10 +27,8 @@ chai.use(chaiHttp);
 
 describe('#School Domain Schema', function() {
     beforeEach(function() {
-        clear.go();
-
-        seed.go();
-        seed.system();
+        /*clear.go();*/
+        var seed = require('../../db/seedDb');
         this.timeout(3000);
     });
 

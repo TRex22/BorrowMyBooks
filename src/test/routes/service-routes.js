@@ -21,7 +21,7 @@ var Book = mongoose.model('Book', book);
 var User = mongoose.model('User', require('../../models/user'));
 
 var clear = require('../../db/clearDb');
-var seed = require('../../db/seedDb');
+
 
 /*js to test*/
 
@@ -30,12 +30,11 @@ chai.use(chaiHttp);
 
 describe('#Admin Route', function() {
     beforeEach(function() {
-        clear.go();
-
-        seed.go();
-        seed.system();
+        /*clear.go();*/
+        var seed = require('../../db/seedDb');
         this.timeout(3000);
     });
+
 
     it('should respond to GET (Not Found)', function(done) {
         chai.request(app)
