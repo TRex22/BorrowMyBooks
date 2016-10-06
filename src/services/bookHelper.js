@@ -22,7 +22,26 @@ function getBook(bookId) {
     });
 }
 
-var getRelatedBooks = [];
+var getRelatedBooks = wrap(function*(bookId) {
+    //using interests and then price
+    var book = yield getBook(bookId);
+    var interests = book.interests
+    if(!util.isArray(interests)){
+        interests = [interests];
+    }
+
+    return new Promise(function(resolve, reject) {
+        Book.find({ $and: [{ _id: { $ne: book._id } }, { interests: { $elemMatch: { $in: interests } } }] }).exec(function(err, relatedBooks) {
+            /* istanbul ignore next */
+            if (err) {
+                logger.error(err);
+                return reject(err);
+            }
+
+            resolve(relatedBooks);
+        });
+    });
+});
 
 function convertToISBN13(ISBN10) {
 
