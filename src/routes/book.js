@@ -67,7 +67,8 @@ module.exports = function(app, passport) {
     app.post('/book/:bookId/rent', function(req, res, next) {
         //TODO: JMC database connection
         if (userHelper.auth(req, res, app.locals.site)) {
-            if (req.body.amount) { //TODO check and perhpas fix this
+            if (!req.body.amount) req.body.amount = 1;
+            if (req.body) {
                 Book.findOne({ _id: req.params.bookId }, function(err, book) {
                     if (err) req.flash('error', '' + err);
                     if (book) {
@@ -97,7 +98,7 @@ module.exports = function(app, passport) {
                             res.redirect('/book/' + req.params.bookId);
                         } else {
                             req.flash('error', 'Book is not for rent.');
-                            res.render('book/book', { site: app.locals.site, book: book, user: req.user, req: req });
+                            res.redirect('/book/' + req.params.bookId);
                         }
                     } else {
                         req.flash('error', 'Book not found.');
@@ -114,7 +115,8 @@ module.exports = function(app, passport) {
     app.post('/book/:bookId/return', function(req, res, next) {
         //TODO: JMC database connection
         if (userHelper.auth(req, res, app.locals.site)) {
-            if (req.body) { //TODO check and perhpas fix this
+            if (!req.body.amount) req.body.amount = 1;
+            if (req.body) {
                 Book.findOne({ _id: req.params.bookId }, function(err, book) {
                     if (err) req.flash('error', '' + err);
                     if (book) {
@@ -148,7 +150,7 @@ module.exports = function(app, passport) {
                                 });
                         } else {
                             req.flash('error', 'Book is not for rent.'); //todo fix? how does this work?    
-                            res.render('book/book', { site: app.locals.site, book: book, user: req.user, req: req });
+                            res.redirect('/book/' + req.params.bookId);
                         }
                     } else {
                         req.flash('error', 'Book not found.');
@@ -162,7 +164,8 @@ module.exports = function(app, passport) {
     app.post('/book/:bookId/buy', function(req, res, next) {
         //TODO: JMC database connection
         if (userHelper.auth(req, res, app.locals.site)) {
-            if (req.body.amount) { //TODO check and perhpas fix this
+            if (!req.body.amount) req.body.amount = 1;
+            if (req.body) {
                 Book.findOne({ _id: req.params.bookId }, function(err, book) {
                     if (err) req.flash('error', '' + err);
                     if (book) {
@@ -193,7 +196,7 @@ module.exports = function(app, passport) {
                             res.redirect('/book/' + req.params.bookId);
                         } else {
                             req.flash('error', 'Book is not for sale.'); //todo fix? how does this work?    
-                            res.render('book/book', { site: app.locals.site, book: book, user: req.user, req: req });
+                            res.redirect('/book/' + req.params.bookId);
                         }
                     } else {
                         req.flash('error', 'Book not found.');
@@ -211,7 +214,7 @@ module.exports = function(app, passport) {
         req = userHelper.processUser(req);
 
         var book;
-        var bookUser = { username: null };
+        var bookUser = false;
         var relatedBooks = [];
 
         try {
@@ -232,7 +235,7 @@ module.exports = function(app, passport) {
             }
 
         } catch (e) {
-            logger.error(e)
+            logger.error(e);
             req.flash('error', "" + e);
             res.redirect('/explore');
         }
