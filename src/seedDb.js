@@ -1,1 +1,1 @@
-require('./db/seedDb');
+/*require('./db/seedDb');*/
