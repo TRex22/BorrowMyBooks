@@ -48,6 +48,7 @@ function processUser(req, logout) {
     if (logout) {
         req.session.user = resetUser();
         req.user = resetUser();
+        req.session.returnTo = "";
     }
 
     if (req.flash) {

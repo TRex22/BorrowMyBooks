@@ -15,7 +15,7 @@
               
           <ul class="list-group">
             <li class="list-group-item text-muted">Profile</li>
-            <li class="list-group-item center-align"><img src= <% if (user.picUrl) {%> <%= user.picUrl %> <%} else{%> <%= site.defaults.DefaultProfilePictureURL %> <%} %> /></li>
+            <li class="list-group-item center-align"><img src= <% if (user.picUrl) {%> <%= user.picUrl %> <%} else{%> <%= site.defaults.DefaultProfilePictureURL %> <%} %> width="100%" height="100%" /></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Username</strong></span> <%= user.username %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Name</strong></span> <%= user.name %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Email</strong></span> <%= user.email %></li>
@@ -71,35 +71,33 @@
                 </table>
               </div>
               
-             </div><!--/tab-pane-->
+              <ul class="list-group">
+                <li class="list-group-item text-muted">Activity</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Sold</strong></span> 125</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Bought</strong></span> 13</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Borrowed</strong></span> 37</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Rented Away</strong></span> 78</li>
+              </ul>
+
+              <ul class="list-group">
+                <li class="list-group-item text-muted">Interests</li>
+                <% if (user.interests.length > 0) {%>
+                  <% for(var i=0; i<user.interests.length; i++) {%>
+                    <li class="list-group-item"><span><strong><%=user.interests[i]%></strong></span></li>
+                  <% } %>
+                <%} else{%>
+                  <li class="list-group-item text-right"><span class="pull-left"><strong></strong></span>No Interests</li>
+                <%}%>
+              </ul>
+
+         </div>
           
-        </div><!--/tab-content-->
-      </div><!--/col-5-->
+        </div>
+      </div>
 
-      <div class="col-sm-3">
-        <ul class="list-group">
-          <li class="list-group-item text-muted">Activity</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong>Books Sold</strong></span> 125</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong>Books Bought</strong></span> 13</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong>Books Borrowed</strong></span> 37</li>
-          <li class="list-group-item text-right"><span class="pull-left"><strong>Books Rented Away</strong></span> 78</li>
-        </ul>
+    </div>
 
-        <ul class="list-group">
-          <li class="list-group-item text-muted">Interests</li>
-          <% if (user.interests.length > 0) {%>
-            <% for(var i=0; i<user.interests.length; i++) {%>
-              <li class="list-group-item"><span><strong><%=user.interests[i]%></strong></span></li>
-            <% } %>
-          <%} else{%>
-            <li class="list-group-item text-right"><span class="pull-left"><strong></strong></span>No Interests</li>
-          <%}%>
-        </ul> 
-      </div><!--/col-3-->
-
-    </div><!--/row-->
-  <!-- </div> --><!-- /container -->
-</div><!-- /site margin -->
+</div>
 
   <%- include('../partials/footer') %>
   </body>
