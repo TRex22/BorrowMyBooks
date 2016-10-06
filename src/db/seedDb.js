@@ -78,7 +78,7 @@ function system() {
     logger.warn("created user");
 }
 
-function go() {
+var go = function() {
     co(function*() {
         var adminId;
         var userId;
