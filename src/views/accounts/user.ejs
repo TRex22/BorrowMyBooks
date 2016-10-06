@@ -15,7 +15,7 @@
               
           <ul class="list-group">
             <li class="list-group-item text-muted">Profile</li>
-            <li class="list-group-item center-align"><img src= <% if (user.picURL) {%> <%= user.picURL %> <%} else{%> <%= site.defaults.DefaultProfilePictureURL %> <%} %> /></li>
+            <li class="list-group-item center-align"><img src= <% if (user.picUrl) {%> <%= user.picUrl %> <%} else{%> <%= site.defaults.DefaultProfilePictureURL %> <%} %> /></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Username</strong></span> <%= user.username %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Name</strong></span> <%= user.name %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Email</strong></span> <%= user.email %></li>

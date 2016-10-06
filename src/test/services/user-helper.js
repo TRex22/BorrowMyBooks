@@ -243,7 +243,7 @@ describe('#User Helper', function() {
     });
 
     it('should auth a user unsuccessfully', function() {
-        var req = {};
+        var req = {};        
         var res = {};
 
         //mock response redirect

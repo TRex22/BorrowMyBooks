@@ -34,7 +34,7 @@
                                    <%} %> </li>
                     <li>Language: <%= book.language %></li>
                     <li title="<%= book.publishDate %>">Published: <%= site.moment(book.publishDate).format('LLL'); %></li>
-                    <% if(bookUser && typeof bookUser !== 'undefined') {%><li>Uploaded by: <a href="/user/<%= bookUser._id %>"><%= bookUser.username %></a></li><% } %>                    
+                    <% if(bookUser && bookUser.username) {%><li>Uploaded by: <a href="/user/<%= bookUser._id %>"><%= bookUser.username %></a></li><% } %>                    
                 </ul>
 
                 <br>

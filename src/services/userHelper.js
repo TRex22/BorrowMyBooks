@@ -21,6 +21,11 @@ function initUser(req) {
         req.user.isLoggedIn = false;
     }
 
+    if (!req.route) {
+        req.params = null;
+        req.route = {};
+    }
+
     return req;
 }
 
@@ -94,25 +99,27 @@ function createNewUser(username, password, body) {
 
 /* istanbul ignore next */
 function getPath(req) {
-    var path = null
+    var path = "/"
 
-    if (req.params) {
-        if (req.route.path.indexOf("buy") > -1 || req.route.path.indexOf("rent") > -1 || req.route.path.indexOf("return") > -1) {
-            path = "/book/" + req.params.bookId;
-            return path;
-        }
-
-        if (req.route.path.indexOf("userId") > -1) {
-            path = "/user/" + req.params.userId;
-
-            if (req.route.path.indexOf("settings") > -1) {
-                path += "/settings";
+    if (req.route) {
+        if (req.params.length > 0) {
+            if (req.route.path.indexOf("buy") > -1 || req.route.path.indexOf("rent") > -1 || req.route.path.indexOf("return") > -1) {
+                path = "/book/" + req.params.bookId;
+                return path;
             }
 
-            return path;
+            if (req.route.path.indexOf("userId") > -1) {
+                path = "/user/" + req.params.userId;
+
+                if (req.route.path.indexOf("settings") > -1) {
+                    path += "/settings";
+                }
+
+                return path;
+            }
+        } else {
+            path = req.route.path;
         }
-    } else {
-        path = req.route.path;
     }
 
     return path;
@@ -138,7 +145,9 @@ function auth(req, res, site, admin, sysinfo) {
         }
     } else {
         if (!sysinfo) {
-            req.session.returnTo = getPath(req);
+            if (req.session) {
+                req.session.returnTo = getPath(req);
+            }
             res.redirect('/login');
         }
         return false;

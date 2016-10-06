@@ -33,7 +33,7 @@ describe('#Admin Route', function() {
         var seed = require('../../db/seedDb');
         this.timeout(3000);
     });
-    
+
     it('should respond to GET', function(done) {
         chai.request(app)
             .get('/book')
@@ -98,7 +98,8 @@ describe('#Admin Route', function() {
                         var cookie = res.headers['set-cookie'];
                         cookie.should.have.elements;
                         request(app)
-                            .post('/book/' + book._id + '/buy')
+                            .post('/book/' + book._id + '/buy?amount=1')
+                            .send({ amount: 1 })
                             .set('cookie', cookie)
                             .end(function(err, res) {
                                 res.should.have.status(302);
@@ -140,7 +141,8 @@ describe('#Admin Route', function() {
                         var cookie = res.headers['set-cookie'];
                         cookie.should.have.elements;
                         chai.request(app)
-                            .post('/book/' + book._id + '/rent')
+                            .post('/book/' + book._id + '/rent?amount=1')
+                            .send({ amount: 1 })
                             .set('cookie', cookie)
                             .end(function(err, res) {
                                 res.should.have.status(200);
@@ -182,7 +184,8 @@ describe('#Admin Route', function() {
                         var cookie = res.headers['set-cookie'];
                         cookie.should.have.elements;
                         chai.request(app)
-                            .post('/book/' + book._id + '/return')
+                            .post('/book/' + book._id + '/return?amount=1')
+                            .send({ amount: 1 })
                             .set('cookie', cookie)
                             .end(function(err, res) {
                                 res.should.have.status(200);
