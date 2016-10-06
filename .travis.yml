@@ -1,6 +1,7 @@
 sudo: false
 language: node_js
 before_install: cd src
+before_script: ./node seedDb.js
 node_js:
 - '6.4'
 - '6.2'
