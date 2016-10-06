@@ -21,6 +21,7 @@ var Book = mongoose.model('Book', book);
 var User = mongoose.model('User', require('../../models/user'));
 
 var clear = require('../../db/clearDb');
+var seed = require('../../db/seedDb');
 
 /*js to test*/
 
@@ -28,10 +29,12 @@ var clear = require('../../db/clearDb');
 chai.use(chaiHttp);
 
 describe('#Admin Route', function() {
-    beforeEach(function*() {
-        this.timeout(3000);
+    beforeEach(function() {
         clear.go();
-        var seed = require('../../db/seedDb');        
+
+        seed.go();
+        seed.system();
+        this.timeout(3000);
     });
 
     it('admin should respond to GET not logged in', function(done) {

@@ -46,7 +46,7 @@ co(function*(){
     var admin = yield userHelper.findUser("Admin");
     if(!admin){
         logger.warn("Emergency db Rebuild");
-        require('./db/seedDb');
+        require('./db/seedDb').system();
     }
 });
 

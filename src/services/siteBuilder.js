@@ -43,18 +43,21 @@ function updateSite(app) {
         if (err) throw err; //TODO: FIX
 
         /* istanbul ignore next */
-        if (defaults.DefaultTheme) {
-            app.locals.site.defaults = defaults._doc;
-        } else {
+        if (defaults) {
             /* istanbul ignore next */
-            app.locals.site.defaults = initSite();
-        }
+            if (defaults.DefaultTheme) {
+                app.locals.site.defaults = defaults._doc;
+            } else {
+                /* istanbul ignore next */
+                app.locals.site.defaults = initSite();
+            }
 
-        //make sure you cant break the site
-        /* istanbul ignore next */
-        if (!findTheme(app.locals.site.defaults.DefaultTheme)) {
+            //make sure you cant break the site
             /* istanbul ignore next */
-            app.locals.site.defaults.DefaultTheme = config.defaultTheme;
+            if (!findTheme(app.locals.site.defaults.DefaultTheme)) {
+                /* istanbul ignore next */
+                app.locals.site.defaults.DefaultTheme = config.defaultTheme;
+            }
         }
     });
 

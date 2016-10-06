@@ -181,6 +181,19 @@ function findUser(userIdent) {
     });
 }
 
+function findUsername(userIdent) {
+    return new Promise(function(resolve, reject) {
+        User.findOne({ username: userIdent }, function(err, user) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            resolve(user);
+        });
+    });
+}
+
 module.exports = {
     isAdmin: isAdmin,
     processUser: processUser,
@@ -190,5 +203,6 @@ module.exports = {
     createNewUser: createNewUser,
     getUser: getUser,
     findUser: findUser,
+    findUsername: findUsername,
     getPath: getPath
 }

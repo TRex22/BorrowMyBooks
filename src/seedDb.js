@@ -1,1 +1,2 @@
-/*require('./db/seedDb');*/
+/*var clearDb = require('./db/clearDb').go();*/
+var seed = require('./db/seedDb');

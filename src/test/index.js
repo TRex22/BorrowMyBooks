@@ -6,14 +6,17 @@ var should = require('chai').should();
 var app = require('../app');
 var www = require('../bin/www-test');
 
+var seed = require('../db/seedDb');
+
 /*js to test*/
 
 //make sure things startup
 describe('#Server Startup', function() {
-    beforeEach(function*() {
+    beforeEach(function() {
         www.listen(config.port + 1); //use a different port
-        require('../db/seedDb');
-        var sd = yield seed.go();
+        seed.go();
+        seed.system();
+        done();
     });
 
     afterEach(function() {
