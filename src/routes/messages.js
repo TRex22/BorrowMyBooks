@@ -8,7 +8,7 @@ var mongoose = require('../config/db.js').mongoose;
 var user = mongoose.model('User', require('../models/user'));
 
 module.exports = function(app, passport) {
-	    app.get('/profile/messages',
+    app.get('/profile/messages',
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site)) {
                 req.user.isMain = true;
@@ -17,4 +17,24 @@ module.exports = function(app, passport) {
             }
         }
     );
+
+    app.post('/user/:userId/message'function(req, res, next) {
+        if (userHelper.auth(req, res, app.locals.site)) {
+            req.user.isMain = true;
+            req = userHelper.processUser(req);
+
+
+
+        }
+    });
+
+    app.post('/messages/admin'function(req, res, next) {
+        if (userHelper.auth(req, res, app.locals.site)) {
+            req.user.isMain = true;
+            req = userHelper.processUser(req);
+
+
+
+        }
+    });
 }
