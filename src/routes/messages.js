@@ -21,8 +21,6 @@ module.exports = function(app, passport) {
                 messages.userMessages = yield messageHelper.getUserMessages(req.user._id, req.user.isAdmin);
 
                 if (!messages) messages = {};
-                if (!messages.systemMessages) messages.systemMessages = [];
-                if (!messages.UserMessage) messages.userMessages = [];
 
                 res.render('messages/user-messages', { site: app.locals.site, user: req.user, messages: messages, req: req });
             }

@@ -5,7 +5,7 @@ var SystemMessage = mongoose.model('SystemMessage', require('../models/systemMes
 
 var util = require('util');
 
-function getSystemMessages(userId, isAdmin) {
+function getSystemMessages() {
     return new Promise(function(resolve, reject) {
         SystemMessage.find({}, function(err, systemMessages) {
             /* istanbul ignore next */
@@ -13,33 +13,17 @@ function getSystemMessages(userId, isAdmin) {
                 return reject(err);
             }
 
-            if (!systemMessages) {
-                systemMessages = {}
-            }
-
             resolve(systemMessages);
         });
     });
 }
 
-function getUserMessages(userId, isAdmin) {
+function getUserMessages(userId) {
     return new Promise(function(resolve, reject) {
-        var searchQuery = [{}];
-        if (isAdmin) {
-            searchQuery = [{ ToUserId: userId }, { ToUserId: userId }, { AdminId: userId }];
-        } else {
-            searchQuery = [{ ToUserId: userId }, { ToUserId: userId }];
-        }
-
-
-        UserMessage.findOne({ $or: searchQuery }, function(err, userMessages) {
+        UserMessage.find({ $or: [{ fromUserId: userId }, { toUserId: userId }, { adminId: userId }] }, function(err, userMessages) {
             /* istanbul ignore next */
             if (err) {
                 return reject(err);
-            }
-
-            if (!userMessages) {
-                userMessages = {}
             }
 
             resolve(userMessages);
