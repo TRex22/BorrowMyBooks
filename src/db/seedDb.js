@@ -291,8 +291,8 @@ var go = function() {
             var bookId = yield bookHelper.findBook(iBook.title);
 
             var iTransaction = new transaction({
-                fromUserId: userId,
-                toUserId: adminId,
+                fromUserId: user._id,
+                toUserId: admin._id,
                 bookId: bookId._id,
                 amount: 1,
                 cost: 500,
@@ -308,8 +308,8 @@ var go = function() {
             logger.warn("created transaction");
 
             iTransaction = new transaction({
-                fromUserId: userId,
-                toUserId: adminId,
+                fromUserId: user._id,
+                toUserId: admin._id,
                 bookId: bookId._id,
                 amount: 1,
                 cost: 500,
@@ -328,7 +328,7 @@ var go = function() {
                 message: "This is a test system message .... should also be in a toastr",
                 date: new Date(),
                 priority: 5,                
-                adminId: adminId
+                adminId: admin._id
             });
             iSystemMessage.save();
 
@@ -337,9 +337,9 @@ var go = function() {
                 date: new Date(),
                 priority: 3,
                 adminId: null,
-                fromUserId: userId,
-                toUserId: adminId,
-                bookId: bookId,
+                fromUserId: user._id,
+                toUserId: admin._id,
+                bookId: bookId._id,
                 transactionId: null
             });
             iUserMessage.save();

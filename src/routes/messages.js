@@ -16,7 +16,10 @@ module.exports = function(app, passport) {
                 var messages = {};
                 req.user.isMain = true;
                 req = userHelper.processUser(req);
-                messages = messageHelper.getMessages(req.user._id, req.user.isAdmin);
+
+                messages.systemMessages = yield messageHelper.getSystemMessages(req.user._id, req.user.isAdmin);
+                messages.userMessages = yield messageHelper.getUserMessages(req.user._id, req.user.isAdmin);
+
                 if (!messages) messages = {};
                 if (!messages.systemMessages) messages.systemMessages = [];
                 if (!messages.UserMessage) messages.userMessages = [];

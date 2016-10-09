@@ -4,22 +4,6 @@ var UserMessage = mongoose.model('UserMessage', require('../models/userMessage')
 var SystemMessage = mongoose.model('SystemMessage', require('../models/systemMessage'));
 
 var util = require('util');
-var wrap = require('co-express');
-var co = require('co');
-
-function getMessages() {
-    var messages = {};
-    messages.systemMessages = [];
-    messages.userMessages = [];
-
-    co(function*(userId, isAdmin) {
-        var systemMessages = yield getSystemMessages(userId, isAdmin);
-        var userMessages = yield getUserMessages(userId, isAdmin);
-
-        return messages;
-    });
-    /*return {};*/
-}
 
 function getSystemMessages(userId, isAdmin) {
     return new Promise(function(resolve, reject) {
@@ -39,14 +23,15 @@ function getSystemMessages(userId, isAdmin) {
 }
 
 function getUserMessages(userId, isAdmin) {
-    var searchQuery = [{}];
-    if (isAdmin) {
-        searchQuery = [{ ToUserId: userId }, { ToUserId: userId }, { AdminId: userId }];
-    } else {
-        searchQuery = [{ ToUserId: userId }, { ToUserId: userId }];
-    }
-
     return new Promise(function(resolve, reject) {
+        var searchQuery = [{}];
+        if (isAdmin) {
+            searchQuery = [{ ToUserId: userId }, { ToUserId: userId }, { AdminId: userId }];
+        } else {
+            searchQuery = [{ ToUserId: userId }, { ToUserId: userId }];
+        }
+
+
         UserMessage.findOne({ $or: searchQuery }, function(err, userMessages) {
             /* istanbul ignore next */
             if (err) {
@@ -93,7 +78,6 @@ function processMessages(req) {
 
 module.exports = {
     processMessages: processMessages,
-    getMessages: getMessages,
     getSystemMessages: getSystemMessages,
     getUserMessages: getUserMessages
 };
