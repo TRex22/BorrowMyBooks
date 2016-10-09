@@ -32,18 +32,43 @@ module.exports = function(app, passport) {
             req.user.isMain = true;
             req = userHelper.processUser(req);
 
+            var iUserMessage = new userMessage({
+                message: req.body.message,
+                date: req.body.date,
+                priority: req.body.priority,
+                adminId: req.body.adminId,
+                fromUserId: req.body.fromUserId,
+                toUserId: req.body.toUserId,
+                bookId: req.body.bookId,
+                transactionId: req.body.transactionId
+            });
+            iUserMessage.save();
 
+            logger.warn("created user message");
 
+            req.flash('success', "created message to user , " + req.body.toUserId);
+            res.redirect(req.session.returnTo || '/');
         }
     });
 
-    app.post('/messages/admin', function(req, res, next) {
+    app.post('/messages/systemMessage', function(req, res, next) {
         if (userHelper.auth(req, res, app.locals.site)) {
             req.user.isMain = true;
             req = userHelper.processUser(req);
 
 
+            var iSystemMessage = new systemMessage({
+                message: req.body.message,
+                date: req.body.date,
+                priority: req.body.priority,
+                adminId: req.body.adminId
+            });
+            iSystemMessage.save();
 
+            logger.warn("created system message");
+
+            req.flash('success', "created system message");
+            res.redirect(req.session.returnTo || '/');
         }
     });
 }
