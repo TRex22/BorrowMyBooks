@@ -1,3 +1,68 @@
+var mongoose = require('../config/db.js').mongoose;
+var User = mongoose.model('User', require('../models/user'));
+var UserMessage = mongoose.model('UserMessage', require('../models/userMessage'));
+var SystemMessage = mongoose.model('SystemMessage', require('../models/systemMessage'));
+
+var util = require('util');
+var wrap = require('co-express');
+var co = require('co');
+
+function getMessages() {
+    var messages = {};
+    messages.systemMessages = [];
+    messages.userMessages = [];
+
+    co(function*(userId, isAdmin) {
+        var systemMessages = yield getSystemMessages(userId, isAdmin);
+        var userMessages = yield getUserMessages(userId, isAdmin);
+
+        return messages;
+    });
+    /*return {};*/
+}
+
+function getSystemMessages(userId, isAdmin) {
+    return new Promise(function(resolve, reject) {
+        SystemMessage.find({}, function(err, systemMessages) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            if (!systemMessages) {
+                systemMessages = {}
+            }
+
+            resolve(systemMessages);
+        });
+    });
+}
+
+function getUserMessages(userId, isAdmin) {
+    var searchQuery = [{}];
+    if (isAdmin) {
+        searchQuery = [{ ToUserId: userId }, { ToUserId: userId }, { AdminId: userId }];
+    } else {
+        searchQuery = [{ ToUserId: userId }, { ToUserId: userId }];
+    }
+
+    return new Promise(function(resolve, reject) {
+        UserMessage.findOne({ $or: searchQuery }, function(err, userMessages) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            if (!userMessages) {
+                userMessages = {}
+            }
+
+            resolve(userMessages);
+        });
+    });
+}
+
+
 function processMessages(req) {
     //sucess
     var success = req.flash('success');
@@ -27,5 +92,8 @@ function processMessages(req) {
 }
 
 module.exports = {
-    processMessages: processMessages
+    processMessages: processMessages,
+    getMessages: getMessages,
+    getSystemMessages: getSystemMessages,
+    getUserMessages: getUserMessages
 };

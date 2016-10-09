@@ -22,6 +22,20 @@ function getBook(bookId) {
     });
 }
 
+function findBook(bookIdent) {
+    return new Promise(function(resolve, reject) {
+        Book.findOne({ $or: [{ title: bookIdent }, { summary: bookIdent }] }, function(err, book) {
+            /* istanbul ignore next */
+            if (err) {
+                logger.error(err);
+                return reject(err);
+            }
+
+            resolve(book);
+        });
+    });
+}
+
 var getRelatedBooks = wrap(function*(bookId) {
     //using interests and then price
     var book = yield getBook(bookId);
@@ -84,5 +98,6 @@ function getAmazonBookCover(ISBN) {
 module.exports = {
     getAmazonBookCover: getAmazonBookCover,
     getBook: getBook,
-    getRelatedBooks: getRelatedBooks
+    getRelatedBooks: getRelatedBooks,
+    findBook: findBook
 }

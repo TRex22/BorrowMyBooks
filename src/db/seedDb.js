@@ -287,11 +287,49 @@ var go = function() {
             iBook.bookId = iBook.generateUUID();
             iBook.save();
             logger.warn("created book");
+
+            var bookId = yield bookHelper.findBook(iBook.title);
+
+            var iTransaction = new transaction({
+                "fromUserId": userId,
+                "toUserId": adminId,
+                "bookId": bookId._id,
+                "amount": 1,
+                "cost": 500,
+                "isPurchase": true,
+                "isRent": false,
+                "hasBeenReturned": false,
+                "returnDate": null,
+                "hasBeenRevoked": false,
+                "Date": new Date(),
+                "AdminId": null,
+                "__v": 0
+            });
+            iTransaction.save();
+            logger.warn("created transaction");
+
+            iTransaction = new transaction({
+                "fromUserId": userId,
+                "toUserId": adminId,
+                "bookId": bookId._id,
+                "amount": 1,
+                "cost": 500,
+                "isPurchase": false,
+                "isRent": true,
+                "hasBeenReturned": false,
+                "returnDate": null,
+                "hasBeenRevoked": false,
+                "Date": new Date(),
+                "AdminId": null
+            });
+            iTransaction.save();
+            logger.warn("created transaction");
         } catch (e) {
             console.log("error in the engine room.");
             console.log(e);
             throw e;
         }
+
 
         /*    var iInterest = new interest({
                 InterestId: String,
