@@ -2,14 +2,14 @@ var mongoose = require('../config/db.js').mongoose;
 var uuid = require('uuid');
 
 var userMessageSchema = mongoose.Schema({
-    	Message: String,
-    	Priority: Number,
-    	Date: Date,
-    	AdminId: String,
-    	FromUserId: String,
-    	ToUserId: String,
-    	BookId: String,
-    	TransactionId: String
+    	message: String,
+    	priority: Number,
+    	date: Date,
+    	adminId: String,
+    	fromUserId: String,
+    	toUserId: String,
+    	bookId: String,
+    	transactionId: String
 }, { strict: false, collection: 'UserMessage' });
 
 

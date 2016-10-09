@@ -291,67 +291,64 @@ var go = function() {
             var bookId = yield bookHelper.findBook(iBook.title);
 
             var iTransaction = new transaction({
-                "fromUserId": userId,
-                "toUserId": adminId,
-                "bookId": bookId._id,
-                "amount": 1,
-                "cost": 500,
-                "isPurchase": true,
-                "isRent": false,
-                "hasBeenReturned": false,
-                "returnDate": null,
-                "hasBeenRevoked": false,
-                "Date": new Date(),
-                "AdminId": null,
-                "__v": 0
+                fromUserId: userId,
+                toUserId: adminId,
+                bookId: bookId._id,
+                amount: 1,
+                cost: 500,
+                isPurchase: true,
+                isRent: false,
+                hasBeenReturned: false,
+                returnDate: null,
+                hasBeenRevoked: false,
+                Date: new Date(),
+                AdminId: null
             });
             iTransaction.save();
             logger.warn("created transaction");
 
             iTransaction = new transaction({
-                "fromUserId": userId,
-                "toUserId": adminId,
-                "bookId": bookId._id,
-                "amount": 1,
-                "cost": 500,
-                "isPurchase": false,
-                "isRent": true,
-                "hasBeenReturned": false,
-                "returnDate": null,
-                "hasBeenRevoked": false,
-                "Date": new Date(),
-                "AdminId": null
+                fromUserId: userId,
+                toUserId: adminId,
+                bookId: bookId._id,
+                amount: 1,
+                cost: 500,
+                isPurchase: false,
+                isRent: true,
+                hasBeenReturned: false,
+                returnDate: null,
+                hasBeenRevoked: false,
+                Date: new Date(),
+                AdminId: null
             });
             iTransaction.save();
             logger.warn("created transaction");
+
+            var iSystemMessage = new systemMessage({
+                message: "This is a test system message .... should also be in a toastr",
+                date: new Date(),
+                priority: 5,                
+                adminId: adminId
+            });
+            iSystemMessage.save();
+
+            var iUserMessage = new userMessage({
+                message: "Hello Mate!!! Cool book dude",                
+                date: new Date(),
+                priority: 3,
+                adminId: null,
+                fromUserId: userId,
+                toUserId: adminId,
+                bookId: bookId,
+                transactionId: null
+            });
+            iUserMessage.save();
+
         } catch (e) {
             console.log("error in the engine room.");
             console.log(e);
             throw e;
         }
-
-
-        /*    var iInterest = new interest({
-                InterestId: String,
-                InterestName: String,
-                InterestDescription: String
-            });
-            var iInterest.save();*/
-
-        /*var iTransaction = new transaction({
-
-        });
-        iTransaction.save();*/
-
-        /*var iSystemMessage = new systemMessage({
-
-        });
-        iSystemMessage.save();*/
-
-        /*var iUserMessage = new userMessage({
-
-        });
-        iUserMessage.save();*/
 
         /*    var iUserRole = new userRole({
                 RoleId: String,

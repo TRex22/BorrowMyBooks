@@ -2,10 +2,10 @@ var mongoose = require('../config/db.js').mongoose;
 var uuid = require('uuid');
 
 var systemMessageSchema = mongoose.Schema({
-        Message: String,
-        Priority: Number,
-        Date: Date,
-        AdminId: String
+        message: String,
+        priority: Number,
+        date: Date,
+        adminId: String
 }, { strict: false, collection: 'SystemMessage' });
 
 systemMessageSchema.methods.generateUUID = function(){

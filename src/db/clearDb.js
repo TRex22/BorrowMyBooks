@@ -22,6 +22,7 @@ function go() {
     dbHelper.dropCollection("SystemDefaults");
     dbHelper.dropCollection("Transaction");
     dbHelper.dropCollection("UserMessage");
+    dbHelper.dropCollection("SystemMessage");
     dbHelper.dropCollection("UserRating");
     dbHelper.dropCollection("UserRole");
 }
