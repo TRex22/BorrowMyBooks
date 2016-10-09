@@ -127,7 +127,7 @@ describe('#Admin Route', function() {
                                 .end(function(err, res) {
                                     User.findOne({ _id: user._id }, function(err, tuser) {
                                         res.should.have.status(200);
-                                        tuser.name.should.be.equal("Test");
+                                        tuser.name.should.be.equal("Administrator");
                                         done();
                                     });
                                 });

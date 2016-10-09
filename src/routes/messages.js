@@ -18,7 +18,7 @@ module.exports = function(app, passport) {
         }
     );
 
-    app.post('/user/:userId/message'function(req, res, next) {
+    app.post('/user/:userId/message', function(req, res, next) {
         if (userHelper.auth(req, res, app.locals.site)) {
             req.user.isMain = true;
             req = userHelper.processUser(req);
@@ -28,7 +28,7 @@ module.exports = function(app, passport) {
         }
     });
 
-    app.post('/messages/admin'function(req, res, next) {
+    app.post('/messages/admin', function(req, res, next) {
         if (userHelper.auth(req, res, app.locals.site)) {
             req.user.isMain = true;
             req = userHelper.processUser(req);
