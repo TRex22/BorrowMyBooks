@@ -12,6 +12,10 @@ var wrap = require('co-express');
 
 var mongoose = require('../config/db.js').mongoose;
 var sysDefault = mongoose.model('SystemDefaults', require('../models/systemDefaults'));
+var userHelper = require('../services/userHelper');
+var messageHelper = require('../services/messageHelper');
+var userMessage = mongoose.model('UserMessage', require('../models/userMessage'));
+var systemMessage = mongoose.model('SystemMessage', require('../models/systemMessage'));
 
 module.exports = function(app, passport) {
     app.get('/admin',
@@ -101,4 +105,35 @@ module.exports = function(app, passport) {
             }
         }
     );
+
+    app.get('/admin/system-message',
+        function(req, res, next) {
+            if (userHelper.auth(req, res, app.locals.site, true)) {
+                req = userHelper.processUser(req);
+                res.render('admin/system-message', { site: app.locals.site, user: req.user, req: req });
+            }
+        }
+    );
+
+
+    app.post('/admin/system-message', function(req, res, next) {
+        if (userHelper.auth(req, res, app.locals.site)) {
+            req.user.isMain = true;
+            req = userHelper.processUser(req);
+
+
+            var iSystemMessage = new systemMessage({
+                message: req.body.message,
+                date: new Date(),
+                priority: req.body.priority,
+                adminId: req.user._id
+            });
+            iSystemMessage.save();
+
+            logger.warn("created system message");
+
+            req.flash('success', "created system message");
+            res.redirect(req.session.returnTo || '/');
+        }
+    });
 };
