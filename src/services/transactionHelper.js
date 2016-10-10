@@ -17,23 +17,23 @@ function getTransactions(userId) {
             }
 
             for (var i = 0; i < transactions.length; i++) {
-            	var book;
+                var book;
                 var toUser;
                 var fromUser;
 
-            	try{
-            		book = yield bookHelper.getBook(transactions[i].bookId);
+                try {
+                    book = yield bookHelper.getBook(transactions[i].bookId);
                     toUser = yield userHelper.getUser(transactions[i].toUserId);
                     fromUser = yield userHelper.getUser(transactions[i].fromUserId);
-            		
-            		transactions[i].book = book;
+
+                    transactions[i].book = book;
                     //todo JMC fix this confusing mess
                     transactions[i].toUser = fromUser;
-                    transactions[i].fromUser = toUser;      		
-            	} catch(e) {
+                    transactions[i].fromUser = toUser;
+                } catch (e) {
                     logger.error(e);
-            		reject(e);
-            	}                
+                    reject(e);
+                }
             }
 
             resolve(transactions);
@@ -41,6 +41,20 @@ function getTransactions(userId) {
     });
 }
 
+function getTransaction(transactionId) {
+    return new Promise(function(resolve, reject) {
+        Transaction.findOne({ _id: transaction }, function(err, transaction) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            resolve(transaction);
+        });
+    });
+}
+
 module.exports = {
-    getTransactions: getTransactions
+    getTransactions: getTransactions,
+    getTransaction: getTransaction
 }

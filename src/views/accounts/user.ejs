@@ -90,6 +90,14 @@
                 <%}%>
               </ul>
 
+              <% if(!user.isMain) { %>
+                <% if(user.username !== userInfo) { %>
+                  <div>
+                    <a href="/user/<%= userInfo._id %>/message" class="btn btn-primary" style="color: grey;"> Message User</a>
+                  </div>
+                <% } %>
+              <% } %>
+
          </div>
           
         </div>

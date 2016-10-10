@@ -55,8 +55,12 @@
 
                       <% if(!toTransactions[i].AdminId) { %>
                         false
-                      <% } %>                     
+                      <% } %>
+                   
                     </li>
+                    <div>
+                      <a href="/transaction/<%= toTransactions[i]._id %>/message" class="btn btn-primary" style="color: grey;"> Message Owner</a>
+                    </div>  
                 </ul>
               </div>
             </div>
@@ -120,6 +124,10 @@
                         false
                       <% } %>                     
                     </li>
+
+                    <div>
+                      <a href="/transaction/<%= toTransactions[i]._id %>/message" class="btn btn-primary" style="color: grey;"> Message Customer</a>
+                    </div>  
                 </ul>
               </div>
             </div>

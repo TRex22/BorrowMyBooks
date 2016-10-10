@@ -105,7 +105,12 @@ function getPath(req) {
     if (req.route) {
         if (req.params.length > 0) {
             if (req.route.path.indexOf("buy") > -1 || req.route.path.indexOf("rent") > -1 || req.route.path.indexOf("return") > -1) {
-                path = "/book/" + req.params.bookId;
+                path = "/transaction/mine/";
+                return path;
+            }
+
+            if (req.route.path.indexOf(":transactionId") > -1 || req.route.path.indexOf(":userId") > -1) {
+                path = "/"
                 return path;
             }
 

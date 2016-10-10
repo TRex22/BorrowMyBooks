@@ -105,35 +105,4 @@ module.exports = function(app, passport) {
             }
         }
     );
-
-    app.get('/admin/system-message',
-        function(req, res, next) {
-            if (userHelper.auth(req, res, app.locals.site, true)) {
-                req = userHelper.processUser(req);
-                res.render('admin/system-message', { site: app.locals.site, user: req.user, req: req });
-            }
-        }
-    );
-
-
-    app.post('/admin/system-message', function(req, res, next) {
-        if (userHelper.auth(req, res, app.locals.site)) {
-            req.user.isMain = true;
-            req = userHelper.processUser(req);
-
-
-            var iSystemMessage = new systemMessage({
-                message: req.body.message,
-                date: new Date(),
-                priority: req.body.priority,
-                adminId: req.user._id
-            });
-            iSystemMessage.save();
-
-            logger.warn("created system message");
-
-            req.flash('success', "created system message");
-            res.redirect(req.session.returnTo || '/');
-        }
-    });
 };

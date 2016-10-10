@@ -102,7 +102,7 @@ var go = function() {
                 edition: "1",
                 loanPrice: 500,
                 sellPrice: 600,
-                isForLoan: false,
+                isForLoan: true,
                 isForSale: true,
                 isSold: false,
                 isOnLoan: false,
@@ -291,8 +291,8 @@ var go = function() {
             var bookId = yield bookHelper.findBook(iBook.title);
 
             var iTransaction = new transaction({
-                fromUserId: user._id,
-                toUserId: admin._id,
+                fromUserId: admin._id,
+                toUserId: user._id,
                 bookId: bookId._id,
                 amount: 1,
                 cost: 500,
