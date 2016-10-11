@@ -24,7 +24,7 @@ module.exports = function(app, passport) {
 
                 if (!messages) messages = {};
 
-                res.render('messages/user-messages', { site: app.locals.site, user: req.user, messages: messages, req: req });
+                res.render('messages/messages', { site: app.locals.site, user: req.user, messages: messages, req: req });
             }
         })
     );
