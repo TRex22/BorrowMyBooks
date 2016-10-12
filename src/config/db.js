@@ -12,7 +12,7 @@ var options = {
 }
 
 var mongoose = require('mongoose');
-
+mongoose.Promise = global.Promise;
 try {
     if (process.env.NODE_ENV === 'test') {
         logger.info("test db");

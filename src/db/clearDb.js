@@ -15,10 +15,16 @@ var userRating = require('../models/userRating');
 
 var dbHelper = require('../services/dbHelper.js');
 
-function go(db) {
+function go() {
+    dbHelper.dropCollection("SchoolDomain");
     dbHelper.dropCollection("User");
     dbHelper.dropCollection("Book");
     dbHelper.dropCollection("SystemDefaults");
+    dbHelper.dropCollection("Transaction");
+    dbHelper.dropCollection("UserMessage");
+    dbHelper.dropCollection("SystemMessage");
+    dbHelper.dropCollection("UserRating");
+    dbHelper.dropCollection("UserRole");
 }
 
 module.exports = { go: go };

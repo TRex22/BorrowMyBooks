@@ -29,19 +29,26 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var flash = require('req-flash');
+var toastr = require('express-toastr');
 
 var pkg = require('./package.json');
 var config = require('./config.json');
 var siteBuilder = require('./services/siteBuilder');
+var userHelper = require('./services/userHelper');
+var co = require('co');
 
 var app = express();
 
-logger.info("passport setup...");
-var passport = require('passport');
-require('./config/passport')(app, passport);
-
 logger.info("Overriding 'Express' logger");
 app.use(require('morgan')("combined", { "stream": logger.stream }));
+
+co(function*(){
+    var admin = yield userHelper.findUser("Admin");
+    if(!admin){
+        logger.warn("Emergency db Rebuild");
+        require('./db/seedDb');
+    }
+});
 
 // view engine setup
 app.set('views', path.join(directory, 'views'));
@@ -52,6 +59,7 @@ app.use(function(req, res, next) {
     logger.info('Connected IP:', ip);
     next();
 });
+
 /* istanbul ignore next */
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(directory, 'public')));
@@ -76,11 +84,31 @@ app.use(session({
     saveUninitialized: true,
     resave: true
 }));
-app.use(flash()); //JMC: TODO add mesages
+
+app.use(flash());
+
+// Load express-toastr
+// You can pass an object of default options to toastr(), see example/index.coffee
+app.use(toastr({
+    closeButton: true,
+    newestOnTop: true
+}));
+
+
+app.use(function(req, res, next) {
+    req.toastr.clear(); //fix for undefined error in ejs
+    res.locals.toasts = req.toastr.render();
+    next();
+});
+
+logger.info("passport setup...");
+var passport = require('passport');
+require('./config/passport')(app, passport);
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-/*app.use(require('connect-livereload')());*/
+app.use(require('connect-livereload')());
 
 logger.info("Build Site Object");
 app.locals.site = siteBuilder.initSite();
@@ -96,6 +124,8 @@ require('./routes/admin.js')(app, passport);
 require('./routes/explore.js')(app, passport);
 require('./routes/book.js')(app, passport);
 require('./routes/accounts.js')(app, passport);
+require('./routes/transaction.js')(app, passport);
+require('./routes/messages.js')(app, passport);
 require('./routes/errors.js')(app);
 
 module.exports = app;

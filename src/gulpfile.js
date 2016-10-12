@@ -43,8 +43,12 @@ gulp.task('pre-cover', function() {
 });
 
 gulp.task('cover', ['pre-cover'], function() {
-    return gulp.src(['test/*.js'])
-        .pipe(mocha())
+    return gulp.src(['test/**/*.js'])
+        .pipe(mocha({
+            recursive: true,
+            reporter: 'spec',
+            ui: 'bdd'
+        }))
         // Creating the reports after tests ran
         .pipe(istanbul.writeReports())
         // Enforce a coverage of at least 70%

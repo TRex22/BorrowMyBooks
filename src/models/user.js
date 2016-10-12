@@ -19,6 +19,45 @@ var userSchema = mongoose.Schema({
         registrationDate: Date
 }, { strict: false, collection: 'User' });
 
+
+//Validated schema. Commented out because dont know how to pass to front-end.
+/*var userSchema = mongoose.Schema({
+        username: {
+            type: String,
+            required: true
+        },
+        userId: String,
+        email: {
+            type: String,
+            required: true,
+            lowercase: true
+        },
+        salt: String,
+        hash: String,
+        name: {
+            type: String,
+            required: true
+        },
+        address: {
+            type: String,
+            required: true
+        },
+        phone: {
+            type: String,
+            validate: {
+                validator: function(v) {
+                    return /^[0-9]{10}$/.test(v);
+                },
+                message: '{VALUE} is not a valid phone number!'
+            }
+        },
+        interests: [String],
+        picUrl: String,
+        userRole: [String],
+        lastLoginDate: Date,
+        registrationDate: Date
+}, { strict: false, collection: 'User' });*/
+
 userSchema.methods.generateSalt = function() {
     return bcrypt.genSaltSync(config.security.saltLength);
 };

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <%- include('../partials/header') %>
+  <body>   
+   <%- include('../partials/navbar') %>
+
+  	<div class="site-margin">
+      <h1>Your Transactions</h1>
+    </div>
+
+    <div class="transactions site-margin">
+
+    <h2>Books you have rented / bought</h2>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    
+    <% if(toTransactions.length > 0) { %>
+      <% for(var i=0; i<toTransactions.length; i++) { %>
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-<%= toTransactions[i]._id %>">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= toTransactions[i]._id %>" aria-expanded="false" aria-controls="<%= toTransactions[i]._id %>">
+                  Transaction #<%= i+1 %>
+                </a>
+              </h4>
+            </div>
+            <div id="<%= toTransactions[i]._id %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-<%= toTransactions[i]._id %>">
+              <div class="panel-body">
+                <h3>Transaction Details</h3>
+                <ul>
+                    <li>Book Title: <a href="/book/<%= toTransactions[i].bookId %>"><%= toTransactions[i].book.title %></a></li>
+                    <li>Transaction Type: 
+                      <% if(toTransactions[i].isPurchase) { %>
+                        Purchase
+                      <% } %>
+
+                      <% if(toTransactions[i].isRent) { %>
+                        Rental
+                      <% } %>
+                    </li>
+
+                    <% if(toTransactions[i].isRent) { %>
+                        <li>Returned?: <%= toTransactions[i].hasBeenReturned %></li>
+                        <% if(toTransactions[i].isRent) { %>
+                          <li title="<%= toTransactions[i].Date %>">Return date: <%= site.moment(toTransactions[i].Date).format('LLL'); %></li>
+                        <% } %>
+                    <% } %>
+                    <li>Owner of Book: <a href="/user/<%= toTransactions[i].toUser._id %>"><%= toTransactions[i].toUser.username %></a></li>
+                    <li>Amount of books: <%= toTransactions[i].amount %></li>
+                    <li>Cost of transaction: <%= toTransactions[i].cost %></li>
+                    <li>Admin invertvention?: 
+                      <% if(toTransactions[i].AdminId) { %>
+                        true
+                        <li>Has transaction been revoked?: <%= toTransactions[i].hasBeenRevoked %></li>
+                      <% } %>  
+
+                      <% if(!toTransactions[i].AdminId) { %>
+                        false
+                      <% } %>
+                   
+                    </li>
+                    <div>
+                      <a href="/transaction/<%= toTransactions[i]._id %>/message" class="btn btn-primary" style="color: grey;"> Message Owner</a>
+                    </div>  
+                </ul>
+              </div>
+            </div>
+          </div>
+      <% } %>
+    <% } %>
+
+    <% if(toTransactions.length === 0) { %>
+      <p class="text-muted">You have not yet purchased or rented any books.</p>
+    <% } %>
+
+    </div>
+
+    <br/>
+
+    <h2>Books you have put on the market</h2>
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    
+    <% if(fromTransactions.length > 0) { %>
+      <% for(var i=0; i<fromTransactions.length; i++) { %>
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-<%= fromTransactions[i]._id %>">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= fromTransactions[i]._id %>" aria-expanded="false" aria-controls="<%= fromTransactions[i]._id %>">
+                  Transaction #<%= i+1 %>
+                </a>
+              </h4>
+            </div>
+            <div id="<%= fromTransactions[i]._id %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-<%= fromTransactions[i]._id %>">
+              <div class="panel-body">
+                <h3>Transaction Details</h3>
+                <ul>
+                    <li>Book Title: <a href="/book/<%= fromTransactions[i].bookId %>"><%= fromTransactions[i].book.title %></a></li>
+                    <li>Transaction Type: 
+                      <% if(fromTransactions[i].isPurchase) { %>
+                        Purchase
+                      <% } %>
+
+                      <% if(fromTransactions[i].isRent) { %>
+                        Rental
+                      <% } %>
+                    </li>
+
+                    <% if(fromTransactions[i].isRent) { %>
+                        <li>Returned?: <%= fromTransactions[i].hasBeenReturned %></li>
+                        <% if(fromTransactions[i].isRent) { %>
+                          <li title="<%= fromTransactions[i].Date %>">Return date: <%= site.moment(fromTransactions[i].Date).format('LLL'); %></li>
+                        <% } %>
+                    <% } %>
+                    <li>Customer: <a href="/user/<%= fromTransactions[i].fromUser._id %>"><%= fromTransactions[i].fromUser.username %></a></li>
+                    <li>Amount of books: <%= fromTransactions[i].amount %></li>
+                    <li>Cost of transaction: <%= fromTransactions[i].cost %></li>
+                    <li>Admin invertvention?: 
+                      <% if(fromTransactions[i].AdminId) { %>
+                        true
+                        <li>Has transaction been revoked?: <%= fromTransactions[i].hasBeenRevoked %></li>
+                      <% } %>  
+
+                      <% if(!fromTransactions[i].AdminId) { %>
+                        false
+                      <% } %>                     
+                    </li>
+
+                    <div>
+                      <a href="/transaction/<%= toTransactions[i]._id %>/message" class="btn btn-primary" style="color: grey;"> Message Customer</a>
+                    </div>  
+                </ul>
+              </div>
+            </div>
+          </div>
+      <% } %>
+    <% } %>
+
+    <% if(fromTransactions.length === 0) { %>
+      <p class="text-muted">None of your books have been rented or bought.</p>
+    <% } %>
+
+    </div>
+
+    </div>
+
+  <%- include('../partials/footer') %>
+  </body>
+</html>

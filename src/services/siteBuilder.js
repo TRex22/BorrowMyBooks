@@ -12,6 +12,7 @@ var pkg = require('../package.json');
 var config = require('../config.json');
 
 var moment = require('moment');
+var validator = require('validator');
 
 function initSite() {
     var site = {};
@@ -29,6 +30,8 @@ function initSite() {
     site.themes = config.themes;
 
     site.moment = moment;
+    site.validator = validator;
+    site.util = util;
     return site;
 }
 
@@ -40,18 +43,21 @@ function updateSite(app) {
         if (err) throw err; //TODO: FIX
 
         /* istanbul ignore next */
-        if (defaults.DefaultTheme) {
-            app.locals.site.defaults = defaults._doc;
-        } else {
+        if (defaults) {
             /* istanbul ignore next */
-            app.locals.site.defaults = initSite();
-        }
+            if (defaults.DefaultTheme) {
+                app.locals.site.defaults = defaults._doc;
+            } else {
+                /* istanbul ignore next */
+                app.locals.site.defaults = initSite();
+            }
 
-        //make sure you cant break the site
-        /* istanbul ignore next */
-        if (!findTheme(app.locals.site.defaults.DefaultTheme)) {
+            //make sure you cant break the site
             /* istanbul ignore next */
-            app.locals.site.defaults.DefaultTheme = config.defaultTheme;
+            if (!findTheme(app.locals.site.defaults.DefaultTheme)) {
+                /* istanbul ignore next */
+                app.locals.site.defaults.DefaultTheme = config.defaultTheme;
+            }
         }
     });
 

@@ -1,22 +1,28 @@
 /* jshint node: true */
+var logger = require("../logger/logger");
 var express = require('express');
 var pkg = require('../package');
 var config = require('../config.json');
 var router = express.Router();
-var seedDb = require('../db/seedDb');
 var clearDb = require('../db/clearDb');
 var userHelper = require('../services/userHelper.js');
 var statHelper = require('../services/statHelper.js');
 
+var wrap = require('co-express');
+
 var mongoose = require('../config/db.js').mongoose;
 var sysDefault = mongoose.model('SystemDefaults', require('../models/systemDefaults'));
+var userHelper = require('../services/userHelper');
+var messageHelper = require('../services/messageHelper');
+var userMessage = mongoose.model('UserMessage', require('../models/userMessage'));
+var systemMessage = mongoose.model('SystemMessage', require('../models/systemMessage'));
 
 module.exports = function(app, passport) {
     app.get('/admin',
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site, true)) {
                 req = userHelper.processUser(req);
-                res.render('admin/admin', { site: app.locals.site, user: req.user });
+                res.render('admin/admin', { site: app.locals.site, user: req.user, req: req });
             }
         }
     );
@@ -26,8 +32,10 @@ module.exports = function(app, passport) {
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site, true)) {
                 req = userHelper.processUser(req);
-                clearDb.go()
-                seedDb.go();
+                logger.warn("started db reset");
+                /*clearDb.go();*/
+                require('../db/seedDb');
+                req.flash('warn', 'database reset');
                 res.redirect(req.session.returnTo || '/');
             }
         }
@@ -38,7 +46,7 @@ module.exports = function(app, passport) {
             /* istanbul ignore next */
             if (userHelper.auth(req, res, app.locals.site, true)) {
                 req = userHelper.processUser(req);
-                res.render('admin/system-defaults', { site: app.locals.site, user: req.user });
+                res.render('admin/system-defaults', { site: app.locals.site, user: req.user, req: req });
             }
         }
     );
@@ -73,8 +81,8 @@ module.exports = function(app, passport) {
 
                         app.locals.site.defaults = defaults;
                         defaults.save();
-
-                        res.render('admin/system-defaults', { site: app.locals.site, user: req.user });
+                        req.flash('warn', 'updated system defaults.');
+                        res.render('admin/system-defaults', { site: app.locals.site, user: req.user, req: req });
                     }
                 });
             }
@@ -93,22 +101,8 @@ module.exports = function(app, passport) {
                 var info = require('simple-node-info');
                 req = userHelper.processUser(req);
                 var sysinfo = info.getStat();
-                res.render('admin/sys-info', { site: app.locals.site, user: req.user, sysinfo: sysinfo, socketvar: 'load averages', jquery: true, socket: true });
+                res.render('admin/sys-info', { site: app.locals.site, user: req.user, sysinfo: sysinfo, socketvar: 'load averages', jquery: true, socket: true, req: req });
             }
         }
     );
-    
-    /* istanbul ignore next */ 
-    if (config.nodeinfo) {
-        var nodeinfo = require('node-info');
-        app.use(nodeinfo({
-            url: '/admin/system-information/node-info',
-            check: function(req, res, next) {
-                if (userHelper.auth(req, res, app.locals.site, true, true)) {
-                    // show nodeinfo
-                    return true;
-                }
-            }
-        }));
-    }
 };

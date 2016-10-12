@@ -25,7 +25,7 @@ var userRating = require('../models/userRating');
 function listBooks(callback) {
     var Book = mongoose.model('Book', book);
     Book.find({}, function(err, books) {
-    	callback.data.err = err;
+        callback.data.err = err;
         books.toArray(callback.data.books);
     });
 }
@@ -35,24 +35,29 @@ function getSystemDefaults(callback) {
     var sysDefault = mongoose.model('SystemDefaults', systemDefaults);
 
     sysDefault.findOne({}, function(err, defaults) { //there should only be one set of defaults
-    	callback.data.err = err;
-    	callback.data.defaults = defaults;
+        callback.data.err = err;
+        callback.data.defaults = defaults;
     });
 }
 
 /* istanbul ignore  next*/
 function find(collec, query, callback) {
     mongoose.connection.db.collection(collec, function(err, collection) {
-    	callback.collec.data.err = err;
+        callback.collec.data.err = err;
         collection.find(query).toArray(callback.collec.data);
     });
 }
 
 /* istanbul ignore  next*/
 function dropCollection(collec) {
-    mongoose.connection.collections[collec].drop(function(err) {
-        logger.warn("collection " + collec + "dropped");
-    });
+    if (mongoose.connection.collections[collec]) {
+        mongoose.connection.collections[collec].drop(function(err) {
+            if (err) {
+                logger.warn("Delete Error on Collection: " + collec + " " + err);
+            }
+            logger.warn("collection " + collec + " dropped");
+        });
+    }
 }
 
 module.exports = {

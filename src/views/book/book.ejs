@@ -12,7 +12,7 @@
     <div class="book site-margin">
 
 
-        <!-- Portfolio Item Row -->
+        <!-- Book Row -->
         <div class="row">
 
             <div class="col-md-3">
@@ -34,7 +34,7 @@
                                    <%} %> </li>
                     <li>Language: <%= book.language %></li>
                     <li title="<%= book.publishDate %>">Published: <%= site.moment(book.publishDate).format('LLL'); %></li>
-                    
+                    <% if(bookUser) {%><li>Uploaded by: <a href="/user/<%= bookUser._id %>"><%= bookUser.username %></a></li><% } %>                    
                 </ul>
 
                 <br>
@@ -47,73 +47,155 @@
             <div class="col-md-4">
               <div class="panel panel-default">
                 <div class="panel-body">
-              <% if (book.isAvailable) {%>
+                  <% if (book.isAvailable && book.userId !== ""+user._id) { %>
 
-                <% if (book.isForSale) {%> 
-                  <div class="amount">
-                    Buy for R<% if (book.sellPrice) {%><%= book.sellPrice.toFixed(2) %> <% } %> 
-                  </div>
-                  <button type="button" class="btn btn-lg btn-buy btn-cyan">Buy</button>
-                <% } %>
+                    <% if (book.isForSale) {%> 
+                      <div class="amount">
+                        Buy for R<% if (book.sellPrice) {%><%= book.sellPrice.toFixed(2) %> <% } %> 
+                      </div>
+                      <button type="button" class="btn btn-lg btn-buy btn-cyan" data-toggle="modal" data-target="#buyModal">
+                        Buy
+                      </button>               
+                    <% } %>
 
-                <% if (book.isForSale && book.isForLoan) {%> 
-                  <div class="or">OR</div>
-                <% } %>
+                    <% if (book.isForSale && book.isForLoan) {%> 
+                      <div class="or">OR</div>
+                    <% } %>
 
-                <% if (book.isForLoan) {%>
-                  <div class="amount">
-                    Rent for R<% if (book.loanPrice) {%><%= book.loanPrice.toFixed(2) %> <% } %>
-                  </div>
-                  <button type="button" class="btn btn-lg btn-rent btn-light-green">Rent</button>
-                <% } %>
+                    <% if (book.isForLoan) {%>
+                      <div class="amount">
+                        Rent for R<% if (book.loanPrice) {%><%= book.loanPrice.toFixed(2) %> <% } %>
+                      </div>
+                      <button type="button" class="btn btn-lg btn-rent btn-light-green" data-toggle="modal" data-target="#rentModal">
+                        Rent
+                      </button>
+                    <% } %>
 
-                  <div class="noAvailable text-muted">
-                    There <% if(book.noAvailable == 1) {%>is <% } else {%>are <% } %> <%= book.noAvailable %> available.
+                      <div class="noAvailable text-muted">
+                        There <% if(book.noAvailable == 1) {%>is <% } else {%>are <% } %> <%= book.noAvailable %> available.
+                    </div>
+                    <% } else if (book.userId === ""+user._id) { %> <div class="noAvailable text-muted">You cannot transact with your own book.</div>
+                    <% } else {%> <div class="noAvailable text-muted">There are none available.</div> <% } %>
                 </div>
-              <% } else {%> <div class="noAvailable text-muted">There are none available.</div> <% } %>
               </div>
             </div>
           </div>
-
         </div>
         <!-- /.row -->
 
         <!-- Related Books Row -->
-        <div class="row">
+        <div class="row p-b-6">
 
-            <div class="col-lg-12">
-                <h3 class="page-header">Related Books</h3>
+          <div class="col-lg-12">
+              <h3 class="page-header">Related Books</h3>
+          </div>
+
+
+          <% for(var i=0; (i < 4 && i < relatedBooks.length); i++) {%>
+            <div class="col-xs-3 col-sm-3 col-md-3"> 
+              <div class="center-align-col">
+
+                <div class="view overlay hm-white-strong center-align">
+                  <a href="<%= relatedBooks[i]._id %>">
+                    <img width=250 height=350 src= <% if (relatedBooks[i].picURL) {%> <%= relatedBooks[i].picURL %> <%} else{%> <%= site.defaults.DefaultBookPictureURL %> <%} %> />
+                    <div class="mask">
+                      <p class="black-text font-weight-bold text-capitalize title">
+                        <% if (relatedBooks[i].title) {%><%=relatedBooks[i].title %> <%} %></p>
+                      <p class="black-text text-capitalize author">
+                        <% if (relatedBooks[i].author) {%><%=relatedBooks[i].author %> <%} %></p>
+                    </div>
+                  </a>
+                </div>
+
+              </div>
             </div>
+          <% } %>
 
+          <% if (relatedBooks.length === 0) {%>
             <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/assets/placeholder236x356.png" alt="236X356">
-                </a>
-            </div>
-
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/assets/placeholder236x356.png" alt="236X356">
-                </a>
-            </div>
-
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/assets/placeholder236x356.png" alt="236X356">
-                </a>
-            </div>
-
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="/assets/placeholder236x356.png" alt="236X356">
-                </a>
-            </div>
-
+              <p class="noAvailable text-muted">There are no related books.</p>
+            </div> 
+          <% } %> 
         </div>
         <!-- /.row -->
-
+        
     </div>
-    
+
+<% if (book.isForSale && book.userId !== ""+user._id) {%> 
+    <!-- Buy Modal -->
+    <div class="modal fade" id="buyModal" tabindex="-1" role="document">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Buy <%= book.title %></h4>
+          </div>
+
+          <form role="form" action="/book/<%= book._id %>/buy" method="post" class="box">
+
+            <div class="modal-body new-book">
+                  <div class="form-group">
+                      <p>Amount to purchase: </p><input name="amount" type="number" class="form-control" tabindex="1" min="1" max="<%= book.noAvailable %>" id="buy-amount" value="1" oninput="updateBuyPrice()"><br/> 
+                      <p id="buy-total">You will pay: R<%= 1 * book.sellPrice %></p>             
+                  </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary btn-cyan">Buy</button>            
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+<% } %> 
+
+
+<% if (book.isForLoan && book.userId !== ""+user._id) {%>
+    <!-- Rent Modal -->
+    <div class="modal fade" id="rentModal" tabindex="-1" role="document">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Rent <%= book.title %></h4>
+          </div>
+
+          <form role="form" action="/book/<%= book._id %>/rent" method="post" class="box">
+
+            <div class="modal-body new-book">
+                  <div class="form-group">
+                      <p>Amount to rent: </p><input name="amount" type="number" class="form-control" tabindex="1" min="1" max="<%= book.noAvailable %>" id="rent-amount" value="1" oninput="updateRentPrice()"><br/> 
+                      <p id="rent-total">You will pay: R<%= 1 * book.loanPrice %></p>             
+                  </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary btn-light-green">Rent</button>            
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+<% } %>
+
+
+<script>
+function updateBuyPrice(){
+  var amount = document.getElementById("buy-amount").value;
+  var total = amount * <%= book.sellPrice%>;
+  document.getElementById("buy-total").innerHTML = "You will pay: R" + total;
+}
+
+function updateRentPrice(){
+  var amount = document.getElementById("rent-amount").value;
+  var total = amount * <%= book.loanPrice%>;
+  document.getElementById("rent-total").innerHTML = "You will pay: R" + total;
+}
+</script>
+
+ 
 
   <!-- </div> -->
   <%- include('../partials/footer') %>

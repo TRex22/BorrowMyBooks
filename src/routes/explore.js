@@ -16,7 +16,9 @@ module.exports = function(app, passport) {
         var Book = mongoose.model('Book', book);
 
         Book.find({}, function(err, books) {
-            res.render('explore/explore', { site: app.locals.site, books: books, user: req.user });
+            if (err) req.flash('error', '' + err);
+
+            res.render('explore/explore', { site: app.locals.site, books: books, user: req.user, req: req });
         });
     });
 
@@ -28,13 +30,15 @@ module.exports = function(app, passport) {
             var Book = mongoose.model('Book', book);
 
             Book.find({}, function(err, books) {
+                if (err) req.flash('error', '' + err);
+
                 var usrBooks = [];
                 for (var i = 0; i < books.length; i++) {
-                    if (books[i].userId === req.user.userId) {
+                    if (books[i].userId === "" + req.user._id) {
                         usrBooks.push(books[i]);
                     }
                 }
-                res.render('explore/explore-mine', { site: app.locals.site, books: usrBooks, user: req.user });
+                res.render('explore/explore-mine', { site: app.locals.site, books: usrBooks, user: req.user, req: req });
             });
         }
     });

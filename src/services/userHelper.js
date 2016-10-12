@@ -1,4 +1,14 @@
+var mongoose = require('../config/db.js').mongoose;
+var User = mongoose.model('User', require('../models/user'));
+
+var messageHelper = require('../services/messageHelper');
+var util = require('util');
+
 function initUser(req) {
+    if (!req.session) {
+        req.session = {};
+    }
+
     if (!req.session.user) {
         req.session.user = {};
         req.session.user.isAdmin = false;
@@ -9,6 +19,11 @@ function initUser(req) {
         req.user = {};
         req.user.isAdmin = false;
         req.user.isLoggedIn = false;
+    }
+
+    if (!req.route) {
+        req.params = null;
+        req.route = {};
     }
 
     return req;
@@ -30,13 +45,14 @@ function processUser(req, logout) {
         req.user.isLoggedIn = true;
     }
 
-/*    if(req.user.picUrl === null){
-        req.user.picUrl = 
-    }*/
-
     if (logout) {
         req.session.user = resetUser();
         req.user = resetUser();
+        req.session.returnTo = "";
+    }
+
+    if (req.flash) {
+        req = messageHelper.processMessages(req);
     }
 
     return req;
@@ -77,17 +93,55 @@ function createNewUser(username, password, body) {
     iUser.userId = iUser.generateUUID();
     iUser.salt = iUser.generateSalt();
     iUser.hash = iUser.generateHash(password);
-    /*iUser.save();*/
+
     //todo detect student
     return iUser;
 }
 
 /* istanbul ignore next */
+function getPath(req) {
+    var path = "/"
+
+    if (req.route) {
+        if (req.params.length > 0) {
+            if (req.route.path.indexOf("buy") > -1 || req.route.path.indexOf("rent") > -1 || req.route.path.indexOf("return") > -1) {
+                path = "/transaction/mine/";
+                return path;
+            }
+
+            if (req.route.path.indexOf("reply") > -1) {
+                path = "/profile/messages";
+                return path;
+            }
+
+            if (req.route.path.indexOf(":transactionId") > -1 || req.route.path.indexOf(":userId") > -1 || req.route.path.indexOf(":messageId") > -1) {
+                path = "/"
+                return path;
+            }
+
+            if (req.route.path.indexOf("userId") > -1) {
+                path = "/user/" + req.params.userId;
+
+                if (req.route.path.indexOf("settings") > -1) {
+                    path += "/settings";
+                }
+
+                return path;
+            }
+        } else {
+            path = req.route.path;
+        }
+    }
+
+    return path;
+}
+
+/* istanbul ignore next */
 function auth(req, res, site, admin, sysinfo) {
     if (req.user) {
-/*        if(!req.user.isLoggedIn){
-            res.redirect('/login');
-        }*/
+        /*        if(!req.user.isLoggedIn){
+                    res.redirect('/login');
+                }*/
         if (!isAdmin(req.user) && admin) {
             res.status(401);
             url = req.url;
@@ -98,14 +152,56 @@ function auth(req, res, site, admin, sysinfo) {
             return false;
 
         } else {
-            return true; //next();
+            return true;
         }
     } else {
         if (!sysinfo) {
+            if (req.session) {
+                req.session.returnTo = getPath(req);
+            }
             res.redirect('/login');
         }
         return false;
     }
+}
+
+function getUser(userId) {
+    return new Promise(function(resolve, reject) {
+        User.findOne({ _id: userId }, function(err, user) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            resolve(user);
+        });
+    });
+}
+
+function findUser(userIdent) {
+    return new Promise(function(resolve, reject) {
+        User.findOne({ $or: [{ username: userIdent }, { email: userIdent }, { name: userIdent }] }, function(err, user) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            resolve(user);
+        });
+    });
+}
+
+function findUsername(userIdent) {
+    return new Promise(function(resolve, reject) {
+        User.findOne({ username: userIdent }, function(err, user) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            resolve(user);
+        });
+    });
 }
 
 module.exports = {
@@ -114,5 +210,9 @@ module.exports = {
     resetUser: resetUser,
     initUser: initUser,
     auth: auth,
-    createNewUser: createNewUser
+    createNewUser: createNewUser,
+    getUser: getUser,
+    findUser: findUser,
+    findUsername: findUsername,
+    getPath: getPath
 }

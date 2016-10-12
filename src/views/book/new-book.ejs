@@ -4,113 +4,152 @@
   <body>   
    <%- include('../partials/navbar') %>
 
- <!--  	<div class="site-margin">
-      <h1>Upload a New Book</h1>
-    </div> -->
+
     <h1 class="center-align">Upload a New Book</h1>
 
 
-    <form role="form" action="/book/new" method="post" class="box new-book">        
+    <form role="form" action="/book/new" method="post" class="box new-book">   
 
-              <div class="form-group">
-                <input type="text" style="max-width: 100%;" class="form-control" tabindex="1" name="title" placeholder="Title" required>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <h3 class="page-header"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Book Details</h3>
+              </div>     
+            </div>
+
+            <!-- Book Details Row -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="title">Book Title: </label>
+                  <input type="text" style="max-width: 100%;" class="form-control" tabindex="1" name="title" placeholder="Title" required>
+                </div>
               </div>
 
-              <div class="form-group">
-                <input type="text" class="form-control" tabindex="1" name="author" placeholder="Author" required>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="author">Book Author: </label>
+                  <input type="text" class="form-control" tabindex="1" name="author" placeholder="Author" required>
+                </div>
               </div>
 
-              <div class="form-group">
-                <input type="file" class="form-control" tabindex="1" name="picURL" placeholder="Picture URL" required>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="ISBN">Book ISBN: </label>
+                  <input type="text" class="form-control" tabindex="1" name="ISBN" placeholder="ISBN" required>
+                </div>
               </div>
 
-              <div class="form-group">
-                <input type="text" class="form-control" tabindex="1" name="ISBN" placeholder="ISBN" required>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="publishDate">Book Publish Date: </label>
+                  <input type="text" class="form-control" tabindex="1" name="publishDate" placeholder="Publication Date" required>
+                </div>
               </div>
 
-              <div class="form-group">
-                <input type="text" class="form-control" tabindex="1" name="publishDate" placeholder="Publication Date" required>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="language">Book Language: </label>
+                  <input type="text" class="form-control" tabindex="1" name="language" placeholder="Language" required>
+                </div>
               </div>
 
-              <div class="form-group">
-                <input type="text" class="form-control" tabindex="1" name="language" placeholder="Language" required>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="edition">Book Edition: </label>
+                  <input type="text" class="form-control" tabindex="1" name="edition" placeholder="Edition" required>
+                </div>
               </div>
 
-              <div class="form-group">
-                <input type="text" class="form-control" tabindex="1" name="edition" placeholder="Edition" required>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="picURL">Book Cover: </label>
+                  <input type="text" class="form-control" tabindex="1" name="picURL" placeholder="Picture URL" required>
+                </div>
               </div>
 
+            </div>
+            <!-- End Bok Details Row -->
+
+            <div class="form-group">
+              <label>Select Book Interests:</label> <br>
+              <select class="selectpicker form-control" data-live-search="true" name="interests" placeholder="Interests" value="<%= user.interests %>" multiple>
+                <option>Mathematics</option>
+                <option>Computer Science</option>
+                <option>Biology</option>
+                <option>Finance</option>
+                <option>Chemistry</option>
+                <option>Law</option>
+                <option>Engineering</option>
+                <option>Physics</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="summary">Book Summary:</label>
+              <textarea class="form-control" tabindex="1" rows="5" id="summary" required></textarea>
+            </div>
 
 
-      <div class="form-group">
-        <input type="text" class="form-control" tabindex="1" name="loanPrice" placeholder="Loan Price" required>
-      </div>
+          <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> Sell/Loan Details</h3>
+            </div>     
+          </div>
 
-      <div class="form-group">
-        <input type="text" class="form-control" tabindex="1" name="sellPrice" placeholder="Sell Price" required>
-      </div>
+    <!--  Sell/Loan Details Row  -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isAvailable" required="">Is This Book Available?</label>
+              </div>
+            </div>
 
-      <!-- <div class="form-group">
-        <input type="checkbox" class="form-control" tabindex="1" name="isForLoan" placeholder="Is This Book Loanable?" required>
-      </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="noAvailable">Number of Books Available: </label>
+                <input type="text" class="form-control" tabindex="1" name="noAvailable" placeholder="Number Available" required>
+              </div>
+            </div>
 
-      <div class="form-group">
-        <input type="checkbox" class="form-control" tabindex="1" name="isForSale" placeholder="Is This Book For Sale?" required>
-      </div> -->
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isForLoan" required="">Is This Book Loanable?</label>
+              </div>
+            </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="loanPrice">Book Loan Price: </label>
+                <input type="text" class="form-control" tabindex="1" name="loanPrice" placeholder="Loan Price" required>
+              </div>
+            </div>
 
 
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isForSale" required="">Is This Book For Sale?</label>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="sellPrice">Book Sell Price: </label>
+                <input type="text" class="form-control" tabindex="1" name="sellPrice" placeholder="Sell Price" required>
+              </div>
+            </div>
+            
+          </div>
+    <!--  End Sell/Loan Details Row  -->
 
-      <div class="form-group">
-        <input type="text" class="form-control" tabindex="1" name="noAvailable" placeholder="Number Available" required>
-      </div>
+          <br>
+          <br>
 
-      <div class="form-group">
-        <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isAvailable" required="">Is This Book Available?</label>
-      </div>
-
-      <div class="form-group">
-        <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isForLoan" required="">Is This Book Loanable?</label>
-        <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isForSale" required="">Is This Book For Sale?</label>
-      </div>
-
-      <div class="form-group">
-        <label for="summary">Summary:</label>
-        <textarea class="form-control" tabindex="1" rows="5" id="summary" required></textarea>
-      </div>
-
-      <div class="form-group">
-          <label>Select your interests:</label> <br>
-          <select class="selectpicker form-control" data-live-search="true" name="interests" placeholder="Interests" value="<%= user.interests %>" multiple>
-          <option>Mathematics</option>
-          <option>Computer Science</option>
-          <option>Biology</option>
-          <option>Finance</option>
-          <option>Chemistry</option>
-          <option>Law</option>
-          <option>Engineering</option>
-          <option>Physics</option>
-        </select>
-      </div>
-
-      <br>
-
-      <div>
-        <input type="submit" class="btn btn-default" value="Upload" tabindex="1">
-      </div>
+          <div class="">
+            <div>
+              <input type="submit" class="btn btn-default btn-lg" value="Upload" tabindex="1">
+            </div>
+          </div>
 
     </form>
     
