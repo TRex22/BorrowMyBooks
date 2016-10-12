@@ -50,7 +50,7 @@
                    
                     </li>
                     <div>
-                      <a href="/message/<%= messages.userMessages[i]._id %>/message" class="btn btn-primary" style="color: grey;"> Reply</a>
+                      <a href="/message/<%= messages.userMessages[i]._id %>/reply" class="btn btn-primary" style="color: grey;"> Reply</a>
                     </div>    
                 </ul>
               </div>
@@ -84,9 +84,6 @@
                     <li>Message: <%= messages.systemMessages[i].message %></li>
                     <li>Priority: <%= messages.systemMessages[i].priority %></li>                    
                     <li>Admin User: <a href="/user/<%= messages.systemMessages[i].adminId %>"><%= messages.systemMessages[i].admin.username %></a></li>
-                    <div>
-                      <a href="/message/<%= messages.systemMessages[i]._id %>/message" class="btn btn-primary" style="color: grey;"> Reply</a>
-                    </div>  
                 </ul>
               </div>
             </div>

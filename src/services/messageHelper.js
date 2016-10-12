@@ -31,6 +31,19 @@ function getUserMessages(userId) {
     });
 }
 
+function getUserMessage(messageId) {
+    return new Promise(function(resolve, reject) {
+        UserMessage.findOne({ _id: messageId }, function(err, userMessage) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            resolve(userMessage);
+        });
+    });
+}
+
 
 function processMessages(req) {
     //sucess
@@ -63,5 +76,6 @@ function processMessages(req) {
 module.exports = {
     processMessages: processMessages,
     getSystemMessages: getSystemMessages,
-    getUserMessages: getUserMessages
+    getUserMessages: getUserMessages,
+    getUserMessage: getUserMessage
 };

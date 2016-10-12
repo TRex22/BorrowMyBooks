@@ -30,7 +30,7 @@ module.exports = function(app, passport) {
                     messages.userMessages[i].fromuser = yield userHelper.getUser(messages.userMessages[i].fromUserId);
                     messages.userMessages[i].toUser = yield userHelper.getUser(messages.userMessages[i].toUserId);
 
-                    if(messages.userMessages[i].bookId) {
+                    if (messages.userMessages[i].bookId) {
                         messages.userMessages[i].book = yield bookHelper.getBook(messages.userMessages[i].bookId);
                     }
                 }
@@ -140,4 +140,48 @@ module.exports = function(app, passport) {
             res.redirect(req.session.returnTo || '/');
         }
     });
+
+    app.get('/message/:messageId/reply',
+        wrap(function*(req, res, next) {
+            if (userHelper.auth(req, res, app.locals.site, true)) {
+                req = userHelper.processUser(req);
+                var originalMessage = yield messageHelper.getUserMessage(req.params.messageId);
+                res.render('messages/reply-message', { site: app.locals.site, user: req.user, req: req, messageId: req.params.messageId, originalMessage: originalMessage.message });
+            }
+        })
+    );
+
+    app.post('/message/:messageId/reply', wrap(function*(req, res, next) {
+        if (userHelper.auth(req, res, app.locals.site)) {
+            req.user.isMain = true;
+            req = userHelper.processUser(req);
+
+            var oldMessage = yield messageHelper.getUserMessage(req.params.messageId);
+            var toUserId = null;
+            if (oldMessage.fromUserId === req.user._id) {
+                toUserId = oldMessage.toUserId;
+            } else {
+                toUserId = oldMessage.fromUserId;
+            }
+
+
+            var iUserMessage = new userMessage({
+                message: req.body.message,
+                date: new Date(),
+                priority: req.body.priority,
+                adminId: null,
+                fromUserId: req.user._id,
+                toUserId: toUserId,
+                bookId: oldMessage.bookId,
+                transactionId: oldMessage.transactionId,
+                previousMessageId: req.params.messageId
+            });
+            iUserMessage.save();
+
+            logger.warn("created message reply");
+
+            req.flash('success', "created reply for messageId: " + req.params.messageId);
+            res.redirect('/profile/messages');
+        }
+    }));
 }

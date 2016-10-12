@@ -9,7 +9,8 @@ var userMessageSchema = mongoose.Schema({
     	fromUserId: String,
     	toUserId: String,
     	bookId: String,
-    	transactionId: String
+    	transactionId: String,
+        previousMessageId: String
 }, { strict: false, collection: 'UserMessage' });
 
 

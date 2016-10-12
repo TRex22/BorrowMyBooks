@@ -109,7 +109,12 @@ function getPath(req) {
                 return path;
             }
 
-            if (req.route.path.indexOf(":transactionId") > -1 || req.route.path.indexOf(":userId") > -1) {
+            if (req.route.path.indexOf("reply") > -1) {
+                path = "/profile/messages";
+                return path;
+            }
+
+            if (req.route.path.indexOf(":transactionId") > -1 || req.route.path.indexOf(":userId") > -1 || req.route.path.indexOf(":messageId") > -1) {
                 path = "/"
                 return path;
             }
