@@ -1,0 +1,10 @@
+                         
+Marko: Quick question guys                         
+Marko: Need to state the functional elements in one of the viewpoints                         
+Marko: Ive said a web based interface to interact with the system and a server database system which stores all the information, what else can I mention?                         
+Jason Chalom: https://github.com/TRex22/BorrowMyBooks/issues                         
+Jason Chalom: look through open and closed                         
+Jason Chalom: Server side system                         
+Jason Chalom: web browser                         
+Marko: Sweet, thanks                        
+Jason Chalom: There is stuff coming today .... just busy with it

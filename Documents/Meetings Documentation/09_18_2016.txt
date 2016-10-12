@@ -1,0 +1,9 @@
+                         
+Jason Chalom: Im getting 21 failing tests WTF?                         
+Liron: How??                         
+Jason Chalom: thats is what Im asking ... I have not done anything to the main system as of yet                         
+Liron: Even me                         
+Jason Chalom: im an idiot ...                         
+Jason Chalom: db is not running                         
+Jason Chalom: facepalm                         
+Liron: Oh lol

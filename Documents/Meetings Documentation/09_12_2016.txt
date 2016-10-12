@@ -1,0 +1,7 @@
+Jason Chalom: Marko can you work on some documentation I'm not coding anything until we get documentation started
+Marko: Sweet, which part must I work on first?
+Jason Chalom: Viewpoints. We need viewpoints. And user stories to use cases with a traceability matrix in the middle
+Marko: I'm doing the context viewpoint now, just wanted to ask something on it. I'm documenting the various entities that interact with the system. Must I state the human interactions and stuff or just the different entities within the system? It's a part of the concerns for the viewpoint
+Jason Chalom: Human interactions have to be documented somewhere
+Marko: Ok sweet I'll add it in to the viewpoints, makes most sense to add it there                          
+Jason Chalom: Yeah

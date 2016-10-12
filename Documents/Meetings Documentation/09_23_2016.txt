@@ -1,0 +1,25 @@
+Jason Chalom: What is happening with SD?                         
+Jason Chalom: We need to also email Terrance. Maybe Friday? I dont want a repeat of last time                         
+Liron: Repeat of what?                         
+Jason Chalom: The last meeting                         
+Liron: Ya but what about it                         
+Jason Chalom: Not having our documentation, features or project to the level he wanted                         
+Jason Chalom: Im tired of being fucked by groups ... Info systems was shit, this has been shit                         
+Liron: I even asked you yesterday if I should do some doc's and you said no do the validation                         
+Jason Chalom: yeah because we need both ...                         
+Jason Chalom: without validation and the system messages a massive hole exists in what he wants                         
+Marko: Jason, listen bro. 
+We aren't all as inclined in this field as you are. 
+I know Liron is way more jacked up than I am in this course and you can wreck me as much as you want for my contribution.
+I feel like you decided to take on all the programming responsibility and I'm just sitting here in a blank space not knowing much about the system or the code and how it functions or anything. 
+I'm left to pull the documentation out of my ass, as I said I'm not that good with all the languages and shit that you chose to use for the project so obviously I'm forced to do the docs. 
+You really don't need to be so pissed off, Liron has worked really hard and just coz one or two things fucked out in the last sprint meeting it doesn't mean we're going to fail or something. 
+Mistakes happen bro. We still got 70 or something which isn't such a bad mark. 
+If we fight at each opportunity about the last sprint meeting then I refuse to try work with this shit. 
+We need to be civil, both Liron and I understand the mistakes of the the last meeting and we need you to chill out a bit so we can continue working together until this project is finished.                         
+Jason Chalom: Fine, then can you take up some initiative and start working on the system a bit? Liron and I are working on another project whose deliverable is also Monday (if Wits reopens). Maybe work with im on validation and getting system messages working                         
+Jason Chalom: Or page styles ... Im still busy making some pages but when Im done they will need to be styled                         
+Marko: Cool.
+And thank you for understanding                                            
+Jason Chalom: yeah ...                         
+Jason Chalom: Still got to get this done
