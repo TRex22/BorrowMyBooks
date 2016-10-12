@@ -4,6 +4,7 @@ var logger = require("../logger/logger");
 var wrap = require('co-express');
 
 var userHelper = require('../services/userHelper');
+var bookHelper = require('../services/bookHelper');
 var messageHelper = require('../services/messageHelper');
 
 var mongoose = require('../config/db.js').mongoose;
@@ -20,7 +21,19 @@ module.exports = function(app, passport) {
                 req = userHelper.processUser(req);
 
                 messages.systemMessages = yield messageHelper.getSystemMessages(req.user._id, req.user.isAdmin);
+                for (var i = 0; i < messages.systemMessages.length; i++) {
+                    messages.systemMessages[i].admin = yield userHelper.getUser(messages.systemMessages[i].adminId);
+                }
+
                 messages.userMessages = yield messageHelper.getUserMessages(req.user._id, req.user.isAdmin);
+                for (var i = 0; i < messages.userMessages.length; i++) {
+                    messages.userMessages[i].fromuser = yield userHelper.getUser(messages.userMessages[i].fromUserId);
+                    messages.userMessages[i].toUser = yield userHelper.getUser(messages.userMessages[i].toUserId);
+
+                    if(messages.userMessages[i].bookId) {
+                        messages.userMessages[i].book = yield bookHelper.getBook(messages.userMessages[i].bookId);
+                    }
+                }
 
                 if (!messages) messages = {};
 
