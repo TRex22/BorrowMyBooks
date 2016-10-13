@@ -60,6 +60,38 @@
                     </li>
                     <div>
                       <a href="/transaction/<%= toTransactions[i]._id %>/message" class="btn btn-primary" style="color: grey;"> Message Owner</a>
+                      <a type="button" data-toggle="modal" data-target="#rateModal<%= i %>" class="btn btn-secondary" style="color: grey;"> Rate Transaction</a> 
+
+                      <!-- Modal -->
+                      <div class="modal fade" id="rateModal<%= i %>" tabindex="-1" role="document">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title" id="myModalLabel"></h4>
+                            </div>
+
+                              <form role="form" action="/transaction/<%= toTransactions[i]._id %>/rate" method="post" class="box">
+                              <p>Please rate this transaction.</p>
+
+                              <div class="form-group">
+                                  <p>Rating (1-5): </p><input name="rating" type="number" class="form-control" tabindex="1" min="1" step="1" max="5" id="rating" value="1">      
+                              </div>
+                              <div class="modal-body new-book">
+                                    <div class="form-group">
+                                        <p>Are you sure?</p>             
+                                    </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary btn-light-green">Rate</button>            
+                              </div>
+
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+
                     </div>  
                 </ul>
               </div>

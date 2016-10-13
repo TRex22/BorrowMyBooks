@@ -93,7 +93,8 @@
               <% if(!user.isMain) { %>
                 <% if(user.username !== userInfo) { %>
                   <div>
-                    <a href="/user/<%= userInfo._id %>/message" class="btn btn-primary" style="color: grey;"> Message User</a>
+                    <a href="/user/<%= userInfo._id %>/message" class="btn btn-primary" style="color: grey;"> Message User</a> <br/>
+                    <a type="button" data-toggle="modal" data-target="#rateModal" class="btn btn-secondary" style="color: grey;"> Rate User</a>                     
                   </div>
                 <% } %>
               <% } %>
@@ -106,7 +107,7 @@
     </div>
 
 </div>
-
+  <%- include('../partials/rate') %>
   <%- include('../partials/footer') %>
   </body>
 </html>
