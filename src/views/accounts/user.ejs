@@ -5,8 +5,7 @@
    <%- include('../partials/navbar') %>
 
    <% if(!user.isMain) { user=userInfo } %>
-  <div class="site-margin">
-      <h1><%= user.username %>'s Profile</h1>
+   <h1 class="center-align"><%= user.username %>'s Profile</h1>
 
 
   <!-- <div class="container"> -->
@@ -93,7 +92,9 @@
               <% if(!user.isMain) { %>
                 <% if(user.username !== userInfo) { %>
                   <div>
-                    <a href="/user/<%= userInfo._id %>/message" class="btn btn-primary" style="color: grey;"> Message User</a>
+                    <a href="/user/<%= userInfo._id %>/message" class="btn btn-primary" style="color: grey;"> Message User</a> <br/>
+                      <%- include('../partials/rate') %>
+                    <a type="button" data-toggle="modal" data-target="#rateModal" class="btn btn-secondary" style="color: grey;"> Rate User</a>                     
                   </div>
                 <% } %>
               <% } %>
@@ -106,7 +107,6 @@
     </div>
 
 </div>
-
   <%- include('../partials/footer') %>
   </body>
 </html>

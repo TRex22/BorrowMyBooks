@@ -15,6 +15,8 @@ function loadScript(url, callback)
     head.appendChild(script);
 }
 
+
+
 //bower libraries are here for now
 /*loadScript("../../bower_components/jquery/dist/jquery.min.js");
 loadScript("../../bower_components/bootstrap/dist/js/bootstrap.min.js");

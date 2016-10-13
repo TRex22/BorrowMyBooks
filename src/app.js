@@ -126,6 +126,7 @@ require('./routes/book.js')(app, passport);
 require('./routes/accounts.js')(app, passport);
 require('./routes/transaction.js')(app, passport);
 require('./routes/messages.js')(app, passport);
+require('./routes/rate.js')(app, passport);
 require('./routes/errors.js')(app);
 
 module.exports = app;

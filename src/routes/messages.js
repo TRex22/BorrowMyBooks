@@ -18,8 +18,7 @@ module.exports = function(app, passport) {
             if (userHelper.auth(req, res, app.locals.site)) {
                 var messages = {};
                 req.user.isMain = true;
-                req = userHelper.processUser(req);
-
+                
                 messages.systemMessages = yield messageHelper.getSystemMessages(req.user._id, req.user.isAdmin);
                 for (var i = 0; i < messages.systemMessages.length; i++) {
                     messages.systemMessages[i].admin = yield userHelper.getUser(messages.systemMessages[i].adminId);
@@ -37,6 +36,7 @@ module.exports = function(app, passport) {
 
                 if (!messages) messages = {};
 
+                req = userHelper.processUser(req);
                 res.render('messages/messages', { site: app.locals.site, user: req.user, messages: messages, req: req });
             }
         })
@@ -44,7 +44,7 @@ module.exports = function(app, passport) {
 
     app.get('/user/:userId/message',
         function(req, res, next) {
-            if (userHelper.auth(req, res, app.locals.site, true)) {
+            if (userHelper.auth(req, res, app.locals.site)) {
                 req = userHelper.processUser(req);
                 res.render('messages/user-message', { site: app.locals.site, user: req.user, req: req, userId: req.params.userId });
             }
@@ -54,7 +54,6 @@ module.exports = function(app, passport) {
     app.post('/user/:userId/message', function(req, res, next) {
         if (userHelper.auth(req, res, app.locals.site)) {
             req.user.isMain = true;
-            req = userHelper.processUser(req);
 
             var iUserMessage = new userMessage({
                 message: req.body.message,
@@ -70,7 +69,9 @@ module.exports = function(app, passport) {
 
             logger.warn("created user message");
 
+            req = userHelper.processUser(req);
             req.flash('success', "created message to userid: " + req.params.userId);
+
             res.redirect(req.session.returnTo || '/');
         }
     });
@@ -78,7 +79,7 @@ module.exports = function(app, passport) {
 
     app.get('/transaction/:transactionId/message',
         function(req, res, next) {
-            if (userHelper.auth(req, res, app.locals.site, true)) {
+            if (userHelper.auth(req, res, app.locals.site)) {
                 req = userHelper.processUser(req);
                 res.render('messages/transaction-message', { site: app.locals.site, user: req.user, req: req, transactionId: req.params.transactionId });
             }
@@ -143,7 +144,7 @@ module.exports = function(app, passport) {
 
     app.get('/message/:messageId/reply',
         wrap(function*(req, res, next) {
-            if (userHelper.auth(req, res, app.locals.site, true)) {
+            if (userHelper.auth(req, res, app.locals.site)) {
                 req = userHelper.processUser(req);
                 var originalMessage = yield messageHelper.getUserMessage(req.params.messageId);
                 res.render('messages/reply-message', { site: app.locals.site, user: req.user, req: req, messageId: req.params.messageId, originalMessage: originalMessage.message });

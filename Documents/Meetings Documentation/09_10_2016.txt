@@ -1,0 +1,3 @@
+Liron: Sup guys. I added some extended use cases to documents/word. Also we should decide which use cases are going into sprint 3. Obviously buy/rent, sell/loan should be
+Jason Chalom: Yeah
+Marko: Nothing

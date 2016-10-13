@@ -1,0 +1,10 @@
+ Marko: Sup guys, just another quick one. I didn't document the administrator as an external user, admins would count as internal actors of the system right?                         
+Jason Chalom: Admins are external                         
+Marko: Also, does the traceability matrix go into the AD document?                         
+Jason Chalom: Maybe both                         
+ Marko: Ok sick.
+How can I describe the connection of the system to the database? 🙈                         
+ Jason Chalom: As an api                         
+ Jason Chalom: You don't have to spec mongodb                         
+ Jason Chalom: Just show it as an external system                         
+ Jason Chalom: I do use mongo for some computation

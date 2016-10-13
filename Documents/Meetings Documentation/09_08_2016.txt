@@ -1,0 +1,9 @@
+Marko: You've commented out the isSold and isOnLoan in the code for the book model, must I take that out of the diagram?
+Jason: No not yet ...Also I have greatly changed all the docs. If you haven't pulled back up your stuff
+Marko: Yeah I just backed up and pulled again
+Jason Chalom: Cool. Remember he wants PDFs at the end. Also we should release before the SD lecture                  Marko: Just pushed the updated db diagram
+Jason Chalom: Can I release?
+Marko: Ya should be chilled
+Jason Chalom: Hey Marko are you around?
+Marko: I'm just looking for parking. I'll be there in 5
+Liron: Nothing

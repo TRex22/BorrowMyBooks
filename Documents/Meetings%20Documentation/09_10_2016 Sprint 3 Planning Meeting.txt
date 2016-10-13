@@ -1,0 +1,10 @@
+We have decided to do the use cases:
+User upload Books
+User buy Books
+User rent Books
+User sell Books
+User loan Books
+
+User send messages to admins
+Admin reply to messages from users
+Admin send system messages
