@@ -85,7 +85,17 @@
                       <div class="noAvailable text-muted">
                         There <% if(book.noAvailable == 1) {%>is <% } else {%>are <% } %> <%= book.noAvailable %> available.
                     </div>
-                    <% } else if (book.userId === ""+user._id) { %> <div class="noAvailable text-muted">You cannot transact with your own book.</div>
+                    <% } else if (book.userId === ""+user._id) { %> 
+                    <div class="noAvailable text-muted">You cannot transact with your own book.</div>
+                    <% if (book.isOnLoan) { %> 
+                      <% if(book.numberOnLoan === 1) { %>
+                        <div class="noAvailable text-muted">There is <%= book.numberOnLoan %> copy of this book on loan.</div> 
+                      <% } %>
+                      <% if(book.numberOnLoan > 1) { %>
+                        <div class="noAvailable text-muted">There are <%= book.numberOnLoan %> copies of this book on loan.</div> 
+                      <% } %>
+                    <% } %>
+                    
                     <% } else {%> <div class="noAvailable text-muted">There are none available.</div> <% } %>
                 </div>
               </div>

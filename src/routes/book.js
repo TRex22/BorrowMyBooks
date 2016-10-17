@@ -115,7 +115,7 @@ module.exports = function(app, passport) {
         //TODO: JMC database connection
         if (userHelper.auth(req, res, app.locals.site)) {
             if (!req.body.amount) req.body.amount = 1;
-            if (req.body) {                
+            if (req.body) {
                 Book.findOne({ _id: req.params.bookId }, wrap(function*(err, book) {
                     if (err) req.flash('error', '' + err);
                     if (book) {
@@ -227,6 +227,14 @@ module.exports = function(app, passport) {
 
                 if (!bookUser || bookUser === null) {
                     bookUser = false;
+                }
+
+                if (book.userId === "" + req.user._id) {
+                    book.numberOnLoan = yield transactionHelper.checkIfOwnBookHasBeenRented(req.user._id, book._id);
+                    book.isOnLoan = false;
+                    if (book.numberOnLoan > 0) {
+                        book.isOnLoan = true;
+                    }
                 }
 
                 res.render('book/book', { site: app.locals.site, book: book, bookUser: bookUser, relatedBooks: relatedBooks, user: req.user, req: req });

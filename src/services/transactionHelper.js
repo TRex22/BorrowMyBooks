@@ -89,12 +89,38 @@ function checkIfBookNeedsToBeReturned(userId, bookId) {
                 return reject(err);
             }
 
-            /*var book = yield bookHelper.getBook(bookId); */
             var numberToReturn = 0;
 
             for (var i = 0; i < transactions.length; i++) {
                 try {
-                    if (transactions[i].isRent && transactions[i].amountToReturn > 0) { /*!transactions[i].hasBeenReturned*/
+                    if (transactions[i].isRent && transactions[i].amountToReturn > 0) { 
+                        numberToReturn += transactions[i].amountToReturn;
+                    }
+
+                } catch (e) {
+                    logger.error(e);
+                    reject(e);
+                }
+            }
+
+            resolve(numberToReturn);
+        }));
+    });
+}
+
+function checkIfOwnBookHasBeenRented(userId, bookId) {
+    return new Promise(function(resolve, reject) {
+        Transaction.find({ $and: [{ fromUserId: userId, bookId: bookId }] }, wrap(function*(err, transactions) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            var numberToReturn = 0;
+
+            for (var i = 0; i < transactions.length; i++) {
+                try {
+                    if (transactions[i].isRent && transactions[i].amountToReturn > 0) { 
                         numberToReturn += transactions[i].amountToReturn;
                     }
 
@@ -163,5 +189,6 @@ module.exports = {
     getTransactionBooks: getTransactionBooks,
     getTransaction: getTransaction,
     checkIfBookNeedsToBeReturned: checkIfBookNeedsToBeReturned,
+    checkIfOwnBookHasBeenRented: checkIfOwnBookHasBeenRented,
     returnTransactionsUpdate: returnTransactionsUpdate
 }
