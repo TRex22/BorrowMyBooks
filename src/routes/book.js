@@ -19,7 +19,6 @@ var Transaction = mongoose.model('Transaction', transaction);
 
 module.exports = function(app, passport) {
     app.get('/book/new', function(req, res, next) {
-        //TODO: JMC database connection
         //also system defaults for alt
         req = userHelper.processUser(req);
         if (userHelper.auth(req, res, app.locals.site)) {
@@ -29,10 +28,9 @@ module.exports = function(app, passport) {
     });
 
     app.post('/book/new', function(req, res, next) {
-        //TODO: JMC database connection
         //also system defaults for alt
         if (userHelper.auth(req, res, app.locals.site)) {
-            if (req.body) { //TODO check and perhpas fix this
+            if (req.body) {
                 var iBook = new Book({
                     title: req.body.title,
                     author: req.body.author,
@@ -79,6 +77,7 @@ module.exports = function(app, passport) {
                                 toUserId: req.user._id,
                                 bookId: book._id,
                                 amount: req.body.amount,
+                                amountToReturn: req.body.amount,
                                 cost: req.body.amount * book.loanPrice,
                                 isPurchase: false,
                                 isRent: true,
@@ -116,53 +115,42 @@ module.exports = function(app, passport) {
         //TODO: JMC database connection
         if (userHelper.auth(req, res, app.locals.site)) {
             if (!req.body.amount) req.body.amount = 1;
-            if (req.body) {
-                var numberToReturn = yield transactionHelper.checkIfBookNeedsToBeReturned(req.user._id, req.params.bookId);
-                Book.findOne({ _id: req.params.bookId }, function(err, book) {
+            if (req.body) {                
+                Book.findOne({ _id: req.params.bookId }, wrap(function*(err, book) {
                     if (err) req.flash('error', '' + err);
                     if (book) {
-                        //check if book is for rent and loaned out                        
+                        //check if book is for rent and loaned out
+                        var numberToReturn = yield transactionHelper.checkIfBookNeedsToBeReturned(req.user._id, req.params.bookId);
+
                         var canBeReturned = false;
                         if (numberToReturn > 0) {
                             canBeReturned = true;
                         }
 
                         if (book.isForLoan && canBeReturned) {
-                            Transaction.findOne({
-                                    toUserId: req.user._id,
-                                    bookId: book._id
-                                },
-                                function(err, itransaction) {
-                                    if (itransaction) {
-                                        //check if right user
-                                        if (itransaction.userId === req.user.userId) {
-                                            itransaction.hasBeenReturned = true;
-                                            itransaction.returnDate = new Date();
-                                            itransaction.save();
+                            try {
+                                var iTransaction = yield transactionHelper.returnTransactionsUpdate(req.body.amount, req.user._id, book._id);
 
-                                            book.noAvailable = book.noAvailable + itransaction.amount;
-                                            /*book.isOnLoan = false;*/
-                                            book.save();
-                                            req.flash('success', book.title + " successfully returned.");
-                                            res.redirect('/book/' + req.params.bookId);
-                                        } else {
-                                            req.flash('error', 'Wrong user.'); //todo fix? how does this work?    
-                                            res.render('book/book', { site: app.locals.site, book: book, user: req.user, req: req });
-                                        }
-                                    } else {
-                                        req.flash('error', 'No such transaction.'); //todo fix? how does this work?    
-                                        res.render('book/book', { site: app.locals.site, book: book, user: req.user, req: req });
-                                    }
-                                });
+                                book.noAvailable = book.noAvailable + parseInt(req.body.amount);
+                                book.save();
+
+                                req.flash('success', book.title + " successfully returned.");
+                                res.redirect('/book/' + req.params.bookId);
+                            } catch (e) {
+                                logger.error(e);
+                                req.flash('error', "" + e);
+                                res.redirect('/book/' + req.params.bookId);
+                            }
+
                         } else {
-                            req.flash('error', 'Book is not on rent.'); //todo fix? how does this work?    
+                            req.flash('error', 'Book is not on loan.');
                             res.redirect('/book/' + req.params.bookId);
                         }
                     } else {
                         req.flash('error', 'Book not found.');
                         res.redirect('/explore');
                     }
-                });
+                }));
             }
         }
     }));
@@ -183,6 +171,7 @@ module.exports = function(app, passport) {
                                 toUserId: req.user._id,
                                 bookId: book._id,
                                 amount: req.body.amount,
+                                amountToReturn: 0,
                                 cost: req.body.amount * book.loanPrice,
                                 isPurchase: true,
                                 isRent: false,
@@ -201,7 +190,7 @@ module.exports = function(app, passport) {
                             req.flash('success', book.title + " successfully purchased.");
                             res.redirect('/book/' + req.params.bookId);
                         } else {
-                            req.flash('error', 'Book is not for sale.'); //todo fix? how does this work?    
+                            req.flash('error', 'Book is not for sale.');
                             res.redirect('/book/' + req.params.bookId);
                         }
                     } else {

@@ -34,7 +34,13 @@ module.exports = function(app, passport) {
                 req = userHelper.processUser(req);
                 logger.warn("started db reset");
                 /*clearDb.go();*/
-                require('../db/seedDb');
+                var clearDb = require('../db/clearDb').go();
+                //wait 2 seconds
+                console.log("Please wait 2 seconds.")
+                setTimeout(function() {
+                    var seed = require('../db/seedDb');
+                }, 2000);
+
                 req.flash('warn', 'database reset');
                 res.redirect(req.session.returnTo || '/');
             }

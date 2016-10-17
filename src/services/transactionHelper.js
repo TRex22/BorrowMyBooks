@@ -56,7 +56,7 @@ function getTransactionBooks(userId) {
             for (var i = 0; i < transactions.length; i++) {
                 try {
                     if (transactions[i].toUserId === userId + "") {
-                        var loanedUsrBook = yield bookHelper.getBook(transactions[i].bookId);                        
+                        var loanedUsrBook = yield bookHelper.getBook(transactions[i].bookId);
                         rentedUsrBooks.push(loanedUsrBook);
                     }
 
@@ -94,9 +94,9 @@ function checkIfBookNeedsToBeReturned(userId, bookId) {
 
             for (var i = 0; i < transactions.length; i++) {
                 try {
-                    if (transactions[i].isRent && !transactions[i].hasBeenReturned) {
-                        numberToReturn += transactions[i].amount;
-                    }                    
+                    if (transactions[i].isRent && transactions[i].amountToReturn > 0) { /*!transactions[i].hasBeenReturned*/
+                        numberToReturn += transactions[i].amountToReturn;
+                    }
 
                 } catch (e) {
                     logger.error(e);
@@ -105,6 +105,42 @@ function checkIfBookNeedsToBeReturned(userId, bookId) {
             }
 
             resolve(numberToReturn);
+        }));
+    });
+}
+
+function returnTransactionsUpdate(AmountToReturn, userId, bookId) {
+    return new Promise(function(resolve, reject) {
+        Transaction.find({ $and: [{ toUserId: userId, bookId: bookId }] }, wrap(function*(err, transactions) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            for (var i = 0; i < transactions.length; i++) {
+                try {
+                    if (transactions[i].amountToReturn > 0 && AmountToReturn > 0) {
+                        transactions[i].hasBeenReturned = true;
+                        transactions[i].returnDate = new Date();
+
+                        if (transactions[i].amountToReturn >= AmountToReturn) {
+                            transactions[i].amountToReturn = transactions[i].amountToReturn - AmountToReturn;
+                            AmountToReturn = 0;
+                        } else if (transactions[i].amountToReturn < AmountToReturn) {
+                            AmountToReturn = AmountToReturn - transactions[i].amountToReturn;
+                            transactions[i].amountToReturn = 0;
+                        }
+
+                        transactions[i].save();
+                    }
+
+                } catch (e) {
+                    logger.error(e);
+                    reject(e);
+                }
+            }
+
+            resolve(true);
         }));
     });
 }
@@ -126,5 +162,6 @@ module.exports = {
     getTransactions: getTransactions,
     getTransactionBooks: getTransactionBooks,
     getTransaction: getTransaction,
-    checkIfBookNeedsToBeReturned: checkIfBookNeedsToBeReturned
+    checkIfBookNeedsToBeReturned: checkIfBookNeedsToBeReturned,
+    returnTransactionsUpdate: returnTransactionsUpdate
 }
