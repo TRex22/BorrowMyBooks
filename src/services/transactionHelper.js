@@ -81,6 +81,34 @@ function getTransactionBooks(userId) {
     });
 }
 
+function checkIfBookNeedsToBeReturned(userId, bookId) {
+    return new Promise(function(resolve, reject) {
+        Transaction.find({ $and: [{ toUserId: userId, bookId: bookId }] }, wrap(function*(err, transactions) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            /*var book = yield bookHelper.getBook(bookId); */
+            var numberToReturn = 0;
+
+            for (var i = 0; i < transactions.length; i++) {
+                try {
+                    if (transactions[i].isRent && !transactions[i].hasBeenReturned) {
+                        numberToReturn += transactions[i].amount;
+                    }                    
+
+                } catch (e) {
+                    logger.error(e);
+                    reject(e);
+                }
+            }
+
+            resolve(numberToReturn);
+        }));
+    });
+}
+
 function getTransaction(transactionId) {
     return new Promise(function(resolve, reject) {
         Transaction.findOne({ _id: transaction }, function(err, transaction) {
@@ -97,5 +125,6 @@ function getTransaction(transactionId) {
 module.exports = {
     getTransactions: getTransactions,
     getTransactionBooks: getTransactionBooks,
-    getTransaction: getTransaction
+    getTransaction: getTransaction,
+    checkIfBookNeedsToBeReturned: checkIfBookNeedsToBeReturned
 }

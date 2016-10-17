@@ -7,6 +7,7 @@ var transactionSchema = mongoose.Schema({
         toUserId: String,
         bookId: String,
         amount: Number,
+        amountToReturn: Number,
         cost: Number,
         isPurchase: Boolean,
         isRent: Boolean,

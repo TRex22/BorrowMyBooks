@@ -10,7 +10,7 @@ var util = require('util');
 var mongoose = require('../config/db.js').mongoose;
 var dbHelper = require('../services/dbHelper');
 var userHelper = require('../services/userHelper.js');
-
+var transactionHelper = require('../services/transactionHelper.js');
 var bookHelper = require('../services/bookHelper.js');
 
 var Book = mongoose.model('Book', require('../models/book'));
@@ -112,16 +112,22 @@ module.exports = function(app, passport) {
         }
     });
 
-    app.post('/book/:bookId/return', function(req, res, next) {
+    app.post('/book/:bookId/return', wrap(function*(req, res, next) {
         //TODO: JMC database connection
         if (userHelper.auth(req, res, app.locals.site)) {
             if (!req.body.amount) req.body.amount = 1;
             if (req.body) {
+                var numberToReturn = yield transactionHelper.checkIfBookNeedsToBeReturned(req.user._id, req.params.bookId);
                 Book.findOne({ _id: req.params.bookId }, function(err, book) {
                     if (err) req.flash('error', '' + err);
                     if (book) {
-                        //check if book is for rent and loaned out
-                        if (book.isForLoan && book.isOnLoan) {
+                        //check if book is for rent and loaned out                        
+                        var canBeReturned = false;
+                        if (numberToReturn > 0) {
+                            canBeReturned = true;
+                        }
+
+                        if (book.isForLoan && canBeReturned) {
                             Transaction.findOne({
                                     toUserId: req.user._id,
                                     bookId: book._id
@@ -149,7 +155,7 @@ module.exports = function(app, passport) {
                                     }
                                 });
                         } else {
-                            req.flash('error', 'Book is not for rent.'); //todo fix? how does this work?    
+                            req.flash('error', 'Book is not on rent.'); //todo fix? how does this work?    
                             res.redirect('/book/' + req.params.bookId);
                         }
                     } else {
@@ -159,7 +165,7 @@ module.exports = function(app, passport) {
                 });
             }
         }
-    });
+    }));
 
     app.post('/book/:bookId/buy', function(req, res, next) {
         //TODO: JMC database connection
@@ -222,7 +228,13 @@ module.exports = function(app, passport) {
 
             if (book) {
                 bookUser = yield userHelper.getUser(book.userId);
-                relatedBooks = yield bookHelper.getRelatedBooks(req.params.bookId);
+                relatedBooks = yield bookHelper.getRelatedBooks(book._id);
+
+                book.numberToReturn = yield transactionHelper.checkIfBookNeedsToBeReturned(req.user._id, book._id);
+                book.canBeReturned = false;
+                if (book.numberToReturn > 0) {
+                    book.canBeReturned = true;
+                }
 
                 if (!bookUser || bookUser === null) {
                     bookUser = false;
