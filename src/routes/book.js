@@ -111,7 +111,7 @@ module.exports = function(app, passport) {
         }
     });
 
-    app.post('/book/:bookId/return', wrap(function*(req, res, next) {
+    app.post('/book/:bookId/return', function(req, res, next) {
         //TODO: JMC database connection
         if (userHelper.auth(req, res, app.locals.site)) {
             if (!req.body.amount) req.body.amount = 1;
@@ -153,7 +153,7 @@ module.exports = function(app, passport) {
                 }));
             }
         }
-    }));
+    });
 
     app.post('/book/:bookId/buy', function(req, res, next) {
         //TODO: JMC database connection
