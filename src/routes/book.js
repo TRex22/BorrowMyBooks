@@ -57,6 +57,7 @@ module.exports = function(app, passport) {
                 logger.warn("created book");
 
                 req.flash('success', "created new book, " + iBook.title);
+                userHelper.logUserAction("created new book", req.user._id, iBook._id, null, null);
                 res.redirect('/book/' + iBook._id);
             }
         }
@@ -94,6 +95,7 @@ module.exports = function(app, passport) {
                             /*book.isOnLoan = true;*/
                             book.save();
                             req.flash('success', book.title + " successfully rented.");
+                            userHelper.logUserAction("rented book", req.user._id, book._id, null, null);
                             res.redirect('/book/' + req.params.bookId);
                         } else {
                             req.flash('error', 'Book is not for rent.');
@@ -135,6 +137,7 @@ module.exports = function(app, passport) {
                                 book.save();
 
                                 req.flash('success', book.title + " successfully returned.");
+                                userHelper.logUserAction("returned book", req.user._id, book._id, null, null);
                                 res.redirect('/book/' + req.params.bookId);
                             } catch (e) {
                                 logger.error(e);
@@ -188,6 +191,7 @@ module.exports = function(app, passport) {
                             book.save();
 
                             req.flash('success', book.title + " successfully purchased.");
+                            userHelper.logUserAction("bought book", req.user._id, book._id, null, null);
                             res.redirect('/book/' + req.params.bookId);
                         } else {
                             req.flash('error', 'Book is not for sale.');

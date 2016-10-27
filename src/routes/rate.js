@@ -28,7 +28,7 @@ module.exports = function(app, passport) {
 
             req = userHelper.processUser(req);
             req.flash('success', "created user rating");
-
+            userHelper.logUserAction("rated user", req.user._id, null, null, null);
             res.redirect(req.session.returnTo || '/');
         }
     });
@@ -49,8 +49,8 @@ module.exports = function(app, passport) {
             logger.warn("rated user");
 
             req = userHelper.processUser(req);
-            req.flash('success', "created user rating");
-
+            req.flash('success', "created user rating"  );
+            userHelper.logUserAction("rated transaction", req.user._id, null, null, null);
             res.redirect(req.session.returnTo || '/');
         }
     });

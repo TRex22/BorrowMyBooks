@@ -69,13 +69,29 @@
                   </tbody>
                 </table>
               </div>
-              
+
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  
+                  <tbody>
+                    <% if (userLog.length > 0) {%>
+                      <% for(var i=0; i<userLog.length && i<10; i++) {%>
+                        <tr>
+                          <td><i class="pull-right fa fa-edit"></i> <%= site.moment(userLog[i].date).fromNow(); %> - <%= user.username %> <%= userLog[i].log %>.</td>
+                        </tr>
+                      <% } %>
+                    <%} %>
+                  </tbody>
+                </table>
+              </div>
+
               <ul class="list-group">
                 <li class="list-group-item text-muted">Activity</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Sold</strong></span> 125</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Bought</strong></span> 13</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Borrowed</strong></span> 37</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Rented Away</strong></span> 78</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Sold</strong></span> <%= userStats.sold %></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Bought</strong></span> <%= userStats.bought %></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Rented</strong></span> <%= userStats.rented %></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Lent</strong></span> <%= userStats.lent %></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Returned</strong></span> <%= userStats.returned %></li>
               </ul>
 
               <ul class="list-group">

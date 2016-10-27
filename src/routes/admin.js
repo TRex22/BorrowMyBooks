@@ -22,6 +22,7 @@ module.exports = function(app, passport) {
         function(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site, true)) {
                 req = userHelper.processUser(req);
+                userHelper.logUserAction("Admin logged in", req.user._id, null, null, null);
                 res.render('admin/admin', { site: app.locals.site, user: req.user, req: req });
             }
         }
@@ -88,6 +89,7 @@ module.exports = function(app, passport) {
                         app.locals.site.defaults = defaults;
                         defaults.save();
                         req.flash('warn', 'updated system defaults.');
+                        userHelper.logUserAction("update system defaults", req.user._id, null, null, null);
                         res.render('admin/system-defaults', { site: app.locals.site, user: req.user, req: req });
                     }
                 });
@@ -107,6 +109,7 @@ module.exports = function(app, passport) {
                 var info = require('simple-node-info');
                 req = userHelper.processUser(req);
                 var sysinfo = info.getStat();
+                userHelper.logUserAction("checked system information", req.user._id, null, null, null);
                 res.render('admin/sys-info', { site: app.locals.site, user: req.user, sysinfo: sysinfo, socketvar: 'load averages', jquery: true, socket: true, req: req });
             }
         }

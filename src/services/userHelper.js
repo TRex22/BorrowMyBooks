@@ -1,7 +1,13 @@
 var mongoose = require('../config/db.js').mongoose;
 var User = mongoose.model('User', require('../models/user'));
+var UserLog = mongoose.model('UserLog', require('../models/userLog'));
+var Transaction = mongoose.model('Transaction', require('../models/transaction'));
+
+var wrap = require('co-express');
+var co = require('co');
 
 var messageHelper = require('../services/messageHelper');
+var transactionHelper = require('../services/transactionHelper.js');
 var util = require('util');
 
 function initUser(req) {
@@ -204,6 +210,101 @@ function findUsername(userIdent) {
     });
 }
 
+function logUserAction(log, userId, bookId, transactionId, messageId) {
+    var userLog = require('../models/userLog');
+    var log = new userLog({
+        log: log,
+        date: new Date(),
+        userId: userId,
+        bookId: bookId,
+        transactionId: transactionId,
+        messageId: messageId
+    });
+
+    log.save();
+}
+
+function getUserLog(userId) {
+    return new Promise(function(resolve, reject) {
+        UserLog.find({ userId: userId }).sort({ date: -1 }).exec(function(err, log) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            resolve(log);
+        });
+    });
+}
+
+function searchUserLog(userId, searchTerm) {
+    return new Promise(function(resolve, reject) {
+        UserLog.find({ $and: [{ userId: userId }, { log: { $regex: ".*" + searchTerm + ".*" } }] }).sort({ date: -1 }).exec(function(err, log) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            resolve(log);
+        });
+    });
+}
+
+function getUserActivity(userId) {
+    return new Promise(function(resolve, reject) {
+        Transaction.find({ $or: [{ fromUserId: userId }, { toUserId: userId }] }, wrap(function*(err, userTransactions) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            var sold = 0;
+            var lent = 0;
+
+            var bought = 0;
+            var rented = 0;
+            var returned = 0;
+
+            for (var i = 0; i < userTransactions.length; i++) {
+                if (userTransactions[i].fromUserId === "" + userId) {
+                    if (userTransactions[i].isPurchase) {
+                        sold += userTransactions[i].amount;
+                    } else if (userTransactions[i].isRent) {
+                        lent += userTransactions[i].amount;
+                    }
+                }
+                if (userTransactions[i].toUserId === "" + userId) {
+                    if (userTransactions[i].isPurchase) {
+                        bought += userTransactions[i].amount;
+                    } else if (userTransactions[i].isRent) {
+                        rented += userTransactions[i].amount;
+                    }
+                }
+
+                if (userTransactions[i].hasBeenReturned) {
+                    returned += userTransactions[i].amount - userTransactions[i].amountToReturn;
+                }
+            }
+
+            var obj = {
+                sold: sold,
+                lent: lent,
+                bought: bought,
+                rented: rented,
+                returned: returned
+            };
+
+            resolve(obj);
+        }));
+
+    });
+    /*        var activitySold = yield searchUserLogWithBooks(userId, "");
+            var activityBorrowedAway = yield searchUserLogWithBooks(userId, "");
+            var activityBought = yield searchUserLog(userId, "bought book");
+            var activityRented = yield searchUserLog(userId, "rented book");
+            var activityReturned = yield searchUserLog(userId, "returned book");*/
+}
+
 module.exports = {
     isAdmin: isAdmin,
     processUser: processUser,
@@ -214,5 +315,9 @@ module.exports = {
     getUser: getUser,
     findUser: findUser,
     findUsername: findUsername,
-    getPath: getPath
+    getPath: getPath,
+    logUserAction: logUserAction,
+    getUserLog: getUserLog,
+    searchUserLog: searchUserLog,
+    getUserActivity: getUserActivity
 }
