@@ -57,7 +57,7 @@ module.exports = function(app, passport) {
                 logger.warn("created book");
 
                 req.flash('success', "created new book, " + iBook.title);
-                userHelper.logUserAction("created new book", req.user._id, iBook._id, null, null);
+                userHelper.logUserAction("You created a new book", req.user._id, iBook._id, null, null);
                 res.redirect('/book/' + iBook._id);
             }
         }

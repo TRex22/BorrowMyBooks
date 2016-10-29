@@ -33,7 +33,7 @@ module.exports = function(app, passport) {
             failureFlash: true
         }),
         function(req, res) {
-            userHelper.logUserAction("signed up", req.user._id, null, null, null);
+            userHelper.logUserAction("Signed up for an account", req.user._id, null, null, null);
             res.redirect(req.session.returnTo || '/');
         });
 
@@ -103,7 +103,7 @@ module.exports = function(app, passport) {
                 logger.warn("user updated info");
                 req.flash('warn', 'User Info Updated');
 
-                userHelper.logUserAction("updated user information", req.user._id, null, null, null);
+                userHelper.logUserAction("You updated user information", req.user._id, null, null, null);
                 res.redirect(req.session.backURL || '/');
             }
         }
@@ -203,7 +203,8 @@ module.exports = function(app, passport) {
 
                 logger.warn("admin updated info");
                 req.flash('warn', 'User Info Updated');
-                userHelper.logUserAction("updated user information", req.user._id, null, null, null);
+                userHelper.logUserAction("Admin updated user information", req.user._id, null, null, null);
+                userHelper.logUserAction("Admin updated user information", req.params.userId, null, null, null);
                 res.redirect('/user/' + req.params.userId);
             }
         }
@@ -211,14 +212,14 @@ module.exports = function(app, passport) {
 
     app.get('/logout', function(req, res) {
         req.logout();
-        req.flash('success', 'Logged out successfully');
+        req.flash('success', 'You logged out successfully');
         req = userHelper.processUser(req, true);
         res.redirect('/');
     });
 
     app.post('/logout', function(req, res) {
         req.logout();
-        req.flash('success', 'Logged out successfully');
+        req.flash('success', 'You logged out successfully');
         userHelper.logUserAction("logged out", req.user._id, null, null, null);
         req = userHelper.processUser(req, true);
         res.redirect('/');

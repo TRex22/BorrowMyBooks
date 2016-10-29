@@ -51,7 +51,7 @@
                     <% if (userLog.length > 0) {%>
                       <% for(var i=0; i<userLog.length && i<10; i++) {%>
                         <tr>
-                          <td><i class="pull-right fa fa-edit"></i> <%= site.moment(userLog[i].date).fromNow(); %> - <%= user.username %> <%= userLog[i].log %>.</td>
+                          <td><i class="pull-right fa fa-edit"></i> <%= site.moment(userLog[i].date).fromNow(); %> - <%= userLog[i].log %>.</td>
                         </tr>
                       <% } %>
                     <%} %>
