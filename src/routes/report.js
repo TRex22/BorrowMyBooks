@@ -11,6 +11,7 @@ var mongoose = require('../config/db.js').mongoose;
 var user = mongoose.model('User', require('../models/user'));
 var userMessage = mongoose.model('UserMessage', require('../models/userMessage'));
 var systemMessage = mongoose.model('SystemMessage', require('../models/systemMessage'));
+var userReport = mongoose.model('UserReport', require('../models/userReport'));
 
 module.exports = function(app, passport) {
     app.get('/admin/reports',
