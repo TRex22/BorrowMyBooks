@@ -2,6 +2,7 @@ var mongoose = require('../config/db.js').mongoose;
 var User = mongoose.model('User', require('../models/user'));
 var UserLog = mongoose.model('UserLog', require('../models/userLog'));
 var Transaction = mongoose.model('Transaction', require('../models/transaction'));
+var userReport = mongoose.model('UserReport', require('../models/userReport'));
 
 var wrap = require('co-express');
 var co = require('co');
@@ -120,7 +121,7 @@ function getPath(req) {
                 return path;
             }
 
-            if (req.route.path.indexOf(":transactionId") > -1 || req.route.path.indexOf(":userId") > -1 || req.route.path.indexOf(":messageId") > -1) {
+            if (req.route.path.indexOf(":userId/reports") > -1 || req.route.path.indexOf(":transactionId") > -1 || req.route.path.indexOf(":userId") > -1 || req.route.path.indexOf(":messageId") > -1) {
                 path = "/"
                 return path;
             }
@@ -298,11 +299,19 @@ function getUserActivity(userId) {
         }));
 
     });
-    /*        var activitySold = yield searchUserLogWithBooks(userId, "");
-            var activityBorrowedAway = yield searchUserLogWithBooks(userId, "");
-            var activityBought = yield searchUserLog(userId, "bought book");
-            var activityRented = yield searchUserLog(userId, "rented book");
-            var activityReturned = yield searchUserLog(userId, "returned book");*/
+}
+
+function getUserReports(userId) {
+    return new Promise(function(resolve, reject) {
+        userReport.find({ userId: userId }).sort({ date: -1 }).exec(function(err, report) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            resolve(report);
+        });
+    });
 }
 
 module.exports = {
@@ -319,5 +328,6 @@ module.exports = {
     logUserAction: logUserAction,
     getUserLog: getUserLog,
     searchUserLog: searchUserLog,
-    getUserActivity: getUserActivity
+    getUserActivity: getUserActivity,
+    getUserReports: getUserReports
 }

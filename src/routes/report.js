@@ -14,42 +14,50 @@ var systemMessage = mongoose.model('SystemMessage', require('../models/systemMes
 var userReport = mongoose.model('UserReport', require('../models/userReport'));
 
 module.exports = function(app, passport) {
-    app.get('/admin/reports',
+    app.get('/profile/reports',
         wrap(function*(req, res, next) {
-            if (userHelper.auth(req, res, app.locals.site, true)) {
-                var messages = {};
+            if (userHelper.auth(req, res, app.locals.site)) {
                 req.user.isMain = true;
-
-/*                messages.systemMessages = yield messageHelper.getSystemMessages(req.user._id, req.user.isAdmin);
-                for (var i = 0; i < messages.systemMessages.length; i++) {
-                    messages.systemMessages[i].admin = yield userHelper.getUser(messages.systemMessages[i].adminId);
-                }
-
-                messages.userMessages = yield messageHelper.getUserMessages(req.user._id, req.user.isAdmin);
-                for (var i = 0; i < messages.userMessages.length; i++) {
-                    messages.userMessages[i].fromuser = yield userHelper.getUser(messages.userMessages[i].fromUserId);
-                    messages.userMessages[i].toUser = yield userHelper.getUser(messages.userMessages[i].toUserId);
-
-                    if (messages.userMessages[i].bookId) {
-                        messages.userMessages[i].book = yield bookHelper.getBook(messages.userMessages[i].bookId);
-                    }
-                }
-
-                if (!messages) messages = {};
-
                 req = userHelper.processUser(req);
-                res.render('messages/messages', { site: app.locals.site, user: req.user, messages: messages, req: req });*/
+
+                var userReports = yield userHelper.getUserReports(req.user._id);
+                for (var i = 0; i < userReports.length; i++) {
+                    if (userReports[i].bookId) {
+                        userReports[i].book = yield bookHelper.getBook(userReports[i].bookId);
+                    }
+
+                    if (userReports[i].transactionId) {
+                        userReports[i].transaction = yield transactionHelper.getTransaction(userReports[i].transactionId);
+                    }
+
+                    userReports[i].reportingUser = yield userHelper.getUser(userReports[i].reportingUserId);
+                }
+
+                res.render('reports/user-reports', { site: app.locals.site, user: req.user, userReports: userReports, req: req });
             }
         })
     );
 
-    app.get('/user/:userId/report',
-        function(req, res, next) {
-            if (userHelper.auth(req, res, app.locals.site)) {
+    app.get('/user/:userId/reports',
+        wrap(function*(req, res, next) {
+            if (userHelper.auth(req, res, app.locals.site, true)) {
                 req = userHelper.processUser(req);
-                /*res.render('messages/user-message', { site: app.locals.site, user: req.user, req: req, userId: req.params.userId });*/
+                var userReports = yield userHelper.getUserReports(req.params.userId);
+                for (var i = 0; i < userReports.length; i++) {
+                    if (userReports[i].bookId) {
+                        userReports[i].book = yield bookHelper.getBook(userReports[i].bookId);
+                    }
+
+                    if (userReports[i].transactionId) {
+                        userReports[i].transaction = yield transactionHelper.getTransaction(userReports[i].transactionId);
+                    }
+
+                    userReports[i].reportingUser = yield userHelper.getUser(userReports[i].reportingUserId);
+                }
+
+                res.render('reports/user-reports', { site: app.locals.site, user: req.user, userReports: userReports, req: req });
             }
-        }
+        })
     );
 
     app.post('/user/:userId/report', function(req, res, next) {

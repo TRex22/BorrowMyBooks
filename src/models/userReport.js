@@ -14,7 +14,7 @@ var userReportSchema = mongoose.Schema({
         reportClosed: Boolean
 }, { strict: false, collection: 'UserReport' });
 
-mongoose.model('UserReport', userMessageSchema);
+mongoose.model('UserReport', userReportSchema);
 var userReport = mongoose.model('UserReport');
 
 module.exports = userReport;

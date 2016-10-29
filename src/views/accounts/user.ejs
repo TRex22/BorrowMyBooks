@@ -82,11 +82,18 @@
               <% if(!user.isMain) { %>
                 <% if(user.username !== userInfo) { %>
                   <div>
+                    <a href="/user/<%= userInfo._id %>/reports" class="btn btn-primary" style="color: red;"> Reports Against User</a> 
                     <a href="/user/<%= userInfo._id %>/message" class="btn btn-primary" style="color: grey;"> Message User</a> <br/>
                       <%- include('../partials/rate') %>
                     <a type="button" data-toggle="modal" data-target="#rateModal" class="btn btn-secondary" style="color: grey;"> Rate User</a>                     
                   </div>
                 <% } %>
+              <% } %>
+
+              <% if(user.isMain) { %>
+                  <div>
+                    <a href="/profile/reports" class="btn btn-primary" style="color: red;"> Reports Against Me</a> 
+                  </div>
               <% } %>
 
          </div>
