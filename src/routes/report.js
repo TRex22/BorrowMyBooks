@@ -63,61 +63,81 @@ module.exports = function(app, passport) {
     app.post('/user/:userId/report', function(req, res, next) {
         if (userHelper.auth(req, res, app.locals.site)) {
             req.user.isMain = true;
-
-            /*var iUserMessage = new userMessage({
-                message: req.body.message,
-                date: new Date(),
-                priority: req.body.priority,
-                adminId: null,
-                fromUserId: req.user._id,
-                toUserId: req.params.userId,
-                bookId: null,
-                transactionId: null
-            });
-            iUserMessage.save();
-
-            logger.warn("created user message");
-
             req = userHelper.processUser(req);
-            req.flash('success', "created message to userid: " + req.params.userId);
 
-            res.redirect(req.session.returnTo || '/');*/
+            var iUserReport = new userReport({
+                message: req.body.message,
+                reason: ["user"],
+                priority: req.body.priority,
+                date: new Date(),
+                adminId: null,
+                reportingUserId: req.user._id,
+                userId: req.params.userId,
+                bookId: null,
+                transactionId: null,
+                reportClosed: false
+            });
+            iUserReport.save();
+
+            logger.warn("reported user");
+            req.flash('success', "reported userid: " + req.params.userId);
+
+            res.redirect(req.session.returnTo || '/');
         }
     });
-
-
-    app.get('/transaction/:transactionId/report',
-        function(req, res, next) {
-            if (userHelper.auth(req, res, app.locals.site)) {
-                req = userHelper.processUser(req);
-                /*res.render('messages/transaction-message', { site: app.locals.site, user: req.user, req: req, transactionId: req.params.transactionId });*/
-            }
-        }
-    );
 
     app.post('/transaction/:transactionId/report', wrap(function*(req, res, next) {
         if (userHelper.auth(req, res, app.locals.site)) {
             req.user.isMain = true;
             req = userHelper.processUser(req);
 
-            // var transaction = yield transactionHelper.getTransaction(req.params.transactionId);
+            var transaction = yield transactionHelper.getTransaction(req.params.transactionId);
+            var book = yield bookHelper.getBook(transaction.bookId);
 
-            // var iUserMessage = new userMessage({
-            //     message: req.body.message,
-            //     date: new Date(),
-            //     priority: req.body.priority,
-            //     adminId: null,
-            //     fromUserId: transaction.fromUserId,
-            //     toUserId: transaction.toUserId,
-            //     bookId: transaction.bookId,
-            //     transactionId: req.params.transactionId
-            // });
-            // iUserMessage.save();
+            var iUserReport = new userReport({
+                message: req.body.message,
+                reason: ["transaction"],
+                priority: req.body.priority,
+                date: new Date(),
+                adminId: null,
+                reportingUserId: req.user._id,
+                userId: transaction.fromUserId, //todo: jmc check
+                bookId: transaction.bookId,
+                transactionId: req.params.transactionId,
+                reportClosed: false
+            });
+            iUserReport.save();
 
-            // logger.warn("created user message for a transaction");
+            logger.warn("reported user");
+            req.flash('success', "reported user");
 
-            // req.flash('success', "created message for transactionID: " + req.params.transactionId);
-            // res.redirect(req.session.returnTo || '/');
+            res.redirect(req.session.returnTo || '/');
+        }
+    }));
+
+    app.post('/book/:bookId/report', wrap(function*(req, res, next) {
+        if (userHelper.auth(req, res, app.locals.site)) {
+            req.user.isMain = true;
+            req = userHelper.processUser(req);
+
+            var book = yield bookHelper.getBook(req.params.bookId);
+
+            var iUserReport = new userReport({
+                message: req.body.message,
+                reason: ["book"],
+                priority: req.body.priority,
+                date: new Date(),
+                adminId: null,
+                reportingUserId: req.user._id,
+                userId: book.userId, 
+                bookId: req.params.bookId,
+                transactionId: null,
+                reportClosed: false
+            });
+            iUserReport.save();
+
+            logger.warn("reported user");
+            req.flash('success', "reported user");
         }
     }));
 }
