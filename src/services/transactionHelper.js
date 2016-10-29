@@ -1,6 +1,7 @@
 /* jshint node: true */
 var logger = require("../logger/logger");
 var wrap = require('co-express');
+var co = require('co');
 
 var bookHelper = require('../services/bookHelper.js');
 var userHelper = require('../services/userHelper.js');
@@ -93,7 +94,7 @@ function checkIfBookNeedsToBeReturned(userId, bookId) {
 
             for (var i = 0; i < transactions.length; i++) {
                 try {
-                    if (transactions[i].isRent && transactions[i].amountToReturn > 0) { 
+                    if (transactions[i].isRent && transactions[i].amountToReturn > 0) {
                         numberToReturn += transactions[i].amountToReturn;
                     }
 
@@ -120,7 +121,7 @@ function checkIfOwnBookHasBeenRented(userId, bookId) {
 
             for (var i = 0; i < transactions.length; i++) {
                 try {
-                    if (transactions[i].isRent && transactions[i].amountToReturn > 0) { 
+                    if (transactions[i].isRent && transactions[i].amountToReturn > 0) {
                         numberToReturn += transactions[i].amountToReturn;
                     }
 

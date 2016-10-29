@@ -121,7 +121,7 @@ function getPath(req) {
                 return path;
             }
 
-            if (req.route.path.indexOf(":userId/reports") > -1 || req.route.path.indexOf(":transactionId") > -1 || req.route.path.indexOf(":userId") > -1 || req.route.path.indexOf(":messageId") > -1) {
+            if (req.route.path.indexOf(":bookId") > -1 || req.route.path.indexOf(":userId/reports") > -1 || req.route.path.indexOf(":transactionId") > -1 || req.route.path.indexOf(":userId") > -1 || req.route.path.indexOf(":messageId") > -1) {
                 path = "/"
                 return path;
             }

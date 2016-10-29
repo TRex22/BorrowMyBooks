@@ -138,6 +138,8 @@ module.exports = function(app, passport) {
 
             logger.warn("reported user");
             req.flash('success', "reported user");
+
+            res.redirect(req.session.returnTo || '/');
         }
     }));
 }

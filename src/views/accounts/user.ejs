@@ -96,11 +96,50 @@
                   </div>
               <% } %>
 
+              <% if(!user.isMain) { %>
+                    <button type="button" class="btn btn-lg btn-rent btn-error" data-toggle="modal" data-target="#reportModal">
+                      Report
+                    </button>
+              <% } %>                    
+
          </div>
           
         </div>
       </div>
 
+    </div>
+
+    <!-- Report Modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1" role="document">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Report <%= user.username %></h4>
+          </div>
+
+          <form role="form" action="/user/<%= user._id %>/report" method="post" class="box">        
+            <div class="modal-body new-book">
+                <div class="form-group">
+                  <label for="summary">Message:</label>
+                  <textarea class="form-control" tabindex="1" rows="5" name="message" required></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-sm-2" for="defaultProfilePictureURL">Priority: </label>
+                  <div class="col-sm-10">
+                    <input type="number" class="form-control" tabindex="1" data-toggle="tooltip" title="Priority" placeholder="Priority" name="priority" value="1" min="1" max="10">
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary btn-light-green">Report</button>            
+            </div>
+
+          </form>
+        </div>
+      </div>
     </div>
 
 </div>
