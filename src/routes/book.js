@@ -16,7 +16,7 @@ var bookHelper = require('../services/bookHelper.js');
 var Book = mongoose.model('Book', require('../models/book'));
 var transaction = require('../models/transaction');
 var Transaction = mongoose.model('Transaction', transaction);
-var user = mongoose.model('User', require('../models/user'));
+var User = mongoose.model('User', require('../models/user'));
 
 module.exports = function(app, passport) {
     app.get('/book/new', function(req, res, next) {
@@ -98,7 +98,7 @@ module.exports = function(app, passport) {
                                 /*book.isOnLoan = true;*/
                                 book.save();
 
-                                user.findOne({ _id: req.user._id },
+                                User.findOne({ _id: req.user._id },
                                     function(err, user) {
                                         /* istanbul ignore next */
                                         if (err) {
@@ -108,9 +108,21 @@ module.exports = function(app, passport) {
                                         user.money -= parseFloat(loanPrice);
                                         user.save();
 
-                                        req.flash('success', book.title + " successfully rented.");
-                                        userHelper.logUserAction("rented book", req.user._id, book._id, null, null);
-                                        res.redirect('/book/' + req.params.bookId);
+                                        User.findOne({ _id: book.userId },
+                                            function(err, seller) {
+                                                /* istanbul ignore next */
+                                                if (err) {
+                                                    logger.error(err);
+                                                }
+
+                                                seller.money += parseFloat(loanPrice);
+                                                seller.save();
+
+                                                req.flash('success', book.title + " successfully rented.");
+                                                userHelper.logUserAction("rented book", req.user._id, book._id, null, null);
+                                                res.redirect('/book/' + req.params.bookId);
+                                            }
+                                        );
                                     }
                                 );
                             } else {
@@ -212,8 +224,8 @@ module.exports = function(app, passport) {
 
                                 book.noAvailable = book.noAvailable - req.body.amount;
                                 book.save();
-
-                                user.findOne({ _id: req.user._id },
+                                
+                                User.findOne({ _id: req.user._id },
                                     function(err, user) {
                                         /* istanbul ignore next */
                                         if (err) {
@@ -223,10 +235,22 @@ module.exports = function(app, passport) {
                                         user.money -= parseFloat(sellingPrice);
                                         user.save();
 
+                                        User.findOne({ _id: book.userId },
+                                            function(err, seller) {
+                                                /* istanbul ignore next */
+                                                if (err) {
+                                                    logger.error(err);
+                                                }
 
-                                        req.flash('success', book.title + " successfully purchased.");
-                                        userHelper.logUserAction("bought book", req.user._id, book._id, null, null);
-                                        res.redirect('/book/' + req.params.bookId);
+                                                seller.money += parseFloat(sellingPrice);
+                                                seller.save();
+
+
+                                                req.flash('success', book.title + " successfully purchased.");
+                                                userHelper.logUserAction("bought book", req.user._id, book._id, null, null);
+                                                res.redirect('/book/' + req.params.bookId);
+                                            }
+                                        );
                                     }
                                 );
 
