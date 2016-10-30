@@ -16,7 +16,8 @@ var userSchema = mongoose.Schema({
         picUrl: String,
         userRole: [String],
         lastLoginDate: Date,
-        registrationDate: Date
+        registrationDate: Date,
+        money: Number
 }, { strict: false, collection: 'User' });
 
 
