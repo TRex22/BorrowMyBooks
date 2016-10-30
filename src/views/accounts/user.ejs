@@ -16,10 +16,12 @@
             <li class="list-group-item text-muted">Profile</li>
             <li class="list-group-item center-align"><img src= <% if (user.picUrl) {%> <%= user.picUrl %> <%} else{%> <%= site.defaults.DefaultProfilePictureURL %> <%} %> width="100%" height="100%" /></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Username</strong></span> <%= user.username %></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Money</strong></span> R<%= user.money %>.00</li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Name</strong></span> <%= user.name %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Email</strong></span> <%= user.email %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Address</strong></span> <%= user.address %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Phone</strong></span> <%= user.phone %></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Is Student?</strong></span> <%= user.isStudent %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Last Seen</strong></span> <%= site.moment(user.lastLoginDate).format('LLL'); %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> <%= site.moment(user.registrationDate).format('LLL'); %></li>
           </ul>               

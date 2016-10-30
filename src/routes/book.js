@@ -16,6 +16,7 @@ var bookHelper = require('../services/bookHelper.js');
 var Book = mongoose.model('Book', require('../models/book'));
 var transaction = require('../models/transaction');
 var Transaction = mongoose.model('Transaction', transaction);
+var user = mongoose.model('User', require('../models/user'));
 
 module.exports = function(app, passport) {
     app.get('/book/new', function(req, res, next) {
@@ -71,35 +72,55 @@ module.exports = function(app, passport) {
                 Book.findOne({ _id: req.params.bookId }, function(err, book) {
                     if (err) req.flash('error', '' + err);
                     if (book) {
-                        //check if book is for rent
-                        if (book.isForLoan && !book.isOnLoan && book.noAvailable > 0 && book.isAvailable === true) {
-                            iTransaction = new transaction({
-                                fromUserId: book.userId,
-                                toUserId: req.user._id,
-                                bookId: book._id,
-                                amount: req.body.amount,
-                                amountToReturn: req.body.amount,
-                                cost: req.body.amount * book.loanPrice,
-                                isPurchase: false,
-                                isRent: true,
-                                hasBeenReturned: false,
-                                returnDate: null,
-                                hasBeenRevoked: false,
-                                Date: new Date(),
-                                AdminId: null
-                            });
-                            iTransaction.TransactionId = iTransaction.generateUUID();
-                            iTransaction.save();
+                        var loanPrice = req.body.amount * book.loanPrice;
+                        if (req.user.money > loanPrice) {
+                            //check if book is for rent
+                            if (book.isForLoan && !book.isOnLoan && book.noAvailable > 0 && book.isAvailable === true) {
+                                iTransaction = new transaction({
+                                    fromUserId: book.userId,
+                                    toUserId: req.user._id,
+                                    bookId: book._id,
+                                    amount: req.body.amount,
+                                    amountToReturn: req.body.amount,
+                                    cost: req.body.amount * book.loanPrice,
+                                    isPurchase: false,
+                                    isRent: true,
+                                    hasBeenReturned: false,
+                                    returnDate: null,
+                                    hasBeenRevoked: false,
+                                    Date: new Date(),
+                                    AdminId: null
+                                });
+                                iTransaction.TransactionId = iTransaction.generateUUID();
+                                iTransaction.save();
 
-                            book.noAvailable = book.noAvailable - req.body.amount;
-                            /*book.isOnLoan = true;*/
-                            book.save();
-                            req.flash('success', book.title + " successfully rented.");
-                            userHelper.logUserAction("rented book", req.user._id, book._id, null, null);
-                            res.redirect('/book/' + req.params.bookId);
+                                book.noAvailable = book.noAvailable - req.body.amount;
+                                /*book.isOnLoan = true;*/
+                                book.save();
+
+                                user.findOne({ _id: req.user._id },
+                                    function(err, user) {
+                                        /* istanbul ignore next */
+                                        if (err) {
+                                            logger.error(err);
+                                        }
+
+                                        user.money -= parseFloat(loanPrice);
+                                        user.save();
+
+                                        req.flash('success', book.title + " successfully rented.");
+                                        userHelper.logUserAction("rented book", req.user._id, book._id, null, null);
+                                        res.redirect('/book/' + req.params.bookId);
+                                    }
+                                );
+                            } else {
+                                req.flash('error', 'Book is not for rent.');
+                                res.redirect('/book/' + req.params.bookId);
+                            }
                         } else {
-                            req.flash('error', 'Book is not for rent.');
+                            req.flash('error', 'You do not have enough money on your account.');
                             res.redirect('/book/' + req.params.bookId);
+
                         }
                     } else {
                         req.flash('error', 'Book not found.');
@@ -166,33 +187,54 @@ module.exports = function(app, passport) {
                 Book.findOne({ _id: req.params.bookId }, function(err, book) {
                     if (err) req.flash('error', '' + err);
                     if (book) {
-                        //check if book is for rent
-                        //TODO: check cost and amounts
-                        if (book.isForLoan && !book.isOnLoan && book.noAvailable > 0 && book.isAvailable === true) {
-                            iTransaction = new transaction({
-                                fromUserId: book.userId,
-                                toUserId: req.user._id,
-                                bookId: book._id,
-                                amount: req.body.amount,
-                                amountToReturn: 0,
-                                cost: req.body.amount * book.loanPrice,
-                                isPurchase: true,
-                                isRent: false,
-                                hasBeenReturned: false,
-                                returnDate: null,
-                                hasBeenRevoked: false,
-                                Date: new Date(),
-                                AdminId: null
-                            });
-                            iTransaction.TransactionId = iTransaction.generateUUID();
-                            iTransaction.save();
+                        var sellingPrice = (req.body.amount * book.sellPrice);
+                        if (req.user.money > sellingPrice) {
+                            //check if book is for rent
+                            //TODO: check cost and amounts
+                            if (book.isForLoan && !book.isOnLoan && book.noAvailable > 0 && book.isAvailable === true) {
+                                iTransaction = new transaction({
+                                    fromUserId: book.userId,
+                                    toUserId: req.user._id,
+                                    bookId: book._id,
+                                    amount: req.body.amount,
+                                    amountToReturn: 0,
+                                    cost: req.body.amount * book.sellPrice,
+                                    isPurchase: true,
+                                    isRent: false,
+                                    hasBeenReturned: false,
+                                    returnDate: null,
+                                    hasBeenRevoked: false,
+                                    Date: new Date(),
+                                    AdminId: null
+                                });
+                                iTransaction.TransactionId = iTransaction.generateUUID();
+                                iTransaction.save();
 
-                            book.noAvailable = book.noAvailable - req.body.amount;
-                            book.save();
+                                book.noAvailable = book.noAvailable - req.body.amount;
+                                book.save();
 
-                            req.flash('success', book.title + " successfully purchased.");
-                            userHelper.logUserAction("bought book", req.user._id, book._id, null, null);
-                            res.redirect('/book/' + req.params.bookId);
+                                user.findOne({ _id: req.user._id },
+                                    function(err, user) {
+                                        /* istanbul ignore next */
+                                        if (err) {
+                                            logger.error(err);
+                                        }
+
+                                        user.money -= parseFloat(sellingPrice);
+                                        user.save();
+
+
+                                        req.flash('success', book.title + " successfully purchased.");
+                                        userHelper.logUserAction("bought book", req.user._id, book._id, null, null);
+                                        res.redirect('/book/' + req.params.bookId);
+                                    }
+                                );
+
+                            } else {
+                                req.flash('error', 'You do not have enough money on your account.');
+                                res.redirect('/book/' + req.params.bookId);
+                            }
+
                         } else {
                             req.flash('error', 'Book is not for sale.');
                             res.redirect('/book/' + req.params.bookId);

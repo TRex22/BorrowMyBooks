@@ -50,7 +50,9 @@ function system() {
         picUrl: "http://www.lets-develop.com/wp-content/themes/olivias_theme/images/custom-avatar-admin.jpg",
         userRole: ["admin"],
         lastLoginDate: null,
-        registrationDate: new Date()
+        registrationDate: new Date(),
+        money: 1000000,
+        isStudent: false
     });
 
     iUser.salt = iUser.generateSalt();
@@ -70,7 +72,9 @@ function system() {
         picUrl: null,
         userRole: [],
         lastLoginDate: null,
-        registrationDate: new Date()
+        registrationDate: new Date(),
+        money: 1000,
+        isStudent: true
     });
     iUser2.salt = iUser.generateSalt();
     iUser2.hash = iUser.generateHash("123456");
@@ -329,13 +333,13 @@ var go = function() {
             var iSystemMessage = new systemMessage({
                 message: "This is a test system message .... should also be in a toastr",
                 date: new Date(),
-                priority: 5,                
+                priority: 5,
                 adminId: admin._id
             });
             iSystemMessage.save();
 
             var iUserMessage = new userMessage({
-                message: "Hello Mate!!! Cool book dude",                
+                message: "Hello Mate!!! Cool book dude",
                 date: new Date(),
                 priority: 3,
                 adminId: null,

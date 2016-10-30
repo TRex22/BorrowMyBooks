@@ -354,6 +354,25 @@ function getReportedUsers() {
     });
 }
 
+function updateUserMoney(userId, money) {
+    return new Promise(function(resolve, reject) {
+        user.findOne({ _id: userId },
+            function(err, user) {
+                /* istanbul ignore next */
+                if (err) {
+                    logger.error(err);
+                } 
+
+                user.money -= parseFloat(money);
+                user.save();
+
+                resolve(true);
+            }
+        );
+
+    });
+}
+
 module.exports = {
     isAdmin: isAdmin,
     processUser: processUser,
@@ -371,5 +390,6 @@ module.exports = {
     searchUserLog: searchUserLog,
     getUserActivity: getUserActivity,
     getUserReports: getUserReports,
-    getReportedUsers: getReportedUsers
+    getReportedUsers: getReportedUsers,
+    updateUserMoney: updateUserMoney
 }

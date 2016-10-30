@@ -210,6 +210,44 @@ module.exports = function(app, passport) {
         }
     );
 
+    app.get('/deposit',
+        wrap(function*(req, res, next) {
+            if (userHelper.auth(req, res, app.locals.site)) {
+                req.user.isMain = true;
+                req = userHelper.processUser(req);
+
+                res.render('accounts/deposit', { site: app.locals.site, user: req.user, req: req });
+            }
+        })
+    );
+
+    app.post('/deposit',
+        function(req, res, next) {
+            if (userHelper.auth(req, res, app.locals.site)) {
+                user.isMain = true;
+
+                user.findOne({ _id: req.user._id },
+                    function(err, user) {
+                        /* istanbul ignore next */
+                        if (err) {
+                            logger.error(err);
+                            throw err;
+                        } //todo fix
+
+                        user.money += parseFloat(req.body.money);
+
+                        user.save();
+                    }
+                );
+
+                logger.warn("Deposited R" + req.body.money);
+                req.flash('success', "Deposited R" + req.body.money);
+                userHelper.logUserAction("You deposited R" + req.body.money, req.user._id, null, null, null);
+                res.redirect('/');
+            }
+        }
+    );
+
     app.get('/logout', function(req, res) {
         req.logout();
         req.flash('success', 'You logged out successfully');
