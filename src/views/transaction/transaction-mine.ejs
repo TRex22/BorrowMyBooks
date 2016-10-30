@@ -17,7 +17,7 @@
             <div class="panel-heading" role="tab" id="heading-<%= toTransactions[i]._id %>">
               <h4 class="panel-title">
                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= toTransactions[i]._id %>" aria-expanded="false" aria-controls="<%= toTransactions[i]._id %>">
-                  Transaction #<%= i+1 %>
+                  Purchase Transaction #<%= i+1 %>
                 </a>
               </h4>
             </div>
@@ -59,7 +59,7 @@
                     <div>
                       <a href="/transaction/<%= toTransactions[i]._id %>/message" class="btn btn-primary" style="color: grey;"> Message Owner</a>
                       <a type="button" data-toggle="modal" data-target="#rateModal<%= i %>" class="btn btn-secondary" style="color: grey;"> Rate Transaction</a> 
-                      <button type="button" class="btn btn-lg btn-report btn-danger" data-toggle="modal" data-target="#reportModal">Report</button>
+                      <button type="button" class="btn btn-report btn-danger" data-toggle="modal" data-target="#reportModal">Report Purchase Transaction</button>
 
                       <!-- Modal -->
                       <div class="modal fade" id="rateModal<%= i %>" tabindex="-1" role="document">
@@ -97,7 +97,7 @@
                           <div class="modal-content">
                             <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title" id="myModalLabel">Report Transaction #<%= i+1 %></h4>
+                              <h4 class="modal-title" id="myModalLabel">Report Purchase Transaction #<%= i+1 %></h4>
                             </div>
 
                             <form role="form" action="/transaction/<%= toTransactions[i]._id %>/report" method="post" class="box">        
@@ -150,7 +150,7 @@
             <div class="panel-heading" role="tab" id="heading-<%= fromTransactions[i]._id %>">
               <h4 class="panel-title">
                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= fromTransactions[i]._id %>" aria-expanded="false" aria-controls="<%= fromTransactions[i]._id %>">
-                  Transaction #<%= i+1 %>
+                  Trading Transaction #<%= i+1 %>
                 </a>
               </h4>
             </div>
@@ -191,9 +191,7 @@
 
                     <div>
                       <a href="/transaction/<%= fromTransactions[i]._id %>/message" class="btn btn-primary" style="color: grey;"> Message Customer</a>
-                      <button type="button" class="btn btn-lg btn-report btn-danger" data-toggle="modal" data-target="#reportModal">
-                        Report
-                      </button>
+                      <button type="button" class="btn btn-report btn-danger" data-toggle="modal" data-target="#reportModal">Report Trading Transaction</button>
 
                       <!-- Report Modal -->
                       <div class="modal fade" id="reportModal" tabindex="-1" role="document">
@@ -201,7 +199,7 @@
                           <div class="modal-content">
                             <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title" id="myModalLabel">Report Transaction #<%= i+1 %></h4>
+                              <h4 class="modal-title" id="myModalLabel">Report Trading Transaction #<%= i+1 %></h4>
                             </div>
 
                             <form role="form" action="/transaction/<%= fromTransactions[i]._id %>/report" method="post" class="box">        

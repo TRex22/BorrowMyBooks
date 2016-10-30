@@ -80,10 +80,6 @@
                         Return
                       </button>
                     <% } %>
-
-                    <button type="button" class="btn btn-lg btn-report btn-danger" data-toggle="modal" data-target="#reportModal">Report</button>
-
-
                       <div class="noAvailable text-muted">
                         There <% if(book.noAvailable == 1) {%>is <% } else {%>are <% } %> <%= book.noAvailable %> available.
                     </div>
@@ -99,6 +95,9 @@
                     <% } %>
                     
                     <% } else {%> <div class="noAvailable text-muted">There are none available.</div> <% } %>
+
+                    <br/><br/><br/>
+                    <button type="button" class="btn btn-lg btn-report btn-danger" data-toggle="modal" data-target="#reportModal">Report Book</button>
                 </div>
               </div>
             </div>
