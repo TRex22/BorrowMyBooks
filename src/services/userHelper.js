@@ -184,6 +184,19 @@ function getUser(userId) {
     });
 }
 
+function getUsers() {
+    return new Promise(function(resolve, reject) {
+        User.find({}, function(err, users) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            resolve(users);
+        });
+    });
+}
+
 function findUser(userIdent) {
     return new Promise(function(resolve, reject) {
         User.findOne({ $or: [{ username: userIdent }, { email: userIdent }, { name: userIdent }] }, function(err, user) {
@@ -302,13 +315,41 @@ function getUserActivity(userId) {
 
 function getUserReports(userId) {
     return new Promise(function(resolve, reject) {
-        userReport.find({ userId: userId }).sort({ date: -1 }).exec(function(err, report) {
+        userReport.find({ userId: userId }).sort({ date: -1 }).exec(function(err, reports) {
             /* istanbul ignore next */
             if (err) {
                 return reject(err);
             }
 
-            resolve(report);
+            resolve(reports);
+        });
+    });
+}
+
+function getReportedUsers() {
+    return new Promise(function(resolve, reject) {
+        userReport.find({}).sort({ date: -1 }).exec(function(err, reports) {
+            /* istanbul ignore next */
+            if (err) {
+                return reject(err);
+            }
+
+            var closedReports = [];
+            var openReports = [];
+
+            for (var i = 0; i < reports.length; i++) {
+                if (reports[i].reportClosed) {
+                    closedReports.push(reports[i]);
+                } else {
+                    openReports.push(reports[i]);
+                }
+            }
+
+            var userReports = {
+                openReports: openReports,
+                closedReports: closedReports
+            };
+            resolve(userReports)
         });
     });
 }
@@ -321,6 +362,7 @@ module.exports = {
     auth: auth,
     createNewUser: createNewUser,
     getUser: getUser,
+    getUsers: getUsers,
     findUser: findUser,
     findUsername: findUsername,
     getPath: getPath,
@@ -328,5 +370,6 @@ module.exports = {
     getUserLog: getUserLog,
     searchUserLog: searchUserLog,
     getUserActivity: getUserActivity,
-    getUserReports: getUserReports
+    getUserReports: getUserReports,
+    getReportedUsers: getReportedUsers
 }
