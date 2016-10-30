@@ -17,7 +17,8 @@ var userSchema = mongoose.Schema({
         userRole: [String],
         lastLoginDate: Date,
         registrationDate: Date,
-        money: Number
+        money: Number,
+        isStudent: Boolean
 }, { strict: false, collection: 'User' });
 
 
