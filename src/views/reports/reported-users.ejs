@@ -5,41 +5,42 @@
    <%- include('../partials/navbar') %>
     
     <h1 class="center-align">Reports</h1>
-
-    <h2><span class="glyphicon glyphicon-envelope" style="color: grey;" aria-hidden="true"></span> Open Reports</h2>
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    
-    <% if(reportedUsers.openReports.length > 0) { %>
-      <% for(var i=0; i<reportedUsers.openReports.length; i++) { %>
+  
+    <% if(reports.openReports.length > 0) { %>
+      <h2><span class="glyphicon glyphicon-envelope" style="color: grey;" aria-hidden="true"></span> Open Reports</h2>
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      
+      <% for(var i=0; i<reports.openReports.length; i++) { %>
           <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="heading-<%= reportedUsers.openReports[i]._id %>">
+            <div class="panel-heading" role="tab" id="heading-<%= reports.openReports[i]._id %>">
               <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= reportedUsers.openReports[i]._id %>" aria-expanded="false" aria-controls="<%= reportedUsers.openReports[i]._id %>">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= reports.openReports[i]._id %>" aria-expanded="false" aria-controls="<%= reports.openReports[i]._id %>">
                   User Report #<%= i+1 %>
                 </a>
               </h4>
             </div>
-            <div id="<%= reportedUsers.openReports[i]._id %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-<%= reportedUsers.openReports[i]._id %>">
+            <div id="<%= reports.openReports[i]._id %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-<%= reports.openReports[i]._id %>">
               <div class="panel-body">
                 <h3>Report Details</h3>
                 <ul>
-                    <li>Date: <%= site.moment(reportedUsers.openReports[i].date) %></li>
-                    <li>Message: <%= reportedUsers.openReports[i].message %></li>
-                    <li>Priority: <%= reportedUsers.openReports[i].priority %></li>
-                    <li>Reporting User: <a href="/user/<%= reportedUsers.openReports[i].reportingUserId %>"><%= reportedUsers.openReports[i].reportingUser.username %></a></li>
-                    <% if (reportedUsers.openReports[i].bookId) { %>
-                     <li>Book: <a href="/book/<%= reportedUsers.openReports[i].bookId %>"><%= reportedUsers.openReports[i].book.title %></a></li>
+                    <li>Date: <%= site.moment(reports.openReports[i].date) %></li>
+                    <li>Message: <%= reports.openReports[i].message %></li>
+                    <li>Reason: <%= reports.openReports[i].reason %></li>
+                    <li>Priority: <%= reports.openReports[i].priority %></li>
+                    <li>Reporting User: <a href="/user/<%= reports.openReports[i].reportingUserId %>"><%= reports.openReports[i].reportingUser.username %></a></li>
+                    <% if (reports.openReports[i].bookId) { %>
+                     <li>Book: <a href="/book/<%= reports.openReports[i].bookId %>"><%= reports.openReports[i].book.title %></a></li>
                     <% } %>
-                    <% if (reportedUsers.openReports[i].transactionId) { %>
-                     <li>Transaction: <%= reportedUsers.openReports[i].transactionId %></li>
+                    <% if (reports.openReports[i].transactionId) { %>
+                     <li>Transaction: <%= reports.openReports[i].transactionId %></li>
                     <% } %>
                    
                     <li>Report Been Resolved?: 
-                      <% if(reportedUsers.openReports[i].reportClosed) { %>
+                      <% if(reports.openReports[i].reportClosed) { %>
                         true
                       <% } %>  
 
-                      <% if(!reportedUsers.openReports[i].reportClosed) { %>
+                      <% if(!reports.openReports[i].reportClosed) { %>
                         false
                       <% } %>
                    
@@ -51,7 +52,54 @@
       <% } %>
     <% } %>
 
-    <% if(reportedUsers.length === 0) { %>
+    
+    <% if(reports.closedReports.length > 0) { %>
+      <h2><span class="glyphicon glyphicon-envelope" style="color: grey;" aria-hidden="true"></span> Closed Reports</h2>
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+      <% for(var i=0; i<reports.closedReports.length; i++) { %>
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-<%= reports.closedReports[i]._id %>">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= reports.closedReports[i]._id %>" aria-expanded="false" aria-controls="<%= reports.closedReports[i]._id %>">
+                  User Report #<%= i+1 %>
+                </a>
+              </h4>
+            </div>
+            <div id="<%= reports.closedReports[i]._id %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-<%= reports.closedReports[i]._id %>">
+              <div class="panel-body">
+                <h3>Report Details</h3>
+                <ul>
+                    <li>Date: <%= site.moment(reports.closedReports[i].date) %></li>
+                    <li>Message: <%= reports.closedReports[i].message %></li>
+                    <li>Reason: <%= reports.closedReports[i].reason %></li>
+                    <li>Priority: <%= reports.closedReports[i].priority %></li>
+                    <li>Reporting User: <a href="/user/<%= reports.closedReports[i].reportingUserId %>"><%= reports.closedReports[i].reportingUser.username %></a></li>
+                    <% if (reports.closedReports[i].bookId) { %>
+                     <li>Book: <a href="/book/<%= reports.closedReports[i].bookId %>"><%= reports.closedReports[i].book.title %></a></li>
+                    <% } %>
+                    <% if (reports.closedReports[i].transactionId) { %>
+                     <li>Transaction: <%= reports.closedReports[i].transactionId %></li>
+                    <% } %>
+                   
+                    <li>Report Been Resolved?: 
+                      <% if(reports.closedReports[i].reportClosed) { %>
+                        true
+                      <% } %>  
+
+                      <% if(!reports.closedReports[i].reportClosed) { %>
+                        false
+                      <% } %>
+                   
+                    </li>   
+                </ul>
+              </div>
+            </div>
+          </div>
+      <% } %>
+    <% } %>
+
+    <% if(reports.openReports.length === 0 && reports.closedReports.length === 0) { %>
       <p class="text-muted">No User's Have Been Reported.</p>
     <% } %>
 

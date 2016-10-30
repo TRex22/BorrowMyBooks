@@ -9,6 +9,7 @@ var userHelper = require('../services/userHelper.js');
 var statHelper = require('../services/statHelper.js');
 
 var wrap = require('co-express');
+var util = require('util');
 
 var mongoose = require('../config/db.js').mongoose;
 var sysDefault = mongoose.model('SystemDefaults', require('../models/systemDefaults'));
@@ -16,6 +17,8 @@ var userHelper = require('../services/userHelper');
 var messageHelper = require('../services/messageHelper');
 var userMessage = mongoose.model('UserMessage', require('../models/userMessage'));
 var systemMessage = mongoose.model('SystemMessage', require('../models/systemMessage'));
+var transactionHelper = require('../services/transactionHelper.js');
+var bookHelper = require('../services/bookHelper.js');
 
 module.exports = function(app, passport) {
     app.get('/admin',
@@ -61,33 +64,65 @@ module.exports = function(app, passport) {
 
     app.get('/admin/reported-users',
         wrap(function*(req, res, next) {
-
+            /* istanbul ignore next */
             if (userHelper.auth(req, res, app.locals.site, true)) {
                 req = userHelper.processUser(req);
 
                 var reportedUsers = yield userHelper.getReportedUsers();
-                for (var i = 0; i < reportedUsers.openReports; i++) {
+                var openReports = [];
+                var closedReports = [];
+                var report = {};
+
+                for (var i = 0; i < reportedUsers.openReports.length; i++) {
+                    report = reportedUsers.openReports[i];
+
                     if (reportedUsers.openReports[i].adminId) {
-                        reportedUsers.openReports[i].admin = yield userHelper.getUser(reportedUsers.openReports[i].adminId);
+                        report.admin = yield userHelper.getUser(reportedUsers.openReports[i].adminId);
+
                     }
 
-                    reportedUsers.openReports[i].reportingUser = yield userHelper.getUser(reportedUsers.openReports[i].reportingUserId);
-                    reportedUsers.openReports[i].user = yield userHelper.getUser(reportedUsers.openReports[i].userId);
-                    reportedUsers.openReports[i].book = yield bookHelper.getBook(reportedUsers.openReports[i].bookId);
-                    reportedUsers.openReports[i].transaction = yield transactionHelper.getTransaction(reportedUsers.openReports[i].transactionId);
+                    report.reportingUser = yield userHelper.getUser(reportedUsers.openReports[i].reportingUserId);
+                    report.user = yield userHelper.getUser(reportedUsers.openReports[i].userId);
+
+                    if (reportedUsers.openReports[i].bookId) {
+                        report.book = yield bookHelper.getBook(reportedUsers.openReports[i].bookId);
+                    }
+
+                    if (reportedUsers.openReports[i].transactionId) {
+                        report.transaction = yield transactionHelper.getTransaction(reportedUsers.openReports[i].transactionId);
+                    }
+
+                    openReports.push(report);
                 }
-                for (var i = 0; i < reportedUsers.closedReports; i++) {
+
+                for (var i = 0; i < reportedUsers.closedReports.length; i++) {
+                    report = reportedUsers.closedReports[i];
+
                     if (reportedUsers.closedReports[i].adminId) {
-                        reportedUsers.closedReports[i].admin = yield userHelper.getUser(reportedUsers.closedReports[i].adminId);
+                        report.admin = yield userHelper.getUser(reportedUsers.closedReports[i].adminId);
                     }
 
-                    reportedUsers.closedReports[i].reportingUser = yield userHelper.getUser(reportedUsers.closedReports[i].reportingUserId);
-                    reportedUsers.closedReports[i].user = yield userHelper.getUser(reportedUsers.closedReports[i].userId);
-                    reportedUsers.closedReports[i].book = yield bookHelper.getBook(reportedUsers.closedReports[i].bookId);
-                    reportedUsers.closedReports[i].transaction = yield transactionHelper.getTransaction(reportedUsers.closedReports[i].transactionId);
+                    report.reportingUser = yield userHelper.getUser(reportedUsers.closedReports[i].reportingUserId);
+                    report.user = yield userHelper.getUser(reportedUsers.closedReports[i].userId);
+
+
+                    if (reportedUsers.closedReports[i].bookId) {
+                        report.book = yield bookHelper.getBook(reportedUsers.closedReports[i].bookId);
+                    }
+
+                    if (reportedUsers.closedReports[i].transactionId) {
+                        report.transaction = yield transactionHelper.getTransaction(reportedUsers.closedReports[i].transactionId);
+                    }
+
+                    closedReports.push(report);
                 }
 
-                res.render('reports/reported-users', { site: app.locals.site, user: req.user, req: req, reportedUsers: reportedUsers });
+                var reports = {
+                    openReports: openReports,
+                    closedReports: closedReports
+                };
+
+                res.render('reports/reported-users', { site: app.locals.site, user: req.user, req: req, reports: reports });
             }
         })
     );
