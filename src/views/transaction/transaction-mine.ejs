@@ -59,6 +59,7 @@
                     <div>
                       <a href="/transaction/<%= toTransactions[i]._id %>/message" class="btn btn-primary" style="color: grey;"> Message Owner</a>
                       <a type="button" data-toggle="modal" data-target="#rateModal<%= i %>" class="btn btn-secondary" style="color: grey;"> Rate Transaction</a> 
+                      <button type="button" class="btn btn-lg btn-report btn-danger" data-toggle="modal" data-target="#reportModal">Report</button>
 
                       <!-- Modal -->
                       <div class="modal fade" id="rateModal<%= i %>" tabindex="-1" role="document">
@@ -99,7 +100,7 @@
                               <h4 class="modal-title" id="myModalLabel">Report Transaction #<%= i+1 %></h4>
                             </div>
 
-                            <form role="form" action="/transaction/<%= transaction._id %>/report" method="post" class="box">        
+                            <form role="form" action="/transaction/<%= toTransactions[i]._id %>/report" method="post" class="box">        
                               <div class="modal-body new-book">
                                   <div class="form-group">
                                     <label for="summary">Message:</label>
@@ -190,7 +191,7 @@
 
                     <div>
                       <a href="/transaction/<%= fromTransactions[i]._id %>/message" class="btn btn-primary" style="color: grey;"> Message Customer</a>
-                      <button type="button" class="btn btn-lg btn-rent btn-error" data-toggle="modal" data-target="#reportModal">
+                      <button type="button" class="btn btn-lg btn-report btn-danger" data-toggle="modal" data-target="#reportModal">
                         Report
                       </button>
 
@@ -203,7 +204,7 @@
                               <h4 class="modal-title" id="myModalLabel">Report Transaction #<%= i+1 %></h4>
                             </div>
 
-                            <form role="form" action="/transaction/<%= transaction._id %>/report" method="post" class="box">        
+                            <form role="form" action="/transaction/<%= fromTransactions[i]._id %>/report" method="post" class="box">        
                               <div class="modal-body new-book">
                                   <div class="form-group">
                                     <label for="summary">Message:</label>

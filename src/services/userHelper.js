@@ -8,7 +8,6 @@ var wrap = require('co-express');
 var co = require('co');
 
 var messageHelper = require('../services/messageHelper');
-var transactionHelper = require('../services/transactionHelper.js');
 var util = require('util');
 
 function initUser(req) {

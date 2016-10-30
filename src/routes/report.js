@@ -94,6 +94,11 @@ module.exports = function(app, passport) {
             var transaction = yield transactionHelper.getTransaction(req.params.transactionId);
             var book = yield bookHelper.getBook(transaction.bookId);
 
+            var userId = transaction.fromUserId;
+            if ("" + userId === "" + req.user._id) {
+                userId = transaction.toUserId;
+            }
+
             var iUserReport = new userReport({
                 message: req.body.message,
                 reason: ["transaction"],
@@ -101,7 +106,7 @@ module.exports = function(app, passport) {
                 date: new Date(),
                 adminId: null,
                 reportingUserId: req.user._id,
-                userId: transaction.fromUserId, //todo: jmc check
+                userId: userId, //todo: jmc check
                 bookId: transaction.bookId,
                 transactionId: req.params.transactionId,
                 reportClosed: false
@@ -129,7 +134,7 @@ module.exports = function(app, passport) {
                 date: new Date(),
                 adminId: null,
                 reportingUserId: req.user._id,
-                userId: book.userId, 
+                userId: book.userId,
                 bookId: req.params.bookId,
                 transactionId: null,
                 reportClosed: false
