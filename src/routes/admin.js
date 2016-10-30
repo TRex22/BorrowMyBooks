@@ -59,6 +59,53 @@ module.exports = function(app, passport) {
         }
     );
 
+    app.get('/admin/reported-users',
+        wrap(function*(req, res, next) {
+
+            if (userHelper.auth(req, res, app.locals.site, true)) {
+                req = userHelper.processUser(req);
+
+                var reportedUsers = yield userHelper.getReportedUsers();
+                for (var i = 0; i < reportedUsers.openReports; i++) {
+                    if (reportedUsers.openReports[i].adminId) {
+                        reportedUsers.openReports[i].admin = yield userHelper.getUser(reportedUsers.openReports[i].adminId);
+                    }
+
+                    reportedUsers.openReports[i].reportingUser = yield userHelper.getUser(reportedUsers.openReports[i].reportingUserId);
+                    reportedUsers.openReports[i].user = yield userHelper.getUser(reportedUsers.openReports[i].userId);
+                    reportedUsers.openReports[i].book = yield bookHelper.getBook(reportedUsers.openReports[i].bookId);
+                    reportedUsers.openReports[i].transaction = yield transactionHelper.getTransaction(reportedUsers.openReports[i].transactionId);
+                }
+                for (var i = 0; i < reportedUsers.closedReports; i++) {
+                    if (reportedUsers.closedReports[i].adminId) {
+                        reportedUsers.closedReports[i].admin = yield userHelper.getUser(reportedUsers.closedReports[i].adminId);
+                    }
+
+                    reportedUsers.closedReports[i].reportingUser = yield userHelper.getUser(reportedUsers.closedReports[i].reportingUserId);
+                    reportedUsers.closedReports[i].user = yield userHelper.getUser(reportedUsers.closedReports[i].userId);
+                    reportedUsers.closedReports[i].book = yield bookHelper.getBook(reportedUsers.closedReports[i].bookId);
+                    reportedUsers.closedReports[i].transaction = yield transactionHelper.getTransaction(reportedUsers.closedReports[i].transactionId);
+                }
+
+                res.render('reports/reported-users', { site: app.locals.site, user: req.user, req: req, reportedUsers: reportedUsers });
+            }
+        })
+    );
+
+
+    app.get('/admin/view-users',
+        wrap(function*(req, res, next) {
+            /* istanbul ignore next */
+            if (userHelper.auth(req, res, app.locals.site, true)) {
+                req = userHelper.processUser(req);
+
+                var users = yield userHelper.getUsers();
+
+                res.render('admin/view-users', { site: app.locals.site, user: req.user, req: req, users: users });
+            }
+        })
+    );
+
     app.post('/admin/system-defaults',
         function(req, res, next) {
             /* istanbul ignore next */
