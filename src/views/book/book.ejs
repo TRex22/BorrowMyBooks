@@ -49,7 +49,7 @@
                 <div class="panel-body">
                   <% if (book.isAvailable && book.userId !== ""+user._id) { %>
 
-                    <% if (book.isForSale) {%> 
+                    <% if (book.isForSale && book.noAvailable > 0) {%> 
                       <div class="amount">
                         Buy for R<% if (book.sellPrice) {%><%= book.sellPrice.toFixed(2) %> <% } %> 
                       </div>
@@ -62,7 +62,7 @@
                       <div class="or">OR</div>
                     <% } %>
 
-                    <% if (book.isForLoan) {%>
+                    <% if (book.isForLoan && book.noAvailable > 0) {%>
                       <div class="amount">
                         Rent for R<% if (book.loanPrice) {%><%= book.loanPrice.toFixed(2) %> <% } %>
                       </div>
@@ -155,10 +155,10 @@
 
           <form role="form" action="/book/<%= book._id %>/buy" method="post" class="box">
 
-            <div class="modal-body new-book">
+            <div class="modal-body modal-style">
                   <div class="form-group">
                       <p>Amount to purchase: </p><input name="amount" type="number" class="form-control" tabindex="1" min="1" step="1" max="<%= book.noAvailable %>" id="buy-amount" value="1" oninput="updateBuyPrice()"><br/> 
-                      <p id="buy-total">You will pay: R<%= 1 * book.sellPrice %></p>             
+                      <p class="center-align" style="padding-top: 5%;" id="buy-total">You will pay: R<%= 1 * book.sellPrice %></p>             
                   </div>
             </div>
             <div class="modal-footer">
@@ -185,10 +185,10 @@
 
           <form role="form" action="/book/<%= book._id %>/rent" method="post" class="box">
 
-            <div class="modal-body new-book">
+            <div class="modal-body modal-style">
                   <div class="form-group">
                       <p>Amount to rent: </p><input name="amount" type="number" class="form-control" tabindex="1" min="1" step="1" max="<%= book.noAvailable %>" id="rent-amount" value="1" oninput="updateRentPrice()"><br/> 
-                      <p id="rent-total">You will pay: R<%= 1 * book.loanPrice %></p>             
+                      <p class="center-align" style="padding-top: 5%;" id="rent-total">You will pay: R<%= 1 * book.loanPrice %></p>             
                   </div>
             </div>
             <div class="modal-footer">
@@ -213,7 +213,7 @@
           </div>
 
           <form role="form" action="/book/<%= book._id %>/return" method="post" class="box">        
-            <div class="modal-body new-book">
+            <div class="modal-body modal-style">
                   <% if(book.numberToReturn === 1) { %>
                     <p>You have <%= book.numberToReturn %> book on loan.</p>
                   <% } %>
@@ -249,12 +249,12 @@
       <form role="form" action="/book/<%= book._id %>/report" method="post" class="box">        
         <div class="modal-body new-book">
             <div class="form-group">
-              <label for="summary">Message:</label>
+              <p for="summary">Message:</p>
               <textarea class="form-control" tabindex="1" rows="5" name="message" required></textarea>
             </div>
 
             <div class="form-group">
-              <label class="control-label col-sm-2" for="defaultProfilePictureURL">Priority: </label>
+              <p class="control-label col-sm-2" for="defaultProfilePictureURL">Priority: </p>
               <div class="col-sm-10">
                 <input type="number" class="form-control" tabindex="1" data-toggle="tooltip" title="Priority" placeholder="Priority" name="priority" value="1" min="1" max="10">
               </div>

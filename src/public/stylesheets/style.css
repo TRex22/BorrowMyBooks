@@ -352,3 +352,10 @@ a {
     background: none;
     background-color: none;
 }
+
+.modal-style {
+    padding-left: 20%;
+    padding-right: 20%;
+    border: 1px;
+    max-width: 100%;
+}
