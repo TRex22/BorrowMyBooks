@@ -1,0 +1,21 @@
+Marko: Sup guys                        
+Marko: Is there anyway for me to check system performance details? Like response time and processing speed and shit like that                        
+Jason Chalom: Yeah kind of                        
+Jason Chalom: Go to admin system stats                        
+Jason Chalom: I can add response time                        
+Jason Chalom: Make a ticket                        
+Marko: Where do i find the admin system stats option?🙈                        
+Marko: Sweet I'll make the ticket now                        
+Jason Chalom: Under admin dude                        
+Marko: Oh wait yeah just found it                        
+Jason Chalom: Won't have page response time                        
+Jason Chalom: Once the website is spun up out of hibernation like the 2nd or third page click its around 25ms                        
+Jason Chalom: As a rough estimate                        
+Marko: Ok sick                        
+Marko: When's our meeting with Terence?                        
+Jason Chalom: I spoke to him                        
+Jason Chalom: He has not yet decided                        
+Jason Chalom: maybe Monday                                                
+Liron: As good a picture that is, what is it?                        
+Jason Chalom: cop car on fire outside noswell house                        
+Jason Chalom: today

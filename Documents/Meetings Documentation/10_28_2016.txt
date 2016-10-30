@@ -1,0 +1,7 @@
+Jason Chalom: How did Terrance go?                        
+Marko: It was chilled, he said I'm not the right track                        
+Liron: You're not *on the right track?                        
+Marko: Sorry I meant that I am on the right track                      
+Marko: He just told me to move some diagrams from the architecture doc to the requirements analysis doc
+Marko: But he read the views and viewpoints and said they're chilled                        
+Jason Chalom: I'm getting admin + reporting users done. The last large thing
