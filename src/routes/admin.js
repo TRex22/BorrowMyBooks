@@ -149,7 +149,9 @@ module.exports = function(app, passport) {
                 //update system defaults and then re-render the page
 
                 sysDefault.findOne({}).exec(function(err, defaults) { //there should only be one set of defaults
-                    if (err) throw err; //TODO: FIX
+                    if (err) {
+                        logger.error(err);
+                    };
 
                     /* istanbul ignore next */
                     if (req.body && defaults) {

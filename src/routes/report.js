@@ -60,6 +60,31 @@ module.exports = function(app, passport) {
         })
     );
 
+    app.post('/report/:reportId/close', function(req, res, next) {
+        if (userHelper.auth(req, res, app.locals.site, true)) {
+            req.user.isMain = true;
+            req = userHelper.processUser(req);
+
+            userReport.findOne({ _id: req.params.reportId }, function(err, report) {
+                if (err) {
+                    logger.error(err);
+                };
+                
+                report.reportClosed = true;
+                report.adminId = req.user._id;
+
+                report.save();
+
+                logger.warn("Admin, closed report");
+                req.flash('success', "report closed.");
+
+                res.redirect('/admin/reported-users');
+            });
+            req.flash('success', "report closed.");
+            res.redirect('/admin/reported-users');
+        }
+    });
+
     app.post('/user/:userId/report', function(req, res, next) {
         if (userHelper.auth(req, res, app.locals.site)) {
             req.user.isMain = true;

@@ -9,7 +9,7 @@
     <% if(reports.openReports.length > 0) { %>
       <h2><span class="glyphicon glyphicon-envelope" style="color: grey;" aria-hidden="true"></span> Open Reports</h2>
       <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-      
+
       <% for(var i=0; i<reports.openReports.length; i++) { %>
           <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="heading-<%= reports.openReports[i]._id %>">
@@ -28,6 +28,7 @@
                     <li>Reason: <%= reports.openReports[i].reason %></li>
                     <li>Priority: <%= reports.openReports[i].priority %></li>
                     <li>Reporting User: <a href="/user/<%= reports.openReports[i].reportingUserId %>"><%= reports.openReports[i].reportingUser.username %></a></li>
+                    <li>Reported User: <a href="/user/<%= reports.openReports[i].userId %>"><%= reports.openReports[i].user.username %></a></li>
                     <% if (reports.openReports[i].bookId) { %>
                      <li>Book: <a href="/book/<%= reports.openReports[i].bookId %>"><%= reports.openReports[i].book.title %></a></li>
                     <% } %>
@@ -43,7 +44,40 @@
                       <% if(!reports.openReports[i].reportClosed) { %>
                         false
                       <% } %>
-                   
+                      <br/><br/>
+                      <div>
+                        <a href="/user/<%= reports.openReports[i].reportingUserId %>/message" class="btn btn-primary" style="color: grey;"> Message Reporting User</a>
+                        <a href="/user/<%= reports.openReports[i].userId %>/message" class="btn btn-primary" style="color: grey;"> Message Reported User</a>
+                        <button type="button" class="btn btn-report btn-danger" data-toggle="modal" data-target="#closeModal<%= i %>">Close Report</button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="closeModal<%= i %>" tabindex="-1" role="document">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel"></h4>
+                              </div>
+
+                                <form role="form" action="/report/<%= reports.openReports[i]._id %>/close" method="post" class="box">
+                                
+                                <div class="modal-body new-book">
+                                    <div class="form-group">
+                                        <p>Are you sure you want to close this report?</p>            
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-primary btn-light-green">Close Report</button>            
+                                </div>
+
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>                      
                     </li>   
                 </ul>
               </div>
