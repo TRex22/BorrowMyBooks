@@ -1,6 +1,8 @@
 /*SOURCE: code from https://github.com/knoldus/Node.js_UserLogin_Template*/
 var logger = require("../logger/logger");
+var mongoose = require('../config/db.js').mongoose;
 var userHelper = require('../services/userHelper');
+var schoolDomain = mongoose.model('SchoolDomain', require('../models/schoolDomain'));
 
 var wrap = require('co-express');
 var co = require('co');
@@ -130,13 +132,27 @@ module.exports = function(app, passport) {
                             newUser.save(function(err) {
                                 if (err)
                                     throw err; //TODO JMC Fix
+
+                                schoolDomain.findOne({}, function(err, domainObj) {
+                                    var isStudent = domainObj.isStudentEmail(iUser.email);
+
+                                    if (isStudent) {
+                                        newUser.money = 1000;
+                                        newUser.isStudent = true;
+                                    } else {
+                                        newUser.money = 0;
+                                        newUser.isStudent = false;
+                                    }
+
+                                    if (isStudent) {
+                                        req.flash('success', 'Because You are a student, we have given you R1000 store credit');
+                                    }
+
+                                });
+
                                 req.user = newUser;
                                 req = userHelper.processUser(req);
                                 logger.warn("created new user");
-
-                                if (req.user.isStudent) {
-                                    req.flash('success', 'You are a student, we have given you R1000 store credit');
-                                }
 
                                 return done(null, newUser, req.flash('success', 'created new user'));
                             });
@@ -150,13 +166,26 @@ module.exports = function(app, passport) {
                             if (err)
                                 throw err;
 
+                            schoolDomain.findOne({}, function(err, domainObj) {
+                                var isStudent = domainObj.isStudentEmail(iUser.email);
+
+                                if (isStudent) {
+                                    newUser.money = 1000;
+                                    newUser.isStudent = true;
+                                } else {
+                                    newUser.money = 0;
+                                    newUser.isStudent = false;
+                                }
+
+                                if (isStudent) {
+                                    req.flash('success', 'Because You are a student, we have given you R1000 store credit');
+                                }
+
+                            });
+
                             req.user = newUser;
                             req = userHelper.processUser(req);
                             logger.warn("created new user");
-
-                            if (req.user.isStudent) {
-                                req.flash('success', 'You are a student, we have given you R1000 store credit');
-                            }
 
                             return done(null, newUser, req.flash('success', 'created new user'));
                         });
