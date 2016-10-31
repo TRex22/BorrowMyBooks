@@ -1,0 +1,43 @@
+                        
+Marko: Jason, did you redo the diagrams? It doesn't look like anything has changed in them                        
+Jason Chalom: No not yet                        
+Jason Chalom: Dealing with shit + need to finish coding                        
+Jason Chalom: Okay so I have to submit something by 5pm                        
+Jason Chalom: And have an essay to write                        
+Jason Chalom: Please get done what you are doing                        
+Jason Chalom: Ill continue to code the requirements and cut corners                        
+Jason Chalom: Later tonight I want to add to the documentation so please commit because if I commit something and then you also do that my changes will be overwritten                        
+Jason Chalom: Is that fine?                        
+Marko: Cool                        
+Jason Chalom: yeah I have a lot of work                        
+Jason Chalom: and only have till 11 am tomorrow to do most of it                        
+Jason Chalom: nearly done with stats                        
+Jason Chalom: will code                        
+Jason Chalom: then write my essay                        
+Marko: Jason, where are the requirements you listed in the traceability matrix written?                        
+Jason Chalom: ?                        
+Jason Chalom: I never wrote that                        
+Jason Chalom: The requirements I wrote are in the analysis                        
+Marko: Oh did Liron do it? There's a traceability matrix in a excel doc in the documents folder                        
+Jason Chalom: The requirements are in issues on github                        
+Marko: The thing is that they're numbered in the matrix so I don't know which one is which and we have to list them                        
+Jason Chalom: I did write them as a list in the one doc                        
+Jason Chalom: not the ios                        
+Jason Chalom: iso                        
+Marko: Uhh                        
+Marko: There aren't any requirements listed in the ISO doc bro                        
+Marko: You're talking about the architecture description document?                        
+Jason Chalom: no dude the other one                        
+Jason Chalom: yeah                        
+Marko: There are 13 functional requirements in that doc                        
+Marko: But 19 requirements in the matrix                        
+Jason Chalom: oh well look at github                        
+Liron: I added some extra ones in the extended use case doc                        
+Jason Chalom: coo                        
+Liron: Maybe I forgot to add then to the req analysis doc                        
+Jason Chalom: busy with admin user and reports stuff                        
+Jason Chalom: make sure it got staged                        
+Jason Chalom: Ive noticed some files wont stage                        
+Liron: I added them long ago                        
+Jason Chalom: got overridden?                        
+Marko: Oh sorry they are in that doc

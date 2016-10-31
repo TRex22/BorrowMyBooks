@@ -49,7 +49,7 @@
                 <div class="panel-body">
                   <% if (book.isAvailable && book.userId !== ""+user._id) { %>
 
-                    <% if (book.isForSale) {%> 
+                    <% if (book.isForSale && book.noAvailable > 0) {%> 
                       <div class="amount">
                         Buy for R<% if (book.sellPrice) {%><%= book.sellPrice.toFixed(2) %> <% } %> 
                       </div>
@@ -62,7 +62,7 @@
                       <div class="or">OR</div>
                     <% } %>
 
-                    <% if (book.isForLoan) {%>
+                    <% if (book.isForLoan && book.noAvailable > 0) {%>
                       <div class="amount">
                         Rent for R<% if (book.loanPrice) {%><%= book.loanPrice.toFixed(2) %> <% } %>
                       </div>
@@ -71,11 +71,33 @@
                       </button>
                     <% } %>
 
+                    <% if ((book.isForSale || book.isForLoan) && book.canBeReturned) {%> 
+                      <div class="or">OR</div>
+                    <% } %>
+
+                    <% if (book.canBeReturned) {%>
+                      <button type="button" class="btn btn-lg btn-rent btn-info" data-toggle="modal" data-target="#returnModal">
+                        Return
+                      </button>
+                    <% } %>
                       <div class="noAvailable text-muted">
                         There <% if(book.noAvailable == 1) {%>is <% } else {%>are <% } %> <%= book.noAvailable %> available.
                     </div>
-                    <% } else if (book.userId === ""+user._id) { %> <div class="noAvailable text-muted">You cannot transact with your own book.</div>
+                    <% } else if (book.userId === ""+user._id) { %> 
+                    <div class="noAvailable text-muted">You cannot transact with your own book.</div>
+                    <% if (book.isOnLoan) { %> 
+                      <% if(book.numberOnLoan === 1) { %>
+                        <div class="noAvailable text-muted">There is <%= book.numberOnLoan %> copy of this book on loan.</div> 
+                      <% } %>
+                      <% if(book.numberOnLoan > 1) { %>
+                        <div class="noAvailable text-muted">There are <%= book.numberOnLoan %> copies of this book on loan.</div> 
+                      <% } %>
+                    <% } %>
+                    
                     <% } else {%> <div class="noAvailable text-muted">There are none available.</div> <% } %>
+
+                    <br/><br/><br/>
+                    <button type="button" class="btn btn-lg btn-report btn-danger" data-toggle="modal" data-target="#reportModal">Report Book</button>
                 </div>
               </div>
             </div>
@@ -133,12 +155,13 @@
 
           <form role="form" action="/book/<%= book._id %>/buy" method="post" class="box">
 
-            <div class="modal-body new-book">
+             <div class="modal-body modal-style">
                   <div class="form-group">
                       <p>Amount to purchase: </p><input name="amount" type="number" class="form-control" tabindex="1" min="1" step="1" max="<%= book.noAvailable %>" id="buy-amount" value="1" oninput="updateBuyPrice()"><br/> 
-                      <p id="buy-total">You will pay: R<%= 1 * book.sellPrice %></p>             
+                      <p class="center-align" style="padding-top: 5%;" id="buy-total">You will pay: R<%= 1 * book.sellPrice %></p>             
                   </div>
             </div>
+            
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary btn-cyan">Buy</button>            
@@ -163,10 +186,10 @@
 
           <form role="form" action="/book/<%= book._id %>/rent" method="post" class="box">
 
-            <div class="modal-body new-book">
+            <div class="modal-body modal-style">
                   <div class="form-group">
                       <p>Amount to rent: </p><input name="amount" type="number" class="form-control" tabindex="1" min="1" step="1" max="<%= book.noAvailable %>" id="rent-amount" value="1" oninput="updateRentPrice()"><br/> 
-                      <p id="rent-total">You will pay: R<%= 1 * book.loanPrice %></p>             
+                      <p class="center-align" style="padding-top: 5%;" id="rent-total">You will pay: R<%= 1 * book.loanPrice %></p>             
                   </div>
             </div>
             <div class="modal-footer">
@@ -179,6 +202,74 @@
       </div>
     </div>
 <% } %>
+
+<% if (book.isForLoan && book.userId !== ""+user._id) {%>
+    <!-- Rent Modal -->
+    <div class="modal fade" id="returnModal" tabindex="-1" role="document">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Return <%= book.title %></h4>
+          </div>
+
+          <form role="form" action="/book/<%= book._id %>/return" method="post" class="box">        
+            <div class="modal-body modal-style">
+                  <% if(book.numberToReturn === 1) { %>
+                    <p>You have <%= book.numberToReturn %> book on loan.</p>
+                  <% } %>
+
+                  <% if(book.numberToReturn > 1) { %>
+                    <p>You have <%= book.numberToReturn %> books on loan.</p>
+                  <% } %>
+                  <br/>
+                  <div class="form-group">
+                      <p>Amount to return: </p><input name="amount" type="number" class="form-control" tabindex="1" min="1" step="1" max="<%= book.numberToReturn %>" id="rent-amount" value="1"><br/>          
+                  </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary btn-light-green">Return</button>            
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+<% } %>
+
+<!-- Report Modal -->
+<div class="modal fade" id="reportModal" tabindex="-1" role="document">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Report <%= book.title %></h4>
+      </div>
+
+      <form role="form" action="/book/<%= book._id %>/report" method="post" class="box">        
+        <div class="modal-body new-book">
+            <div class="form-group">
+              <p for="summary">Message:</p>
+              <textarea class="form-control" tabindex="1" rows="5" name="message" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <p class="control-label col-sm-2" for="defaultProfilePictureURL">Priority: </p>
+              <div class="col-sm-10">
+                <input type="number" class="form-control" tabindex="1" data-toggle="tooltip" title="Priority" placeholder="Priority" name="priority" value="1" min="1" max="10">
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary btn-light-green">Report</button>            
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
 
 
 <script>

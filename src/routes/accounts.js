@@ -8,7 +8,7 @@ var mongoose = require('../config/db.js').mongoose;
 var user = mongoose.model('User', require('../models/user'));
 
 module.exports = function(app, passport) {
-    app.get('/login', function(req, res) {        
+    app.get('/login', function(req, res) {
         req = userHelper.processUser(req);
         res.render('accounts/login.ejs', { 'site': app.locals.site, user: req.user, req: req });
     });
@@ -18,7 +18,8 @@ module.exports = function(app, passport) {
             failureFlash: true
         }),
         function(req, res) {
-            req = userHelper.processUser(req);            
+            req = userHelper.processUser(req);
+            userHelper.logUserAction("logged in", req.user._id, null, null, null);
             res.redirect(req.session.returnTo || '/');
         });
 
@@ -32,17 +33,22 @@ module.exports = function(app, passport) {
             failureFlash: true
         }),
         function(req, res) {
+            userHelper.logUserAction("Signed up for an account", req.user._id, null, null, null);
             res.redirect(req.session.returnTo || '/');
         });
 
     app.get('/profile',
-        function(req, res, next) {
+        wrap(function*(req, res, next) {
             if (userHelper.auth(req, res, app.locals.site)) {
                 req.user.isMain = true;
                 req = userHelper.processUser(req);
-                res.render('accounts/user', { site: app.locals.site, user: req.user, req: req });
+
+                var userLog = yield userHelper.getUserLog(req.user._id);
+                var userStats = yield userHelper.getUserActivity(req.user._id);
+
+                res.render('accounts/user', { site: app.locals.site, user: req.user, req: req, userLog: userLog, userStats: userStats });
             }
-        }
+        })
     );
 
     app.get('/profile/settings',
@@ -96,6 +102,8 @@ module.exports = function(app, passport) {
 
                 logger.warn("user updated info");
                 req.flash('warn', 'User Info Updated');
+
+                userHelper.logUserAction("You updated user information", req.user._id, null, null, null);
                 res.redirect(req.session.backURL || '/');
             }
         }
@@ -110,8 +118,10 @@ module.exports = function(app, passport) {
                 try {
                     userInfo = yield userHelper.getUser(req.params.userId);
                     if (userInfo) {
-                        req.flash('User Info Updated', 'User Info Updated');
-                        res.render('accounts/user', { site: app.locals.site, user: req.user, userInfo: userInfo, req: req });
+                        var userLog = yield userHelper.getUserLog(userInfo._id);
+                        var userStats = yield userHelper.getUserActivity(userInfo._id);
+
+                        res.render('accounts/user', { site: app.locals.site, user: req.user, userInfo: userInfo, req: req, userLog: userLog, userStats: userStats });
                     } else {
                         req.flash('error', "No user of that id.");
                         res.redirect(req.session.backURL || '/');
@@ -191,23 +201,64 @@ module.exports = function(app, passport) {
                         user.save();
                     });
 
-                logger.warn("admin updated info");  
+                logger.warn("admin updated info");
                 req.flash('warn', 'User Info Updated');
+                userHelper.logUserAction("Admin updated user information", req.user._id, null, null, null);
+                userHelper.logUserAction("Admin updated user information", req.params.userId, null, null, null);
                 res.redirect('/user/' + req.params.userId);
+            }
+        }
+    );
+
+    app.get('/deposit',
+        wrap(function*(req, res, next) {
+            if (userHelper.auth(req, res, app.locals.site)) {
+                req.user.isMain = true;
+                req = userHelper.processUser(req);
+
+                res.render('accounts/deposit', { site: app.locals.site, user: req.user, req: req });
+            }
+        })
+    );
+
+    app.post('/deposit',
+        function(req, res, next) {
+            if (userHelper.auth(req, res, app.locals.site)) {
+                user.isMain = true;
+
+                user.findOne({ _id: req.user._id },
+                    function(err, user) {
+                        /* istanbul ignore next */
+                        if (err) {
+                            logger.error(err);
+                            throw err;
+                        } //todo fix
+
+                        user.money += parseFloat(req.body.money);
+
+                        user.save();
+                    }
+                );
+
+                logger.warn("Deposited R" + req.body.money);
+                req.flash('success', "Deposited R" + req.body.money);
+                userHelper.logUserAction("You deposited R" + req.body.money, req.user._id, null, null, null);
+                res.redirect('/');
             }
         }
     );
 
     app.get('/logout', function(req, res) {
         req.logout();
-        req.flash('success', 'Logged out successfully');
+        req.flash('success', 'You logged out successfully');
         req = userHelper.processUser(req, true);
         res.redirect('/');
     });
 
     app.post('/logout', function(req, res) {
         req.logout();
-        req.flash('success', 'Logged out successfully');
+        req.flash('success', 'You logged out successfully');
+        userHelper.logUserAction("logged out", req.user._id, null, null, null);
         req = userHelper.processUser(req, true);
         res.redirect('/');
     });

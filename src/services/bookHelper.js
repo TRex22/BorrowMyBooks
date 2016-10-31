@@ -8,6 +8,21 @@ var util = require('util');
 var mongoose = require('../config/db.js').mongoose;
 var Book = mongoose.model('Book', require('../models/book'));
 
+
+function getUserBooks(_userId) {
+    return new Promise(function(resolve, reject) {
+        Book.find({ userId: _userId }, function(err, books) {
+            /* istanbul ignore next */
+            if (err) {
+                logger.error(err);
+                return reject(err);
+            }
+
+            resolve(books);
+        });
+    });
+}
+
 function getBook(bookId) {
     return new Promise(function(resolve, reject) {
         Book.findOne({ _id: bookId }, function(err, book) {
@@ -40,7 +55,7 @@ var getRelatedBooks = wrap(function*(bookId) {
     //using interests and then price
     var book = yield getBook(bookId);
     var interests = book.interests
-    if(!util.isArray(interests)){
+    if (!util.isArray(interests)) {
         interests = [interests];
     }
 
@@ -95,9 +110,18 @@ function getAmazonBookCover(ISBN) {
 
 }
 
+function compareBookObjects(book1, book2) {
+    if (book1._id === book2._id) {
+        return true;
+    }
+    return false;
+}
+
 module.exports = {
     getAmazonBookCover: getAmazonBookCover,
     getBook: getBook,
+    getUserBooks: getUserBooks,
     getRelatedBooks: getRelatedBooks,
-    findBook: findBook
+    findBook: findBook,
+    compareBookObjects: compareBookObjects
 }

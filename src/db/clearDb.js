@@ -25,6 +25,9 @@ function go() {
     dbHelper.dropCollection("SystemMessage");
     dbHelper.dropCollection("UserRating");
     dbHelper.dropCollection("UserRole");
+    dbHelper.dropCollection("UserReport");
+    dbHelper.dropCollection("UserLog");
+    dbHelper.dropCollection("UserRating");
 }
 
 module.exports = { go: go };

@@ -1,0 +1,26 @@
+                        
+Marko: Sick                     
+Liron: Sup. What parts of the docs still need to be done?                        
+Jason Chalom: Well all the new activity flows                        
+Jason Chalom: kind of have a new water leak to deal with                        
+Marko: He said for diagrams, we only need to do the more complex ones, so like selling and loaning out a book                        
+Marko: Not so much rating and stuff like that                        
+Jason Chalom: and reporting users?                        
+Jason Chalom: banning users?                        
+Marko: Otherwise I just need to do the last viewpoint and view and some final touch ups. Well I didn't ask him about each one individually, i understood that If it's only a small process flow in the diagram then there isn't really a point but if they're as complex as sign up and upload (which are already in the document) they they're worth documenting                        
+Jason Chalom: well they are                        
+Marko: One more thing I remembered now, while updating the db diagram                        
+Marko: Terrence said we have to show some sort of inheritance or encapsulation in the class diagram                        
+Marko: There has to be some sort of relationships or something                        
+Jason Chalom: I'm still changing the db models                        
+Jason Chalom: Just trying to finish this stuff ... I'm going out later tho                        
+Marko: Ok cool, lemme know when you're done so I can fix up the model, are we not putting in relationships and stuff tho? Coz you guys said it's not a relational data model and I told him that but he said there should technically be some sort of connections                        
+Jason Chalom: well he is an idiot                        
+Jason Chalom: An example of how a db query with multiple data works                        
+Jason Chalom: connections only occur within the code structure not in the db structure                        
+Jason Chalom: That example has a code glitch Im trying to fix                        
+Marko: Ok cool I'll state that in the doc                        
+Jason Chalom: well we could map code ...                        
+Jason Chalom: Class diagrams can be auto generated                        
+Jason Chalom: Gonna run it when I leave                        
+Jason Chalom: and see the results

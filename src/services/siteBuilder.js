@@ -26,9 +26,7 @@ function initSite() {
     site.defaults.DefaultProfilePictureURL = config.defaultProfilePictureURL;
     site.defaults.DefaultBookPictureURL = config.defaultBookPictureURL;
     site.defaults.DefaultBrandingText = config.defaultBrandingText;
-
     site.themes = config.themes;
-
     site.moment = moment;
     site.validator = validator;
     site.util = util;

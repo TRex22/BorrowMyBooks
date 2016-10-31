@@ -16,10 +16,12 @@
             <li class="list-group-item text-muted">Profile</li>
             <li class="list-group-item center-align"><img src= <% if (user.picUrl) {%> <%= user.picUrl %> <%} else{%> <%= site.defaults.DefaultProfilePictureURL %> <%} %> width="100%" height="100%" /></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Username</strong></span> <%= user.username %></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Money</strong></span> R<%= user.money %>.00</li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Name</strong></span> <%= user.name %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Email</strong></span> <%= user.email %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Address</strong></span> <%= user.address %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Phone</strong></span> <%= user.phone %></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Is Student?</strong></span> <% if (user.isStudent) {%> Yes <%} else{%> No <%} %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Last Seen</strong></span> <%= site.moment(user.lastLoginDate).format('LLL'); %></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> <%= site.moment(user.registrationDate).format('LLL'); %></li>
           </ul>               
@@ -43,39 +45,30 @@
           <div class="tab-content">
             <div class="tab-pane active" id="home">
               <h4>Recent Activity</h4>
-              
+
               <div class="table-responsive">
                 <table class="table table-hover">
                   
                   <tbody>
-                    <tr>
-                      <td><i class="pull-right fa fa-edit"></i> Today, 1:00 - Jeff Manzi liked your post.</td>
-                    </tr>
-                    <tr>
-                      <td><i class="pull-right fa fa-edit"></i> Today, 12:23 - Mark Friendo liked and shared your post.</td>
-                    </tr>
-                    <tr>
-                      <td><i class="pull-right fa fa-edit"></i> Today, 12:20 - You posted a new blog entry title "Why social media is".</td>
-                    </tr>
-                    <tr>
-                      <td><i class="pull-right fa fa-edit"></i> Yesterday - Karen P. liked your post.</td>
-                    </tr>
-                    <tr>
-                      <td><i class="pull-right fa fa-edit"></i> 2 Days Ago - Philip W. liked your post.</td>
-                    </tr>
-                    <tr>
-                      <td><i class="pull-right fa fa-edit"></i> 2 Days Ago - Jeff Manzi liked your post.</td>
-                    </tr>
+                    <% if (userLog.length > 0) {%>
+                      <% for(var i=0; i<userLog.length && i<10; i++) {%>
+                        <tr>
+                          <td><i class="pull-right fa fa-edit"></i> <%= site.moment(userLog[i].date).fromNow(); %> - <%= userLog[i].log %>.</td>
+                        </tr>
+                      <% } %>
+                    <%} %>
                   </tbody>
                 </table>
               </div>
-              
+
               <ul class="list-group">
                 <li class="list-group-item text-muted">Activity</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Sold</strong></span> 125</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Bought</strong></span> 13</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Borrowed</strong></span> 37</li>
-                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Rented Away</strong></span> 78</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Sold</strong></span> <%= userStats.sold %></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Bought</strong></span> <%= userStats.bought %></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Rented</strong></span> <%= userStats.rented %></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Lent</strong></span> <%= userStats.lent %></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Books Returned</strong></span> <%= userStats.returned %></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>User Rating</strong></span> <%= userStats.rating %></li>
               </ul>
 
               <ul class="list-group">
@@ -92,6 +85,7 @@
               <% if(!user.isMain) { %>
                 <% if(user.username !== userInfo) { %>
                   <div>
+                    <a href="/user/<%= userInfo._id %>/reports" class="btn btn-primary" style="color: red;"> Reports Against User</a> 
                     <a href="/user/<%= userInfo._id %>/message" class="btn btn-primary" style="color: grey;"> Message User</a> <br/>
                       <%- include('../partials/rate') %>
                     <a type="button" data-toggle="modal" data-target="#rateModal" class="btn btn-secondary" style="color: grey;"> Rate User</a>                     
@@ -99,11 +93,54 @@
                 <% } %>
               <% } %>
 
+              <% if(user.isMain) { %>
+                  <div>
+                    <a href="/profile/reports" class="btn btn-primary" style="color: red;"> Reports Against Me</a> 
+                  </div>
+              <% } %>
+
+              <% if(!user.isMain) { %>
+                  <button type="button" class="btn btn-report btn-danger" data-toggle="modal" data-target="#reportModal">Report</button>
+              <% } %>                    
+
          </div>
           
         </div>
       </div>
 
+    </div>
+
+    <!-- Report Modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1" role="document">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Report <%= user.username %></h4>
+          </div>
+
+          <form role="form" action="/user/<%= user._id %>/report" method="post" class="box">        
+            <div class="modal-body new-book">
+                <div class="form-group">
+                  <label for="summary">Message:</label>
+                  <textarea class="form-control" tabindex="1" rows="5" name="message" required></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-sm-2" for="defaultProfilePictureURL">Priority: </label>
+                  <div class="col-sm-10">
+                    <input type="number" class="form-control" tabindex="1" data-toggle="tooltip" title="Priority" placeholder="Priority" name="priority" value="1" min="1" max="10">
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary btn-light-green">Report</button>            
+            </div>
+
+          </form>
+        </div>
+      </div>
     </div>
 
 </div>

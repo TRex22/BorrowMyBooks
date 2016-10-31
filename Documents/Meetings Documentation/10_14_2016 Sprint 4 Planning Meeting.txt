@@ -1,0 +1,7 @@
+Use cases to be done for this sprint:
+ - Reporting Users
+ - Suggested Prices
+ - Rate Users
+ - Check if student for discount
+ - Accounts/Cash functionality
+ - Recent Activity

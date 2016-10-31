@@ -1,0 +1,17 @@
+Marko: Howsit guys                        
+Marko: For the login activity diagram, must I fix it up? Coz he said some of the flows didn't make sense.                        
+Marko: I'll also make more of the activity diagrams for the other functions                        
+Marko: also, for the database diagram, shouldn't there be connectors and stuff between the tables?                        
+Liron: So for the db diagram. MongoDB isn't a relational database with primary keys and stuff like that. It's literally just tables                        
+Marko: Oh ok sweet                        
+Liron: And for activity diagrams, he said that it was way too low level. Make it higher level                        
+Marko: Sick I'll do my best for the activity diagrams and if you guys can just check them when you have time, I'll let you know when they're done                      
+Liron: Sweet. I'll also redo the sequence diagrams                        
+Liron: He also said that the higher level(user-friendly) activity diagrams go into requirements doc and the low level ones go into architecture doc                        
+Jason Chalom: I can look at doing some low level ones later                        
+Jason Chalom: Also db models have changed but more changes are coming ....                        
+Jason Chalom: Okay so I need to do some PC project                        
+Jason Chalom: But for return I know how to get it to work                        
+Jason Chalom: Will be done in explore my own books                        
+Jason Chalom: The lender can request back the book after 2 weeks                        
+Jason Chalom: And if the book is a month late the user won't be able to borrow book
