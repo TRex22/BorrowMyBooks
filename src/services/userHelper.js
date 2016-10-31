@@ -82,38 +82,43 @@ function resetUser() {
 }
 
 function createNewUser(username, password, body) {
-    var userModel = require('../models/user');
+    return new Promise(function(resolve, reject) {
+        var userModel = require('../models/user');
 
-    schoolDomain.findOne({}, function(err, domainObj) {
-        var isStudent = domainObj.isStudentEmail(iUser.email);
-        var iUser = new userModel({
-            username: username,
-            email: body.email,
-            salt: null,
-            hash: null,
-            name: body.name,
-            address: body.address,
-            phone: body.phone,
-            interests: body.interests,
-            picUrl: null,
-            userRole: [],
-            lastLoginDate: new Date(),
-            registrationDate: new Date()
+        schoolDomain.findOne({}, function(err, domainObj) {
+            if (err) reject(err);
+            
+            var iUser = new userModel({
+                username: username,
+                email: body.email,
+                salt: null,
+                hash: null,
+                name: body.name,
+                address: body.address,
+                phone: body.phone,
+                interests: body.interests,
+                picUrl: null,
+                userRole: [],
+                lastLoginDate: new Date(),
+                registrationDate: new Date()
+            });
+
+            var isStudent = domainObj.isStudentEmail(iUser.email);
+
+            if (isStudent) {
+                iUser.money = 1000;
+                iUser.isStudent = true;
+            } else {
+                iUser.money = 0;
+                iUser.isStudent = false;
+            }
+
+            iUser.userId = iUser.generateUUID();
+            iUser.salt = iUser.generateSalt();
+            iUser.hash = iUser.generateHash(password);
+
+            resolve(iUser);
         });
-
-        if (isStudent) {
-            iUser.money = 1000;
-            iUser.isStudent = true;
-        } else {
-            iUser.money = 0;
-            iUser.isStudent = false;
-        }
-
-        iUser.userId = iUser.generateUUID();
-        iUser.salt = iUser.generateSalt();
-        iUser.hash = iUser.generateHash(password);
-
-        return iUser;
     });
 }
 
