@@ -25,7 +25,7 @@
               <div class="panel-body">
                 <h3>User Details</h3>
                 <ul>
-                    <li><strong>Username:</strong> <%= users[i].username %></li>
+                    <li><strong>Username:</strong> <a href="/user/<%= users[i]._id %>"><%= users[i].username %></a></li>
                     <li><strong>Name:</strong> <%= users[i].name %></li>
                     <li><strong>Email:</strong> <%= users[i].email %></li>
                     <li><strong>Address:</strong> <%= users[i].address %></li>

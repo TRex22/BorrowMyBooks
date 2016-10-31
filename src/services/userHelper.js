@@ -278,6 +278,8 @@ function getUserActivity(userId) {
             var rented = 0;
             var returned = 0;
 
+            var rating = 0;
+
             for (var i = 0; i < userTransactions.length; i++) {
                 if (userTransactions[i].fromUserId === "" + userId) {
                     if (userTransactions[i].isPurchase) {
@@ -304,7 +306,8 @@ function getUserActivity(userId) {
                 lent: lent,
                 bought: bought,
                 rented: rented,
-                returned: returned
+                returned: returned,
+                rating: rating
             };
 
             resolve(obj);

@@ -78,7 +78,6 @@ module.exports = function(app, passport) {
 
                     if (reportedUsers.openReports[i].adminId) {
                         report.admin = yield userHelper.getUser(reportedUsers.openReports[i].adminId);
-
                     }
 
                     report.reportingUser = yield userHelper.getUser(reportedUsers.openReports[i].reportingUserId);
