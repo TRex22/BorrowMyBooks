@@ -155,12 +155,13 @@
 
           <form role="form" action="/book/<%= book._id %>/buy" method="post" class="box">
 
-            <div class="modal-body modal-style">
+             <div class="modal-body modal-style">
                   <div class="form-group">
                       <p>Amount to purchase: </p><input name="amount" type="number" class="form-control" tabindex="1" min="1" step="1" max="<%= book.noAvailable %>" id="buy-amount" value="1" oninput="updateBuyPrice()"><br/> 
                       <p class="center-align" style="padding-top: 5%;" id="buy-total">You will pay: R<%= 1 * book.sellPrice %></p>             
                   </div>
             </div>
+            
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary btn-cyan">Buy</button>            
