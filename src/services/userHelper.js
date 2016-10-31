@@ -3,6 +3,7 @@ var User = mongoose.model('User', require('../models/user'));
 var UserLog = mongoose.model('UserLog', require('../models/userLog'));
 var Transaction = mongoose.model('Transaction', require('../models/transaction'));
 var userReport = mongoose.model('UserReport', require('../models/userReport'));
+var userRating = mongoose.model('UserRating', require('../models/userRating'));
 
 var wrap = require('co-express');
 var co = require('co');
@@ -301,16 +302,39 @@ function getUserActivity(userId) {
                 }
             }
 
-            var obj = {
-                sold: sold,
-                lent: lent,
-                bought: bought,
-                rented: rented,
-                returned: returned,
-                rating: rating
-            };
+            userRating.find({ userId: userId }, function(err, ratings) {
+                if (err) {
+                    return reject(err);
+                }
 
-            resolve(obj);
+                var sum = 0.0;
+
+                for (var i = 0; i < ratings.length; i++) {
+                    sum += arseInt(ratings.Rating);
+                }
+
+                rating = parseInt(sum / ratings.length);
+
+                if (rating === 'NaN') {
+                    rating = 0;
+                }
+
+                if (ratings.length === 0) {
+                    rating = "not yet rated";
+                }
+
+                var obj = {
+                    sold: sold,
+                    lent: lent,
+                    bought: bought,
+                    rented: rented,
+                    returned: returned,
+                    rating: rating
+                };
+
+                resolve(obj);
+            });
+
         }));
 
     });
@@ -364,7 +388,7 @@ function updateUserMoney(userId, money) {
                 /* istanbul ignore next */
                 if (err) {
                     logger.error(err);
-                } 
+                }
 
                 user.money -= parseFloat(money);
                 user.save();
