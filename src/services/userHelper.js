@@ -4,6 +4,7 @@ var UserLog = mongoose.model('UserLog', require('../models/userLog'));
 var Transaction = mongoose.model('Transaction', require('../models/transaction'));
 var userReport = mongoose.model('UserReport', require('../models/userReport'));
 var userRating = mongoose.model('UserRating', require('../models/userRating'));
+var schoolDomain = mongoose.model('SchoolDomain', require('../models/schoolDomain'));
 
 var wrap = require('co-express');
 var co = require('co');
@@ -82,27 +83,38 @@ function resetUser() {
 
 function createNewUser(username, password, body) {
     var userModel = require('../models/user');
-    var iUser = new userModel({
-        username: username,
-        email: body.email,
-        salt: null,
-        hash: null,
-        name: body.name,
-        address: body.address,
-        phone: body.phone,
-        interests: body.interests,
-        picUrl: null,
-        userRole: [],
-        lastLoginDate: new Date(),
-        registrationDate: new Date()
+
+    schoolDomain.findOne({}, function(err, domainObj) {
+        var isStudent = domainObj.isStudentEmail(iUser.email);
+        var iUser = new userModel({
+            username: username,
+            email: body.email,
+            salt: null,
+            hash: null,
+            name: body.name,
+            address: body.address,
+            phone: body.phone,
+            interests: body.interests,
+            picUrl: null,
+            userRole: [],
+            lastLoginDate: new Date(),
+            registrationDate: new Date()
+        });
+
+        if (isStudent) {
+            iUser.money = 1000;
+            iUser.isStudent = true;
+        } else {
+            iUser.money = 0;
+            iUser.isStudent = false;
+        }
+
+        iUser.userId = iUser.generateUUID();
+        iUser.salt = iUser.generateSalt();
+        iUser.hash = iUser.generateHash(password);
+
+        return iUser;
     });
-
-    iUser.userId = iUser.generateUUID();
-    iUser.salt = iUser.generateSalt();
-    iUser.hash = iUser.generateHash(password);
-
-    //todo detect student
-    return iUser;
 }
 
 /* istanbul ignore next */
@@ -310,7 +322,7 @@ function getUserActivity(userId) {
                 var sum = 0.0;
 
                 for (var i = 0; i < ratings.length; i++) {
-                    sum += arseInt(ratings.Rating);
+                    sum += parseInt(ratings[i].Rating);
                 }
 
                 rating = parseInt(sum / ratings.length);

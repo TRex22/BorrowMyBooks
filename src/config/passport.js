@@ -1,6 +1,7 @@
 /*SOURCE: code from https://github.com/knoldus/Node.js_UserLogin_Template*/
 var logger = require("../logger/logger");
 var userHelper = require('../services/userHelper');
+
 // local authentication
 // For more details go to https://github.com/jaredhanson/passport-local
 var LocalStrategy = require('passport-local').Strategy;
@@ -69,7 +70,7 @@ module.exports = function(app, passport) {
 
                     user.lastLoginDate = new Date();
                     user.save();
-                    
+
                     req = userHelper.processUser(req);
                     return done(null, user, req.flash('success', 'user logged in.'));
 
@@ -129,7 +130,11 @@ module.exports = function(app, passport) {
                                 req.user = newUser;
                                 req = userHelper.processUser(req);
                                 logger.warn("created new user");
-                                
+
+                                if (req.user.isStudent) {
+                                    req.flash('success', 'You are a student, we have given you R1000 store credit');
+                                }
+
                                 return done(null, newUser, req.flash('success', 'created new user'));
                             });
                         }
@@ -144,6 +149,10 @@ module.exports = function(app, passport) {
                         req.user = newUser;
                         req = userHelper.processUser(req);
                         logger.warn("created new user");
+
+                        if (req.user.isStudent) {
+                            req.flash('success', 'You are a student, we have given you R1000 store credit');
+                        }
 
                         return done(null, newUser, req.flash('success', 'created new user'));
                     });
