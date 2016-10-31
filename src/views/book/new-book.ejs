@@ -43,9 +43,25 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="publishDate">Book Publish Date: </label>
-                  <input type="text" class="form-control" tabindex="1" name="publishDate" placeholder="Publication Date" required>
+                  <input type="date" class="form-control" tabindex="1" id="publishDate" name="publishDate" placeholder="Publication Date" max="2000-13-13" required>
                 </div>
               </div>
+
+              <script type="text/javascript">
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth()+1; //January is 0!
+                var yyyy = today.getFullYear();
+                 if(dd<10){
+                        dd='0'+dd
+                    } 
+                    if(mm<10){
+                        mm='0'+mm
+                    } 
+
+                today = yyyy+'-'+mm+'-'+dd;
+                document.getElementById("publishDate").setAttribute("max", today);
+              </script>
 
               <div class="col-md-6">
                 <div class="form-group">
@@ -87,7 +103,7 @@
 
             <div class="form-group">
               <label for="summary">Book Summary:</label>
-              <textarea class="form-control" tabindex="1" rows="5" id="summary" required></textarea>
+              <textarea class="form-control" tabindex="1" rows="5" name="summary" required></textarea>
             </div>
 
 
@@ -101,41 +117,41 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isAvailable" required="">Is This Book Available?</label>
+                <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isAvailable" ="">Is This Book Available?</label>
               </div>
             </div>
 
             <div class="col-md-6">
               <div class="form-group">
                 <label for="noAvailable">Number of Books Available: </label>
-                <input type="text" class="form-control" tabindex="1" name="noAvailable" placeholder="Number Available" required>
+                <input type="text" class="form-control" tabindex="1" name="noAvailable" placeholder="Number Available" >
               </div>
             </div>
 
             <div class="col-md-6">
               <div class="form-group">
-                <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isForLoan" required="">Is This Book Loanable?</label>
+                <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isForLoan" ="">Is This Book Loanable?</label>
               </div>
             </div>
 
             <div class="col-md-6">
               <div class="form-group">
                 <label for="loanPrice">Book Loan Price: </label>
-                <input type="text" class="form-control" tabindex="1" name="loanPrice" placeholder="Loan Price" required>
+                <input type="text" class="form-control" tabindex="1" name="loanPrice" placeholder="Loan Price" >
               </div>
             </div>
 
 
             <div class="col-md-6">
               <div class="form-group">
-                <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isForSale" required="">Is This Book For Sale?</label>
+                <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isForSale" ="">Is This Book For Sale?</label>
               </div>
             </div>
             
             <div class="col-md-6">
               <div class="form-group">
                 <label for="sellPrice">Book Sell Price: </label>
-                <input type="text" class="form-control" tabindex="1" name="sellPrice" placeholder="Sell Price" required>
+                <input type="text" class="form-control" tabindex="1" name="sellPrice" placeholder="Sell Price" >
               </div>
             </div>
             

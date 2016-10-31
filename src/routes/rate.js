@@ -19,7 +19,7 @@ module.exports = function(app, passport) {
                 userId: req.params.userId,
                 Date: new Date(),
                 TransactionId: null,
-                Rating: req.body.rating,
+                Rating: parseInt(req.body.rating),
                 RaterId: req.user._id
             });
             iUserRating.save();
@@ -28,8 +28,8 @@ module.exports = function(app, passport) {
 
             req = userHelper.processUser(req);
             req.flash('success', "created user rating");
-
-            res.redirect(req.session.returnTo || '/');
+            userHelper.logUserAction("rated user", req.user._id, null, null, null);
+            res.redirect('/');
         }
     });
 
@@ -41,7 +41,7 @@ module.exports = function(app, passport) {
                 userId: null,
                 Date: new Date(),
                 TransactionId: req.params.transactionId,
-                Rating: req.body.rating,
+                Rating: parseInt(req.body.rating),
                 RaterId: req.user._id
             });
             iUserRating.save();
@@ -49,9 +49,9 @@ module.exports = function(app, passport) {
             logger.warn("rated user");
 
             req = userHelper.processUser(req);
-            req.flash('success', "created user rating");
-
-            res.redirect(req.session.returnTo || '/');
+            req.flash('success', "created user rating"  );
+            userHelper.logUserAction("rated transaction", req.user._id, null, null, null);
+            res.redirect('/');
         }
     });
 }

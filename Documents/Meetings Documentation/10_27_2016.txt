@@ -1,0 +1,31 @@
+Marko: Sup guys                        
+Marko: Jason, where can I find the files again for the tests so I can document them?                        
+Jason Chalom: In the folder test ... More are otw                        
+Jason Chalom: So Im writing tomorrow                        
+Jason Chalom: I will do some diagrams today but Ill get done what I get done                        
+Liron: I'm trying to redo the sequence diagrams but I have no internet                        
+Jason Chalom: yeah my net died last night and I went to bed :/                        
+Liron: Same                        
+Jason Chalom: On Sunday night lets copy this graph: https://waffle.io/TRex22/BorrowMyBooks/metrics/throughput                        
+Jason Chalom: into docs                        
+Jason Chalom: Also user profile has some style issues                        
+Jason Chalom: Im busy with the diagrams ...                        
+Jason Chalom: Ill post them in the diagrams folder                        
+Jason Chalom: Ill start with the system stuff, try do some activity stuff (updates) and new ones                        
+Jason Chalom: and maybe some layer ones                        
+Jason Chalom: I stumbled on this tool: https://www.npmjs.com/package/wavi                        
+Jason Chalom: it makes class diagrams seeing if it helps                        
+Jason Chalom: quite slow because BB is pretty large collection of code                        
+Jason Chalom: okay the state diagram is uploaded                        
+Jason Chalom: The tool is taking forever to generate diagrams                        
+Jason Chalom: The data model has been changed again                        
+Jason Chalom: anyone there?                        
+Jason Chalom: So the activity diagrams will not have that complicated looping stuff ... instead it willl refer to the state diagram                        
+Jason Chalom: I need to study now .... unless you need more diagrams                        
+Jason Chalom: We need to start completing the documentation REMEMBER 2 docs and finish the system ... cut corners where we can                        
+Liron: My neighbours were just hijacked so I'm helping them out                        
+Jason Chalom: damn                        
+Jason Chalom: they okay?                        
+Liron: They fine. I'll have to work a bit later                        
+Jason Chalom: np Im busy with stats and IS                        
+Marko: Sorry guys I just finished tutoring, will reply when I get home! 

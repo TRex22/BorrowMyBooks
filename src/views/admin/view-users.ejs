@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <%- include('../partials/header') %>
+  <body>   
+   <%- include('../partials/navbar') %>
+    
+    <h1 class="center-align">Users on Borrow My Books</h1>
+
+    <div class="Messages site-margin">
+
+    <h2><span class="glyphicon glyphicon-envelope" style="color: grey;" aria-hidden="true"></span> User Reports</h2>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    
+    <% if(users.length > 0) { %>
+      <% for(var i=0; i<users.length; i++) { %>
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-<%= users[i]._id %>">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= users[i]._id %>" aria-expanded="false" aria-controls="<%= users[i]._id %>">
+                  User #<%= i+1 %>
+                </a>
+              </h4>
+            </div>
+            <div id="<%= users[i]._id %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-<%= users[i]._id %>">
+              <div class="panel-body">
+                <h3>User Details</h3>
+                <ul>
+                    <li><strong>Username:</strong> <a href="/user/<%= users[i]._id %>"><%= users[i].username %></a></li>
+                    <li><strong>Name:</strong> <%= users[i].name %></li>
+                    <li><strong>Email:</strong> <%= users[i].email %></li>
+                    <li><strong>Address:</strong> <%= users[i].address %></li>
+                    <li><strong>Phone:</strong> <%= users[i].phone %></li>
+                    <li><strong>Last Seen:</strong> <%= site.moment(users[i].lastLoginDate).format('LLL'); %></li>
+                    <li><strong>Joined:</strong> <%= site.moment(users[i].registrationDate).format('LLL'); %></li>
+                    <br/>
+                    <div>
+                      <a href="/user/<%= users[i]._id %>/settings" class="btn btn-primary" style="color: grey;"> Edit User Details</a> 
+                      <a href="/user/<%= users[i]._id %>/reports" class="btn btn-danger" style="color: grey;"> Reports Against User</a> 
+                    </div>
+                </ul>
+              </div>
+            </div>
+          </div>
+      <% } %>
+    <% } %>
+
+    <% if(users.length === 0) { %>
+      <p class="text-muted">No Users.</p>
+    <% } %>
+
+
+  </div>
+
+  <%- include('../partials/footer') %>
+  </body>
+</html>

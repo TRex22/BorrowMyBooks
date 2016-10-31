@@ -16,7 +16,9 @@ var userSchema = mongoose.Schema({
         picUrl: String,
         userRole: [String],
         lastLoginDate: Date,
-        registrationDate: Date
+        registrationDate: Date,
+        money: Number,
+        isStudent: Boolean
 }, { strict: false, collection: 'User' });
 
 

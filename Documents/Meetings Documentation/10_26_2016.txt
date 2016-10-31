@@ -1,0 +1,32 @@
+Marko: Sup guys                        
+Marko: I don't think I know enough about the system to do the Model kinds section of the architecture description document                        
+Marko: I'm going to consult with Terence tomorrow on the rest of the doc tho to make sure I'm doing it right and hopefully he can guide me a bit                        
+Marko: That's if he replies to my email                      
+Marko: Also, miz, you need to book a time slot for Monday for the meeting, not sure if you saw the email Terence just sent                        
+Liron: Thanks I actually didn't see it. Which timeslot would be best for you guys?                        
+Marko: I'm chilled with anytime                        
+Liron: Jason?                        
+Liron: I'm gonna try get 11, that good?                        
+Jason Chalom: Yeah ....                                           
+Marko: @Jason Chalom please let me know when you're going to do the other diagrams so I can try add them in before I meet with Terence on Friday morning                        
+Jason Chalom: okay ... just busy with other shit                        
+Jason Chalom: I closed the one ticket about logging in ... in our demo we just make sure not to show that problem ... I just want to reduce workload                        
+Jason Chalom: my bathroom has gotten worse :/                        
+Liron: I booked 11 on Monday                        
+Liron: Also if you didn't see, no official sd lecture tomorrow. Said he will go over stuff for exam                        
+Jason Chalom: on monday you mean?                        
+Jason Chalom: or tomorrow?                        
+Liron: What?                        
+Liron: The meeting is on Monday at 11am central African time.  He also sent an email about the lecture tomorrow                        
+Jason Chalom: so tomorrow is there anything?                        
+Jason Chalom: I interpreted it as saying that there is nothing tomorrow                        
+Liron: Oh sorry                        
+Jason Chalom: so?                        
+Jason Chalom: tomorrow?                        
+Jason Chalom: Im confused                        
+Liron: Did you read the email he sent?                        
+Jason Chalom: yeah I reread it                
+Jason Chalom: you gave me doubt                                                
+Liron: Sorry. Shouldn't have said anything                      
+Jason Chalom: lol                        
+Jason Chalom: Ill use the time wisely

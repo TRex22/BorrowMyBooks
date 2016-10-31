@@ -1,6 +1,12 @@
 /*SOURCE: code from https://github.com/knoldus/Node.js_UserLogin_Template*/
 var logger = require("../logger/logger");
+var mongoose = require('../config/db.js').mongoose;
 var userHelper = require('../services/userHelper');
+var schoolDomain = mongoose.model('SchoolDomain', require('../models/schoolDomain'));
+
+var wrap = require('co-express');
+var co = require('co');
+
 // local authentication
 // For more details go to https://github.com/jaredhanson/passport-local
 var LocalStrategy = require('passport-local').Strategy;
@@ -69,7 +75,7 @@ module.exports = function(app, passport) {
 
                     user.lastLoginDate = new Date();
                     user.save();
-                    
+
                     req = userHelper.processUser(req);
                     return done(null, user, req.flash('success', 'user logged in.'));
 
@@ -115,38 +121,75 @@ module.exports = function(app, passport) {
             process.nextTick(function() {
 
                 if (!req.user) {
-                    User.findOne({ $or: [{ email: username }, { username: username }] }, function(err, user) {
+                    User.findOne({ $or: [{ email: username }, { username: username }] }, wrap(function*(err, user) {
                         if (err) {
                             return done(err, req.flash('error', '' + err));
                         }
                         if (user) {
                             return done(null, false, req.flash('error', 'User already exists', null));
                         } else {
-                            var newUser = userHelper.createNewUser(username, password, req.body);
+                            var newUser = yield userHelper.createNewUser(username, password, req.body);
                             newUser.save(function(err) {
                                 if (err)
                                     throw err; //TODO JMC Fix
+
+                                schoolDomain.findOne({}, function(err, domainObj) {
+                                    var isStudent = domainObj.isStudentEmail(iUser.email);
+
+                                    if (isStudent) {
+                                        newUser.money = 1000;
+                                        newUser.isStudent = true;
+                                    } else {
+                                        newUser.money = 0;
+                                        newUser.isStudent = false;
+                                    }
+
+                                    if (isStudent) {
+                                        req.flash('success', 'Because You are a student, we have given you R1000 store credit');
+                                    }
+
+                                });
+
                                 req.user = newUser;
                                 req = userHelper.processUser(req);
                                 logger.warn("created new user");
-                                
+
                                 return done(null, newUser, req.flash('success', 'created new user'));
                             });
                         }
 
-                    });
+                    }));
                 } else {
-                    var newUser = userHelper.createNewUser(username, password, req.body);
-                    newUser.save(function(err) {
-                        if (err)
-                            throw err;
+                    co(function*() {
+                        var newUser = yield userHelper.createNewUser(username, password, req.body);
+                        newUser.save(function(err) {
+                            if (err)
+                                throw err;
 
-                        req.user = newUser;
-                        req = userHelper.processUser(req);
-                        logger.warn("created new user");
+                            schoolDomain.findOne({}, function(err, domainObj) {
+                                var isStudent = domainObj.isStudentEmail(iUser.email);
 
-                        return done(null, newUser, req.flash('success', 'created new user'));
-                    });
+                                if (isStudent) {
+                                    newUser.money = 1000;
+                                    newUser.isStudent = true;
+                                } else {
+                                    newUser.money = 0;
+                                    newUser.isStudent = false;
+                                }
+
+                                if (isStudent) {
+                                    req.flash('success', 'Because You are a student, we have given you R1000 store credit');
+                                }
+
+                            });
+
+                            req.user = newUser;
+                            req = userHelper.processUser(req);
+                            logger.warn("created new user");
+
+                            return done(null, newUser, req.flash('success', 'created new user'));
+                        });
+                    })
                 }
 
             });
