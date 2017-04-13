@@ -1,0 +1,4 @@
+The group met at Liron's house at 3pm to do some work.
+Marko installed all the needed software and did some documentation.
+Jason did some backend code for the login and signup pages.
+Liron did the styles for the login and signup pages.

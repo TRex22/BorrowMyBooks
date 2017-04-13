@@ -2,10 +2,11 @@
 var express = require('express');
 var pkg = require('../package');
 var router = express.Router();
+var userHelper = require('../services/userHelper.js');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Borrow My Books', buildVersion: pkg.version });
-});
-
-module.exports = router;
+module.exports = function(app, passport) {
+    app.get('/', function(req, res) {
+        req = userHelper.processUser(req);
+        res.render('index', { site: app.locals.site, user: req.user, req: req });
+    });
+};

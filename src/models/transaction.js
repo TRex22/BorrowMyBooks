@@ -2,16 +2,20 @@ var mongoose = require('../config/db.js').mongoose;
 var uuid = require('uuid');
 
 var transactionSchema = mongoose.Schema({
-    transaction: {
-        TransactionId: String,
-        FromUserId: String,
-        ToUserId: String,
-        Amount: Number,
+        transactionId: String,
+        fromUserId: String,
+        toUserId: String,
+        bookId: String,
+        amount: Number,
+        amountToReturn: Number,
+        cost: Number,
         isPurchase: Boolean,
+        isRent: Boolean,
+        hasBeenReturned: Boolean,
+        returnDate: Date,
         hasBeenRevoked: Boolean,
-        Date: Date,
-        AdminId: String
-    }
+        date: Date,
+        adminId: String
 }, { strict: false, collection: 'Transaction' });
 
 transactionSchema.methods.generateUUID = function(){

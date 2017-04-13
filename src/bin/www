@@ -12,8 +12,11 @@ var config = require('../config');
 /**
  * Get port from environment and store in Express.
  */
-
 var port = normalizePort(config.port);
+if (process.env.NODE_ENV === 'production') {
+  var port = normalizePort(process.env.PORT || config.port); //for heroku
+} 
+
 app.set('port', port);
 
 /**
@@ -91,3 +94,6 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+
+

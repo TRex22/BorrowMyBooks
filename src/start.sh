@@ -2,4 +2,5 @@
 #will start server
 #change to gulp soon
 #npm start
-gulp watch
+#node ./bin/www
+gulp watch --color

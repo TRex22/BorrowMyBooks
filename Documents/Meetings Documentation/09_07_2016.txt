@@ -1,0 +1,3 @@
+Jason sugested the group merge the branches into master.
+Liorn said he is busy studying.
+Marko said he will update the db diagram.

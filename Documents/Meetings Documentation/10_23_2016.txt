@@ -1,0 +1,8 @@
+                        
+Marko: Howsit guys                        
+Marko: Which document must the testing stuff go into? Its the architecture doc right?                        
+Jason Chalom: Iso                        
+Marko: Jason do you mind fixing up the activity diagrams that Terence said we should change?                        
+Marko: Unless you just wanna send a vn here on what needs to be fixed and I'll edit it                        
+Jason Chalom: I said I would dude                        
+Jason Chalom: Just out atm

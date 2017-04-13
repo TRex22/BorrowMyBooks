@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <%- include('../partials/header') %>
+  <body>   
+   <%- include('../partials/navbar') %>
+    
+    <% if(user.isMain) { %>
+      <h1 class="center-align">Reports Against You</h1>
+    <% } else { %>
+      <h1 class="center-align">Reports Against <%= user.username %> </h1>
+    <% } %>
+
+    <div class="Messages site-margin">
+
+    <h2><span class="glyphicon glyphicon-envelope" style="color: grey;" aria-hidden="true"></span> User Reports</h2>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    
+    <% if(userReports.length > 0) { %>
+      <% for(var i=0; i<userReports.length; i++) { %>
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading-<%= userReports[i]._id %>">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= userReports[i]._id %>" aria-expanded="false" aria-controls="<%= userReports[i]._id %>">
+                  User Report #<%= i+1 %>
+                </a>
+              </h4>
+            </div>
+            <div id="<%= userReports[i]._id %>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-<%= userReports[i]._id %>">
+              <div class="panel-body">
+                <h3>Report Details</h3>
+                <ul>
+                    <li>Date: <%= site.moment(userReports[i].date) %></li>
+                    <li>Message: <%= userReports[i].message %></li>
+                    <li>Priority: <%= userReports[i].priority %></li>
+                    <li>From User: <a href="/user/<%= userReports[i].reportingUserId %>"><%= userReports[i].reportingUser.username %></a></li>
+                    <% if (userReports[i].bookId) { %>
+                     <li>Book: <a href="/book/<%= userReports[i].bookId %>"><%= userReports[i].book.title %></a></li>
+                    <% } %>
+                    <% if (userReports[i].transactionId) { %>
+                     <li>Transaction: <%= userReports[i].transactionId %></li>
+                    <% } %>
+                   
+                    <li>Report Been Resolved?: 
+                      <% if(userReports[i].reportClosed) { %>
+                        true
+                      <% } %>  
+
+                      <% if(!userReports[i].reportClosed) { %>
+                        false
+                      <% } %>
+                   
+                    </li>   
+                </ul>
+              </div>
+            </div>
+          </div>
+      <% } %>
+    <% } %>
+
+    <% if(userReports.length === 0) { %>
+      <p class="text-muted">No User Reports.</p>
+    <% } %>
+
+
+  </div>
+
+  <%- include('../partials/footer') %>
+  </body>
+</html>

@@ -1,15 +1,27 @@
 var fs = require('fs');
 var util = require('util');
-var config = ("../config.json");
-
+var config = require('../config');
 var should = require('chai').should();
+
+var app = require('../app');
+var www = require('../bin/www-test');
 
 /*js to test*/
 
+//make sure things startup
+describe('#Server Startup', function() {
+    beforeEach(function() {
+        www.listen(config.port + 1); //use a different port
+        require('../db/clearDb').go();
+        require('../db/seedDb');
+    });
 
-describe('#Tests', function() {
-  it('createTest', function(){
-   
-  });
-
+    afterEach(function() {
+        www.close();
+    });
+    
+    // tests here
+    it('Server should be able to start up', function() {
+        console.log("    started?");
+    });
 });

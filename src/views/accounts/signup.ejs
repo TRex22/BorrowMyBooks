@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<%- include('../partials/header') %>
+<body>
+<%- include('../partials/navbar') %>
+<h1 class="center-align">Sign Up For Borrow My Books</h1>
+<form role="form" action="/signup" method="post" class="box login">
+
+	<div class="form-group">
+	  <input type="text" class="form-control" tabindex="1" placeholder="Username" name="username" required>
+	</div>
+
+	<div class="form-group">
+	  <input type="text" class="form-control" tabindex="1" placeholder="Full Name" name="fullname" required>
+	</div>
+
+	<div class="form-group">
+	  <input type="text" class="form-control" tabindex="1" placeholder="Email Address" name="email" required>
+	</div>
+
+	<div class="form-group">
+	  <input type="text" class="form-control" tabindex="1" placeholder="Physical Address" name="address" required>
+	</div>
+
+	<div class="form-group">
+	  <input type="text" class="form-control" tabindex="1" placeholder="Phone Number" name="phone" required>
+	</div>
+
+	<div class="form-group">
+	  <input type="password" class="form-control" tabindex="2"  placeholder="Password" name="password" required>
+	</div>
+
+	<div class="form-group">
+	<label>Select your interests:</label> <br>
+      <select class="selectpicker form-control" data-live-search="true" name="interests" multiple>
+	    <option>Mathematics</option>
+	    <option>Computer Science</option>
+	    <option>Biology</option>
+	    <option>Finance</option>
+	    <option>Chemistry</option>
+	    <option>Law</option>
+	    <option>Engineering</option>
+	    <option>Physics</option>
+	  </select>
+	</div>
+
+	<br>
+
+	<div>
+	  <input type="submit" class="btn btn-default" value="SignUp" tabindex="1">
+	</div>
+	<br>
+		<p>Already have an account? 
+		<a href="/login"> Login</a>
+		</p>
+
+
+</form>
+	<%- include('../partials/footer') %>
+</body>
+</html>

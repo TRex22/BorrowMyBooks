@@ -1,18 +1,11 @@
 sudo: false
 language: node_js
-before_script: scripts/prebuild.sh
+before_install: cd src
+before_script: node seedDb.js
 node_js:
+- '6.4'
+- '6.1'
 - '5.0'
-- '4.1'
 - '4.0'
-- '0.11'
-- '0.10'
-before_deploy: scripts/before_deploy.sh
-deploy:
-  api_key:
-    secure: 
-  on:
-    repo: lmizrahi12/BorrowMyBooks
-    branch: master
-  email: contact@jasonchalom.com
-  provider: npm
+services:
+- mongodb

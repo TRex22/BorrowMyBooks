@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src\services\statHelper.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">src/services/</a> statHelper.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>35/35</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>6/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>2/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>35/35</span>
+      </div>
+      <div class='fl pad1y'>
+        <span class="strong">30 statements, 2 functions, 6 branches</span>
+        <span class="quiet">Ignored</span>  &nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const os = require('os');
+/*var logger = require("../logger/logger");*/
+var simpleInfo = require('simple-node-info');
+&nbsp;
+/* istanbul ignore next */
+<span class="fstat-skip" title="function not covered" >function vmstat() {</span>
+<span class="cstat-skip" title="statement not covered" >    var isWin = (os.platform() === 'win32' || os.platform() === 'win64');</span>
+<span class="cstat-skip" title="statement not covered" >    if (isWin) {</span>
+        /*logger.error("Error! On Windows platform. VM Stats are not possible!");*/
+<span class="cstat-skip" title="statement not covered" >        console.log("" + winvmstat());</span>
+    } else {
+<span class="cstat-skip" title="statement not covered" >        const exec = require('child_process').exec;</span>
+<span class="cstat-skip" title="statement not covered" >        exec('vmstat -n 1', (error, stdout, stderr) =&gt; {</span>
+<span class="cstat-skip" title="statement not covered" >            if (error) {</span>
+<span class="cstat-skip" title="statement not covered" >                console.err(`exec error: ${error}`);</span>
+<span class="cstat-skip" title="statement not covered" >                return;</span>
+            }
+<span class="cstat-skip" title="statement not covered" >            console.log(`stdout: ${stdout}`);</span>
+<span class="cstat-skip" title="statement not covered" >            console.log(`stderr: ${stderr}`);</span>
+        });
+    }
+}
+&nbsp;
+/* istanbul ignore next */
+<span class="fstat-skip" title="function not covered" >function winvmstat() {</span>
+    //this is a work in progress
+    //for now basic info and much zeroing
+&nbsp;
+    /*var cpu = require('windows-cpu');*/
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >    var info = simpleInfo.getStat();</span>
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >    var output = "procs -----------memory---------- ---swap-- -----io---- -system-- ----cpu----\n" +</span>
+        "r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa";
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >    var r = "0"; </span>//TODO
+<span class="cstat-skip" title="statement not covered" >    var b = "0"; </span>//todo
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >    var swpd = "0"; </span>//todo
+<span class="cstat-skip" title="statement not covered" >    var free = "2742600"; </span>//todo + info.freeMemory;
+<span class="cstat-skip" title="statement not covered" >    var buff = "0"; </span>//todo
+<span class="cstat-skip" title="statement not covered" >    var cache = "0"; </span>//todo
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >    var si = "0"; </span>//todo
+<span class="cstat-skip" title="statement not covered" >    var so = "0"; </span>//todo
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >    var bi = "0"; </span>//todo
+<span class="cstat-skip" title="statement not covered" >    var bo = "0"; </span>//todo
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >    var _in = "0"; </span>//todo
+<span class="cstat-skip" title="statement not covered" >    var cs = "0"; </span>//todo
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >    var us = "0"; </span>//todo
+<span class="cstat-skip" title="statement not covered" >    var sy = "0"; </span>//todo
+<span class="cstat-skip" title="statement not covered" >    var id = "0"; </span>//todo
+<span class="cstat-skip" title="statement not covered" >    var wa = "0"; </span>//todo
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >    output += r + " " + b + " " + swpd + " " + free + " " + buff + " " + cache + " " + si + " " + so + " " + bi + " " + bo + " " + _in + " " + cs + " " + us + " " + sy + " " + id + " " + wa;</span>
+    //Note: the memory, swap, and I/O statistics are in blocks, not in bytes. In Linux, blocks are usually 1,024 bytes (1 KB).
+<span class="cstat-skip" title="statement not covered" >    return output;</span>
+}
+&nbsp;
+/*function isOSWin64() {
+    return process.arch === 'x64' || process.env.hasOwnProperty('PROCESSOR_ARCHITEW6432');
+}
+&nbsp;
+function isOSWin32() {
+    return process.arch === 'x86' || process.env.hasOwnProperty('PROCESSOR_ARCHITEW6432');
+}*/
+&nbsp;
+module.exports = {
+    vmstat: vmstat
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Sep 08 2016 02:11:18 GMT+0200 (South Africa Standard Time)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

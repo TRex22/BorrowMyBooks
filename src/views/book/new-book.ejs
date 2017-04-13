@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <%- include('../partials/header') %>
+  <body>   
+   <%- include('../partials/navbar') %>
+
+
+    <h1 class="center-align">Upload a New Book</h1>
+
+
+    <form role="form" action="/book/new" method="post" class="box new-book">   
+
+
+            <div class="row">
+              <div class="col-lg-12">
+                <h3 class="page-header"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Book Details</h3>
+              </div>     
+            </div>
+
+            <!-- Book Details Row -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="title">Book Title: </label>
+                  <input type="text" style="max-width: 100%;" class="form-control" tabindex="1" name="title" placeholder="Title" required>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="author">Book Author: </label>
+                  <input type="text" class="form-control" tabindex="1" name="author" placeholder="Author" required>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="ISBN">Book ISBN: </label>
+                  <input type="text" class="form-control" tabindex="1" name="ISBN" placeholder="ISBN" required>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="publishDate">Book Publish Date: </label>
+                  <input type="date" class="form-control" tabindex="1" id="publishDate" name="publishDate" placeholder="Publication Date" max="2000-13-13" required>
+                </div>
+              </div>
+
+              <script type="text/javascript">
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth()+1; //January is 0!
+                var yyyy = today.getFullYear();
+                 if(dd<10){
+                        dd='0'+dd
+                    } 
+                    if(mm<10){
+                        mm='0'+mm
+                    } 
+
+                today = yyyy+'-'+mm+'-'+dd;
+                document.getElementById("publishDate").setAttribute("max", today);
+              </script>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="language">Book Language: </label>
+                  <input type="text" class="form-control" tabindex="1" name="language" placeholder="Language" required>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="edition">Book Edition: </label>
+                  <input type="text" class="form-control" tabindex="1" name="edition" placeholder="Edition" required>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="picURL">Book Cover: </label>
+                  <input type="text" class="form-control" tabindex="1" name="picURL" placeholder="Picture URL" required>
+                </div>
+              </div>
+
+            </div>
+            <!-- End Bok Details Row -->
+
+            <div class="form-group">
+              <label>Select Book Interests:</label> <br>
+              <select class="selectpicker form-control" data-live-search="true" name="interests" placeholder="Interests" value="<%= user.interests %>" multiple>
+                <option>Mathematics</option>
+                <option>Computer Science</option>
+                <option>Biology</option>
+                <option>Finance</option>
+                <option>Chemistry</option>
+                <option>Law</option>
+                <option>Engineering</option>
+                <option>Physics</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="summary">Book Summary:</label>
+              <textarea class="form-control" tabindex="1" rows="5" name="summary" required></textarea>
+            </div>
+
+
+          <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> Sell/Loan Details</h3>
+            </div>     
+          </div>
+
+    <!--  Sell/Loan Details Row  -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isAvailable" ="">Is This Book Available?</label>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="noAvailable">Number of Books Available: </label>
+                <input type="text" class="form-control" tabindex="1" name="noAvailable" placeholder="Number Available" >
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isForLoan" ="">Is This Book Loanable?</label>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="loanPrice">Book Loan Price: </label>
+                <input type="text" class="form-control" tabindex="1" name="loanPrice" placeholder="Loan Price" >
+              </div>
+            </div>
+
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="checkbox-inline"><input type="checkbox" tabindex="1" name="isForSale" ="">Is This Book For Sale?</label>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="sellPrice">Book Sell Price: </label>
+                <input type="text" class="form-control" tabindex="1" name="sellPrice" placeholder="Sell Price" >
+              </div>
+            </div>
+            
+          </div>
+    <!--  End Sell/Loan Details Row  -->
+
+          <br>
+          <br>
+
+          <div class="">
+            <div>
+              <input type="submit" class="btn btn-default btn-lg" value="Upload" tabindex="1">
+            </div>
+          </div>
+
+    </form>
+    
+
+  <!-- </div> -->
+  <%- include('../partials/footer') %>
+  </body>
+</html>

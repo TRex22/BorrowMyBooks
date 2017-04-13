@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<%- include('../partials/header') %>
+
+<body>
+    <%- include('../partials/navbar') %>
+        <div class="bs-component">
+            <h1 class="center-align"><span class="glyphicon glyphicon-stats" style="color: #e65100;" aria-hidden="true"></span> System Information</h1>
+        </div>
+           <!--  <div class="row"> -->
+
+	            <div class="center-align new-book">
+	                <ul class="list-group">
+	  	            	<li class="list-group-item text-muted"><strong>System Summary</strong></li>
+		              	<li class="list-group-item text-right"><span class="pull-left"><strong>Up Time: </strong></span> <%= sysinfo.upTime %> seconds</li>
+						<li class="list-group-item text-right"><span class="pull-left"><strong>Start Time: </strong></span> <%= site.moment(sysinfo.startTime).format('LLL'); %></li>
+						<li class="list-group-item text-right"><span class="pull-left"><strong>Node Version: </strong></span> <%= sysinfo.nodeVersion %></li>
+						<li class="list-group-item text-right"><span class="pull-left"><strong>Node PID: </strong></span> <%= sysinfo.pid %></li>
+						<li class="list-group-item text-right"><span class="pull-left"><strong>Load Average: </strong></span> <% if (sysinfo.loadAvg) {%> 
+																							                                    <%= sysinfo.loadAvg[0]  %> 
+																							                                      <% for(var i=1; i<sysinfo.loadAvg.length; i++) {%>
+																							                                         , <%= sysinfo.loadAvg[0]  %> 
+																							                                     <% } %> 
+																							                                   <%} %></li>
+						<li class="list-group-item text-right"><span class="pull-left"><strong>Free Memory: </strong></span> <%= sysinfo.freeMemory %></li>
+						<li class="list-group-item text-right"><span class="pull-left"><strong>Used Memory: </strong></span> <%= sysinfo.memoryUsage %></li>
+		              	<li class="list-group-item text-right"><span class="pull-left"><strong>Environment: </strong></span> <%= sysinfo.env %></li>
+						<li class="list-group-item text-right"><span class="pull-left"><strong>Hostname: </strong></span> <%= sysinfo.hostname %></li>
+						<li class="list-group-item text-right"><span class="pull-left"><strong>Server Ip: </strong></span> <% if (sysinfo.serverIp) {%> 
+																						                                   		<%= sysinfo.serverIp[0]  %> 
+																						                                      	<% for(var i=1; i<sysinfo.serverIp.length; i++) {%>
+																						                                       		, <%= sysinfo.serverIp[0]  %>
+																						                                     	<% } %> 
+																						                                   	<%} %></li>
+			            
+			        </ul> 
+
+
+
+
+
+	            
+	            </div>
+			<!-- </div> -->
+        <%- include('../partials/footer') %>
+</body>
+</html>

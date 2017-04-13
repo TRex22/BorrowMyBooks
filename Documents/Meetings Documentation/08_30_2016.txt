@@ -1,0 +1,5 @@
+Jason asked Marko to document the tests.
+Jason said he got a live site running.
+Marko said he could not work today as he was busy.
+Liron suggested that we add a summary field to the book page and the database.
+Liron said he will update the db diagram

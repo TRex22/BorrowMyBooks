@@ -2,8 +2,24 @@ var mongoose = require('../config/db.js').mongoose;
 var uuid = require('uuid');
 
 var userMessageSchema = mongoose.Schema({
-    userMessage: {
-    	Message: String,
+    	message: String,
+    	priority: Number,
+    	date: Date,
+    	adminId: String,
+    	fromUserId: String,
+    	toUserId: String,
+    	bookId: String,
+    	transactionId: String,
+        previousMessageId: String
+}, { strict: false, collection: 'UserMessage' });
+
+
+//Validated schema. Commented out because dont know how to pass to front-end.
+/*var userMessageSchema = mongoose.Schema({
+    	Message: {
+            type: String,
+            required: true
+        },
     	Priority: Number,
     	Date: Date,
     	AdminId: String,
@@ -11,8 +27,7 @@ var userMessageSchema = mongoose.Schema({
     	ToUserId: String,
     	BookId: String,
     	TransactionId: String
-    }
-}, { strict: false, collection: 'UserMessage' });
+}, { strict: false, collection: 'UserMessage' });*/
 
 userMessageSchema.methods.generateUUID = function(){
     return uuid.v4();

@@ -7,6 +7,9 @@
 		"bowerRoot": "./bower_components",
         "logPath": "./logs"
 	},
+    "security": {
+        "saltLength": 256
+    },
     "port": 8080,    
     "liveReloadPort": 35729,
     "appPath": "./app.js",
@@ -17,8 +20,37 @@
     "logFileMaxSize": 5242880,
     "logFileMaxFiles": 5,
     "mongodb": "mongodb://localhost/BorrowMyBooks",
+    "mongodbTest": "mongodb://localhost/BorrowMyBooksTestDb",
     "mongoUser": "trex22",
     "mongoPassword": "123456",
     "apiMode": false,
-    "secret": "keybao097d cat"
+    "secret": "keybao097d cat",
+    "themes": [
+        "cerulean",
+        "cosmo",
+        "cyborg",
+        "darkly",
+        "flatly",
+        "journal",
+        "lumen",
+        "paper",
+        "readable",
+        "sandstone",
+        "simplex",
+        "slate",
+        "spacelab",
+        "superhero",
+        "united",
+        "yeti"
+    ],
+    "defaultTheme": "cyborg",
+    "title": "Borrow My Books",
+    "defaultProfilePictureURL": "/assets/profile.jpg",
+    "defaultBookPictureURL": "/assets/cover.jpg",
+    "defaultBrandingText": "Borrow My Books",
+    "nodeinfo": false,
+    "socket": {
+        "interval": 5,
+        "limit": 1440
+    }
 }

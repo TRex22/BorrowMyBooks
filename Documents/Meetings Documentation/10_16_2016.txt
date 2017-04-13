@@ -1,0 +1,36 @@
+arko: That sounds good                        
+Marko: Just wanted to ask guys, my commit count hasn't gone up on GitHub yet, did like 3 commits yesterday. Does it only reflect when a release happens?                        
+Liron: I'm assuming you working on the develop branch. Your commits would only be shown on that branch, not master                        
+Liron: You can't actually view your commits on the develop branch until it's merged with master                        
+Marko: Can I delete the branch I created by mistake at the beginning of the semester or will it mess with the repo?                        
+Liron: I think just leave it for now                        
+Jason Chalom: Umm Ill finish off return today ... leaving upload books because it will change a bit with suggested price and cover image so will get it solid when I get to those tickets                        
+Jason Chalom: Besides documentation can someone try and get validation working?                        
+Jason Chalom: So validator js which is in the site.validator var in ejs can tell if a string is a real .... (ISBN, date etc...)                        
+Jason Chalom: and use toastr to send messages                        
+Marko: I can give it a try                        
+Jason Chalom: miz and I have done a large amount of it already .... please dont break anthinjg                        
+Jason Chalom: anything                        
+Marko: validator.js under validator folder?                        
+Jason Chalom: ?                        
+Jason Chalom: Its a library installed in the project                        
+Jason Chalom: but yes thats what it is called                        
+Marko: Ok that shit looks too hectic                        
+Jason Chalom: ?                        
+Marko: Is it not this?                        
+Jason Chalom: Yeah but you can just search npm.js website for it and find out how to use it                        
+Jason Chalom: No need to look under the hood                        
+Marko: Oh ok sweet                        
+Jason Chalom: Or even google                        
+Marko: What example can I look at elsewhere in the code that works so I can make sure I'm on the right track? Found this github repo that makes demo toastrs                        
+Jason Chalom: Umm look at accounts                        
+Jason Chalom: Toastrs are automatic                        
+Jason Chalom: I made code to do it                        
+Jason Chalom: All you need to do is use req.flash                        
+Marko: Oh sick                        
+Marko: Where's accounts?                        
+Jason Chalom: With the right kind of message and then the string message                        
+Jason Chalom: Route                        
+Jason Chalom: And I repeat do not break anything                        
+Marko: Cool                        
+Marko: I won't do anything until I work it out, if I can't work it out then maybe Liron can do it

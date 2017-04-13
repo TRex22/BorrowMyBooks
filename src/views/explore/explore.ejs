@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <%- include('../partials/header') %>
+  <body>   
+   <%- include('../partials/navbar') %>
+
+  <h1 class="center-align">Explore</h1>
+
+  <br>
+
+  <div class="center-align">
+    <div class="container">
+      <div class="row p-b-6">
+        <% for(var i=0; i<books.length; i++) {%>
+
+          <% if (i%3 == 0 && i != 0) {%>
+            </div>
+            <div class="row p-b-6">
+          <% } %>
+
+          <div class="col-xs-4 col-sm-4 col-md-4"> 
+            <div class="center-align-col">
+
+              <div class="view overlay hm-white-strong">
+                <a href="book/<%= books[i]._id %>">
+                  <img width=250 height=350 src= <% if (books[i].picURL) {%> <%= books[i].picURL %> <%} else{%> <%= site.defaults.DefaultBookPictureURL %> <%} %> />
+                  <div class="mask">
+                    <p class="black-text font-weight-bold text-capitalize title">
+                      <% if (books[i].title) {%><%=books[i].title %> <%} %></p>
+                    <p class="black-text text-capitalize author">
+                      <% if (books[i].author) {%><%=books[i].author %> <%} %></p>
+                  </div>
+                </a>
+              </div>
+
+            </div>
+          </div>
+        <% } %>
+      </div>     
+    </div>
+  </div>
+  
+  <%- include('../partials/footer') %>
+  </body>
+</html>

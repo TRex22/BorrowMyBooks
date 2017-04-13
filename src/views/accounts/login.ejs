@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<%- include('../partials/header') %>
+<body>
+<%- include('../partials/navbar') %>
+
+<h1 class="center-align">Sign into <%= site.defaults.Title %></h1>
+<form role="form" action="/login" method="post" class="box login">
+	<!-- <fieldset class="boxBody"> -->
+		<div class="form-group">
+			<!--<label for="email" >Email:</label>-->
+	  		<input type="text" class="form-control" tabindex="1" placeholder="Email Address or Username" name="username" id="username" required>
+	  	</div>
+	  	<div class="form-group">
+ 			<!--<label for="password">Password:</label>-->
+	  		<input type="password" class="form-control" tabindex="2"  placeholder="Password"  name="password" id="password" required>
+	  	</div>
+		<div>
+			<input type="submit" class="btn btn-default" value="Login" tabindex="4">
+			<!-- <input TYPE="button" class="btn btn-default" value="SignUp"  onClick="parent.location='/signup'"> -->
+		</div>
+		<br>
+		<p>Need an account? 
+		<a href="/signup"> Sign Up</a>
+		</p>
+	<!-- </fieldset> -->
+</form>
+
+<%- include('../partials/footer') %>
+</body>
+</html>

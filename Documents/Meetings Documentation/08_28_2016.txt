@@ -1,0 +1,3 @@
+Marko proposed we meet at Wits in order to do work.
+Liron suggested the group meet at his house.
+The group worked on documentation and backend code.

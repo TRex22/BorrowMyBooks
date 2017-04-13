@@ -1,0 +1,8 @@
+Marko: Sup guys                         
+Marko: In order for me to do the traceability matrix I need to complete the concerns part of the document                         
+Marko: Must I just list the general concerns of the system?                         
+Marko: Like from each stakeholders perspective?                         
+Liron: Don't you just need the requirements and the use cases                         
+Marko: I'm not sure, I feel like this document is very repetitive                         
+Marko: I have to state concerns and stakeholders in section 2                         
+Marko: And then section 3 is viewpoints but you have to state stakeholders and their concerns under each viewpoint

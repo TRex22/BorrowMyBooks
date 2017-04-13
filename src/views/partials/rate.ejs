@@ -1,0 +1,42 @@
+<!-- Modal -->
+<div class="modal fade" id="rateModal" tabindex="-1" role="document">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Please rate this user.</h4>
+      </div>
+
+<% if (userInfo) { %> 
+        <form role="form" action="/user/<%= userInfo._id %>/rate" method="post" class="box">
+<% } else if (rateTransaction) { %>
+        <form role="form" action="/transaction/<%= rateTransaction._id %>/rate" method="post" class="box">
+        <p>Please rate this transaction.</p>
+        <p></p>
+<% } %>
+
+
+        <div class="modal-body modal-style">
+              <div class="form-group">
+                  <!-- <p>Rating (1-5): </p><input name="rating" type="number" class="form-control" tabindex="1" min="1" step="1" max="5" id="rating" value="1"> --> 
+              <p>Please give a rating of 1-5:</p> <br>
+              <select class="selectpicker form-control" data-live-search="true" name="rating" title="Rating">
+                <option type="number" value="1">1</option>
+                <option type="number" value="2">2</option>
+                <option type="number" value="3">3</option>
+                <option type="number" value="4">4</option>
+                <option type="number" value="5">5</option>
+              </select>
+              </div>
+        </div>
+
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary btn-light-green">Rate</button>            
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <%- include('../partials/header') %>
+  <body>   
+   <%- include('../partials/navbar') %>
+
+    <% if(!user.isMain) { user=userInfo } %>
+  	<div class="center-align">
+      <h1>Your Profile Settings</h1>
+    </div>
+
+    <form role="form" action="/profile/settings" method="post" class="box new-book form-horizontal">
+            <div class="row">
+              <div class="col-lg-12">
+                <h3 class="page-header"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Your Public Profile:</h3>
+              </div>     
+            </div>
+
+            <div class="form-group">
+              <p class="control-label col-sm-2" for="username">Username: </p>
+              <div class="col-sm-10">
+              <input type="text" class="form-control" tabindex="1" placeholder="Username" id="username" title="Username" value="<%= user.username %>" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <p class="control-label col-sm-2" for="fullname">Full Name: </p>
+              <div class="col-sm-10">
+              <input type="text" class="form-control" tabindex="1" placeholder="Full Name" name="fullname" title="Full Name" value="<%= user.name %>" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <p class="control-label col-sm-2" for="email">Email: </p>
+              <div class="col-sm-10">
+              <input type="email" class="form-control" tabindex="1" placeholder="Email Address" name="email" title="Email" value="<%= user.email %>" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <p class="control-label col-sm-2" for="address">Address: </p>
+              <div class="col-sm-10">
+              <input type="text" class="form-control" tabindex="1" placeholder="Physical Address" name="address" title="Physical Address" value="<%= user.address %>" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <p class="control-label col-sm-2" for="phone">Phone Number: </p>
+              <div class="col-sm-10">
+              <input type="text" class="form-control" tabindex="1" placeholder="Phone Number" name="phone" title="Phone Number" value="<%= user.phone %>" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <img class="img-responsive account-picture" width="50" src=<% if (user.picURL) {%> <%= user.picURL %> <%} else{%> <%= site.defaults.DefaultProfilePictureURL %> <%} %> >
+              <!-- <button>Upload new picture</button> -->
+              <input type="text" class="form-control" tabindex="1" name="picURL" placeholder="Picture URL" required>
+            </div>
+
+            <div class="form-group">
+            <label>Select your interests:</label> <br>
+                <select class="selectpicker form-control" data-live-search="true" name="interests" title="Interests" value="<%= user.interests %>" multiple>
+                <option>Mathematics</option>
+                <option>Computer Science</option>
+                <option>Biology</option>
+                <option>Finance</option>
+                <option>Chemistry</option>
+                <option>Law</option>
+                <option>Engineering</option>
+                <option>Physics</option>
+              </select>
+            </div>
+
+            <br>
+
+            <div>
+              <input type="submit" class="btn btn-default" value="Save" tabindex="1">
+            </div>
+
+    </form>
+    
+          </div>
+      </div>
+  <%- include('../partials/footer') %>
+  </body>
+</html>
